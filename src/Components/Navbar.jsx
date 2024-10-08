@@ -11,12 +11,11 @@ const Navbar = () => {
 
   return (
     <div
-      className="bg-primary  text-white flex flex-col md:flex-row justify-between py-2 
-    "
+      className="flex flex-col justify-between py-2 text-white bg-primary md:flex-row "
     >
       <div className="flex items-center gap-3">
-        <img className="h-10 w-8 lg:h-12 lg:w-12  md:ml-10" src={img} alt="Logo" />
-        <div className="text-xl md:text-3xl font-bold">CarcleanWash</div>
+        <img className="w-8 h-10 lg:h-12 lg:w-12 md:ml-10" src={img} alt="Logo" />
+        <div className="text-xl font-bold md:text-3xl">CarcleanWash</div>
       </div>
       {/* {isNavOpen ? ( */}
       <nav
@@ -25,46 +24,46 @@ const Navbar = () => {
         } flex-col md:flex-row gap-4 md:gap-12`}
       >
         <Link
-          className="hover:text-blue-300 transition duration-200 self-center"
+          className="self-center transition duration-200 hover:text-blue-300"
           to="/"
         >
           Home
         </Link>
         <Link
-          className="hover:text-blue-300 transition duration-200  self-center"
+          className="self-center transition duration-200 hover:text-blue-300"
           to="/about"
         >
           About
         </Link>
         <Link
-          className="hover:text-blue-300 transition duration-200  self-center"
+          className="self-center transition duration-200 hover:text-blue-300"
           to="/ContactComponent"
         >
           Contact
         </Link>
         <Link
-          className="hover:text-blue-300 transition duration-200  self-center"
+          className="self-center transition duration-200 hover:text-blue-300"
           to="/faq"
         >
           FAQ
         </Link>
         <Link
-          className="hover:text-blue-300 transition duration-200  self-center"
-          to="/PrivacyPolicy"
+          className="self-center transition duration-200 hover:text-blue-300"
+          to="/privacy-policy"
         >
           Privacy Policy
         </Link>
 
-        <button className="self-center   rounded-xl bg-blue-600 text-white p-2">
+        <button className="self-center p-2 text-white bg-blue-600 rounded-xl">
           Get An Appointment
         </button>
       </nav>
       {/* ) : ( */}
       <div
         onClick={() => setIsnavOpen(!isNavOpen)}
-        className="sm:hidden text-2xl flex absolute right-0 top-10"
+        className="absolute right-0 flex text-2xl sm:hidden top-10"
       >
-        <FiAlignJustify className="flex absolute bottom-0 right-0" />
+        <FiAlignJustify className="absolute bottom-0 right-0 flex" />
       </div>
       {/* )} */}
     </div>

@@ -6,7 +6,7 @@ function PrivacyPolicy() {
     <> 
       <div>
         <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-72 bg-[rgb(0,69,120)] rounded-3xl">
-          <div className="font-medium text-4xl md:text-7xl text-cyan-50 text-center py-12 md:py-20 px-6 md:px-64">
+          <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-64">
             Privacy Policy
           </div>
         </div>
@@ -27,23 +27,23 @@ function PrivacyPolicy() {
               <li>To contact you to provide the information requested.</li>
             </ul>
           </div>
-          <div className="font-medium px-5">Disclosure of Your Information</div>
+          <div className="px-5 font-medium">Disclosure of Your Information</div>
           <div className="p-5">
             Any information you provide to us will either be emailed directly to us or may be stored on a secure server. We do not rent, sell, or share personal information about you with other people or non-affiliated companies. We will use all reasonable efforts to ensure that your personal data is not disclosed to regional/national institutions and authorities unless required by law or other regulations. Unfortunately, the transmission of information via the internet is not completely secure. Although we will do our best to protect your personal data, we cannot guarantee the security of your data transmitted to our site; any transmission is at your own risk. Once we have received your information, we will use strict procedures and security features to try to prevent unauthorized access.
           </div>
-          <div className="font-medium px-5">Your Rights – Access to Your Personal Data</div>
+          <div className="px-5 font-medium">Your Rights – Access to Your Personal Data</div>
           <div className="p-5">
             You have the right to ensure that your personal data is being processed lawfully (“Subject Access Right”). Your subject access right can be exercised in accordance with data protection laws and regulations. Any subject access request must be made in writing to Agape Acts, 235 Wing Mill Road, Sandy Springs, GA 30350. We will provide your personal data to you within the statutory time frames. To enable us to trace any of your personal data that we may be holding, we may need to request further information from you. If you complain about how we have used your information, you have the right to complain to the Information Commissioner’s Office (ICO).
           </div>
-          <div className="font-medium px-5">Changes to Our Privacy Policy</div>
+          <div className="px-5 font-medium">Changes to Our Privacy Policy</div>
           <div className="p-5">
             Any changes we may make to our privacy policy in the future will be posted on this page and, where appropriate, notified to you by email. Please check back frequently to see any updates or changes to our privacy policy.
           </div>
-          <div className="font-medium px-5">Contact</div>
+          <div className="px-5 font-medium">Contact</div>
           <div className="p-5">
             Questions, comments, and requests regarding this privacy policy are welcomed and should be addressed to: LBIC Consulting Services, Inc., doing business as Agape Acts, contact@agapeacts.com.
           </div>
-          <div className="font-medium px-5">Effective Date</div>
+          <div className="px-5 font-medium">Effective Date</div>
           <div className="p-5">This Privacy Policy is effective as of August 22, 2023, and was last updated on September 14, 2023.</div>
         </div>
         <Viresonapp/>
