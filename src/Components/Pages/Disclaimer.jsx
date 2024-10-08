@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../Button";
-import img from "../../assets/Mobile-02.webp";
+import img from "../../assets/mobiles.png";
 
 function Disclaimer() {
   return (
