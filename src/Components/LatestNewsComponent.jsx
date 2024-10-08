@@ -18,10 +18,10 @@ const mydata = [
 function LatestNewsComponent() {
   return (
     <>
-
       <div className="  bg-[#202020] ">
-        
-      <h1 className="text-center text-3xl font-bold text-mywhite py-4">Latest New & Artical</h1>
+        <h1 className="text-center text-3xl font-bold text-mywhite py-4">
+          Latest New & Artical
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 justify-items-center py-4">
           {mydata.map((item, key) => (
             <div key={key} className="w-full">
@@ -41,7 +41,7 @@ function LatestNewsComponent() {
                     <h2 className="text-2xl md:text-3xl text-center md:text-left font-semibold tracking-wide">
                       {item.title}
                     </h2>
-                    <p className="text-white">{item.descri}</p>
+                    <p className="text-white ">{item.descri}</p>
                   </div>
                 </div>
               </div>

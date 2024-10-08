@@ -50,7 +50,9 @@ const About = () => {
                 inventore provident odit amet culpa dolores quisquam, numquam
                 harum consectetur quam. Qui illo mollitia quas aperiam!
               </p>
-              <Button />
+            <div className="mx-3 my-5">
+            <Button />
+            </div>
             </div>
           </div>
         </div>
