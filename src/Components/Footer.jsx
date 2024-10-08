@@ -111,11 +111,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="border-slate-950  mt-10 mx-10" />
+        <hr className="border-white  mt-10 mx-10 " />
         <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center mx-10  md:justify-center">
-          <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left">
+          <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left py-2">
             © 2023
-            <a href="#" className="hover:underline">
+            <a href="#" className="hover:underline ">
               CAR WASH
             </a>
             . All Rights Reserved.

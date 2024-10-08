@@ -40,7 +40,9 @@ const About = () => {
               />
             </div>
             <div className="md:w-1/2 md:mx-10 pb-5">
-              <h1 className="text-2xl md:text-4xl font-medium text-white">Lorem</h1>
+              <h1 className="text-2xl md:text-4xl font-medium text-white">
+                Lorem
+              </h1>
               <p className="font-sans text-lg md:text-xl text-white p-1">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
                 animi? Illum deleniti ullam quia quisquam aut, omnis similique!

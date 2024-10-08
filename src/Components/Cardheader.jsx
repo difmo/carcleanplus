@@ -37,7 +37,7 @@ function HeaderCard({ heading, description }) {
           {mydata.map((item, key) => {
             return (
               <div key={key} className="flex justify-center">
-                <div className="rounded-md w-72 shadow-md bg-black text-gray-100">
+                <div className="rounded-md w-72 shadow-md bg-[#002f49] text-gray-100">
                   <img
                     src={item.src}
                     alt=""

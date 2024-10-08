@@ -25,7 +25,7 @@ function LatestNewsComponent() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 justify-items-center py-4">
           {mydata.map((item, key) => (
             <div key={key} className="w-full">
-              <div className="flex flex-col md:flex-row  shadow-md bg-[#333532] text-gray-100">
+              <div className="flex flex-col md:flex-row  shadow-md  bg-black  text-gray-100">
                 {/* Image */}
                 <div className="w-full md:w-1/2">
                   <img
