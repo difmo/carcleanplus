@@ -5,13 +5,13 @@ function TermsofService() {
   return (
     <>
     <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-72 bg-[rgb(0,69,120)] rounded-3xl">
-        <div className="font-medium text-4xl md:text-7xl text-cyan-50 text-center py-12 md:py-20 px-6 md:px-64">
+        <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-64">
         Terms of Service
         </div>
       </div>
-      <div className="py-20 px-20">
+      <div className="px-20 py-20">
        
-        <div className="font-bold">Effective Date: August 22, 2023</div>
+        <div className="font-bold">Effective Date: July 01, 2024</div>
         <div  className="p-5 font-medium">1. Introduction</div>
         <div className="p-2"> 
           Welcome to Agape Acts, an app provided by LBIC Consulting Services,
