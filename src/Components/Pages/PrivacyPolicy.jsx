@@ -44,7 +44,7 @@ function PrivacyPolicy() {
             Questions, comments, and requests regarding this privacy policy are welcomed and should be addressed to: LBIC Consulting Services, Inc., doing business as Agape Acts, contact@agapeacts.com.
           </div>
           <div className="px-5 font-medium">Effective Date</div>
-          <div className="p-5">This Privacy Policy is effective as of August 22, 2023, and was last updated on September 14, 2023.</div>
+          <div className="p-5">This one is not save This Privacy Policy is effective as of August 22, 2023, and was last updated on September 14, 2023.</div>
         </div>
         <Viresonapp/>
       </div>
