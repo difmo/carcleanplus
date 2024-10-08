@@ -38,7 +38,7 @@ const Navbar = () => {
         </Link>
         <Link
           className="hover:text-blue-300 transition duration-200  self-center"
-          to="/contact"
+          to="/ContactComponent"
         >
           Contact
         </Link>
@@ -50,7 +50,7 @@ const Navbar = () => {
         </Link>
         <Link
           className="hover:text-blue-300 transition duration-200  self-center"
-          to="/privacy-policy"
+          to="/PrivacyPolicy"
         >
           Privacy Policy
         </Link>

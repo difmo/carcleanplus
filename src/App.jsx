@@ -5,13 +5,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navebar from "./Components/Navbar"; // Check the path is correct
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
-// import About from './Components/About';
+import About from "./Components/About";
 import Faq from "./Components/Pages/Faq";
 import HelpSupport from "./Components/Pages/HelpSupport";
 import TermsofService from "./Components/Pages/TermsofService";
 import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
 import Disclaimer from "./Components/Pages/Disclaimer";
-// import ImageSlider from './Components/ImageSlider'; // Import ImageSlider component
+import ContactComponent from "./Components/ContactComponent";
 
 function App() {
   return (
@@ -20,8 +20,9 @@ function App() {
         <Navebar />
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/imageslider" element={<ImageSlider />} /> */}
-          {/* <Route path="/about" element={<About />} /> */}
+
+          <Route path="/about" element={<About />} />
+          <Route path="/ContactComponent" element={<ContactComponent/>} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/helpsupport" element={<HelpSupport />} />
           <Route path="/termsofservice" element={<TermsofService />} />
