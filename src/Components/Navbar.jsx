@@ -15,7 +15,7 @@ const Navbar = () => {
     >
       <div className="flex items-center gap-3">
         <img className="w-8 h-10 lg:h-12 lg:w-12 md:ml-10" src={img} alt="Logo" />
-        <div className="text-xl font-bold md:text-3xl">CarcleanWash</div>
+        <div className="text-xl font-bold md:text-3xl">Car Clean Plus</div>
       </div>
       {/* {isNavOpen ? ( */}
       <nav
