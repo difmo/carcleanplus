@@ -1,11 +1,10 @@
 import React from "react";
 // import  img from '../assets/logo.png';
-import img3 from "../assets/jeep-logo.png";
-
-import img4 from "../assets/logo2.png";
-import img5 from "../assets/logo1.png";
-import img1 from "../assets/gmc-logo.png";
-import img2 from "../assets/logo3.png";
+import img3 from "../assets/Logo/jeep-logo.png";
+import img4 from "../assets/Logo/logo2.png";
+import img5 from "../assets/Logo/logo3.png";
+import img1 from "../assets/Logo/logo1.png";
+import img2 from "../assets/Logo/gmc-logo.png";
 
 function LogoComponent() {
   return (

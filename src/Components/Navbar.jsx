@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import img from "../assets/logo.png";
+import img from "../assets/Logo/logo.png";
 import { BsHammer } from "react-icons/bs";
 import { FaHamburger, FaHammer } from "react-icons/fa";
 import { FaAlgolia, FaHand } from "react-icons/fa6";

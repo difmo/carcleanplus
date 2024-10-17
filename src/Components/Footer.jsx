@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoLogoFacebook, IoLogoInstagram, IoLogoYoutube } from "react-icons/io";
-import img from "../assets/logo.png"; // Assuming this is the logo
+import img from "../assets/Logo/logo.png"; // Assuming this is the logo
 import bgImage from "../assets/footer.jpg"; // Add your background image
 
 const Footer = () => {

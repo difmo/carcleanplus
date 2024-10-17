@@ -1,9 +1,6 @@
 import React from "react";
 import img5 from "../assets/home1.png";
-
-
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
-
 import { FaCalculator, FaCalendarAlt, FaCarAlt, FaCarBattery, FaCompressArrowsAlt, FaIdCardAlt } from "react-icons/fa";
 import CardSlider from "./CardSlider";
 import { RiHomeGearFill } from "react-icons/ri";
@@ -13,56 +10,56 @@ const mydata = [
     icon: <RiHomeGearFill/>,
     title:'Preventative Maintenance',
     descri:
-      "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+      "Key benefits include reduced downtime, cost savings, improved safety, and optimized performance.",
   },
   {
     key: 2,
     icon: <FaCalendarAlt/>,
-    title:'Preventative Maintenance',
+    title:'Brake Repair ',
     descri:
-      "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+      "Brake repair and services involve inspecting, maintaining, and replacing components of a vehicle's braking system. ",
   },
   {
     key: 3,
     icon: <FaCarAlt/>,
-    title:'Preventative Maintenance',
+    title:'Transmission Service & Repair',
     descri:
-      "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+      "Vulputato sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
   },
   {
     key: 4,
     icon: <FaIdCardAlt/>,
-    title:'Preventative Maintenance',
+    title:'Engine Services ',
     descri:
-    "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+    "Engine services involve the maintenance and repair of a vehicle's engine to ensure optimal performance and longevity",
   },
   {
     key: 5,
     icon: <FaCompressArrowsAlt/>,
-    title:'Preventative Maintenance',
+    title:'Tires & Wheels',
     descri:
-    "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+    " Tires and wheels are vital components of any vehicle, significantly impacting safety, performance, and comfort",
   },
   {
     key: 6,
     icon: <FaCarAlt />,
-    title:'Preventative Maintenance',
+    title:'Exhaust System',
      descri:
-    "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+    "The exhaust system is essential for directing harmful gases away from the engine and reducing vehicle emissions..",
   },
   {
     key: 7,
     icon: <FaCarBattery/>,
-    title:'Preventative Maintenance',
+    title:'Body Service',
     descri:
-      "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+      "Body service involves the maintenance and repair of a vehicle's exterior components to enhance appearance .",
   },
   {
     key: 8,
     icon: <FaCalculator/>,
-    title:'Preventative Maintenance',
+    title:'Diagnostic Car',
     descri:
-      "Vulputate sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
+      "Diagnostic car services involve identifying and troubleshooting issues within a vehicle using specialized tools and technology",
   },
 ];
 
@@ -85,7 +82,7 @@ function Card({ heading, description }) {
               </div>
               <div className="flex flex-col p-6 space-y-8">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-semibold tracking-wide px-10">
+                  <h2 className="text-xl font-semibold tracking-wide px-5 text-center">
                     {item.title}
                   </h2>
                   <p className="text-black text-center">{item.descri}</p>
@@ -98,15 +95,12 @@ function Card({ heading, description }) {
         <div>
           <WhyChouseUsComponents />
         </div>
-        {/* <div
-        className="absolute -bottom-0  left-0 w-full h-80 bg-yellow-400 transform origin-bottom"
-        style={{ transform: "rotate(6deg)" }}
-      ></div> */}
+        
 
         <div
-          className="bg-no-repeat bg-cover bg-center mx-10 md:mx-40  "
+          className="bg-no-repeat bg-cover bg-center   "
           style={{
-            backgroundImage: "url('src/assets/car-wash.jpg')",
+            backgroundImage: "url('src/assets/cardslider/bgimg.jpg')",
           }}
         >
           <CardSlider />
