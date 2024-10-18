@@ -5,12 +5,12 @@ function PrivacyPolicy() {
   return (
     <> 
       <div>
-        <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-72 bg-[rgb(0,69,120)] rounded-3xl">
+        <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
           <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-64">
             Privacy Policy
           </div>
         </div>
-        <div className="p-20">
+        <div className="px-2 md:px-20">
           <div className="pl-5 font-medium"><h1 className="font-serif font-extrabold">Effective Date: July 01, 2024</h1></div>
           <div className="p-5">
           This Privacy Policy outlines how Car Clean Plus (“We”), collects, uses, discloses, and protects your personal information when you use our mobile application and website (collectively, the “Services”). We are committed to protecting and respecting your privacy and ensuring compliance with all applicable data protection regulations and laws.

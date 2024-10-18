@@ -5,8 +5,8 @@ import Viresonapp from "../Viresonapp";
 function Faq() {
   return (
     <>
-      <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-72 bg-[rgb(0,69,120)] rounded-3xl">
-        <div className="font-medium text-4xl md:text-7xl text-cyan-50 text-center py-12 md:py-20 px-6 md:px-64">
+      <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
+        <div className="font-medium text-4xl md:text-7xl text-cyan-50 text-center py-4 md:py-20 px-6 md:px-64">
           Frequently Asked Questions
         </div>
 
@@ -22,7 +22,7 @@ function Faq() {
         
         <div className="w-full md:w-1/2 font-serif pt-4 md:pt-0">
           <div className="px-4 md:px-10">
-            <div className="font-bold text-lg md:text-xl">
+            <div className="py-2 font-serif font-extrabold">
               Lorem ipsum dolor sit amet
             </div>
             <div className="text-sm md:text-base">
@@ -35,7 +35,7 @@ function Faq() {
             </div>
           </div>
           <div className="px-4 md:px-10 pt-4">
-            <div className="font-bold text-lg md:text-xl">
+            <div className=" py-2 font-serif font-extrabold ">
               Far far away, behind the word mountains
             </div>
             <div className="text-sm md:text-base">
@@ -48,7 +48,7 @@ function Faq() {
             </div>
           </div>
           <div className="px-4 md:px-10 pt-4">
-            <div className="font-bold text-lg md:text-xl">
+            <div className="py-2 font-serif font-extrabold ">
               Far far away, behind the word mountains
             </div>
             <div className="text-sm md:text-base">

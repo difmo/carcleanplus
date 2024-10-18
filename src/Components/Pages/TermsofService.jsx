@@ -4,16 +4,15 @@ import Viresonapp from "../Viresonapp";
 function TermsofService() {
   return (
     <>
-    <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-72 bg-[rgb(0,69,120)] rounded-3xl">
-        <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-64">
-        Terms of Service
+      <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
+        <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-52">
+          Terms of Service
         </div>
       </div>
-      <div className="px-20 py-20">
-       
+      <div className="px-4 md:px-20 py-20">
         <div className="font-bold">Effective Date: July 01, 2024</div>
-        <div  className="p-5 font-medium">1. Introduction</div>
-        <div className="p-2"> 
+        <div className="p-5 font-medium">1. Introduction</div>
+        <div className="p-2">
           Welcome to Agape Acts, an app provided by LBIC Consulting Services,
           Inc. doing business as Agape Acts (“we,” “us,” “our”). These Terms and
           Conditions, often referred to as a “Terms of Service” or “User
@@ -67,10 +66,8 @@ function TermsofService() {
           content. Violation of these guidelines may result in account
           suspension or termination.
         </div>
-        <div className="p-5 font-medium">9. Payment and Billing</div>
-        <div className="p-2"></div>
       </div>
-      <Viresonapp/>
+      <Viresonapp />
     </>
   );
 }

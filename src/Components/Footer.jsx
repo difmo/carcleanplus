@@ -34,10 +34,10 @@ const Footer = () => {
               <ul className="text-white font-medium">
                 {[
                   { name: "FAQ", url: "/faq" },
-                  { name: "Help & Support", url: "/help-support" },
-                  { name: "Privacy Policy", url: "/privacy-policy" },
+                  { name: "Help & Support", url: "/helpsupport" },
+                  { name: "Privacy Policy", url: "/privacypolicy" },
                   { name: "Disclaimer", url: "/disclaimer" },
-                  { name: "Terms of Service", url: "/terms-of-service" },
+                  { name: "Terms of Service", url: "/termsofservice" },
                 ].map((link) => (
                   <li className="mb-1" key={link.name}>
                     <a
