@@ -24,6 +24,38 @@ const Footer = () => {
                 Enhancing Customer Experience with Innovative Web and Mobile App
                 Solutions
               </h3>
+              <div className="flex flex-col md:flex-row justify-between items-center ">
+                <div className="flex justify-center md:justify-start mt-4">
+                  <a
+                    href="https://www.youtube.com/your-channel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-700 mx-2"
+                  >
+                    <IoLogoFacebook size={24} />
+                    <span className="sr-only">Facebook</span>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/your-channel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-700 mx-2"
+                  >
+                    <IoLogoInstagram size={24} />
+                    <span className="sr-only">Instagram</span>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/your-channel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-700 mx-2"
+                  >
+                    <IoLogoYoutube size={24} />
+                    <span className="sr-only">YouTube</span>
+                  </a>
+                </div>
+              </div>
+             
             </div>
 
             {/* Quick Links Section */}
@@ -61,12 +93,12 @@ const Footer = () => {
                   <FaEnvelope className="mr-2" />
                   <span>info@codeservir.com</span>
                 </li>
-                <li className="mb-1 flex items-center justify-center md:justify-start">
-                  <FaPhoneAlt className="mr-1" />
+                <li className="mb-2 flex items-center justify-center md:justify-start">
+                  <FaPhoneAlt className="mr-2" />
                   <span>+91 945-579-1624</span>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
-                  <FaMapMarkerAlt className="mr-1" />
+                  <FaMapMarkerAlt className="mr-2 " />
                   <span>
                     4/37 Vibhav Khand, Gomti Nagar, Lucknow, Uttar Pradesh,
                     226010
@@ -77,49 +109,14 @@ const Footer = () => {
           </div>
 
           {/* Footer Bottom Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center mt-8">
-            <p className="mt-4 text-white text-sm max-w-md text-center md:text-left">
-              We Innovate, Coffee Helps! A team of mobility experts driven by an
-              everlasting passion for app technology!
-            </p>
-            <div className="flex justify-center md:justify-start mt-4">
-              <a
-                href="https://www.youtube.com/your-channel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-700 mx-2"
-              >
-                <IoLogoFacebook size={24} />
-                <span className="sr-only">Facebook</span>
-              </a>
-              <a
-                href="https://www.youtube.com/your-channel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-700 mx-2"
-              >
-                <IoLogoInstagram size={24} />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a
-                href="https://www.youtube.com/your-channel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-700 mx-2"
-              >
-                <IoLogoYoutube size={24} />
-                <span className="sr-only">YouTube</span>
-              </a>
-            </div>
-          </div>
         </div>
 
         <hr className="border-white  mt-10 mx-10 " />
         <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center mx-10  md:justify-center">
           <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left py-2">
-            © 2023
+            © 2024
             <a href="#" className="hover:underline ">
-              CAR WASH
+              CAR CLEAN PLUS
             </a>
             . All Rights Reserved.
           </span>
