@@ -5,7 +5,7 @@ function TermsofService() {
   return (
     <>
       <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
-        <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-52">
+        <div className="px-12 py-12 text-4xl font-medium self-center md:text-7xl text-cyan-50 md:py-24 md:px-72">
           Terms of Service
         </div>
       </div>

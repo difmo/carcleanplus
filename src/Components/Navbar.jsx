@@ -1,25 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
-import { BsHammer } from "react-icons/bs";
-import { FaHamburger, FaHammer } from "react-icons/fa";
-import { FaAlgolia, FaHand } from "react-icons/fa6";
 import { FiAlignJustify } from "react-icons/fi";
 
 const Navbar = () => {
-  const [isNavOpen, setIsnavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
-    <div
-      className="flex flex-col justify-between py-2 px-1 text-white bg-primary md:flex-row "
-    >
-      <div className="flex items-center gap-3">
-        <img className="w-8 h-10 lg:h-12 lg:w-12 md:ml-10" src={img} alt="Logo" />
-        <div className="text-xl font-bold md:text-3xl">Car Clean Plus</div>
+    <div className="flex flex-col justify-between  py-6 relative px-1 text-white bg-primary md:flex-row">
+      <div className="flex  items-center gap-3">
+        <div className="w-12 ml-5  lg:w-12 md:ml-20">
+          <img className="bg-cover" src={img} alt="Logo" />
+        </div>
+        <div className="text-2xl font-bold md:text-3xl">Car Clean Plus</div>
       </div>
-      {/* {isNavOpen ? ( */}
       <nav
-        className={`pb-4 lg:flex  pt-4 md:mt-0 mx-4   text-xl ${
+        className={`pb-4 lg:flex pt-4 md:mt-0 mx-4 text-xl ${
           isNavOpen ? "flex" : "hidden"
         } flex-col md:flex-row gap-4 md:gap-12`}
       >
@@ -53,19 +49,16 @@ const Navbar = () => {
         >
           Privacy Policy
         </Link>
-
-        <button className="self-center p-4 text-white bg-myyellow rounded-2xl">
+        <button className="self-center py-3 px-2 text-white bg-myyellow rounded-2xl">
           Get An Appointment
         </button>
       </nav>
-      {/* ) : ( */}
       <div
-        onClick={() => setIsnavOpen(!isNavOpen)}
-        className="absolute right-0 flex text-2xl sm:hidden top-10 -4"
+        onClick={() => setIsNavOpen(!isNavOpen)}
+        className="absolute right-5 top-1/2 transform -translate-y-1/2 flex justify-center items-center text-2xl sm:hidden"
       >
-        <FiAlignJustify className="absolute bottom-0 right-0 flex" />
+        <FiAlignJustify />
       </div>
-      {/* )} */}
     </div>
   );
 };

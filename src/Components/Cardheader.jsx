@@ -31,12 +31,12 @@ const mydata = [
 function HeaderCard({ heading, description }) {
   return (
     <>
-      <div className="relative flex items-center justify-center md:top-40 lg:-top-16 md:mx-5">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="relative flex items-center justify-center sm:-top-6 md:top-28 lg:-top-16 md:mx-5">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {mydata.map((item, key) => {
             return (
               <div key={key} className="flex justify-center">
-                <div className="rounded-2xl w-full max-w-xs shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50">
+                <div className="rounded-2xl w-full md:max-w-xs shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50">
                   <img
                     src={item.src}
                     alt=""

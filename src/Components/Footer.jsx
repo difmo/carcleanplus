@@ -55,7 +55,6 @@ const Footer = () => {
                   </a>
                 </div>
               </div>
-             
             </div>
 
             {/* Quick Links Section */}
@@ -67,7 +66,7 @@ const Footer = () => {
                 {[
                   { name: "FAQ", url: "/faq" },
                   { name: "Help & Support", url: "/helpsupport" },
-                  { name: "Privacy Policy", url: "/privacypolicy" },
+                  { name: "Privacy Policy", url: "/privacy-policy" },
                   { name: "Disclaimer", url: "/disclaimer" },
                   { name: "Terms of Service", url: "/termsofservice" },
                 ].map((link) => (
