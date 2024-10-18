@@ -2,6 +2,7 @@ import React from "react";
 import img from "../assets/about/car-image.png";
 import img1 from "../assets/Svg/Vector.svg";
 import Button from "./Button";
+import car from '../assets/car.jpg';
 import HeaderCard from "./Cardheader";
 const About = () => {
   return (
@@ -18,11 +19,6 @@ const About = () => {
             <HeaderCard />
           </div>
 
-          {/* Rotate yellow color only at the bottom */}
-          <div
-          // className="absolute bottom-0 left-0 w-full -top-8 h-64 bg-myyellow transform origin-bottom"
-          // style={{ transform: "rotate(-4deg)" }}
-          ></div>
         </div>
 
         <div className="bg-cover bg-center bg-black bg-opacity-80">
@@ -32,7 +28,7 @@ const About = () => {
           <div className="sm:px-5 md:flex md:mx-20">
             <div className=" md:w-1/2 self-center mb-5 md:mb-0">
               <img
-                src="src/assets/car.jpg"
+                src={car}
                 alt="Car"
                 className="object-cover w-full h-full"
               />

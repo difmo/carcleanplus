@@ -44,14 +44,14 @@ const ImageSlider = () => {
       {images.map((image, index) => (
         <div
           key={index}
-          className="w-full relative bg-primary h-[300px] sm:h-[400px] md:h-[400px] lg:h-[510px] overflow-hidden  "
+          className="w-full relative bg-primary h-[300px]  md:h-[400px] lg:h-[510px] overflow-hidden  "
         >
           <img
             src={image.image}
             alt={`Slide ${index + 1}`}
             className="w-full bg-no-repeat object-cover "
           />
-          <div className="relative bottom-32 sm:-bottom-16 md:bottom-[280px]   lg:bottom-[490px] left-0 right-0 flex flex-col items-center       justify-center text-center">
+          <div className="relative bottom-32 sm:-bottom-16   md:bottom-[490px] left-0 right-0 flex flex-col items-center       justify-center text-center">
             <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold lg:px-40 text-mywhite p-4">
               {image.title}
             </h1>

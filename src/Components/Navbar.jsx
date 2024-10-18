@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="flex flex-col justify-between py-2 text-white bg-primary md:flex-row "
+      className="flex flex-col justify-between py-2 px-1 text-white bg-primary md:flex-row "
     >
       <div className="flex items-center gap-3">
         <img className="w-8 h-10 lg:h-12 lg:w-12 md:ml-10" src={img} alt="Logo" />
@@ -19,7 +19,7 @@ const Navbar = () => {
       </div>
       {/* {isNavOpen ? ( */}
       <nav
-        className={`pb-4 lg:flex  pt-4 md:mt-0 mx-2  text-xl ${
+        className={`pb-4 lg:flex  pt-4 md:mt-0 mx-4   text-xl ${
           isNavOpen ? "flex" : "hidden"
         } flex-col md:flex-row gap-4 md:gap-12`}
       >
@@ -54,14 +54,14 @@ const Navbar = () => {
           Privacy Policy
         </Link>
 
-        <button className="self-center p-2 text-white bg-blue-600 rounded-xl">
+        <button className="self-center p-4 text-white bg-myyellow rounded-2xl">
           Get An Appointment
         </button>
       </nav>
       {/* ) : ( */}
       <div
         onClick={() => setIsnavOpen(!isNavOpen)}
-        className="absolute right-0 flex text-2xl sm:hidden top-10"
+        className="absolute right-0 flex text-2xl sm:hidden top-10 -4"
       >
         <FiAlignJustify className="absolute bottom-0 right-0 flex" />
       </div>
