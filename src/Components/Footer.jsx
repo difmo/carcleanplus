@@ -33,16 +33,19 @@ const Footer = () => {
               </h2>
               <ul className="text-white font-medium">
                 {[
-                  "FAQ",
-                  "Help & Support",
-                  "Privacy Policy",
-                  "Disclaimer",
-                  "Terms of Service",
+                  { name: "FAQ", url: "/faq" },
+                  { name: "Help & Support", url: "/help-support" },
+                  { name: "Privacy Policy", url: "/privacy-policy" },
+                  { name: "Disclaimer", url: "/disclaimer" },
+                  { name: "Terms of Service", url: "/terms-of-service" },
                 ].map((link) => (
-                  <li className="mb-1" key={link}>
-                    <span className="hover:underline cursor-pointer text-sm">
-                      {link}
-                    </span>
+                  <li className="mb-1" key={link.name}>
+                    <a
+                      href={link.url}
+                      className="hover:underline cursor-pointer text-sm"
+                    >
+                      {link.name}
+                    </a>
                   </li>
                 ))}
               </ul>
