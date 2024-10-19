@@ -5,6 +5,7 @@ function FormContact() {
     name: "",
     mobileNumber: "",
     email: "",
+    address: "",
     message: "",
   });
 
@@ -20,7 +21,6 @@ function FormContact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate form fields
     let errors = {};
     if (formData.name.trim() === "") {
       errors.name = "Name is required";
@@ -31,6 +31,9 @@ function FormContact() {
     if (formData.email.trim() === "") {
       errors.email = "Email is required";
     }
+    if (formData.address.trim() === "") {
+      errors.address = "Address is required";
+    }
     if (formData.message.trim() === "") {
       errors.message = "Message is required";
     }
@@ -40,30 +43,29 @@ function FormContact() {
       return;
     }
 
-    // Process form submission (e.g., send data to backend)
+    // Simulate form submission
     console.log("Form submitted:", formData);
 
-    // Clear form fields
     setFormData({
       name: "",
       mobileNumber: "",
       email: "",
+      address: "",
       message: "",
     });
 
-    // Clear errors
     setErrors({});
   };
 
   return (
-    <div className="flex flex-col md:flex-row mx-auto p-4">
-      <div className="w-full  p-4">
-        <h2 className="text-2xl md:text-2xl font-bold mb-4 text-center md:text-left">
-          Contact Us
-        </h2>
+    <div className="flex justify-center items-center min-h-screen  p-3">
+      
+      {/* Card Form Container */}
+      <div className="shadow-2xl rounded-2xl p-8 max-w-2xl w-full bg-slate-200">
+        <h2 className="text-3xl font-bold  text-center text-black">Contact Us</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-xl md:text-3xl font-semibold text-gray-700">
+          <div className="mb-3">
+            <label className="block text-xl font-semibold text-black">
               Name
             </label>
             <input
@@ -71,14 +73,14 @@ function FormContact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded p-2"
+              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
             />
             {errors.name && (
-              <p className="text-red-500 text-sm md:text-xl">{errors.name}</p>
+              <p className="text-red-500 text-sm">{errors.name}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-2xl md:text-4xl font-semibold text-gray-700">
+          <div className="mb-3">
+            <label className="block text-xl font-semibold text-black">
               Mobile Number
             </label>
             <input
@@ -86,16 +88,14 @@ function FormContact() {
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded p-2"
+              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
             />
             {errors.mobileNumber && (
-              <p className="text-red-500 text-sm md:text-xl">
-                {errors.mobileNumber}
-              </p>
+              <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-2xl md:text-4xl font-semibold text-gray-700">
+          <div className="mb-3">
+            <label className="block text-xl font-semibold text-black">
               Email
             </label>
             <input
@@ -103,38 +103,50 @@ function FormContact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded p-2"
+              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm md:text-xl">{errors.email}</p>
+              <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-2xl md:text-4xl font-semibold text-gray-700">
+          <div className="mb-3">
+            <label className="block text-xl font-semibold text-black">
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+            />
+            {errors.address && (
+              <p className="text-red-500 text-sm">{errors.address}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label className="block text-xl font-semibold text-black">
               Message
             </label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded p-2"
-              rows="4"
+              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+              rows="3"
             />
             {errors.message && (
-              <p className="text-red-500 text-sm md:text-xl">
-                {errors.message}
-              </p>
+              <p className="text-red-500 text-sm">{errors.message}</p>
             )}
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white rounded p-2 hover:bg-blue-700"
+            className="  bg-blue-600 text-white rounded-lg px-10 py-2  mx-56 hover:bg-blue-700"
           >
             Submit
           </button>
         </form>
       </div>
-      <div className="hidden md:block md:w-1/2 p-4"></div>
     </div>
   );
 }

@@ -49,7 +49,7 @@ const Navbar = () => {
         >
           Privacy Policy
         </Link>
-        <button className="self-center py-3 px-2 text-white bg-myyellow rounded-2xl">
+        <button className="self-center p-3  text-white bg-myyellow rounded-2xl">
           Get An Appointment
         </button>
       </nav>

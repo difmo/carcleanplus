@@ -3,7 +3,7 @@ import img5 from "../assets/home1.png";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
 import { FaCalculator, FaCalendarAlt, FaCarAlt, FaCarBattery, FaCompressArrowsAlt, FaIdCardAlt } from "react-icons/fa";
 import CardSlider from "./CardSlider";
-import bgimg from '../assets/cardslider/bgimg.jpg';
+// import bgimg from '../assets/cardslider/bgimg.jpg';
 import { RiHomeGearFill } from "react-icons/ri";
 const mydata = [
   {
@@ -99,10 +99,7 @@ function Card({ heading, description }) {
         
 
         <div
-          className="bg-no-repeat bg-cover bg-center   "
-          style={{
-            backgroundImage:`url(${bgimg})`,
-          }}
+          
         >
           <CardSlider />
         </div>

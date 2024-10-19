@@ -2,7 +2,7 @@ import React from "react";
 import img from "../assets/about/car-image.png";
 import img1 from "../assets/Svg/Vector.svg";
 import Button from "./Button";
-import car from "../assets/car.jpg";
+import car from "../assets/about/wash.png";
 import HeaderCard from "./Cardheader";
 const About = () => {
   return (
@@ -21,18 +21,17 @@ const About = () => {
         </div>
 
         <div className="bg-cover bg-center bg-black bg-opacity-80">
-          <div className="text-center font-bold text-4xl md:text-6xl py-5 text-mywhite">
+          <div className="justify-center">
+          <div className=" font-bold text-2xl md:text-4xl py-5 text-mywhite md:pl-[770px] px-32">
             About Us
           </div>
           <div className="sm:px-5 md:flex md:mx-20">
-            <div className=" md:w-1/2 self-center mb-5 md:mb-0 w-full h-full px-4 ">
+            <div className=" md:w-1/2 self-center mb-5 md:mb-0 w-full h-full  ">
               <img src={car} alt="Car" className="object-cover " />
             </div>
-            <div className="w-full md:w-1/2 md:mx-10 md:pb-5">
-              <h1 className="text-2xl md:text-4xl font-medium text-white">
-                {/* Lorem */}
-              </h1>
-              <p className="font-sans text-lg md:text-xl text-white px-4 ">
+            <div className="w-full md:w-1/2 md:mx-1 md:pb-5">
+              
+              <p className="font-sans text-lg md:text-xl text-white  px-3 ">
                 A clean car is a happy car. Who doesn't want to drive a clean
                 car? At DAILY CARWASH, we aim to change the previous car washing
                 concept where car owners had to deal with inconvenient,
@@ -42,10 +41,11 @@ const About = () => {
                 best car cleaning service at your doorstep with the right
                 equipment by highly trained professionals.
               </p>
-              <div className="flex py-4 px-24 self-center ">
+              <div className="py-4" >
                 <Button />
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

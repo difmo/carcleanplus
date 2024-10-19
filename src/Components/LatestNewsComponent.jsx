@@ -1,6 +1,6 @@
 import React from "react";
-import img from "../assets/latestnews/1.jpg";
-import img1 from "../assets/latestnews/2.jpg";
+import img from "../assets/latestnews/1.png";
+import img1 from "../assets/latestnews/2.png";
 const mydata = [
   {
     key: 1,
@@ -29,7 +29,7 @@ function LatestNewsComponent() {
             <div key={key} className="w-full">
               <div className="flex flex-col md:flex-row  shadow-md  bg-black  text-gray-100">
                 {/* Image */}
-                <div className="w-full md:w-1/2">
+                <div className="w-full md:w-1/2 ">
                   <img
                     src={item.src}
                     alt=""
