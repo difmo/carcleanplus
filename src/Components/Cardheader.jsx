@@ -31,12 +31,12 @@ const mydata = [
 function HeaderCard({ heading, description }) {
   return (
     <>
-      <div className="relative flex items-center justify-center sm:-top-6 md:top-28 md:mx-5">
+      <div className="relative flex items-center justify-center sm:-top-6 md:top-28 mx-0 md:mx-5">
   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
     {mydata.map((item, key) => {
       return (
         <div key={key} className="flex justify-center">
-          <div className="rounded-2xl w-full shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50 max-w-sm lg:max-w-sm">
+          <div className="rounded-2xl w-full shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50 max-w-xs sm:max-w-sm lg:max-w-md">
             <img
               src={item.src}
               alt=""
@@ -55,7 +55,6 @@ function HeaderCard({ heading, description }) {
     })}
   </div>
 </div>
-
     </>
   );
 }

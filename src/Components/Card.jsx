@@ -68,30 +68,33 @@ function Card({ heading, description }) {
   return (
     <>
       <div className=" bg-[#202020]">
-        <div className="text-center font-bold text-mywhite text-6xl py-7">
-          <h1>Our Services</h1>
-        </div>
+        <div className="text-center font-bold text-mywhite text-4xl md:text-5xl lg:text-6xl py-7">
+  <h1>Our Services</h1>
+</div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  justify-items-center items-center md:mx-20  ">
-          {mydata.map((item) => (
-            <div
-              key={item.key}
-              className="rounded-md shadow-md text-black bg-white mx-5 mt-5"
-            >
-              <div className="flex items-center justify-center mt-6 object-cover object-center rounded-t-md">
-                {item.icon}
-              </div>
-              <div className="flex flex-col p-6 space-y-8">
-                <div className="space-y-2">
-                  <h2 className="text-xl font-semibold tracking-wide px-5 text-center">
-                    {item.title}
-                  </h2>
-                  <p className="text-black text-center">{item.descri}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-4 md:mx-10 lg:mx-20">
+  {mydata.map((item) => (
+    <div
+      key={item.key}
+      className="rounded-md shadow-md bg-white  sm:mx-6 md:mx-4 lg:mx-5 mt-5 w-full "
+    >
+      <div className="flex items-center justify-center mt-6">
+        <div className="object-cover object-center rounded-t-md">
+          {item.icon}
         </div>
+      </div>
+      <div className="flex flex-col p-3 space-y-4">
+        <div className="space-y-2">
+          <h2 className="text-xl md:text-2xl font-semibold tracking-wide text-center">
+            {item.title}
+          </h2>
+          <p className="text-black text-center">{item.descri}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         <div>
           <WhyChouseUsComponents />

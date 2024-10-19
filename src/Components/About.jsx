@@ -22,7 +22,7 @@ const About = () => {
 
         <div className="bg-cover bg-center bg-black bg-opacity-80">
           <div className="justify-center">
-          <div className=" font-bold text-2xl md:text-4xl py-5 text-mywhite md:pl-[770px] px-32">
+          <div className=" font-mono text-2xl md:text-3xl py-5 text-mywhite md:px-[520px] px-32">
             About Us
           </div>
           <div className="sm:px-5 md:flex md:mx-20">
