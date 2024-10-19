@@ -59,10 +59,11 @@ function FormContact() {
 
   return (
     <div className="flex justify-center items-center min-h-screen  p-3">
-      
       {/* Card Form Container */}
       <div className="shadow-2xl rounded-2xl p-8 max-w-2xl w-full bg-slate-200">
-        <h2 className="text-3xl font-bold  text-center text-black">Contact Us</h2>
+        <h2 className="text-3xl font-bold  text-center text-black">
+          Contact Us
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="block text-xl font-semibold text-black">
@@ -141,7 +142,7 @@ function FormContact() {
           </div>
           <button
             type="submit"
-            className="  bg-blue-600 text-white rounded-lg px-10 py-2  mx-56 hover:bg-blue-700"
+            className="bg-blue-600 text-white rounded-xl px-8 py-2 md:px-16 md:py-3 lg:px-24 lg:py-4 w-full max-w-xs mx-auto hover:bg-blue-700"
           >
             Submit
           </button>
