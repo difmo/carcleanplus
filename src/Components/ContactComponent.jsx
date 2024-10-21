@@ -8,8 +8,6 @@ function ContactComponent() {
     <div className="w-full md:w-1/2 p-4">
       <FormContact />
     </div>
-  
-    {/* Contact Information Section */}
     <div className="text-center w-full md:w-1/2 flex flex-col justify-center p-4">
       <h2 className="text-xl md:text-2xl font-bold mb-4">Contact Information</h2>
       <p className="mb-2">Email: example@example.com</p>
@@ -17,8 +15,6 @@ function ContactComponent() {
       <p>Address: 123 Main Street, City, Country</p>
     </div>
   </div>
-  
-  {/* Google Map Section */}
   <div className="flex flex-col md:flex-row justify-center w-full">
     <div className="w-full">
       <iframe

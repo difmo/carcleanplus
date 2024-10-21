@@ -1,9 +1,8 @@
 import React from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoLogoFacebook, IoLogoInstagram, IoLogoYoutube } from "react-icons/io";
-import img from "../assets/Logo/logo.png"; // Assuming this is the logo
-import bgImage from "../assets/footer.jpg"; // Add your background image
-
+import img from "../assets/Logo/logo.png";
+import bgImage from "../assets/footer.jpg";
 const Footer = () => {
   return (
     <footer
@@ -14,12 +13,11 @@ const Footer = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-[#083248] bg-opacity-70 pt-10">
+      <div className="bg-[#083248] bg-opacity-70 pt-5">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
-            {/* Logo and Description Section */}
             <div className="w-full flex flex-col items-center md:items-start">
-              <img src={img} alt="Company Logo" className="h-12 w-12 mb-2" />
+              <img src={img} alt="Company Logo" className="h-12 w-12 " />
               <h3 className="text-sm sm:text-base lg:text-lg text-center md:text-left mt-4">
                 Enhancing Customer Experience with Innovative Web and Mobile App
                 Solutions
@@ -56,9 +54,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-
-            {/* Quick Links Section */}
-            <div className="mb-8 sm:ml-8 md:ml-0">
+            <div className="">
               <h2 className="mb-4 text-sm font-semibold uppercase underline text-white">
                 Quick Links
               </h2>
@@ -81,9 +77,7 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-
-            {/* Contact Information Section */}
-            <div className="mb-6">
+            <div className="mb-4">
               <h2 className="mb-4 text-sm font-semibold uppercase underline text-white">
                 Contact
               </h2>
@@ -97,7 +91,7 @@ const Footer = () => {
                   <span>+91 945-579-1624</span>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
-                  <FaMapMarkerAlt className="mr-2 " />
+                  <FaMapMarkerAlt className="mr-2 mb-6 " />
                   <span>
                     4/37 Vibhav Khand, Gomti Nagar, Lucknow, Uttar Pradesh,
                     226010
@@ -106,11 +100,8 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-
-          {/* Footer Bottom Section */}
         </div>
-
-        <hr className="border-white  mt-10 mx-10 " />
+        <hr className="border-white  mt-5 mx-10 " />
         <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center mx-10  md:justify-center">
           <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left py-2">
             © 2024
@@ -124,5 +115,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

@@ -45,7 +45,6 @@ const CardSlider = () => {
     {images.map((image, index) => (
       <div key={index} className="w-full overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-center">
-          {/* Image Section */}
           <div className="w-full md:w-1/2">
             <img
               src={image.image}
@@ -53,7 +52,6 @@ const CardSlider = () => {
               className="w-full h-auto object-cover"
             />
           </div>
-          {/* Text Section */}
           <div className="w-full md:w-1/2 px-4 md:px-6 lg:px-8 self-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-mywhite py-4">
               {image.title}
@@ -67,37 +65,7 @@ const CardSlider = () => {
     ))}
   </Slider>
 </div>
-
     </>
-
-    // <div className="w-full mr-1 rounded-3xl py-20 justify-center-center px-4">
-    //   <Slider {...settings}>
-    //     {images.map((image, index) => (
-    //       <div
-    //         key={index}
-
-    //       >
-    //         <div className="self-center  md:px-10 ">
-    //         <img
-    //           src={image.image}
-    //           alt={`Slide ${index + 1}`}
-    //           className="object-cover"
-    //         />
-    //         </div>
-    //        <div className="relative  bottom-96 left-40 right-0 ">
-    //        <div className="">
-    //           <h1 className="text-xl font-bold text-center text-mywhite md:text-2xl lg:text-4xl ">
-    //             {image.title}
-    //           </h1>
-    //           <p className=" text-xl p-4 font-medium text-center text-mywhite">
-    //             {image.description}
-    //           </p>
-    //         </div>
-    //        </div>
-    //       </div>
-    //     ))}
-    //   </Slider>
-    // </div>
   );
 };
 

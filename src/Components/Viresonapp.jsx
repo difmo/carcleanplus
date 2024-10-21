@@ -13,7 +13,6 @@ function Viresonapp() {
         <div className="w-full md:w-auto flex justify-center md:justify-start my-4 md:my-0">
           <Button />
         </div>
-
         <div className="w-full flex justify-center items-center mt-6 md:mt-0">
           <img src={img} alt="" className="h-auto object-cover" />
         </div>

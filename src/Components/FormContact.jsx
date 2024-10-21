@@ -58,30 +58,28 @@ function FormContact() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen  p-3">
+    <div className="flex justify-center items-center ">
       {/* Card Form Container */}
-      <div className="shadow-2xl rounded-2xl p-8 max-w-2xl w-full bg-slate-200">
-        <h2 className="text-3xl font-bold  text-center text-black">
+      <div className="shadow-2xl rounded-xl p-8 max-w-2xl w-full bg-slate-200">
+        <h2 className="text-2xl font-bold  text-center text-black">
           Contact Us
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="block text-xl font-semibold text-black">
-              Name
-            </label>
+          <div className="mb-2">
+            <label className="block  font-semibold text-black">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name}</p>
             )}
           </div>
-          <div className="mb-3">
-            <label className="block text-xl font-semibold text-black">
+          <div className="mb">
+            <label className="block  font-semibold text-black">
               Mobile Number
             </label>
             <input
@@ -89,52 +87,46 @@ function FormContact() {
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
             />
             {errors.mobileNumber && (
               <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
             )}
           </div>
-          <div className="mb-3">
-            <label className="block text-xl font-semibold text-black">
-              Email
-            </label>
+          <div className="mb-2">
+            <label className="block  font-semibold text-black">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>
-          <div className="mb-3">
-            <label className="block text-xl font-semibold text-black">
-              Address
-            </label>
+          <div className="mb-2">
+            <label className="block  font-semibold text-black">Address</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address}</p>
             )}
           </div>
-          <div className="mb-3">
-            <label className="block text-xl font-semibold text-black">
-              Message
-            </label>
+          <div className="mb-2">
+            <label className="block  font-semibold text-black">Message</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 rounded-2xl p-2"
-              rows="3"
+              className="mt-1 block w-full border-spacing-10 text-black rounded-xl"
+              rows=""
             />
             {errors.message && (
               <p className="text-red-500 text-sm">{errors.message}</p>
@@ -142,14 +134,13 @@ function FormContact() {
           </div>
           <button
             type="submit"
-            className="bg-blue-600 text-white rounded-xl px-8 py-2 md:px-16 md:py-3 lg:px-24 lg:py-4 w-full max-w-xs mx-auto hover:bg-blue-700"
+            className="bg-blue-600 flex mx-auto border-0 pt-2 px-8  text-white rounded-xl      justify-centerhover:bg-blue-700"
           >
-            Submit
+            Send
           </button>
         </form>
       </div>
     </div>
   );
 }
-
 export default FormContact;

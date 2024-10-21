@@ -28,7 +28,6 @@ function LatestNewsComponent() {
           {mydata.map((item, key) => (
             <div key={key} className="w-full">
               <div className="flex flex-col md:flex-row  shadow-md  bg-black  text-gray-100">
-                {/* Image */}
                 <div className="w-full md:w-1/2 ">
                   <img
                     src={item.src}
@@ -37,7 +36,6 @@ function LatestNewsComponent() {
                     style={{ minHeight: "15rem", maxHeight: "25rem" }}
                   />
                 </div>
-                {/* Content */}
                 <div className="flex flex-col justify-center p-6 space-y-4 w-full md:w-1/2">
                   <div className="space-y-2">
                     <h2 className="text-xl  text-center md:text-left font-semibold tracking-wide text-myyellow">

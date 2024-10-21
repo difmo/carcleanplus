@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import header2 from "../assets/imageslider/images.png";
 import header3 from "../assets/imageslider/carwash.png";
 import header from "../assets/imageslider/slider.png";
-
 const ImageSlider = () => {
   const images = [
     {
@@ -27,7 +26,6 @@ const ImageSlider = () => {
       image: header,
     },
   ];
-
   const settings = {
     dots: false,
     infinite: true,
@@ -38,9 +36,9 @@ const ImageSlider = () => {
     autoplay: true, // Enable auto-sliding
     autoplaySpeed: 2000,
   };
-
   return (
-    <div className="">
+ 
+       <div className=" max-w-screen-2xl  ">
       <Slider {...settings}>
         {images.map((image, index) => (
           <div
@@ -66,7 +64,8 @@ const ImageSlider = () => {
           </div>
         ))}
       </Slider>
-    </div>
+      </div>
+  
   );
 };
 

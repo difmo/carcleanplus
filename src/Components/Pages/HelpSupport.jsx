@@ -1,6 +1,5 @@
 import React from "react";
 import Viresonapp from "../Viresonapp";
-// import img from "../../assets/designs.png";
 function HelpSupport() {
   return (
     <>
