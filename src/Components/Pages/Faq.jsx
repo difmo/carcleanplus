@@ -5,7 +5,7 @@ import Viresonapp from "../Viresonapp";
 function Faq() {
   return (
     <>
-      <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
+      <div id="faq" className="selection object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
         <div className="font-medium text-4xl md:text-7xl text-cyan-50 text-center py-4 md:py-20 px-6 md:px-64">
           Frequently Asked Questions
         </div>

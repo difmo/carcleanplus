@@ -3,7 +3,7 @@ import FormContact from "./FormContact";
 
 function ContactComponent() {
   return (
-    <><div className="flex flex-col md:flex-row w-full bg-opacity-95 leading-10 bg-[#333532] text-white">
+    <><div id="contact" className="section flex flex-col md:flex-row w-full bg-opacity-95 leading-10 bg-[#333532] text-white">
     {/* Contact Form Section */}
     <div className="w-full md:w-1/2 p-4">
       <FormContact />

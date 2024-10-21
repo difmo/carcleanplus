@@ -7,8 +7,8 @@ import HeaderCard from "./Cardheader";
 const About = () => {
   return (
     <>
-      <div
-        className="bg-no-repeat bg-cover bg-center"
+      <div  id="about"
+        className="section bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `url(${img})`,
         }}

@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
 import { FiAlignJustify } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const handleOnGetInTouch = () => {
-    router.push("#/contact");
+
+  const handleScrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
+    }
   };
+
   return (
-    <div className="flex flex-col justify-between  py-6 relative px-1 text-white bg-primary md:flex-row">
-      <div className="flex  items-center gap-3">
-        <div className="w-12 ml-5  lg:w-12 md:ml-12">
+    <div className="flex flex-col justify-between py-6 relative px-1 text-white bg-primary md:flex-row">
+      <div className="flex items-center gap-3">
+        <div className="w-12 ml-5 lg:w-12 md:ml-12">
           <img className="bg-cover" src={img} alt="Logo" />
         </div>
         <div className="text-2xl font-bold md:text-3xl">Car Clean Plus</div>
@@ -20,30 +26,30 @@ const Navbar = () => {
           isNavOpen ? "flex" : "hidden"
         } flex-col md:flex-row gap-4 md:gap-12`}
       >
-        <Link
+        <button
           className="self-center transition duration-200 hover:text-blue-300"
-          to="/"
+          onClick={() => handleScrollToSection("home")}
         >
           Home
-        </Link>
-        <Link
+        </button>
+        <button
           className="self-center transition duration-200 hover:text-blue-300"
-          to="/about"
+          onClick={() => handleScrollToSection("about")}
         >
           About
-        </Link>
-        <Link
+        </button>
+        <button
           className="self-center transition duration-200 hover:text-blue-300"
-          to="/ContactComponent"
+          onClick={() => handleScrollToSection("contact")}
         >
           Contact
-        </Link>
-        <Link
+        </button>
+        <button
           className="self-center transition duration-200 hover:text-blue-300"
-          to="/faq"
+          onClick={() => handleScrollToSection("faq")} // Ensure the ID matches the section ID
         >
           FAQ
-        </Link>
+        </button>
         <Link
           className="self-center transition duration-200 hover:text-blue-300"
           to="/privacy-policy"
@@ -51,7 +57,7 @@ const Navbar = () => {
           Privacy Policy
         </Link>
         <button
-          onClick={handleOnGetInTouch}
+          onClick={() => handleScrollToSection("contact")}
           className="bg-myyellow hover:bg-black text-white py-2 px-4 transition-all duration-300 rounded hover:text-mybg"
         >
           Get An Appointment
@@ -66,4 +72,5 @@ const Navbar = () => {
     </div>
   );
 };
+
 export default Navbar;

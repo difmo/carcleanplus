@@ -12,6 +12,7 @@ import LatestNewsComponent from "./LatestNewsComponent.jsx";
 import LogoComponent from "./LogoComponent.jsx";
 import ContactComponent from "./ContactComponent.jsx";
 import HeaderCard from "./Cardheader.jsx";
+import Faq from "./Pages/Faq.jsx";
 
 // primaryColor: #092b3d
 // secondryColor : #ffd101
@@ -19,14 +20,17 @@ import HeaderCard from "./Cardheader.jsx";
 function Home() {
   return (
     <>
+    <div  id="home" className="section">
       <ImageSlide />
-      <HeaderCard/>
+      <HeaderCard />
       <About />
       <Card />
       <HowCanhelpComponent />
       <LatestNewsComponent />
       <LogoComponent />
+      <Faq/>
       <ContactComponent />
+      </div>
     </>
   );
 }

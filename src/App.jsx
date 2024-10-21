@@ -20,9 +20,9 @@ function App() {
         <Navebar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          {/* <Route path="#" element={<About />} />
           <Route path="/ContactComponent" element={<ContactComponent />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/faq" element={<Faq />} /> */}
           <Route path="/helpsupport" element={<HelpSupport />} />
           <Route path="/termsofservice" element={<TermsofService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
