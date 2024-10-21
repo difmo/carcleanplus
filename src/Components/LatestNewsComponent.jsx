@@ -24,19 +24,18 @@ function LatestNewsComponent() {
         <h1 className="text-center text-3xl font-bold text-mywhite py-4">
           Latest New & Artical
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center py-4">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center">
           {mydata.map((item, key) => (
             <div key={key} className="w-full">
-              <div className="flex  shadow-md  bg-black  text-gray-100">
-                <div className="w-full md:w-1/2 ">
+              <div className="md:flex  shadow-md  bg-black  text-gray-100 mx-2 rounded-sm">
+                <div className="w-full md:w-1/2   ">
                   <img
                     src={item.src}
                     alt=""
-                    className="object-cover object-center w-full h-full"
-                    style={{ minHeight: "15rem", maxHeight: "25rem" }}
+                    className="object-cover object-center  w-full h-full"
                   />
                 </div>
-                <div className="flex flex-col justify-center p-6 space-y-4 w-full md:w-1/2">
+                <div className="flex flex-col justify-center px-2 py-2  w-full md:w-1/2">
                   <div className="space-y-2">
                     <h2 className="text-xl  text-center md:text-left font-semibold tracking-wide text-myyellow">
                       {item.title}

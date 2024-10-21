@@ -72,7 +72,7 @@ function FormContact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-sm"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name}</p>
@@ -87,7 +87,7 @@ function FormContact() {
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-sm"
             />
             {errors.mobileNumber && (
               <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
@@ -100,7 +100,7 @@ function FormContact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-sm]"
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
@@ -113,7 +113,7 @@ function FormContact() {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10  text-black rounded-xl"
+              className="mt-1 block w-full border-spacing-10  text-black rounded-sm"
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address}</p>
@@ -125,7 +125,7 @@ function FormContact() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 block w-full border-spacing-10 text-black rounded-xl"
+              className="mt-1 block w-full border-spacing-10 text-black rounded-sm"
               rows=""
             />
             {errors.message && (
@@ -134,7 +134,7 @@ function FormContact() {
           </div>
           <button
             type="submit"
-            className="bg-blue-600 flex mx-auto border-0 pt-2 px-8  text-white rounded-xl      justify-centerhover:bg-blue-700"
+            className="bg-blue-600 flex mx-auto border-0 pt-2 px-8  text-white rounded-sm     justify-centerhover:bg-blue-700"
           >
             Send
           </button>
