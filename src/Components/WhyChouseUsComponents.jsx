@@ -59,7 +59,7 @@ function WhyChouseUsComponents() {
   </div>
 
   {/* Main Grid */}
-  <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 zzzmd:mx-5 lg:mx-10  ">
+  <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 zzzmd:mx-5 lg:mx-10 px-5  ">
     {/* Left Side - Images */}
     <div className="flex  justify-center lg:justify-start">
       {mydata1.map((item1, index) => (

@@ -39,16 +39,16 @@ function HeaderCard({ heading, description }) {
       >
         <div className="bg-black bg-opacity-80">
           <img src={Img1} alt="" />
-          <div className="relative flex items-center justify-center sm:-top-6 md:top-28 lg:-top-8  md:px-5">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+          <div className="relative flex items-center justify-center sm:-top-6 -top-16 md:px-5">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-4 ">
               {mydata.map((item, key) => {
                 return (
                   <div key={key} className="flex justify-center">
-                    <div className="relative bottom-[12rem] md:bottom-[20rem] lg:bottom-[36rem] rounded-2xl w-full shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50 max-w-xs sm:max-w-sm lg:max-w-md">
+                    <div className="relative bottom-[12rem] md:bottom-[22rem] lg:bottom-[36rem] rounded-2xl w-full shadow-md bg-[#002f49] text-gray-100 border-4 border-indigo-50 ">
                       <img
                         src={item.src}
                         alt=""
-                        className="object-cover object-center w-full bg-[#002f49] rounded-xl h-48 lg:h-64"
+                        className="object-cover object-center w-full bg-[#002f49] rounded-xl h-48  md:h-52 "
                       />
                       <div className="flex flex-col justify-center p-4 sm:p-6 space-y-4">
                         <div className="space-y-2">

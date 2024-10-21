@@ -12,7 +12,7 @@ const mydata = [
   {
     key: 2,
     src: img1,
-    title:"Optimization model for balancing Consumer Experience with Supply Utillzation in a Marketplace",
+    title:"Optimization model for balancing Consumer Experience ",
     descri:
       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, animi? Illum deleniti ullam quia quisquam aut",
   },
@@ -24,10 +24,10 @@ function LatestNewsComponent() {
         <h1 className="text-center text-3xl font-bold text-mywhite py-4">
           Latest New & Artical
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 justify-items-center py-4">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center py-4">
           {mydata.map((item, key) => (
             <div key={key} className="w-full">
-              <div className="flex flex-col md:flex-row  shadow-md  bg-black  text-gray-100">
+              <div className="flex  shadow-md  bg-black  text-gray-100">
                 <div className="w-full md:w-1/2 ">
                   <img
                     src={item.src}
