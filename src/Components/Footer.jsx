@@ -91,7 +91,7 @@ const Footer = () => {
                   <span>+91 945-579-1624</span>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
-                  <FaMapMarkerAlt className="mr-2 mb-6 " />
+                  <FaMapMarkerAlt className=" mb-6 " />
                   <span>
                     4/37 Vibhav Khand, Gomti Nagar, Lucknow, Uttar Pradesh,
                     226010
