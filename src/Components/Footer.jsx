@@ -10,19 +10,19 @@ const handleFAQClick = () => {
 const Footer = () => {
   return (
     <footer
-      className="text-white relative overflow-hidden w-full"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      // className="text-white relative overflow-hidden w-full"
+      // style={{
+      //   backgroundImage: `url(${bgImage})`,
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      // }}
     >
-      <div className="bg-[#083248] bg-opacity-70 pt-5">
+      <div className="bg-black pt-5">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="w-full flex flex-col items-center md:items-start">
               <img src={img} alt="Company Logo" className="h-12 w-12 " />
-              <h3 className="text-sm sm:text-base lg:text-lg text-center md:text-left mt-4">
+              <h3 className="text-sm sm:text-base lg:text-lg text-center md:text-left mt-4 text-white">
                 Enhancing Customer Experience with Innovative Web and Mobile App
                 Solutions
               </h3>

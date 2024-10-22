@@ -86,7 +86,7 @@ const Navbar = () => {
       </nav>
       <div
         onClick={() => setIsNavOpen(!isNavOpen)}
-        className="absolute right-5 top-1/2 transform -translate-y-1/2 flex justify-center items-center text-2xl sm:hidden"
+        className="absolute right-5 top-12 transform -translate-y-1/2 flex justify-center items-center text-2xl sm:hidden "
       >
         <FiAlignJustify />
       </div>

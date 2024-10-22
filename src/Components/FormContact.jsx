@@ -86,7 +86,7 @@ function FormContact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full text-black rounded-sm"
+              className="mt-1 w-full text-black rounded-sm outline-none px-1"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name}</p>
@@ -97,11 +97,11 @@ function FormContact() {
               Mobile Number
             </label>
             <input
-              type="text"
+              type="number"
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="mt-1 block w-full text-black rounded-sm"
+              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
             />
             {errors.mobileNumber && (
               <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
@@ -114,7 +114,7 @@ function FormContact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full text-black rounded-sm"
+              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
@@ -127,7 +127,7 @@ function FormContact() {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="mt-1 block w-full text-black rounded-sm"
+              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address}</p>
@@ -139,7 +139,7 @@ function FormContact() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 block w-full text-black rounded-sm"
+              className="mt-1 px-1 block w-full text-black rounded-sm outline-none "
               rows="4"
             />
             {errors.message && (
