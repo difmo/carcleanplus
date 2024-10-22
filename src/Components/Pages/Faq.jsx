@@ -12,15 +12,15 @@ function Faq() {
 
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between pt-4 md:pt-10 px-4 md:px-20">
+      <div className="flex flex-col md:flex-row justify-around pt-4 md:pt-10 px-4 md:px-20">
 
-        <div className="w-full md:w-1/2 md:pr-4  md:text-left">
-          <h3 className="text-3xl py-2">Can't Find an Answer? Contact our support team</h3>
+        <div className="w-full  h-full">
+          <h3 className="text-3xl py-4">Can't Find an Answer? Contact our support team</h3>
           <FormContact />
 
         </div>
         
-        <div className="w-full md:w-1/2 font-serif pt-4 md:pt-0">
+        <div className="w-full font-serif py-4 ">
           <div className="px-4 md:px-10">
             <div className="py-2 font-serif font-extrabold">
               Lorem ipsum dolor sit amet
