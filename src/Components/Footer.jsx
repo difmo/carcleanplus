@@ -3,6 +3,10 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoLogoFacebook, IoLogoInstagram, IoLogoYoutube } from "react-icons/io";
 import img from "../assets/Logo/logo.png";
 import bgImage from "../assets/footer.jpg";
+const handleFAQClick = () => {
+  navigate("/");
+  setTimeout(() => handleScrollToSection("faq"), 0);
+};
 const Footer = () => {
   return (
     <footer
@@ -60,7 +64,7 @@ const Footer = () => {
               </h2>
               <ul className="text-white font-medium">
                 {[
-                  { name: "FAQ", url: "/faq" },
+                  { name: "FAQ", url: "/faq"  },
                   { name: "Help & Support", url: "/helpsupport" },
                   { name: "Privacy Policy", url: "/privacy-policy" },
                   { name: "Disclaimer", url: "/disclaimer" },

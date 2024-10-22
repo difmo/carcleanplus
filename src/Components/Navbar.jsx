@@ -1,20 +1,39 @@
+// Navbar.js
+
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for programmatic navigation
 import img from "../assets/Logo/logo.png";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleScrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  const handleAboutClick = () => {
+    navigate("/");
+    setTimeout(() => handleScrollToSection("about"), 0);
+  };
+  const handleHomeClick = () => {
+    navigate("/");
+    setTimeout(() => handleScrollToSection("home"), 0);
+  };
+  const handleContactClick = () => {
+    navigate("/"); 
+    setTimeout(() => handleScrollToSection("contact"), 0);
+  };
+  const handleFAQClick = () => {
+    navigate("/"); 
+    setTimeout(() => handleScrollToSection("faq"), 0);
+  };
   return (
-    <div className="flex flex-col justify-between py-6 relative px-1 text-white bg-primary md:flex-row">
+    <div className="flex flex-col justify-between py-6 relative px-1 text-white bg-primary md:flex-row ">
       <div className="flex items-center gap-3">
         <div className="w-12 ml-5 lg:w-12 md:ml-12">
           <img className="bg-cover" src={img} alt="Logo" />
@@ -28,25 +47,27 @@ const Navbar = () => {
       >
         <button
           className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleScrollToSection("home")}
+          onClick={handleHomeClick}
         >
           Home
         </button>
         <button
           className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleScrollToSection("about")}
+          onClick={handleAboutClick} // Scroll to "About" section
         >
           About
         </button>
         <button
           className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleScrollToSection("contact")}
+          // onClick={() => handleScrollToSection("contact")}
+          onClick={handleContactClick}
         >
           Contact
         </button>
         <button
           className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleScrollToSection("faq")} // Ensure the ID matches the section ID
+          // onClick={() => handleScrollToSection("faq")}
+          onClick={handleFAQClick}
         >
           FAQ
         </button>
@@ -74,3 +95,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

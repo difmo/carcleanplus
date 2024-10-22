@@ -12,14 +12,7 @@ const About = () => {
         style={{
           backgroundImage: `url(${img})`,
         }}
-      >
-        {/* <div className="relative bg-black bg-opacity-80 ">
-          <img src={img1} alt="" />
-          <div className="relative z-10 bottom-[12rem] md:bottom-[40rem]">
-            <HeaderCard />
-          </div>
-        </div> */}
-        
+      >     
 
         <div className="bg-cover bg-center bg-black bg-opacity-80">
           <div className="justify-center">

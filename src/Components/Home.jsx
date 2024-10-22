@@ -20,16 +20,16 @@ import Faq from "./Pages/Faq.jsx";
 function Home() {
   return (
     <>
-    <div  id="home" className="section">
-      <ImageSlide />
-      <HeaderCard />
-      <About />
-      <Card />
-      <HowCanhelpComponent />
-      <LatestNewsComponent />
-      <LogoComponent />
-      <Faq/>
-      <ContactComponent />
+      <div id="home" className="section">
+        <ImageSlide />
+        <HeaderCard />
+        <About />
+        <Card />
+        <HowCanhelpComponent />
+        <LatestNewsComponent />
+        <LogoComponent />
+        <Faq />
+        <ContactComponent />
       </div>
     </>
   );
