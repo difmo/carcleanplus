@@ -58,11 +58,11 @@ function FormContact() {
       );
       setStatus("Email sent successfully!");
       setFormData({
-        name: "name",
-        mobileNumber: "mobileNumber",
-        email: "email",
-        address: "address",
-        message: "message",
+        name: "",
+        mobileNumber: "",
+        email: "",
+        address: "",
+        message: "",
       });
       setErrors({});
     } catch (error) {
