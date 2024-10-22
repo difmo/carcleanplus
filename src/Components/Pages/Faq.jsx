@@ -14,8 +14,8 @@ function Faq() {
 
       <div className="flex flex-col md:flex-row justify-between pt-4 md:pt-10 px-4 md:px-20">
 
-        <div className="w-full md:w-1/2 text-3xl md:pr-4 text-center md:text-left">
-          Can't Find an Answer? Contact our support team
+        <div className="w-full md:w-1/2 md:pr-4  md:text-left">
+          <h3 className="text-3xl py-2">Can't Find an Answer? Contact our support team</h3>
           <FormContact />
 
         </div>
@@ -25,7 +25,7 @@ function Faq() {
             <div className="py-2 font-serif font-extrabold">
               Lorem ipsum dolor sit amet
             </div>
-            <div className="text-sm md:text-base">
+            <div className=" md:text-base">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa. Cum sociis natoque
               penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -38,7 +38,7 @@ function Faq() {
             <div className=" py-2 font-serif font-extrabold ">
               Far far away, behind the word mountains
             </div>
-            <div className="text-sm md:text-base">
+            <div className="md:text-base">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa. Cum sociis natoque
               penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -51,7 +51,7 @@ function Faq() {
             <div className="py-2 font-serif font-extrabold ">
               Far far away, behind the word mountains
             </div>
-            <div className="text-sm md:text-base">
+            <div className=" md:text-base">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa. Cum sociis natoque
               penatibus et magnis dis parturient montes, nascetur ridiculus mus.
