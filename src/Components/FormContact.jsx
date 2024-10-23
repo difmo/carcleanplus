@@ -74,26 +74,26 @@ function FormContact() {
   return (
     <div className="flex justify-center items-center ">
       {/* Card Form Container */}
-      <div className="shadow-2xl rounded-xl p-8 max-w-2xl w-full bg-slate-200">
-        <h2 className="text-2xl font-bold text-center text-black">
+      <div className="w-full  md:px-20 p-4 mb-4  md:p-10 bg-contactbg bg-cover bg-center hover:bg-[#ffffff] duration-500 rounded-lg shadow-md">
+        <h2 className="text-3xl md:text-5xl font-bold text-center mb-8 font-lilita text-[#26baf6]">
           Contact Us
         </h2>
         <form ref={form} onSubmit={handleSubmit}>
           <div className="mb-2">
-            <label className="block font-semibold text-black">Name</label>
+            <label className="block text-sm font-bold text-gray-600 ml-1">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 w-full text-black rounded-sm outline-none px-1"
+              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name}</p>
             )}
           </div>
           <div className="mb-2">
-            <label className="block font-semibold text-black">
+            <label className="block text-sm font-bold text-gray-600 ml-1">
               Mobile Number
             </label>
             <input
@@ -101,45 +101,45 @@ function FormContact() {
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
+              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
             />
             {errors.mobileNumber && (
               <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
             )}
           </div>
           <div className="mb-2">
-            <label className="block font-semibold text-black">Email</label>
+            <label className="block text-sm font-bold text-gray-600 ml-1">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
+              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>
           <div className="mb-2">
-            <label className="block font-semibold text-black">Address</label>
+            <label className="block text-sm font-bold text-gray-600 ml-1">Address</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="mt-1 px-1 block w-full text-black rounded-sm outline-none"
+              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address}</p>
             )}
           </div>
           <div className="mb-2">
-            <label className="block font-semibold text-black">Message</label>
+            <label className="block text-sm font-bold text-gray-600 ml-1">Message</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 px-1 block w-full text-black rounded-sm outline-none "
+              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
               rows="4"
             />
             {errors.message && (
@@ -148,7 +148,8 @@ function FormContact() {
           </div>
           <button
             type="submit"
-            className="bg-myyellow hover:bg-black text-white py-2 px-6 transition-all rounded  font-mono"
+            className="w-full p-5 py-2 text-white transition duration-300 bg-black rounded-lg btn2 hover:bg-blue-700"
+            // className="bg-myyellow hover:bg-black text-white py-2 px-6 transition-all rounded  font-mono"
           >
             Send
           </button>

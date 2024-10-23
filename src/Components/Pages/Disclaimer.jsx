@@ -5,15 +5,14 @@ import img from "../../assets/mobiles.png";
 function Disclaimer() {
   return (
     <>
-      <div className="h-auto">
-        <div className="h-auto ">
+      <div className="h-auto ">
+        <div className="h-auto  ">
           <div className="md:px-40 bg-[#004578] text-white">
             <div className="text-center py-5 md:py-16 text-5xl font-bold ">
               Disclaimer
             </div>
             <div className=" px-4  md:px-28 text-center pb-10 text-xl ">
-              Donec id dolor nec mauris consectetur scelerisque a eget nunc
-              tincidunt ultricies risus est eu ligula
+            At INFINITY WASH, we are committed to providing high-quality, eco-friendly car cleaning services while minimizing water usage.
             </div>
           </div>
           <svg
@@ -39,62 +38,62 @@ function Disclaimer() {
             ></path>
           </svg>
         </div>
-        <div className="h-auto px-4 md:px-36">
-          <div className="text-2xl p-2">Lorem ipsum dolor sit</div>
-          <div className="py-2 ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
-            luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus
-            nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo.
+        <div className="h-auto px-4 md:px-36 py-4">
+          <div className="text-2xl p-2">Pre-existing Damage:</div>
+          <div className="py- px-2 ">
+            We take no responsibility for any pre-existing damage, defects, or
+            wear and tear on the vehicle’s exterior or interior surfaces.
+            Customers are encouraged to inspect their vehicle prior to cleaning
+            and inform us of any areas that may require special attention.
           </div>
-          <div className="text-2xl p-2">Lorem ipsum dolor sit</div>
-          <div className="py-2 ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
-            luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus
-            nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo.
+          <div className="text-2xl p-2">
+            Liability for Custom Modifications:
           </div>
-          <div className="text-2xl p-2">Lorem ipsum dolor sit</div>
-          <div className="py-2 ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
-            luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus
-            nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo.
+          <div className="py- px-2 ">
+            If your vehicle has any custom modifications, non-standard finishes,
+            or aftermarket accessories, please notify us in advance. We cannot
+            be held liable for any damages to these modifications if they are
+            not disclosed before service.
           </div>
-          <div className="text-2xl p-2">Lorem ipsum dolor sit</div>
-          <div className="py-2 ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
-            luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus
-            nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-            ullamcorper mattis, pulvinar dapibus leo.
+          <div className="text-2xl p-2">Stain and Damage Removal:</div>
+          <div className="py- px-2 ">
+            While we use professional-grade cleaning methods and products, we
+            cannot guarantee the complete removal of all stains, scuffs, or
+            damages, especially those caused by extreme weather conditions,
+            environmental factors, or long-term neglect.
+          </div>
+          <div className="text-2xl p-2">Water Efficiency:</div>
+          <div className="py- px-2 ">
+            Our service prides itself on using only 20 liters of water per wash
+            to minimize wastage. This approach is intended to be both effective
+            and environmentally responsible. However, for extremely dirty
+            vehicles, certain areas may not achieve the desired level of
+            cleanliness, and additional services may be recommended.
+          </div>
+          <div className="text-2xl p-2">No Guarantee for External Factors:</div>
+          <div className="py- px-2 ">
+            After your vehicle is cleaned, external factors such as weather
+            conditions, road dirt, or environmental pollutants may quickly
+            affect the appearance of your vehicle. We are not liable for any
+            dirt, grime, or water spots that may occur after the vehicle leaves
+            our premises or once the cleaning is complete.
+          </div>
+          <div className="text-2xl p-2">Customer Responsibility:</div>
+          <div className="py- px-2 ">
+            Customers are responsible for securing all personal belongings,
+            valuables, and loose items in the vehicle before cleaning. We do not
+            accept liability for any lost or damaged items left inside the
+            vehicle during the cleaning process.
+          </div>
+          <div className="text-2xl p-2">Service Changes:</div>
+          <div className="py- px-2  ">
+            We reserve the right to modify, change, or cancel any services due
+            to unforeseen circumstances, technical issues, or safety concerns.
+            In such cases, we will inform the customer and offer alternative
+            options or rescheduling as necessary.
           </div>
         </div>
         <div className=" flex justify-center py-3">
-         
           <Button />
         </div>
         <div className="px-3 justify-center flex">

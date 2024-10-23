@@ -34,7 +34,7 @@ const About = () => {
                 best car cleaning service at your doorstep with the right
                 equipment by highly trained professionals.
               </p>
-              <div className="py-4" >
+              <div className="py-4 px-20" >
                 <Button />
               </div>
             </div>
