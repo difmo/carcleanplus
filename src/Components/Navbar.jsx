@@ -79,7 +79,7 @@ const Navbar = () => {
         </Link>
         <button
           onClick={() => handleScrollToSection("contact")}
-          className="bg-myyellow hover:bg-black text-white py-2 px-4 transition-all duration-300 rounded hover:text-mybg"
+          className="bg-myyellow text-black py-2 px-4 transition-all  duration-300 rounded-full hover:bg-black hover:text-mywhite"
         >
           Get An Appointment
         </button>

@@ -50,7 +50,7 @@ const ImageSlider = () => {
               alt={`Slide ${index + 1}`}
               className="w-full bg-no-repeat object-cover "
             />
-            <div className=" flex flex-col items-center  absolute top-0  bottom-32 left-0 right-0     justify-center text-center">
+            <div className=" flex flex-col items-center  absolute top-0  bottom-32 left-0 right-0 justify-center text-center">
               <h1 className="text-3xl md:text-3xl lg:text-5xl font-bold lg:px-40 text-mywhite p-2">
                 {image.title}
               </h1>

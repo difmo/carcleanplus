@@ -148,7 +148,7 @@ function FormContact() {
           </div>
           <button
             type="submit"
-            className="w-full p-5 py-2 text-white transition duration-300 bg-black rounded-lg btn2 hover:bg-blue-700"
+            className="w-full p-5 py-2 text-white transition duration-300 font-bold bg-black rounded-lg btn2 hover:bg-myyellow hover:text-black"
             // className="bg-myyellow hover:bg-black text-white py-2 px-6 transition-all rounded  font-mono"
           >
             Send
