@@ -9,7 +9,7 @@ function Faq() {
         id="faq"
         className="selection object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl"
       >
-        <div className="font-bold text-3xl md:text-6xl text-cyan-50 text-center py-8 md:py-20 px-6 md:px-64 lin">
+        <div className="font-bold text-3xl md:text-6xl text-cyan-50 text-center py-8 md:py-24 px-6 md:px lin">
           Frequently Asked Questions
         </div>
       </div>

@@ -10,12 +10,7 @@ const handleFAQClick = () => {
 const Footer = () => {
   return (
     <footer
-      // className="text-white relative overflow-hidden w-full"
-      // style={{
-      //   backgroundImage: `url(${bgImage})`,
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      // }}
+   
     >
       <div className="bg-black pt-5">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl relative z-10">
@@ -32,7 +27,7 @@ const Footer = () => {
                     href="https://www.youtube.com/your-channel"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-gray-700 mx-2"
+                    className="text-white hover:text-myyellow mx-2"
                   >
                     <IoLogoFacebook size={24} />
                     <span className="sr-only">Facebook</span>
@@ -41,7 +36,7 @@ const Footer = () => {
                     href="https://www.youtube.com/your-channel"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-gray-700 mx-2"
+                    className="text-white hover:text-myyellow mx-2"
                   >
                     <IoLogoInstagram size={24} />
                     <span className="sr-only">Instagram</span>
@@ -50,7 +45,7 @@ const Footer = () => {
                     href="https://www.youtube.com/your-channel"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-gray-700 mx-2"
+                    className="text-white hover:text-myyellow mx-2"
                   >
                     <IoLogoYoutube size={24} />
                     <span className="sr-only">YouTube</span>
@@ -88,7 +83,7 @@ const Footer = () => {
               <ul className="text-white font-medium">
                 <li className="mb-2 flex items-center justify-center md:justify-start">
                   <FaEnvelope className="mr-2" />
-                  <span>info@codeservir.com</span>
+                  <span>carcleanplus@gmail.com</span>
                 </li>
                 <li className="mb-2 flex items-center justify-center md:justify-start">
                   <FaPhoneAlt className="mr-2" />

@@ -8,20 +8,20 @@ import car3 from "../assets/cardslider/img2.png";
 
 const images = [
   {
-    title: "The best auto service repairs",
-    description: "I want to join the Codeservir",
+    title: "Ultimate Car Care Experience",
+    description: "Experience ultimate car care at INFINITY WASH, combining technology and eco-friendly practices for exceptional results that restore your vehicle’s beauty.",
     buttonText: "Discover More",
     image: car3,
   },
   {
-    title: "The best auto service repairs",
-    description: "I want to join the Codeservir",
+    title: "Affordable Car Cleaning with a Green Touch",
+    description: "Enjoy affordable, eco-friendly car cleaning at INFINITY WASH, where quality meets sustainability for a sparkling, responsible finish.",
     buttonText: "Discover More",
     image: car,
   },
   {
-    title: "The best auto service repairs",
-    description: "I want to join the Codeservir",
+    title: "Sustainable Car Care for Every Vehicle",
+    description: "Choose INFINITY WASH for eco-friendly car care using minimal water and safe products to keep your vehicle spotless and valued.",
     buttonText: "Discover More",
     image: home1,
   },

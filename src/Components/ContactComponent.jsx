@@ -10,10 +10,10 @@ function ContactComponent() {
     </div>
     <div className="text-center w-full md:w-1/2 flex flex-col justify-center p-4">
       <h2 className="text-xl md:text-2xl font-bold mb-4">Contact Information</h2>
-      <p className="mb-2">Email: example@example.com</p>
-      <p className="mb-2">Phone: +123 456 7890</p>
-      <p>Address: 123 Main Street, City, Country</p>
-    </div>
+      <p className="mb-2">Email :- carcleanplus@gmail.com</p>
+      <p className="mb-2">Phone :- +91 945-579-1624</p>
+      <p>Address :- 4/37 Vibhav Khand, Gomti Nagar, Lucknow, Uttar Pradesh, 226010</p>
+    </div> 
   </div>
   <div className="flex flex-col md:flex-row justify-center w-full">
     <div className="w-full">

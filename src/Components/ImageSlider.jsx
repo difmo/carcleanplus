@@ -8,20 +8,20 @@ import header from "../assets/imageslider/slider.png";
 const ImageSlider = () => {
   const images = [
     {
-      title: "The best auto service repairs",
-      description: "I want to join the Codeservir",
+      title: "Eco-Friendly Car Detailing Solutions",
+      description: "Eco-friendly detailing at INFINITY WASH for a spotless, safe clean.",
       buttonText: "Discover More",
       image: header2,
     },
     {
-      title: "The best auto service repairs",
-      description: "I want to join the Codeservir",
+      title: "Comprehensive Car Cleaning Services",
+      description: "Comprehensive car cleaning with minimal water for outstanding results.",
       buttonText: "Discover More",
       image: header3,
     },
     {
-      title: "The best auto service repairs",
-      description: "I want to join the Codeservir",
+      title: "Professional Car Cleaning with Water Conservation",
+      description: "Innovative car cleaning using 20 litres, conserving water responsibly",
       buttonText: "Discover More",
       image: header,
     },
@@ -51,7 +51,7 @@ const ImageSlider = () => {
               className="w-full bg-no-repeat object-cover "
             />
             <div className=" flex flex-col items-center  absolute top-0  bottom-32 left-0 right-0     justify-center text-center">
-              <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold lg:px-40 text-mywhite p-4">
+              <h1 className="text-3xl md:text-3xl lg:text-5xl font-bold lg:px-40 text-mywhite p-2">
                 {image.title}
               </h1>
               <p className="font-medium sm:text-2xl text-mywhite p-4">

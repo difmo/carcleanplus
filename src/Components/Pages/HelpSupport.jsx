@@ -4,7 +4,7 @@ function HelpSupport() {
   return (
     <>
       <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
-        <div className="font-medium text-3xl md:text-7xl text-cyan-50 text-center py-14 md:py-20 px-4  md:px-64">
+        <div className="font-medium text-3xl md:text-7xl text-cyan-50 text-center py-10 md:py-28 px-6  md:px-">
           Help & Support
         </div>
       </div>
