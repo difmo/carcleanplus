@@ -9,19 +9,22 @@ const ImageSlider = () => {
   const images = [
     {
       title: "Eco-Friendly Car Detailing Solutions",
-      description: "Eco-friendly detailing at INFINITY WASH for a spotless, safe clean.",
+      description:
+        "Eco-friendly detailing at INFINITY WASH for a spotless, safe clean.",
       buttonText: "Discover More",
       image: header2,
     },
     {
       title: "Comprehensive Car Cleaning Services",
-      description: "Comprehensive car cleaning with minimal water for outstanding results.",
+      description:
+        "Comprehensive car cleaning with minimal water for outstanding results.",
       buttonText: "Discover More",
       image: header3,
     },
     {
       title: "Professional Car Cleaning with Water Conservation",
-      description: "Innovative car cleaning using 20 litres, conserving water responsibly",
+      description:
+        "Innovative car cleaning using 20 litres, conserving water responsibly",
       buttonText: "Discover More",
       image: header,
     },
@@ -37,19 +40,21 @@ const ImageSlider = () => {
     autoplaySpeed: 2000,
   };
   return (
- 
-       <div className=" max-w-screen-2xl  ">
+    <div className=" w-full  ">
       <Slider {...settings}>
         {images.map((image, index) => (
           <div
             key={index}
-            className="w-full relative  bg-primary h-[500px]  overflow-hidden  "
+            className="w-full relative  bg-primary h-[500px] lg:h-[600px]  overflow-hidden  "
           >
-            <img
-              src={image.image}
-              alt={`Slide ${index + 1}`}
-              className="w-full bg-no-repeat object-cover "
-            />
+            <div className="w-auto">
+              <img
+                src={image.image}
+                alt={`Slide ${index + 1}`}
+                className="w-full bg-no-repeat object-cover bg-cover"
+              />
+            </div>
+
             <div className=" flex flex-col items-center  absolute top-0  bottom-32 left-0 right-0 justify-center text-center">
               <h1 className="text-3xl md:text-3xl lg:text-5xl font-bold lg:px-40 text-mywhite p-2">
                 {image.title}
@@ -64,8 +69,7 @@ const ImageSlider = () => {
           </div>
         ))}
       </Slider>
-      </div>
-  
+    </div>
   );
 };
 
