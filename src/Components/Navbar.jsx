@@ -25,11 +25,11 @@ const Navbar = () => {
     setTimeout(() => handleScrollToSection("home"), 0);
   };
   const handleContactClick = () => {
-    navigate("/"); 
+    navigate("/");
     setTimeout(() => handleScrollToSection("contact"), 0);
   };
   const handleFAQClick = () => {
-    navigate("/"); 
+    navigate("/");
     setTimeout(() => handleScrollToSection("faq"), 0);
   };
   return (
@@ -95,4 +95,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

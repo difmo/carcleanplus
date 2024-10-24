@@ -9,22 +9,22 @@ const mydata = [
   {
     key: 1,
     src: img5,
-    descri: "Diagnostic Car",
+    descri: "Vacuuming",
   },
   {
     key: 2,
     src: img1,
-    descri: "Engine Repair",
+    descri: "Shampooing",
   },
   {
     key: 3,
     src: img2,
-    descri: "Tires Services",
+    descri: " Polishing ",
   },
   {
     key: 4,
     src: img3,
-    descri: "Body Services",
+    descri: "Stain Removal",
   },
 ];
 
@@ -48,7 +48,7 @@ function HeaderCard({ heading, description }) {
                       <img
                         src={item.src}
                         alt=""
-                        className="object-cover object-center w-full bg-[#002f49] rounded-xl h-48  md:h-52 "
+                        className="object-cover object-center w-full bg-[#002f49] rounded-xl h-48  md:h "
                       />
                       <div className="flex flex-col justify-center p-4 sm:p-6 space-y-4">
                         <div className="space-y-2">

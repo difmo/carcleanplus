@@ -28,7 +28,7 @@ function Home() {
         <HowCanhelpComponent />
         <LatestNewsComponent />
         <LogoComponent />
-        <Faq />
+        {/* <Faq /> */}
         <ContactComponent />
       </div>
     </>
