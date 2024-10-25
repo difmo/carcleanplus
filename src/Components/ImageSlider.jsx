@@ -35,8 +35,8 @@ const ImageSlider = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false, // Disable previous and next buttons
-    autoplay: true, // Enable auto-sliding
+    arrows: false, 
+    autoplay: true, 
     autoplaySpeed: 2000,
   };
   return (
