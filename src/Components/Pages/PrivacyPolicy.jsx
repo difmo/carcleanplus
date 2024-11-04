@@ -126,8 +126,9 @@ function PrivacyPolicy() {
             </h1>
           </div>
           <div className="py-2 ml-4 pl-2 border-2 border-myyellow">
-            The user enters their identifier, such as a email address -
-            testing123@gmail.com.
+            The user enters their identifier, such as a <b>Email address</b> -
+            testing123@gmail.com. <br /> The user inputs their
+            <b> Password - </b> Testing@123 associated with their account.
           </div>
           <div className="px-5 font-medium ">
             <h1 className="font-serif font-extrabold py-2">Effective Date</h1>
