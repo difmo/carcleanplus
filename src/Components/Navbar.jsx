@@ -1,7 +1,7 @@
 // Navbar.js
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for programmatic navigation
+import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
 import { FiAlignJustify } from "react-icons/fi";
 
@@ -16,13 +16,14 @@ const Navbar = () => {
     }
   };
 
-  const handleAboutClick = () => {
-    navigate("/");
-    setTimeout(() => handleScrollToSection("about"), 0);
-  };
+  
   const handleHomeClick = () => {
     navigate("/");
     setTimeout(() => handleScrollToSection("home"), 0);
+  };
+  const handleAboutClick = () => {
+    navigate("/");
+    setTimeout(() => handleScrollToSection("about"), 0);
   };
   const handleContactClick = () => {
     navigate("/");

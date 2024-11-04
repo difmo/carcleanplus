@@ -121,7 +121,16 @@ function PrivacyPolicy() {
             carcleanplusofficial@gmail.com.
           </div>
           <div className="px-5 font-medium">
-            <h1 className="font-serif font-extrabold">Effective Date</h1>
+            <h1 className="pb-2 font-serif font-extrabold">
+              App Access Instructions
+            </h1>
+          </div>
+          <div className="py-2 ml-4 pl-2 border-2 border-myyellow">
+            The user enters their identifier, such as a email address -
+            testing123@gmail.com.
+          </div>
+          <div className="px-5 font-medium ">
+            <h1 className="font-serif font-extrabold py-2">Effective Date</h1>
           </div>
           <div className="p-5">
             This one is not save This Privacy Policy is effective as of July 01,
