@@ -25,11 +25,17 @@ const About = () => {
               </div>
               <div className="w-full lg:w-1/2 md:mx-1 md:pb-5">
                 <p className="font-sans text-lg md:text-xl text-white  px-3 ">
-                  CarCleanPlus transforms car cleaning with vocal washing
-                  technology, allowing you to schedule, customize, and track
-                  washes with just your voice. Whether it is a quick refresh or
-                  a thorough cleaning, our hands-free service ensures that your
-                  vehicle stays in pristine condition effortlessly and reliably.
+                  Car Clean Plus is Lucknow's trusted name in professional car
+                  cleaning and washing services. We specialize in high-quality
+                  exterior and interior cleaning, ensuring your vehicle stays
+                  spotless and well-maintained. Our services include doorstep
+                  car cleaning and regular maintenance packages, providing
+                  convenience and reliability. Using advanced cleaning
+                  techniques and eco-friendly products, we deliver top-notch
+                  results with every wash. Whether you need a quick wash or deep
+                  detailing, our skilled team guarantees excellent service and
+                  customer satisfaction. At Car Clean Plus, we make car care
+                  effortless, reliable, and affordable. Book your service today!
                 </p>
                 <div className="py-4 px-20">
                   <Button />
