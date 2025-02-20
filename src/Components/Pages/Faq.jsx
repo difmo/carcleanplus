@@ -15,12 +15,12 @@ function Faq() {
       </div>
 
       <div className="flex flex-col md:flex-row justify-around pt-4 md:pt-10 px-4 md:px-20">
-        <div className="w-full  h-full">
+        {/* <div className="w-full  h-full">
           <h3 className="text-3xl py-4">
             Can't Find an Answer? Contact our support team
           </h3>
           <FormContact />
-        </div>
+        </div> */}
 
         <div className="w-full font-serif py-4 ">
           <div className="px-4 md:px-10">
@@ -48,23 +48,26 @@ function Faq() {
           </div>
           <div className="px-4 md:px-10 pt-4">
             <div className="py-2 font-serif font-extrabold ">
-            What are your hours?
+              What are your hours?
             </div>
             <div className=" md:text-base">
-            Generally we are open on all days, from 10AM TO 8PM. On some occasions hours may differ.
+              Generally we are open on all days, from 10AM TO 8PM. On some
+              occasions hours may differ.
             </div>
           </div>
           <div className="px-4 md:px-10 pt-4">
             <div className="py-2 font-serif font-extrabold ">
-            What methods of payment do you accept?
+              What methods of payment do you accept?
             </div>
             <div className=" md:text-base">
-            We accept all kinds of payment methods including, Cash in Hand, Google Pay, paytm, Phonepay UPI, NEFT and payment through our Value Cards.
+              We accept all kinds of payment methods including, Cash in Hand,
+              Google Pay, paytm, Phonepay UPI, NEFT and payment through our
+              Value Cards.
             </div>
           </div>
         </div>
       </div>
-      <Viresonapp />
+      {/* <Viresonapp /> */}
     </>
   );
 }

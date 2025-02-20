@@ -89,7 +89,7 @@ function HelpSupport() {
           </div>
         </div>
       </div>
-      <Viresonapp />
+      {/* <Viresonapp /> */}
     </>
   );
 }

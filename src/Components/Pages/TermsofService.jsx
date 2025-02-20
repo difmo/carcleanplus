@@ -67,7 +67,7 @@ function TermsofService() {
           suspension or termination.
         </div>
       </div>
-      <Viresonapp />
+      {/* <Viresonapp /> */}
     </>
   );
 }

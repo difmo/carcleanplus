@@ -9,9 +9,7 @@ const handleFAQClick = () => {
 };
 const Footer = () => {
   return (
-    <footer
-   
-    >
+    <footer>
       <div className="bg-black pt-5">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
@@ -29,7 +27,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-white hover:text-myyellow mx-2"
                   >
-                    <IoLogoFacebook size={24} />
+                    <IoLogoFacebook size={60} />
                     <span className="sr-only">Facebook</span>
                   </a>
                   <a
@@ -38,7 +36,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-white hover:text-myyellow mx-2"
                   >
-                    <IoLogoInstagram size={24} />
+                    <IoLogoInstagram size={60} />
                     <span className="sr-only">Instagram</span>
                   </a>
                   <a
@@ -47,7 +45,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-white hover:text-myyellow mx-2"
                   >
-                    <IoLogoYoutube size={24} />
+                    <IoLogoYoutube size={60} />
                     <span className="sr-only">YouTube</span>
                   </a>
                 </div>
@@ -59,7 +57,7 @@ const Footer = () => {
               </h2>
               <ul className="text-white font-medium">
                 {[
-                  { name: "FAQ", url: "/faq"  },
+                  { name: "FAQ", url: "/faq" },
                   { name: "Help & Support", url: "/helpsupport" },
                   { name: "Privacy Policy", url: "/privacy-policy" },
                   { name: "Disclaimer", url: "/disclaimer" },
@@ -87,14 +85,11 @@ const Footer = () => {
                 </li>
                 <li className="mb-2 flex items-center justify-center md:justify-start">
                   <FaPhoneAlt className="mr-2" />
-                  <span>+91 945-579-1624</span>
+                  <span> +91 63927 98847</span>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <FaMapMarkerAlt className=" mb-6 " />
-                  <span>
-                    4/37 Vibhav Khand, Gomti Nagar, Lucknow, Uttar Pradesh,
-                    226010
-                  </span>
+                  <span>Office Space</span>
                 </li>
               </ul>
             </div>

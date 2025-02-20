@@ -138,7 +138,7 @@ function PrivacyPolicy() {
             2024, and was last updated on October 08, 2024.
           </div>
         </div>
-        <Viresonapp />
+        {/* <Viresonapp /> */}
       </div>
     </>
   );

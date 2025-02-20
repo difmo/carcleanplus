@@ -32,13 +32,13 @@ const mydata = [
     descri:
       "We use biodegradable and water-saving cleaning solutions to keep your car clean while protecting the environment.",
   },
-  {
-    key: 5,
-    icon: <FaCarRear />,
-    title: " Advanced Cleaning Technology",
-    descri:
-      "Our cutting-edge equipment and techniques, such as steam cleaning and ceramic coating, provide superior results.",
-  },
+  // {
+  //   key: 5,
+  //   icon: <FaCarRear />,
+  //   title: " Advanced Cleaning Technology",
+  //   descri:
+  //     "Our cutting-edge equipment and techniques, such as steam cleaning and ceramic coating, provide superior results.",
+  // },
 ];
 const mydata1 = [
   {

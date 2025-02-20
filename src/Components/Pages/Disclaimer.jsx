@@ -12,7 +12,8 @@ function Disclaimer() {
               Disclaimer
             </div>
             <div className=" px-4  md:px-28 text-center pb-10 text-xl ">
-            At INFINITY WASH, we are committed to providing high-quality, eco-friendly car cleaning services while minimizing water usage.
+              At INFINITY WASH, we are committed to providing high-quality,
+              eco-friendly car cleaning services while minimizing water usage.
             </div>
           </div>
           <svg
@@ -93,12 +94,12 @@ function Disclaimer() {
             options or rescheduling as necessary.
           </div>
         </div>
-        <div className=" flex justify-center py-3">
+        {/* <div className=" flex justify-center py-3">
           <Button />
         </div>
         <div className="px-3 justify-center flex">
           <img src={img} alt="" className="md:w-2/3 md:pr-20 py-10" />
-        </div>
+        </div> */}
       </div>
       <div className="h-[100px]  ">
         <svg

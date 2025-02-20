@@ -25,9 +25,9 @@ function Home() {
         <HeaderCard />
         <About />
         <Card />
-        <HowCanhelpComponent />
-        <LatestNewsComponent />
-        <LogoComponent />
+        {/* <HowCanhelpComponent /> */}
+        {/* <LatestNewsComponent /> */}
+        {/* <LogoComponent /> */}
         <Faq />
         <ContactComponent />
       </div>
