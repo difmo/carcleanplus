@@ -17,12 +17,19 @@ function PrivacyPolicy() {
             </h1>
           </div>
           <div className="p-5">
-            This Privacy Policy outlines how Car Clean Plus (“We”), collects,
+            Car Clean Plus ("We," "Us," or "Our") is committed to protecting and
+            respecting the privacy of our customers and website visitors. This
+            Privacy Policy outlines how we collect, use, disclose, and safeguard
+            your personal information when you use our website, mobile
+            application, and related services (collectively, the "Services"). By
+            using our Services, you agree to the collection and use of
+            information in accordance with this Privacy Policy.
+            {/* This Privacy Policy outlines how Car Clean Plus (“We”), collects,
             uses, discloses, and protects your personal information when you use
             our mobile application and website (collectively, the “Services”).
             We are committed to protecting and respecting your privacy and
             ensuring compliance with all applicable data protection regulations
-            and laws.
+            and laws. */}
             <br />
             <br />
             <p>

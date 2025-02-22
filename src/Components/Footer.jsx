@@ -22,28 +22,28 @@ const Footer = () => {
               <div className="flex flex-col md:flex-row justify-between items-center ">
                 <div className="flex justify-center md:justify-start mt-4">
                   <a
-                    href="https://www.youtube.com/your-channel"
+                    href="https://www.facebook.com/carcleanplusofficial/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-myyellow mx-2"
+                    className="text-blue-600 mx-2"
                   >
                     <IoLogoFacebook size={60} />
                     <span className="sr-only">Facebook</span>
                   </a>
                   <a
-                    href="https://www.youtube.com/your-channel"
+                    href="https://www.instagram.com/carcleanplus_/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-myyellow mx-2"
+                    className="text-pink-600 mx-2"
                   >
                     <IoLogoInstagram size={60} />
                     <span className="sr-only">Instagram</span>
                   </a>
                   <a
-                    href="https://www.youtube.com/your-channel"
+                    href="https://www.youtube.com/@carcleanplus/featured"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-myyellow mx-2"
+                    className="text-red-600 mx-2"
                   >
                     <IoLogoYoutube size={60} />
                     <span className="sr-only">YouTube</span>
@@ -81,7 +81,7 @@ const Footer = () => {
               <ul className="text-white font-medium">
                 <li className="mb-2 flex items-center justify-center md:justify-start">
                   <FaEnvelope className="mr-2" />
-                  <span>carcleanplus@gmail.com</span>
+                  <span>carcleanplusofficial@gmail.com</span>
                 </li>
                 <li className="mb-2 flex items-center justify-center md:justify-start">
                   <FaPhoneAlt className="mr-2" />
@@ -98,7 +98,7 @@ const Footer = () => {
         <hr className="border-white  mt-5 mx-10 " />
         <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center mx-10  md:justify-center">
           <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left py-2">
-            © 2024
+            © 2025
             <a href="#" className="hover:underline ">
               CAR CLEAN PLUS
             </a>

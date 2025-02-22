@@ -16,7 +16,7 @@ function ContactComponent() {
           <h2 className="text-xl md:text-2xl font-bold mb-4">
             Contact Information
           </h2>
-          <p className="mb-2">Email :- carcleanplus@gmail.com</p>
+          <p className="mb-2">Email :-carcleanplusofficial@gmail.com</p>
           <p className="mb-2">Phone :- +91 63927 98847</p>
           <p>Address :- Office Space</p>
         </div>
