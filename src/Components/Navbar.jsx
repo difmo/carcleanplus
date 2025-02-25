@@ -16,7 +16,6 @@ const Navbar = () => {
     }
   };
 
-  
   const handleHomeClick = () => {
     navigate("/");
     setTimeout(() => handleScrollToSection("home"), 0);
@@ -34,7 +33,7 @@ const Navbar = () => {
     setTimeout(() => handleScrollToSection("faq"), 0);
   };
   return (
-    <div className="flex flex-col justify-between py-6 relative px-1 text-white bg-primary md:flex-row ">
+    <div className="flex flex-col justify-between md:py-0 py-4 relative px-1 text-white bg-primary md:flex-row ">
       <div className="flex items-center gap-3">
         <div className="w-12 ml-5 lg:w-12 md:ml-12">
           <img className="bg-cover" src={img} alt="Logo" />

@@ -22,7 +22,7 @@ function Home() {
     <>
       <div id="home" className="section">
         <ImageSlide />
-        <HeaderCard />
+        {/* <HeaderCard /> */}
         <About />
         <Card />
         {/* <HowCanhelpComponent /> */}

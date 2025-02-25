@@ -5,9 +5,10 @@ function FormContact() {
   const form = useRef();
   const [formData, setFormData] = useState({
     name: "",
+    lastname: "",
     mobileNumber: "",
     email: "",
-    address: "",
+    subject: "",
     message: "",
   });
 
@@ -27,21 +28,14 @@ function FormContact() {
     let errors = {};
 
     // Validation
-    if (formData.name.trim() === "") {
-      errors.name = "Name is required";
-    }
-    if (formData.mobileNumber.trim() === "") {
+    if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.lastname.trim()) errors.lastname = "Last Name is required";
+    if (!formData.mobileNumber.trim())
       errors.mobileNumber = "Mobile number is required";
-    }
-    if (formData.email.trim() === "") {
-      errors.email = "Email is required";
-    }
-    if (formData.address.trim() === "") {
-      errors.address = "Address is required";
-    }
-    if (formData.message.trim() === "") {
-      errors.message = "Message is required";
-    }
+    if (!formData.email.trim()) errors.email = "Email is required";
+    if (!formData.subject.trim())
+      errors.subject = "Subject selection is required";
+    if (!formData.message.trim()) errors.message = "Message is required";
 
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
@@ -59,9 +53,10 @@ function FormContact() {
       setStatus("Email sent successfully!");
       setFormData({
         name: "",
+        lastname: "",
         mobileNumber: "",
         email: "",
-        address: "",
+        subject: "",
         message: "",
       });
       setErrors({});
@@ -72,88 +67,138 @@ function FormContact() {
   };
 
   return (
-    <div className="flex justify-center items-center ">
-      {/* Card Form Container */}
-      <div className="w-full  md:px-20 p-4 mb-4  md:p-10 bg-contactbg bg-cover bg-center hover:bg-[#ffffff] duration-500 rounded-lg shadow-md">
-        <h2 className="text-3xl md:text-5xl font-bold text-center mb-8 font-lilita text-[#26baf6]">
+    <div className="flex justify-center items-center px-2 sm:px-2 md:px-4">
+      <div className="w-full  bg-white shadow-lg rounded-lg p-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#26baf6]">
           Contact Us
         </h2>
-        <form ref={form} onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-600 ml-1">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name}</p>
-            )}
+        <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+            </div>
+
+            {/* Last Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
+              />
+              {errors.lastname && (
+                <p className="text-red-500 text-sm">{errors.lastname}</p>
+              )}
+            </div>
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-600 ml-1">
-              Mobile Number
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Mobile Number
+              </label>
+              <input
+                type="tel"
+                name="mobileNumber"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
+              />
+              {errors.mobileNumber && (
+                <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Subject Selection */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600">
+              Select Subject
             </label>
-            <input
-              type="number"
-              name="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={handleChange}
-              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
-            />
-            {errors.mobileNumber && (
-              <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
+            <div className="flex flex-wrap gap-4 mt-2">
+              {["Math", "Science", "History", "English"].map((subject) => (
+                <label key={subject} className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="subject"
+                    value={subject}
+                    checked={formData.subject === subject}
+                    onChange={handleChange}
+                    className="form-radio text-blue-500  "
+                  />
+                  <span className="text-gray-700">{subject}</span>
+                </label>
+              ))}
+            </div>
+            {errors.subject && (
+              <p className="text-red-500 text-sm">{errors.subject}</p>
             )}
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-600 ml-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )}
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-600 ml-1">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
-            />
-            {errors.address && (
-              <p className="text-red-500 text-sm">{errors.address}</p>
-            )}
-          </div>
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-600 ml-1">Message</label>
+
+          {/* Message */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600">
+              Message
+            </label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="appearance-none border rounded-xl w-full py-4 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out"
-              rows="4"
+              className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none  "
+              rows="2"
             />
             {errors.message && (
               <p className="text-red-500 text-sm">{errors.message}</p>
             )}
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full p-5 py-2 text-white transition duration-300 font-bold bg-black rounded-lg btn2 hover:bg-myyellow hover:text-black"
-            // className="bg-myyellow hover:bg-black text-white py-2 px-6 transition-all rounded  font-mono"
+            className="w-full py-3 text-white font-bold bg-blue-600 hover:bg-blue-700 transition duration-300 rounded-md"
           >
             Send
           </button>
-          {status && <p className="mt-4 text-green-500">{status}</p>}
+
+          {/* Status Message */}
+          {status && (
+            <p className="mt-4 text-green-500 text-center">{status}</p>
+          )}
         </form>
       </div>
     </div>
