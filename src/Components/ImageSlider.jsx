@@ -22,11 +22,30 @@ const ImageSlider = () => {
         {/* Location Dropdown */}
         <select className="w-full p-3 border rounded mb-4">
           <option>Gurgaon</option>
+          <option>Delhi</option>
+          <option>Noida</option>
+          <option>Faridabad</option>
+          <option>Ghaziabad</option>
+          <option>Jaipur</option>
+          <option>Chandigarh</option>
+          <option>Lucknow</option>
+          <option>Bangalore</option>
+          <option>Mumbai</option>
         </select>
 
         {/* Car Selection Dropdown */}
         <select className="w-full p-3 border rounded mb-4">
           <option>Select Your Car</option>
+          <option>Toyota Fortuner</option>
+          <option>Maruti Suzuki Swift</option>
+          <option>Hyundai Creta</option>
+          <option>Honda City</option>
+          <option>Mahindra Thar</option>
+          <option>Ford Endeavour</option>
+          <option>Volkswagen Polo</option>
+          <option>Kia Seltos</option>
+          <option>Tata Harrier</option>
+          <option>Mercedes-Benz GLC</option>
         </select>
 
         {/* Mobile Number Input */}

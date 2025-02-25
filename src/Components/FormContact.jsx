@@ -151,7 +151,7 @@ function FormContact() {
               Select Subject
             </label>
             <div className="flex flex-wrap gap-4 mt-2">
-              {["Math", "Science", "History", "English"].map((subject) => (
+              {["General Inquiry", "car Inquiry", "washing Inquiry", " Inquiry"].map((subject) => (
                 <label key={subject} className="flex items-center space-x-2">
                   <input
                     type="radio"
