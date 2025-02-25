@@ -52,12 +52,12 @@ function WhyChouseUsComponents() {
     <>
       <div className="pt-8">
         {/* Heading */}
-        <div className="text-center font-bold text-4xl text-mywhite md:text-5xl lg:text-6xl">
+        <div className="text-center font-bold text-4xl text-black md:text-5xl lg:text-6xl">
           <h1>Why Choose Us</h1>
         </div>
 
         {/* Description text */}
-        <div className="text-lg text-mywhite md:text-2xl py-8 md:pt-16 mx-6 sm:mx-10 md:mx-14 lg:mx-32 flex justify-center">
+        <div className="text-lg text-black md:text-2xl py-8 md:pt-16 mx-6 sm:mx-10 md:mx-14 lg:mx-32 flex justify-center">
           <p>
             Choosing the right car wash service makes a big difference in
             maintaining your vehicle's cleanliness and longevity. Here's why Car
@@ -66,7 +66,7 @@ function WhyChouseUsComponents() {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 zzzmd:mx-5 lg:mx-10 px-5  ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 md:mx-5 lg:mx-10 px-5  ">
           {/* Left Side - Images */}
           <div className="flex  justify-center lg:justify-start">
             {mydata1.map((item1, index) => (
@@ -79,7 +79,7 @@ function WhyChouseUsComponents() {
             {mydata.map((item, key) => (
               <div
                 key={key}
-                className="rounded-md shadow-md text-black bg-white py-2 px-3"
+                className="rounded-md shadow-md text-black bg-slate-100 border-1 border-gray-200 py-2 px-3"
               >
                 <div className="flex items-center justify-center mb-4 h-6">
                   {item.icon}

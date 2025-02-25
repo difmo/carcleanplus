@@ -4,7 +4,7 @@ import Viresonapp from "../Viresonapp";
 
 function Faq() {
   return (
-    <>
+    <><div className="mt-24">
       <div
         id="faq"
         className="selection object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl"
@@ -68,6 +68,7 @@ function Faq() {
         </div>
       </div>
       {/* <Viresonapp /> */}
+      </div>
     </>
   );
 }

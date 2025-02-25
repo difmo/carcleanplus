@@ -4,14 +4,14 @@ import land from "../assets/landing.jpg";
 const ImageSlider = () => {
   return (
     <div
-      className="h-[500px] md:h-screen bg-gray-600 flex flex-col md:flex-row bg-cover  relative"
+      className="h-[500px] md:h-[850px]  flex flex-col md:flex-row bg-cover pt-32 relative "
       style={{
         backgroundImage: `url(${land})`,
         // height: "500px",
       }}
     >
       {/* Booking Form */}
-      <div className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] absolute max-w-md bg-white p-6 rounded-lg shadow-lg px-4 top-[100%] sm:top-[55%] md:top-[50%] lg:top-20 right-1/2 translate-x-1/2 md:right-3 md:translate-x-0">
+      <div className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] absolute z-20 max-w-md bg-white p-6 rounded-lg shadow-lg px-4 top-[100%] sm:top-[55%] md:top-[50%] lg:top-32 right-1/2 translate-x-1/2 md:right-3 md:translate-x-0">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center md:text-left">
           Experience The Best Car Services
         </h2>
@@ -64,10 +64,10 @@ const ImageSlider = () => {
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-gray-700 text-center sm:text-left">
           <div className="mb-4 sm:mb-0">
             <span className="text-green-500 font-bold">4.0/5</span>
-            <p className="text-sm">Based on 150,000+ Reviews</p>
+            <p className="text-sm">Based on 150+ Reviews</p>
           </div>
           <div>
-            <span className="font-bold">2 Million+</span>
+            <span className="font-bold">200+</span>
             <p className="text-sm">Happy Customers</p>
           </div>
         </div>
