@@ -190,9 +190,9 @@ function FormContact() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 text-white font-bold bg-blue-600 hover:bg-blue-700 transition duration-300 rounded-md"
+            className="w-full py-3 text-white font-bold bg-red-500 hover:bg-red-700 transition duration-300 rounded-md"
           >
-            Send
+            Submit
           </button>
 
           {/* Status Message */}
