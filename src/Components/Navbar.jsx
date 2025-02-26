@@ -46,7 +46,9 @@ const Navbar = () => {
         <div className="w-12 ml-5 lg:w-12 md:ml-12">
           <img className="bg-cover" src={img} alt="Logo" />
         </div>
-        <div className="text-2xl font-bold md:text-3xl">Car Clean Plus</div>
+        <div className="text-2xl font-bold md:text-3xl text-[#4dbecc]">
+          Car Clean Plus
+        </div>
       </div>
 
       {/* Navigation Links */}
