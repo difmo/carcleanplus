@@ -27,7 +27,7 @@ function Home() {
         <Card />
         {/* <HowCanhelpComponent /> */}
         {/* <LatestNewsComponent /> */}
-        {/* <LogoComponent /> */}
+        <LogoComponent />
         {/* <Faq /> */}
         <ContactComponent />
       </div>
