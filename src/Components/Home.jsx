@@ -1,35 +1,28 @@
 import React from "react";
-import Button from "./Button";
-import img from "../assets/Phone.png";
-import img1 from "../assets/home1.png";
-import img2 from "../assets/home2.png";
-import Viresonapp from "./Viresonapp";
-import Card from "./Card";
-import About from "./About";
-import ImageSlide from "./ImageSlider.jsx";
-import HowCanhelpComponent from "./HowCanhelpComponent.jsx";
-import LatestNewsComponent from "./LatestNewsComponent.jsx";
-import LogoComponent from "./LogoComponent.jsx";
-import ContactComponent from "./ContactComponent.jsx";
-import HeaderCard from "./Cardheader.jsx";
-import Faq from "./Pages/Faq.jsx";
-
-// primaryColor: #092b3d
-// secondryColor : #ffd101
+import HeroSection from "./HeroSection";
+import TrustStats from "./TrustStats";
+import ServicesPricing from "./ServicesPricing";
+import HowItWorks from "./HowItWorks";
+import WhyChouseUsComponents from "./WhyChouseUsComponents";
+import BeforeAfterGallery from "./BeforeAfterGallery";
+import Testimonials from "./Testimonials";
+import BookingModal from "./BookingFlow/BookingModal";
+import Footer from "./Footer"; // Assuming footer exists
 
 function Home() {
   return (
     <>
-      <div id="home" className="section">
-        <ImageSlide />
-        {/* <HeaderCard /> */}
-        <About />
-        <Card />
-        {/* <HowCanhelpComponent /> */}
-        {/* <LatestNewsComponent /> */}
-        <LogoComponent />
-        {/* <Faq /> */}
-        <ContactComponent />
+      <div id="home" className="section bg-secondary min-h-screen relative">
+        <HeroSection />
+        <TrustStats />
+        <ServicesPricing />
+        <WhyChouseUsComponents />
+        <BeforeAfterGallery />
+        <HowItWorks />
+        <Testimonials />
+        
+        {/* The Modal will only show when isModalOpen is true in Context */}
+        <BookingModal />
       </div>
     </>
   );

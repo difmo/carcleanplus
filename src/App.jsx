@@ -10,6 +10,8 @@ import Disclaimer from "./Components/Pages/Disclaimer";
 import TermsofService from"./Components/Pages/TermsofService";
 import HelpSupport from "./Components/Pages/HelpSupport";
 import Faq from "./Components/Pages/Faq";
+import Gallery from "./Components/Pages/Gallery";
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +20,7 @@ function App() {
         {/* Render the full homepage with all sections */}
         <Route path="/" element={<Home />} />
         {/* Full-page routes for Privacy Policy, Disclaimer, etc. */}
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} />

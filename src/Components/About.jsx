@@ -14,18 +14,9 @@ const About = () => {
         <h2 className="text-center font-mono text-2xl md:text-3xl text-mywhite pb-5">
           About Us
         </h2>
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          {/* Image Section */}
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src={car}
-              alt="Car"
-              className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl object-cover rounded-lg shadow-lg"
-            />
-          </div>
-
+        <div className="flex flex-col items-center gap-6 max-w-4xl mx-auto">
           {/* Text Section */}
-          <div className="w-full md:w-1/2 text-center md:text-left">
+          <div className="w-full text-center">
             <p className="font-sans text-base sm:text-lg md:text-xl text-white leading-relaxed px-2">
               Car Clean Plus is Lucknow's trusted name in professional car
               cleaning and washing services. We specialize in high-quality
@@ -39,7 +30,7 @@ const About = () => {
               Car Clean Plus, we make car care effortless, reliable, and
               affordable. Book your service today!
             </p>
-            <div className="mt-6 flex justify-center md:justify-start">
+            <div className="mt-8 flex justify-center">
               <Button />
             </div>
           </div>

@@ -2,13 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
 import { FiAlignJustify } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
+import { useBooking } from "../context/BookingContext"; 
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { openModal } = useBooking();
 
-  // Function to scroll smoothly to a section
+  // Handle scroll effect for glassmorphism
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleScrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -16,18 +28,16 @@ const Navbar = () => {
     }
   };
 
-  // Handle navigation and scroll
   const handleNavigation = (sectionId) => {
     if (location.pathname !== "/") {
       navigate("/");
-      localStorage.setItem("scrollToSection", sectionId); // Save section ID
+      localStorage.setItem("scrollToSection", sectionId);
     } else {
       handleScrollToSection(sectionId);
     }
-    setIsNavOpen(false); // Close menu after navigation
+    setIsNavOpen(false);
   };
 
-  // Scroll to section after navigation
   useEffect(() => {
     const sectionId = localStorage.getItem("scrollToSection");
     if (sectionId) {
@@ -38,58 +48,85 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex flex-col justify-between md:py-0 py-4 px-1 text-white absolute z-10 md:flex-row w-full top-0 transition-all duration-300 ${
-        location.pathname !== "/" || isNavOpen ? "bg-gray-900" : ""
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${
+        isScrolled || isNavOpen
+          ? "bg-white/95 backdrop-blur-xl border-gray-200/80 shadow-sm py-2"
+          : "bg-white/80 backdrop-blur-md border-transparent py-4"
       }`}
     >
-      <div className="flex items-center gap-3">
-        <div className="w-12 ml-5 lg:w-12 md:ml-12">
-          <img className="bg-cover" src={img} alt="Logo" />
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        {/* Logo */}
+        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => handleNavigation("home")}>
+          <img className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-105" src={img} alt="Car Clean Plus Logo" />
+          <div className="flex flex-col justify-center leading-none">
+            <span className="text-xl md:text-2xl font-bold tracking-tight text-primary">
+              Car Clean Plus
+            </span>
+            <span className="text-[9px] font-semibold text-accent tracking-[0.2em] mt-1 uppercase">
+              Clean Car, Happy You
+            </span>
+          </div>
         </div>
-        <div className="text-2xl font-bold md:text-3xl text-[#4dbecc]">
-          Car Clean Plus
+
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex items-center gap-10">
+          {["home", "about", "services", "pricing"].map((item) => (
+            <button
+              key={item}
+              className="relative text-[15px] font-medium text-gray-600 hover:text-primary transition-colors capitalize group py-2"
+              onClick={() => handleNavigation(item === "pricing" ? "services" : item)}
+            >
+              {item}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 ease-out group-hover:w-full"></span>
+            </button>
+          ))}
+        </nav>
+
+        {/* Action Button */}
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            onClick={openModal}
+            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-[15px] font-bold py-2.5 px-6 rounded-full hover:from-green-600 hover:to-green-700 hover:-translate-y-0.5 transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-green-500/30"
+          >
+            <FaWhatsapp className="text-[18px]" /> Book on WhatsApp
+          </button>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setIsNavOpen(!isNavOpen)}
+          className="lg:hidden text-2xl text-primary p-2 focus:outline-none"
+        >
+          <FiAlignJustify />
+        </button>
       </div>
 
-      {/* Navigation Links */}
-      <nav
-        className={`pb-4 lg:flex pt-4 md:mt-0 mx-4 text-xl ${
-          isNavOpen ? "flex bg-gray-900 p-4 rounded-md" : "hidden"
-        } flex-col md:flex-row gap-4 md:gap-12`}
-      >
-        <button
-          className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleNavigation("home")}
-        >
-          Home
-        </button>
-        <button
-          className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleNavigation("about")}
-        >
-          About
-        </button>
-        <button
-          className="self-center transition duration-200 hover:text-blue-300"
-          onClick={() => handleNavigation("contact")}
-        >
-          Contact
-        </button>
-
-        <button
-          onClick={() => handleNavigation("contact")}
-          className="bg-red-500 py-2 px-2 transition-all duration-300 rounded-md hover:bg-black hover:text-mywhite"
-        >
-          Get An Appointment
-        </button>
-      </nav>
-
-      {/* Mobile Menu Toggle Button */}
+      {/* Mobile Menu Dropdown */}
       <div
-        onClick={() => setIsNavOpen(!isNavOpen)}
-        className="absolute right-5 top-12 transform -translate-y-1/2 flex justify-center items-center text-2xl sm:hidden cursor-pointer"
+        className={`lg:hidden absolute top-full left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden ${
+          isNavOpen ? "max-h-[400px] border-t border-gray-100 opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
-        <FiAlignJustify />
+        <div className="flex flex-col p-6 gap-4">
+          {["home", "about", "services", "pricing"].map((item) => (
+            <button
+              key={item}
+              className="text-left text-base font-medium text-gray-700 hover:text-accent capitalize py-2 border-b border-gray-100"
+              onClick={() => handleNavigation(item === "pricing" ? "services" : item)}
+            >
+              {item}
+            </button>
+          ))}
+          <button
+            onClick={() => {
+              setIsNavOpen(false);
+              openModal();
+            }}
+            className="flex justify-center items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-base font-bold py-3 px-6 rounded-full mt-4 hover:from-green-600 hover:to-green-700 transition-all shadow-md"
+          >
+            <FaWhatsapp className="text-xl" /> Book on WhatsApp
+          </button>
+        </div>
       </div>
     </div>
   );
