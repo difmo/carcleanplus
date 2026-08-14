@@ -47,7 +47,28 @@ export const BookingProvider = ({ children }) => {
   const nextStep = () => setBookingState(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
   const prevStep = () => setBookingState(prev => ({ ...prev, currentStep: prev.currentStep - 1 }));
   const setStep = (step) => setBookingState(prev => ({ ...prev, currentStep: step }));
-  const openModal = () => setBookingState(prev => ({ ...prev, isModalOpen: true, currentStep: 1 }));
+  const openModal = (carArg = null, service = null) => {
+    setBookingState(prev => {
+      // Ignore React Synthetic Events passed from onClick={openModal}
+      const car = (carArg && carArg.category) ? carArg : null;
+      
+      let step = 1;
+      if (car) step = 2;
+      if (car && service) step = 3;
+      
+      const newState = { ...prev, isModalOpen: true, currentStep: step };
+      if (car) {
+        newState.carModel = car;
+      }
+      if (service) {
+        newState.service = service;
+        if (car) {
+          newState.finalPrice = getPrice(car.category, service);
+        }
+      }
+      return newState;
+    });
+  };
   const closeModal = () => setBookingState(prev => ({ ...prev, isModalOpen: false }));
   
   const resetBooking = () => {

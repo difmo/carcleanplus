@@ -14,7 +14,7 @@ const BookingModal = () => {
 
   if (!isModalOpen) return null;
 
-  const filteredCars = CAR_MODELS.filter(car => 
+  const filteredCars = CAR_MODELS.filter(car =>
     car.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -54,14 +54,14 @@ const BookingModal = () => {
   const renderStepIndicator = () => {
     if (bookingConfirmed) return null;
     const maxStepAllowed = getMaxStepAllowed();
-    
+
     return (
       <div className="flex justify-between items-center mb-8 px-4">
         {[1, 2, 3, 4, 5, 6].map((step) => {
           const isClickable = step <= maxStepAllowed && step !== currentStep;
           return (
-            <div 
-              key={step} 
+            <div
+              key={step}
               onClick={() => isClickable && setStep(step)}
               title={isClickable ? `Go to step ${step}` : ''}
               className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all ${isClickable ? 'cursor-pointer hover:ring-2 hover:ring-accent/50 hover:scale-110' : ''} ${currentStep === step ? 'bg-accent text-white shadow-md scale-110 ring-4 ring-accent/20' : step <= maxStepAllowed ? 'bg-primary text-white cursor-pointer' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
@@ -78,12 +78,12 @@ const BookingModal = () => {
     <div className="animate-fade-in">
       <h3 className="text-2xl font-bold mb-2">What type of car do you have?</h3>
       <p className="text-gray-500 mb-6">Search your exact car model.</p>
-      
+
       <div className="relative mb-6">
         <FaSearch className="absolute left-4 top-4 text-gray-400" />
-        <input 
-          type="text" 
-          placeholder="Search car model (e.g. Creta, Swift)" 
+        <input
+          type="text"
+          placeholder="Search car model (e.g. Creta, Swift)"
           className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none text-lg"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -92,8 +92,8 @@ const BookingModal = () => {
 
       <div className="max-h-64 overflow-y-auto border border-gray-100 rounded-lg">
         {filteredCars.map(car => (
-          <div 
-            key={car.id} 
+          <div
+            key={car.id}
             onClick={() => {
               updateBooking('carModel', car);
               nextStep();
@@ -119,14 +119,14 @@ const BookingModal = () => {
       <div className="animate-fade-in">
         <h3 className="text-2xl font-bold mb-2">Select Your Wash</h3>
         <p className="text-gray-500 mb-6">Prices shown for {bookingState.carModel.name} ({category})</p>
-        
+
         <div className="space-y-4">
           {[
             { id: SERVICES.BASIC, title: 'Basic Wash', desc: 'Exterior wash & dry' },
             { id: SERVICES.PREMIUM, title: 'Premium Wash', desc: 'Exterior + Basic Interior (Recommended)', highlight: true },
             { id: SERVICES.COMPLETE, title: 'Complete Clean', desc: 'Detailed Interior & Exterior' }
           ].map(svc => (
-            <div 
+            <div
               key={svc.id}
               onClick={() => {
                 updateBooking('service', svc.id);
@@ -152,11 +152,11 @@ const BookingModal = () => {
     <div className="animate-fade-in">
       <h3 className="text-2xl font-bold mb-2">Where should we come?</h3>
       <p className="text-gray-500 mb-6">Enter your address details.</p>
-      
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Complete Address (House/Flat, Street, Area)</label>
-          <textarea 
+          <textarea
             rows="3"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.location.address}
@@ -166,15 +166,15 @@ const BookingModal = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.location.pincode}
             onChange={(e) => updateBooking('location', { ...bookingState.location, pincode: e.target.value })}
             placeholder="E.g. 226010"
           />
         </div>
-        <button 
+        <button
           onClick={nextStep}
           disabled={!bookingState.location.address || !bookingState.location.pincode}
           className="w-full btn-primary disabled:opacity-50 mt-4"
@@ -191,22 +191,22 @@ const BookingModal = () => {
       <div className="animate-fade-in">
         <h3 className="text-2xl font-bold mb-2">Date & Time</h3>
         <p className="text-gray-500 mb-6">When do you want the service?</p>
-        
+
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">Select Date</label>
-          <input 
-            type="date" 
+          <input
+            type="date"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.date}
             onChange={(e) => updateBooking('date', e.target.value)}
           />
         </div>
-        
+
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-3">Available Time Slots</label>
           <div className="grid grid-cols-2 gap-3">
             {slots.map(slot => (
-              <div 
+              <div
                 key={slot}
                 onClick={() => updateBooking('timeSlot', slot)}
                 className={`p-3 text-center text-sm font-medium rounded-lg border cursor-pointer transition-colors ${bookingState.timeSlot === slot ? 'bg-accent text-white border-accent' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
@@ -216,7 +216,7 @@ const BookingModal = () => {
             ))}
           </div>
         </div>
-        <button 
+        <button
           onClick={nextStep}
           disabled={!bookingState.date || !bookingState.timeSlot}
           className="w-full btn-primary disabled:opacity-50"
@@ -231,12 +231,12 @@ const BookingModal = () => {
     <div className="animate-fade-in">
       <h3 className="text-2xl font-bold mb-2">Customer Details</h3>
       <p className="text-gray-500 mb-6">We need this to contact you.</p>
-      
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.customerDetails.fullName}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, fullName: e.target.value })}
@@ -244,8 +244,8 @@ const BookingModal = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
-          <input 
-            type="tel" 
+          <input
+            type="tel"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.customerDetails.mobile}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, mobile: e.target.value })}
@@ -253,15 +253,15 @@ const BookingModal = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Special Instructions (Optional)</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
             value={bookingState.customerDetails.instructions}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, instructions: e.target.value })}
             placeholder="e.g. Call before arriving"
           />
         </div>
-        <button 
+        <button
           onClick={nextStep}
           disabled={!bookingState.customerDetails.fullName || !bookingState.customerDetails.mobile}
           className="w-full btn-primary disabled:opacity-50 mt-4"
@@ -275,7 +275,7 @@ const BookingModal = () => {
   const renderStep6 = () => (
     <div className="animate-fade-in">
       <h3 className="text-2xl font-bold mb-6">Review Your Booking</h3>
-      
+
       <div className="bg-gray-50 p-5 rounded-xl border border-gray-200 mb-6 space-y-4">
         <div className="flex justify-between border-b border-gray-200 pb-3">
           <span className="text-gray-500">Car</span>
@@ -287,7 +287,7 @@ const BookingModal = () => {
         </div>
         <div className="flex justify-between border-b border-gray-200 pb-3">
           <span className="text-gray-500">Date & Time</span>
-          <span className="font-semibold text-right">{bookingState.date}<br/><span className="text-sm font-normal">{bookingState.timeSlot}</span></span>
+          <span className="font-semibold text-right">{bookingState.date}<br /><span className="text-sm font-normal">{bookingState.timeSlot}</span></span>
         </div>
         <div className="flex justify-between pb-1">
           <span className="text-gray-500">Location</span>
@@ -300,7 +300,7 @@ const BookingModal = () => {
         <span className="text-3xl font-bold text-dark">₹{bookingState.finalPrice}</span>
       </div>
 
-      <button 
+      <button
         onClick={handleConfirmBooking}
         disabled={isSubmitting}
         className="w-full btn-primary py-4 text-lg"
@@ -317,7 +317,7 @@ const BookingModal = () => {
       </div>
       <h2 className="text-3xl font-bold text-dark mb-2">Booking Confirmed!</h2>
       <p className="text-gray-500 mb-8">Thank you for choosing Car Clean Plus. You will receive a confirmation message shortly.</p>
-      
+
       <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-8 text-left">
         <p className="text-sm text-gray-500 mb-1">Booking ID</p>
         <p className="font-bold text-lg text-dark mb-4">CCP-{Math.floor(Math.random() * 90000) + 10000}</p>
@@ -325,7 +325,7 @@ const BookingModal = () => {
         <p className="text-sm text-gray-700"><strong>Time:</strong> {bookingState.date} at {bookingState.timeSlot}</p>
       </div>
 
-      <button 
+      <button
         onClick={() => {
           resetBooking();
           closeModal();
@@ -345,7 +345,7 @@ const BookingModal = () => {
           <div className="flex justify-between items-center p-6 md:p-8 bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white flex-shrink-0 border-b border-gray-700 shadow-lg relative overflow-hidden">
             {/* Subtle glow effect */}
             <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-50 pointer-events-none"></div>
-            
+
             <div className="relative z-10">
               <h2 className="text-2xl md:text-3xl font-heading font-extrabold tracking-tight text-white mb-1 drop-shadow-md">Book Your Premium Wash</h2>
               <p className="text-gray-300 text-sm font-medium">Get your car shining in just a few clicks.</p>
@@ -359,7 +359,7 @@ const BookingModal = () => {
         {/* Content */}
         <div className="p-6 md:p-12 overflow-y-auto flex-1 custom-scrollbar">
           {renderStepIndicator()}
-          
+
           {bookingConfirmed && renderSuccess()}
           {!bookingConfirmed && currentStep === 1 && renderStep1()}
           {!bookingConfirmed && currentStep === 2 && renderStep2()}

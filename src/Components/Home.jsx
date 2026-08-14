@@ -6,7 +6,6 @@ import HowItWorks from "./HowItWorks";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
 import BeforeAfterGallery from "./BeforeAfterGallery";
 import Testimonials from "./Testimonials";
-import BookingModal from "./BookingFlow/BookingModal";
 import Footer from "./Footer"; // Assuming footer exists
 
 function Home() {
@@ -21,8 +20,6 @@ function Home() {
         <HowItWorks />
         <Testimonials />
         
-        {/* The Modal will only show when isModalOpen is true in Context */}
-        <BookingModal />
       </div>
     </>
   );

@@ -29,6 +29,12 @@ const Navbar = () => {
   };
 
   const handleNavigation = (sectionId) => {
+    if (sectionId === "pricing") {
+      navigate("/pricing");
+      setIsNavOpen(false);
+      return;
+    }
+
     if (location.pathname !== "/") {
       navigate("/");
       localStorage.setItem("scrollToSection", sectionId);
@@ -74,7 +80,7 @@ const Navbar = () => {
             <button
               key={item}
               className="relative text-[15px] font-medium text-gray-600 hover:text-primary transition-colors capitalize group py-2"
-              onClick={() => handleNavigation(item === "pricing" ? "services" : item)}
+              onClick={() => handleNavigation(item)}
             >
               {item}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 ease-out group-hover:w-full"></span>
@@ -112,7 +118,7 @@ const Navbar = () => {
             <button
               key={item}
               className="text-left text-base font-medium text-gray-700 hover:text-accent capitalize py-2 border-b border-gray-100"
-              onClick={() => handleNavigation(item === "pricing" ? "services" : item)}
+              onClick={() => handleNavigation(item)}
             >
               {item}
             </button>

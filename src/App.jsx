@@ -12,15 +12,20 @@ import HelpSupport from "./Components/Pages/HelpSupport";
 import Faq from "./Components/Pages/Faq";
 import Gallery from "./Components/Pages/Gallery";
 
+import PricingPage from "./Components/Pages/PricingPage";
+import BookingModal from "./Components/BookingFlow/BookingModal";
+
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <BookingModal />
       <Routes>
         {/* Render the full homepage with all sections */}
         <Route path="/" element={<Home />} />
         {/* Full-page routes for Privacy Policy, Disclaimer, etc. */}
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} />

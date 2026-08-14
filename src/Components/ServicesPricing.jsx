@@ -68,11 +68,11 @@ const ServicesPricing = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-xl flex flex-col justify-between overflow-hidden border border-gray-100 shadow-premium hover:-translate-y-2 transition-all duration-300 group"
+              className="bg-white rounded-xl flex flex-col justify-between overflow-hidden border border-gray-100 shadow-premium transition-all duration-300"
             >
               <div className="w-full h-40 md:h-32 xl:h-40 overflow-hidden relative">
-                <img src={service.image} alt={service.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-dark/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-dark/5"></div>
               </div>
               <div className="p-4 flex flex-col flex-grow justify-between text-center bg-white">
                 <div>
