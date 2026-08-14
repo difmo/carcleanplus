@@ -57,17 +57,23 @@ const BookingModal = () => {
 
     return (
       <div className="flex justify-between items-center mb-8 px-4">
-        {[1, 2, 3, 4, 5, 6].map((step) => {
+        {[1, 2, 3, 4, 5, 6].map((step, index) => {
           const isClickable = step <= maxStepAllowed && step !== currentStep;
           return (
-            <div
-              key={step}
-              onClick={() => isClickable && setStep(step)}
-              title={isClickable ? `Go to step ${step}` : ''}
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all ${isClickable ? 'cursor-pointer hover:ring-2 hover:ring-accent/50 hover:scale-110' : ''} ${currentStep === step ? 'bg-accent text-white shadow-md scale-110 ring-4 ring-accent/20' : step <= maxStepAllowed ? 'bg-primary text-white cursor-pointer' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
-            >
-              {step}
-            </div>
+            <React.Fragment key={step}>
+              <div
+                onClick={() => isClickable && setStep(step)}
+                title={isClickable ? `Go to step ${step}` : ''}
+                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm transition-all z-10 ${isClickable ? 'cursor-pointer hover:ring-2 hover:ring-accent/50 hover:scale-110' : ''} ${currentStep === step ? 'bg-accent text-white shadow-md scale-110 ring-4 ring-accent/20' : step <= maxStepAllowed ? 'bg-primary text-white cursor-pointer' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
+              >
+                {step}
+              </div>
+              {index < 5 && (
+                <div 
+                  className={`flex-1 h-[3px] mx-1 md:mx-2 rounded-full transition-colors duration-300 ${step < currentStep ? 'bg-primary' : 'bg-gray-200'}`} 
+                />
+              )}
+            </React.Fragment>
           );
         })}
       </div>
