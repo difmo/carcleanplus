@@ -2,6 +2,9 @@ import React from 'react';
 import { useBooking } from '../context/BookingContext';
 import { FaCar, FaCalendarCheck, FaMapMarkerAlt, FaStar } from 'react-icons/fa';
 import chooseYourCarImg from '../assets/choose your car .png';
+import selectTimeImg from '../assets/select time .png';
+import enterLocationImg from '../assets/location.png';
+import relaxImg from '../assets/relax.png';
 
 const HowItWorks = () => {
   const { openModal } = useBooking();
@@ -15,21 +18,21 @@ const HowItWorks = () => {
       icon: <FaCar className="text-2xl text-[#2563eb]" />
     },
     {
-      image: 'https://images.unsplash.com/photo-1517594422361-5e18140cf61c?auto=format&fit=crop&q=80&w=600',
+      image: selectTimeImg,
       title: 'Select Service & Time',
       description: 'Pick your wash service and preferred time slot.',
       step: 2,
       icon: <FaCalendarCheck className="text-2xl text-[#2563eb]" />
     },
     {
-      image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=600',
+      image: enterLocationImg,
       title: 'Enter Location',
       description: 'Add your address. We come to your doorstep!',
       step: 3,
       icon: <FaMapMarkerAlt className="text-2xl text-[#2563eb]" />
     },
     {
-      image: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&q=80&w=600',
+      image: relaxImg,
       title: 'Relax & Enjoy',
       description: 'Sit back while we clean your car to perfection.',
       step: 4,
@@ -42,11 +45,12 @@ const HowItWorks = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16 flex flex-col items-center">
-          <div className="text-[#2563eb] text-xs font-bold tracking-widest uppercase bg-transparent border border-[#2563eb]/30 px-5 py-1.5 rounded-full mb-4 inline-block">
-            4 SIMPLE STEPS
-          </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-[#0f172a] mb-4 tracking-tight">How It Works</h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto font-medium">Get your car sparkling clean in just a few easy steps.</p>
+          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 mb-4 tracking-tight">
+            Seamless & Effortless
+          </h2>
+          <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+            Experience a premium car care journey. From booking to a sparkling finish, we've designed everything around your absolute convenience.
+          </p>
         </div>
 
         {/* Cards Grid */}
@@ -54,15 +58,14 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div 
               key={index} 
-              onClick={openModal}
-              className="group bg-white rounded-[24px] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col items-center text-center transform hover:-translate-y-2 overflow-hidden border border-gray-100"
+              className="flex flex-col items-center text-center w-full"
             >
               {/* Image Section */}
-              <div className="w-full h-[220px] relative mb-12 overflow-hidden bg-gray-100">
+              <div className="w-full h-[220px] relative mb-12 overflow-hidden rounded-[24px] shadow-sm">
                 <img 
                   src={step.image} 
                   alt={step.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                 />
                 {/* Number Badge */}
                 <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#2563eb] text-white flex items-center justify-center font-bold text-base shadow-md z-10">
@@ -79,7 +82,7 @@ const HowItWorks = () => {
 
               {/* Text Section */}
               <div className="px-6 pb-8 w-full mt-2">
-                <h3 className="text-xl font-bold text-[#2563eb] mb-3">{step.title}</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
                 <p className="text-gray-500 text-base leading-relaxed">{step.description}</p>
               </div>
             </div>

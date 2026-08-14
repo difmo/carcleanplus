@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
 import { FiAlignJustify } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { useBooking } from "../context/BookingContext"; 
+import { useBooking } from "../context/BookingContext";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -61,11 +61,10 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${
-        isScrolled || isNavOpen
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${isScrolled || isNavOpen
           ? "bg-white/95 backdrop-blur-xl border-gray-200/80 shadow-sm py-2"
           : "bg-white/80 backdrop-blur-md border-transparent py-4"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
@@ -116,9 +115,8 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden ${
-          isNavOpen ? "max-h-[400px] border-t border-gray-100 opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`lg:hidden absolute top-full left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden ${isNavOpen ? "max-h-[400px] border-t border-gray-100 opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="flex flex-col p-6 gap-4">
           {["home", "about", "services", "pricing"].map((item) => (
