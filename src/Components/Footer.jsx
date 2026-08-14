@@ -245,7 +245,7 @@ const Footer = () => {
       <div className="border-t border-gray-800 bg-[#03060a] py-6 relative z-10">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm text-center md:text-left">
-            © 2025 Car Clean Plus. All Rights Reserved.
+            © 2025 Car Clean Plus. All Rights Reserved. <span className="hidden md:inline mx-2">|</span> <br className="md:hidden" /> Merchant ID: TPb4N2383whw9M
           </p>
           
           <div className="flex items-center gap-2 text-gray-400">

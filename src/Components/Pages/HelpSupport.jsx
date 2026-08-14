@@ -21,16 +21,17 @@ function HelpSupport() {
             <div>
               <h1 className="font-bold ">Phone Support:</h1>
               <p>
-                For immediate assistance, call us at{" "}
-                <span>[Phone No. +91 9939553453] </span>. Our customer service
-                team is available [insert hours of operation].
+                Any feedback and suggestions on the services can be provided by
+                contacting us at 
+                <span className="font-bold"> +91 6392 798847</span>. Our customer service
+                team is there to help you out with everything.
               </p>
-              <h1 className="font-bold ">Email Support:</h1>
+              <br />
+              <h1 className="font-bold mt-4">Email Support:</h1>
               <p>
                 You can reach us at{" "}
-                <span>[Email Id. carcleanplus@gmail.com ]</span> for any
-                inquiries or feedback. We aim to respond within [insert response
-                time, e.g., 24 hours].
+                <span className="font-bold text-blue-600">carcleanplusofficial@gmail.com</span> for any
+                inquiries or feedback. We aim to respond within 24 hours.
               </p>
             </div>
 

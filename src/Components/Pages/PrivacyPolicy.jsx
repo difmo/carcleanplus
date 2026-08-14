@@ -135,7 +135,7 @@ function PrivacyPolicy() {
           </div>
           <div className="py-2 ml-4 pl-2 border-2 border-myyellow">
             The user enters their identifier, such as a <b>Email address</b> -
-            testing123@gmail.com. <br /> The user inputs their
+            carcleanplusofficial@gmail.com. <br /> The user inputs their
             <b> Password - </b> Testing@123 associated with their account.
           </div>
           <div className="px-5 font-medium ">
