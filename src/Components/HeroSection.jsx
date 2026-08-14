@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBooking } from '../context/BookingContext';
 import { FaCheckCircle } from 'react-icons/fa';
-import heroImage from '../assets/wash car.png';
+import heroImage from '../assets/home section.png';
 
 const HeroSection = () => {
   const { openModal } = useBooking();
