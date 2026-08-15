@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/Logo/logo.png";
-import { FiAlignJustify } from "react-icons/fi";
+import { FiAlignJustify, FiX } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
 
@@ -24,7 +24,7 @@ const Navbar = () => {
   const handleScrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const headerOffset = 85; // Fixed navbar height offset
+      const headerOffset = 100; // Adjusted for floating navbar
       const elementPosition = section.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
@@ -54,77 +54,98 @@ const Navbar = () => {
   useEffect(() => {
     const sectionId = localStorage.getItem("scrollToSection");
     if (sectionId) {
-      handleScrollToSection(sectionId);
-      localStorage.removeItem("scrollToSection");
+      setTimeout(() => {
+        handleScrollToSection(sectionId);
+        localStorage.removeItem("scrollToSection");
+      }, 100);
     }
   }, [location.pathname]);
 
   return (
-    <div
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out border-b ${isScrolled || isNavOpen
-          ? "bg-white/95 backdrop-blur-xl border-gray-200/80 shadow-sm py-2"
-          : "bg-white/80 backdrop-blur-md border-transparent py-4"
-        }`}
-    >
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => handleNavigation("home")}>
-          <img className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-105" src={img} alt="Car Clean Plus Logo" />
-          <div className="flex flex-col justify-center leading-none">
-            <span className="text-xl md:text-2xl font-bold tracking-tight text-primary">
+    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm py-2 md:py-3" : "bg-transparent py-4 md:py-6"}`}>
+      <div className="w-[98%] max-w-7xl mx-auto">
+        {/* Main Floating Pill */}
+        <div
+          className={`bg-[#18181b] rounded-[40px] p-2 md:p-2.5 flex justify-between items-center shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] border border-gray-800 transition-all duration-300`}
+        >
+        {/* Left: Logo Section */}
+        <div
+          className="flex items-center gap-3 cursor-pointer group pl-1"
+          onClick={() => handleNavigation("home")}
+        >
+          {/* White Circular Logo Container */}
+          <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300">
+            <img className="w-7 h-7 md:w-8 md:h-8 object-contain" src={img} alt="Car Clean Plus Logo" />
+          </div>
+
+          {/* Brand Name (Hidden on very small screens to save space) */}
+          <div className="hidden sm:flex flex-col justify-center leading-none">
+            <span className="text-lg md:text-xl font-bold tracking-tight text-white">
               Car Clean Plus
             </span>
-            <span className="text-[9px] font-semibold text-accent tracking-[0.2em] mt-1 uppercase">
+            <span className="text-[8px] md:text-[9px] font-semibold text-gray-400 tracking-[0.2em] mt-1 uppercase">
               Clean Car, Happy You
             </span>
           </div>
         </div>
 
-        {/* Desktop Menu */}
-        <nav className="hidden lg:flex items-center gap-10">
+        {/* Middle: Desktop Menu */}
+        <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
           {["home", "about", "services", "pricing"].map((item) => (
             <button
               key={item}
-              className="relative text-[15px] font-medium text-gray-600 hover:text-primary transition-colors capitalize group py-2"
+              className="relative text-[15px] font-medium text-gray-300 hover:text-white transition-colors capitalize group py-2"
               onClick={() => handleNavigation(item)}
             >
               {item}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 ease-out group-hover:w-full"></span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 ease-out group-hover:w-full rounded-full"></span>
             </button>
           ))}
         </nav>
 
-        {/* Action Button */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Right: Action Button & Mobile Toggle */}
+        <div className="flex items-center gap-2 md:gap-4 pr-1">
+          {/* Desktop WhatsApp Button */}
           <a
             href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-[15px] font-bold py-2.5 px-6 rounded-full hover:from-green-600 hover:to-green-700 hover:-translate-y-0.5 transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-green-500/30"
+            className="hidden md:flex items-center gap-2 bg-white text-[#18181b] text-[14px] md:text-[15px] font-bold py-2 md:py-2.5 px-5 md:px-6 rounded-full hover:bg-gray-100 transition-colors shadow-sm"
           >
-            <FaWhatsapp className="text-[18px]" /> Book on WhatsApp
+            <FaWhatsapp className="text-[18px] text-green-500" />
+            <span>Book on WhatsApp</span>
           </a>
-        </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setIsNavOpen(!isNavOpen)}
-          className="lg:hidden text-2xl text-primary p-2 focus:outline-none"
-        >
-          <FiAlignJustify />
-        </button>
+          {/* Mobile WhatsApp Button Icon Only */}
+          <a
+            href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="md:hidden flex items-center justify-center w-10 h-10 bg-white rounded-full text-green-500 shadow-sm"
+          >
+            <FaWhatsapp className="text-xl" />
+          </a>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsNavOpen(!isNavOpen)}
+            className="lg:hidden w-10 h-10 flex items-center justify-center text-xl text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none"
+          >
+            {isNavOpen ? <FiX /> : <FiAlignJustify />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown (Floating card below pill) */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden ${isNavOpen ? "max-h-[400px] border-t border-gray-100 opacity-100" : "max-h-0 opacity-0"
+        className={`lg:hidden absolute top-[calc(100%+10px)] left-0 w-full bg-[#18181b] rounded-3xl shadow-2xl transition-all duration-300 overflow-hidden border border-gray-800 ${isNavOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 border-transparent"
           }`}
       >
-        <div className="flex flex-col p-6 gap-4">
+        <div className="flex flex-col p-6 gap-2">
           {["home", "about", "services", "pricing"].map((item) => (
             <button
               key={item}
-              className="text-left text-base font-medium text-gray-700 hover:text-accent capitalize py-2 border-b border-gray-100"
+              className="text-left text-base font-medium text-gray-300 hover:text-white capitalize py-3 border-b border-gray-800/50"
               onClick={() => handleNavigation(item)}
             >
               {item}
@@ -135,11 +156,12 @@ const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsNavOpen(false)}
-            className="flex justify-center items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-base font-bold py-3 px-6 rounded-full mt-4 hover:from-green-600 hover:to-green-700 transition-all shadow-md"
+            className="flex justify-center items-center gap-2 bg-white text-[#18181b] text-base font-bold py-3 px-6 rounded-full mt-4 transition-colors shadow-sm"
           >
-            <FaWhatsapp className="text-xl" /> Book on WhatsApp
+            <FaWhatsapp className="text-xl text-green-500" /> Book on WhatsApp
           </a>
         </div>
+      </div>
       </div>
     </div>
   );
