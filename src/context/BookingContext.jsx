@@ -47,14 +47,18 @@ export const BookingProvider = ({ children }) => {
   const nextStep = () => setBookingState(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
   const prevStep = () => setBookingState(prev => ({ ...prev, currentStep: prev.currentStep - 1 }));
   const setStep = (step) => setBookingState(prev => ({ ...prev, currentStep: step }));
-  const openModal = (carArg = null, service = null) => {
+  const openModal = (carArg = null, service = null, specificStep = null) => {
     setBookingState(prev => {
       // Ignore React Synthetic Events passed from onClick={openModal}
       const car = (carArg && carArg.category) ? carArg : null;
       
       let step = 1;
-      if (car) step = 2;
-      if (car && service) step = 3;
+      if (typeof specificStep === 'number') {
+        step = specificStep;
+      } else {
+        if (car) step = 2;
+        if (car && service) step = 3;
+      }
       
       const newState = { ...prev, isModalOpen: true, currentStep: step };
       if (car) {

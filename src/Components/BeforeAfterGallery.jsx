@@ -25,8 +25,12 @@ const BeforeAfterGallery = () => {
     <section className="pt-10 pb-8 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-dark mb-4 tracking-tight">See The Transformation</h2>
-          <p className="text-gray-600 text-lg md:text-xl font-medium">Real results, real shine.</p>
+          <h2 className="text-4xl md:text-5xl font-sans font-bold text-slate-800 mb-2">
+            See The Transformation<span className="text-blue-600">.</span>
+          </h2>
+          <p className="text-slate-500 text-lg md:text-xl font-normal">
+            Real results, real shine.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">

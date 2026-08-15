@@ -58,14 +58,15 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-center text-center w-full"
+              className="flex flex-col items-center text-center w-full cursor-pointer group transition-all duration-300 hover:-translate-y-2"
+              onClick={() => openModal(null, null, step.step)}
             >
               {/* Image Section */}
-              <div className="w-full h-[220px] relative mb-12 overflow-hidden rounded-[24px] shadow-sm">
+              <div className="w-full h-[220px] relative mb-12 overflow-hidden rounded-[24px] shadow-sm transition-all duration-300 group-hover:shadow-xl group-hover:ring-4 group-hover:ring-blue-500/20">
                 <img 
                   src={step.image} 
                   alt={step.title} 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Number Badge */}
                 <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#2563eb] text-white flex items-center justify-center font-bold text-base shadow-md z-10">

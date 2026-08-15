@@ -96,12 +96,14 @@ const Navbar = () => {
 
         {/* Action Button */}
         <div className="hidden lg:flex items-center gap-4">
-          <button
-            onClick={openModal}
+          <a
+            href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-[15px] font-bold py-2.5 px-6 rounded-full hover:from-green-600 hover:to-green-700 hover:-translate-y-0.5 transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-green-500/30"
           >
             <FaWhatsapp className="text-[18px]" /> Book on WhatsApp
-          </button>
+          </a>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -128,15 +130,15 @@ const Navbar = () => {
               {item}
             </button>
           ))}
-          <button
-            onClick={() => {
-              setIsNavOpen(false);
-              openModal();
-            }}
+          <a
+            href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsNavOpen(false)}
             className="flex justify-center items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-base font-bold py-3 px-6 rounded-full mt-4 hover:from-green-600 hover:to-green-700 transition-all shadow-md"
           >
             <FaWhatsapp className="text-xl" /> Book on WhatsApp
-          </button>
+          </a>
         </div>
       </div>
     </div>

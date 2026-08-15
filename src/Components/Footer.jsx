@@ -100,9 +100,11 @@ const Footer = () => {
               </div>
             </a>
             
-            <button 
-              onClick={openModal} 
-              className="flex items-center justify-between gap-6 px-6 py-4 bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] border border-green-400/30 group"
+            <a 
+              href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-6 px-6 py-4 bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] border border-green-400/30 group cursor-pointer"
             >
               <div className="flex items-center gap-4">
                 <FaWhatsapp className="text-3xl md:text-4xl" />
@@ -114,7 +116,7 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center group-hover:translate-x-1 transition-transform">
                 <FaArrowRight className="text-white text-sm" />
               </div>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -144,7 +146,7 @@ const Footer = () => {
               <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-pink-500 hover:text-pink-500 transition-colors text-gray-400">
                 <FaInstagram size={16} />
               </a>
-              <a href="#" onClick={(e) => { e.preventDefault(); openModal(); }} className="p-2.5 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-colors text-gray-400">
+              <a href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-colors text-gray-400">
                 <FaWhatsapp size={16} />
               </a>
               <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 transition-colors text-gray-400">
