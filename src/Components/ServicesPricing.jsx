@@ -80,10 +80,10 @@ const ServicesPricing = () => {
                   <p className="text-gray-500 text-xs mb-4 leading-relaxed">{service.description}</p>
                 </div>
                 <div>
-                  <div className="text-blue-600 font-extrabold text-lg xl:text-xl mb-3">₹{service.price}</div>
+                  <div className="text-blue-600 font-extrabold text-lg xl:text-xl mb-3"><span className="text-xs text-gray-400 font-normal mr-1">Starts at</span>₹{service.price}</div>
                   <button 
-                    onClick={openModal}
-                    className="w-full py-2 rounded-lg bg-gray-900 hover:bg-blue-600 text-white text-xs xl:text-sm font-bold shadow-md transition-colors duration-300"
+                    onClick={() => openModal()}
+                    className="w-full py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs xl:text-sm font-bold shadow-md transition-colors duration-300"
                   >
                     Book Now
                   </button>
@@ -95,8 +95,8 @@ const ServicesPricing = () => {
         
         <div className="text-center mt-4 flex justify-center">
           <button 
-            onClick={openModal}
-            className="group relative flex items-center justify-center gap-3 bg-gradient-to-r from-gray-900 to-black hover:from-red-600 hover:to-red-700 text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.7)] border-b-4 border-gray-800 hover:border-red-800"
+            onClick={() => openModal()}
+            className="group relative flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.7)] border-b-4 border-red-800"
           >
             <span className="relative z-10 tracking-widest uppercase text-sm font-extrabold">View All Services</span>
             <FaArrowRight className="relative z-10 transform group-hover:translate-x-1.5 transition-transform duration-300 text-lg" />

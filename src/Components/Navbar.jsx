@@ -98,7 +98,7 @@ const Navbar = () => {
               onClick={() => handleNavigation(item)}
             >
               {item}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 ease-out group-hover:w-full rounded-full"></span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] transition-all duration-300 ease-out group-hover:w-full rounded-full"></span>
             </button>
           ))}
         </nav>
@@ -110,9 +110,9 @@ const Navbar = () => {
             href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 bg-white text-[#18181b] text-[14px] md:text-[15px] font-bold py-2 md:py-2.5 px-5 md:px-6 rounded-full hover:bg-gray-100 transition-colors shadow-sm"
+            className="group hidden md:flex items-center gap-2 bg-white text-[#18181b] text-[14px] md:text-[15px] font-bold py-2 md:py-2.5 px-5 md:px-6 rounded-full hover:bg-red-600 hover:text-white transition-colors shadow-sm"
           >
-            <FaWhatsapp className="text-[18px] text-green-500" />
+            <FaWhatsapp className="text-[18px] text-green-500 group-hover:text-white transition-colors" />
             <span>Book on WhatsApp</span>
           </a>
 
@@ -121,9 +121,9 @@ const Navbar = () => {
             href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
             target="_blank"
             rel="noopener noreferrer"
-            className="md:hidden flex items-center justify-center w-10 h-10 bg-white rounded-full text-green-500 shadow-sm"
+            className="group md:hidden flex items-center justify-center w-10 h-10 bg-white rounded-full hover:bg-red-600 transition-colors shadow-sm"
           >
-            <FaWhatsapp className="text-xl" />
+            <FaWhatsapp className="text-xl text-green-500 group-hover:text-white transition-colors" />
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -156,9 +156,9 @@ const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsNavOpen(false)}
-            className="flex justify-center items-center gap-2 bg-white text-[#18181b] text-base font-bold py-3 px-6 rounded-full mt-4 transition-colors shadow-sm"
+            className="group flex justify-center items-center gap-2 bg-white text-[#18181b] text-base font-bold py-3 px-6 rounded-full mt-4 hover:bg-red-600 hover:text-white transition-colors shadow-sm"
           >
-            <FaWhatsapp className="text-xl text-green-500" /> Book on WhatsApp
+            <FaWhatsapp className="text-xl text-green-500 group-hover:text-white transition-colors" /> Book on WhatsApp
           </a>
         </div>
       </div>

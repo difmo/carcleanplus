@@ -57,7 +57,7 @@ const BeforeAfterGallery = () => {
         </div>
 
         <div className="text-center mt-12 flex justify-center">
-          <Link to="/gallery" className="group relative flex items-center justify-center gap-3 bg-gradient-to-r from-gray-900 to-black text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] border-b-4 border-gray-800">
+          <Link to="/gallery" className="group relative flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.7)] border-b-4 border-red-800">
             <span className="relative z-10 tracking-widest uppercase text-sm font-extrabold">Explore Full Gallery</span>
             <FaArrowRight className="relative z-10 transform group-hover:translate-x-1.5 transition-transform duration-300 text-lg" />
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
