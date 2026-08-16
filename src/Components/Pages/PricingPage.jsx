@@ -8,7 +8,7 @@ const PricingPage = () => {
   const { openModal } = useBooking();
 
   const filteredCars = useMemo(() => {
-    return CAR_MODELS.filter(car => 
+    return CAR_MODELS.filter(car =>
       car.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery]);
@@ -30,12 +30,12 @@ const PricingPage = () => {
 
   return (
     <div className="bg-[#050505] min-h-screen pt-32 pb-20 relative overflow-hidden font-sans">
-      
+
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-red-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
-        
+
         {/* Header Section */}
         <div className="text-center mb-10 animate-fade-in">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight font-heading">
@@ -47,14 +47,14 @@ const PricingPage = () => {
         <div className="max-w-2xl mx-auto mb-16 animate-fade-in relative" style={{ animationDelay: '0.1s' }}>
           {/* Subtle glow behind search bar */}
           <div className="absolute inset-0 bg-red-600/10 blur-xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
+
           <div className="relative group p-[1px] rounded-full bg-gradient-to-r from-red-500/20 via-red-900/40 to-red-500/20 hover:from-red-500/50 hover:via-red-500/30 hover:to-red-500/50 transition-all duration-500 shadow-[0_0_30px_rgba(220,38,38,0.1)] hover:shadow-[0_0_40px_rgba(220,38,38,0.25)] focus-within:shadow-[0_0_40px_rgba(220,38,38,0.3)] focus-within:from-red-500/60 focus-within:to-red-500/60">
             <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none z-10">
               <FaSearch className="text-red-500/70 text-xl group-focus-within:text-red-500 group-hover:scale-110 transition-all duration-300" />
             </div>
-            <input 
-              type="text" 
-              placeholder="Search by make or model (e.g., Maruti, Nexon)..." 
+            <input
+              type="text"
+              placeholder="Search by make or model (e.g., Maruti, Nexon)..."
               className="w-full pl-16 pr-6 py-4 rounded-full bg-[#0a0a0a]/90 backdrop-blur-xl outline-none transition-all text-lg font-medium text-white placeholder-gray-400 relative z-0"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -80,14 +80,14 @@ const PricingPage = () => {
                 {filteredCars.map((car, index) => {
                   const [brand, ...modelParts] = car.name.split(' ');
                   const modelName = modelParts.join(' ');
-                  
+
                   const basicPrice = PRICING_MATRIX[car.category][SERVICES.BASIC];
                   const premiumPrice = PRICING_MATRIX[car.category][SERVICES.PREMIUM];
                   const completePrice = PRICING_MATRIX[car.category][SERVICES.COMPLETE];
 
                   return (
-                    <tr 
-                      key={car.id} 
+                    <tr
+                      key={car.id}
                       className="group hover:bg-gradient-to-r hover:from-white/5 hover:to-red-900/10 transition-all duration-300"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -99,10 +99,10 @@ const PricingPage = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         {getCategoryBadge(car.category)}
                       </td>
-                      
+
                       {/* Pricing Cells - Clickable */}
                       <td className="px-6 py-4 text-center">
-                        <button 
+                        <button
                           onClick={() => openModal(car, SERVICES.BASIC)}
                           className="w-full h-full py-2 px-3 rounded-lg hover:bg-white/10 text-gray-300 font-bold transition-all group-hover:text-white"
                         >
@@ -110,7 +110,7 @@ const PricingPage = () => {
                         </button>
                       </td>
                       <td className="px-6 py-4 text-center bg-red-500/5 group-hover:bg-red-500/10 transition-colors border-x border-red-500/5 group-hover:border-red-500/20">
-                        <button 
+                        <button
                           onClick={() => openModal(car, SERVICES.PREMIUM)}
                           className="w-full h-full py-2 px-3 rounded-lg hover:bg-red-500/20 text-red-500 font-extrabold text-lg transition-all scale-100 hover:scale-110 drop-shadow-[0_0_5px_rgba(220,38,38,0.4)]"
                         >
@@ -118,7 +118,7 @@ const PricingPage = () => {
                         </button>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <button 
+                        <button
                           onClick={() => openModal(car, SERVICES.COMPLETE)}
                           className="w-full h-full py-2 px-3 rounded-lg hover:bg-white/10 text-gray-300 font-bold transition-all group-hover:text-white"
                         >
@@ -131,7 +131,7 @@ const PricingPage = () => {
               </tbody>
             </table>
           </div>
-          
+
           {filteredCars.length === 0 && (
             <div className="text-center py-20 px-6">
               <p className="text-2xl font-bold text-gray-400 mb-2">No cars found matching "{searchQuery}"</p>

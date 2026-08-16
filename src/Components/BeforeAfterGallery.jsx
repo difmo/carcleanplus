@@ -22,23 +22,25 @@ const BeforeAfterGallery = () => {
   ];
 
   return (
-    <section className="pt-10 pb-8 bg-white">
+    <section className="pt-10 pb-8 bg-transparent relative z-10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-sans font-bold text-slate-800 mb-2">
-            See The Transformation<span className="text-blue-600">.</span>
+          <h2 className="text-4xl md:text-5xl font-sans font-bold text-white mb-2">
+            See The Transformation<span className="text-red-500">.</span>
           </h2>
-          <p className="text-slate-500 text-lg md:text-xl font-normal">
+          <p className="text-gray-400 text-lg md:text-xl font-normal">
             Real results, real shine.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
           {transformations.map((item, index) => (
-            <div key={index} className="w-full flex gap-2 shadow-premium rounded-xl">
+            <div key={index} className="w-full flex gap-2 rounded-[24px] bg-[#0a0a0a] border border-white/10 shadow-lg p-2 transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)]">
               {item.singleImage ? (
-                <div className="relative w-full rounded-xl overflow-hidden group flex items-center justify-center bg-gray-100 h-[250px] md:h-[300px]">
-                  <img src={item.singleImage} alt={`${item.title}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 relative z-0" />
+                <div className="relative w-full rounded-[16px] overflow-hidden group flex items-center justify-center bg-black h-[250px] md:h-[300px]">
+                  <img src={item.singleImage} alt={`${item.title}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 relative z-0 opacity-80 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-60"></div>
+                  <h3 className="absolute bottom-4 left-4 text-white font-bold text-lg tracking-wide drop-shadow-md">{item.title}</h3>
                 </div>
               ) : (
                 <>
@@ -48,7 +50,7 @@ const BeforeAfterGallery = () => {
                   </div>
                   <div className="relative w-1/2 rounded-xl overflow-hidden group h-[250px] md:h-[300px]">
                     <img src={item.after} alt={`After ${item.title}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md shadow">After</div>
+                    <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow">After</div>
                   </div>
                 </>
               )}

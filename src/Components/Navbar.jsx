@@ -62,7 +62,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm py-2 md:py-3" : "bg-transparent py-4 md:py-6"}`}>
+    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled ? "bg-[#050505]/90 backdrop-blur-md border-b border-white/5 py-2 md:py-3" : "bg-transparent py-4 md:py-6"}`}>
       <div className="w-[98%] max-w-7xl mx-auto">
         {/* Main Floating Pill */}
         <div

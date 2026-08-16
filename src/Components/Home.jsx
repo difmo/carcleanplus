@@ -11,7 +11,7 @@ import Footer from "./Footer"; // Assuming footer exists
 function Home() {
   return (
     <>
-      <div id="home" className="section bg-secondary min-h-screen relative">
+      <div id="home" className="section bg-[#050505] min-h-screen relative">
         <HeroSection />
         <TrustStats />
         <ServicesPricing />

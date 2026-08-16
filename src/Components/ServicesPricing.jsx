@@ -57,43 +57,56 @@ const ServicesPricing = () => {
   ];
 
   return (
-    <section id="services" className="pt-6 pb-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-gray-900 mb-4 tracking-tight">Premium Car Cleaning Services</h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">Experience the ultimate shine with our expertly crafted detailing packages, delivered right to your doorstep.</p>
+    <section id="services" className="pt-6 pb-20 bg-transparent relative z-10">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-white mb-4 tracking-tight">
+            Our Premium Services
+          </h2>
+          <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto font-medium">
+            Choose from our range of professional car care services.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 max-w-[1400px] mx-auto mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-xl flex flex-col justify-between overflow-hidden border border-gray-100 shadow-premium transition-all duration-300"
+              className="bg-[#0a0a0a]/80 backdrop-blur-xl rounded-[24px] border border-white/10 overflow-hidden shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(220,38,38,0.15)] hover:border-red-500/30 group flex flex-col"
             >
-              <div className="w-full h-40 md:h-32 xl:h-40 overflow-hidden relative">
-                <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-dark/5"></div>
+              <div className="h-[220px] w-full overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10"></div>
+                <img 
+                  src={service.image} 
+                  alt={service.name} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                />
+                <div className="absolute top-4 right-4 bg-red-600 text-white font-bold py-1.5 px-4 rounded-full text-sm z-20 shadow-lg">
+                  ₹{service.price}
+                </div>
               </div>
-              <div className="p-4 flex flex-col flex-grow justify-between text-center bg-white">
-                <div>
-                  <h3 className="text-sm xl:text-base font-bold text-gray-900 mb-1">{service.name}</h3>
-                  <p className="text-gray-500 text-xs mb-4 leading-relaxed">{service.description}</p>
-                </div>
-                <div>
-                  <div className="text-blue-600 font-extrabold text-lg xl:text-xl mb-3"><span className="text-xs text-gray-400 font-normal mr-1">Starts at</span>₹{service.price}</div>
-                  <button 
-                    onClick={() => openModal()}
-                    className="w-full py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs xl:text-sm font-bold shadow-md transition-colors duration-300"
-                  >
-                    Book Now
-                  </button>
-                </div>
+              
+              <div className="p-8 flex flex-col flex-grow relative z-20 -mt-6 bg-gradient-to-b from-transparent to-[#0a0a0a]">
+                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight group-hover:text-red-500 transition-colors">
+                  {service.name}
+                </h3>
+                <p className="text-gray-400 mb-8 leading-relaxed font-medium">
+                  {service.description}
+                </p>
+                
+                <button 
+                  onClick={() => openModal(null, service.id)}
+                  className="mt-auto flex items-center justify-center gap-2 w-full py-4 px-6 bg-white/5 hover:bg-red-600 text-white font-bold rounded-xl transition-all duration-300 border border-white/10 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.4)] group/btn"
+                >
+                  <span>Book Now</span>
+                  <FaArrowRight className="text-sm group-hover/btn:translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-4 flex justify-center">
+        <div className="text-center mt-12 flex justify-center">
           <button 
             onClick={() => openModal()}
             className="group relative flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.7)] border-b-4 border-red-800"
