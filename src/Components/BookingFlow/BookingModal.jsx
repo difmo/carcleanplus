@@ -2,7 +2,24 @@ import React, { useState } from 'react';
 import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, PRICING_MATRIX, getPrice } from '../../utils/pricingLogic';
 import { FaTimes, FaSearch, FaCar, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaCheckCircle } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
+import { SiSuzuki, SiHyundai, SiTata, SiHonda, SiToyota, SiVolkswagen, SiSkoda, SiKia, SiRenault, SiNissan, SiFord, SiJeep } from 'react-icons/si';
+
+const getCarIcon = (carName) => {
+  const name = carName.toLowerCase();
+  if (name.includes('maruti') || name.includes('suzuki')) return <SiSuzuki className="text-2xl" />;
+  if (name.includes('hyundai')) return <SiHyundai className="text-2xl" />;
+  if (name.includes('tata')) return <SiTata className="text-3xl" />;
+  if (name.includes('honda')) return <SiHonda className="text-3xl" />;
+  if (name.includes('toyota')) return <SiToyota className="text-3xl" />;
+  if (name.includes('volkswagen')) return <SiVolkswagen className="text-2xl" />;
+  if (name.includes('skoda')) return <SiSkoda className="text-2xl" />;
+  if (name.includes('kia')) return <SiKia className="text-3xl" />;
+  if (name.includes('renault')) return <SiRenault className="text-2xl" />;
+  if (name.includes('nissan')) return <SiNissan className="text-2xl" />;
+  if (name.includes('ford')) return <SiFord className="text-2xl" />;
+  if (name.includes('jeep')) return <SiJeep className="text-2xl" />;
+  return <FaCar className="text-2xl" />;
+};
 
 const BookingModal = () => {
   const { bookingState, updateBooking, nextStep, prevStep, setStep, closeModal, resetBooking } = useBooking();
@@ -20,22 +37,6 @@ const BookingModal = () => {
 
   const handleConfirmBooking = () => {
     setIsSubmitting(true);
-
-    const templateParams = {
-      to_name: "Car Clean Plus Admin",
-      from_name: bookingState.customerDetails.fullName,
-      car: `${bookingState.carModel.name} (${bookingState.carModel.category})`,
-      service: bookingState.service,
-      price: `₹${bookingState.finalPrice}`,
-      location: `${bookingState.location.address}, Pincode: ${bookingState.location.pincode}`,
-      datetime: `${bookingState.date} at ${bookingState.timeSlot}`,
-      contact: bookingState.customerDetails.mobile,
-      instructions: bookingState.customerDetails.instructions
-    };
-
-    // Assuming EmailJS is setup in FormContact.jsx, using generic keys for now.
-    // Real implementation requires actual Service ID and Template ID.
-    // For now, we will simulate a success response since we don't have the real keys handy here.
     setTimeout(() => {
       setIsSubmitting(false);
       setBookingConfirmed(true);
@@ -51,29 +52,41 @@ const BookingModal = () => {
     return 6;
   };
 
+  const stepLabels = ['CAR TYPE', 'SERVICE', 'ADD-ONS', 'DATE & TIME', 'DETAILS', 'CONFIRMATION'];
+
   const renderStepIndicator = () => {
     if (bookingConfirmed) return null;
     const maxStepAllowed = getMaxStepAllowed();
 
     return (
-      <div className="flex justify-between items-center mb-8 px-4">
+      <div className="flex justify-between items-start mb-10 px-2 md:px-8 relative">
+        {/* Background line */}
+        <div className="absolute top-[19px] left-[10%] right-[10%] h-[1px] bg-[#333] -z-10"></div>
+        
         {[1, 2, 3, 4, 5, 6].map((step, index) => {
           const isClickable = step <= maxStepAllowed && step !== currentStep;
+          const isCompleted = step < currentStep;
+          const isActive = step === currentStep;
+          
           return (
-            <React.Fragment key={step}>
+            <div key={step} className="flex flex-col items-center z-10 group relative w-16">
+              {/* Active gold line connecting from previous */}
+              {isCompleted && index < 5 && (
+                <div className="absolute top-[19px] left-[50%] w-[200%] h-[1px] bg-[#eab308] -z-10"></div>
+              )}
               <div
                 onClick={() => isClickable && setStep(step)}
-                title={isClickable ? `Go to step ${step}` : ''}
-                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm transition-all z-10 ${isClickable ? 'cursor-pointer hover:ring-2 hover:ring-accent/50 hover:scale-110' : ''} ${currentStep === step ? 'bg-accent text-white shadow-md scale-110 ring-4 ring-accent/20' : step <= maxStepAllowed ? 'bg-primary text-white cursor-pointer' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all mb-2 
+                ${isClickable ? 'cursor-pointer hover:ring-1 hover:ring-[#eab308]' : ''} 
+                ${isActive ? 'bg-[#0a0a0a] text-[#eab308] border border-[#eab308] shadow-[0_0_15px_rgba(234,179,8,0.2)]' : 
+                  isCompleted ? 'bg-[#111] text-gray-400 border border-[#333]' : 'bg-[#0a0a0a] text-gray-600 border border-[#333] cursor-not-allowed'}`}
               >
                 {step}
               </div>
-              {index < 5 && (
-                <div 
-                  className={`flex-1 h-[3px] mx-1 md:mx-2 rounded-full transition-colors duration-300 ${step < currentStep ? 'bg-primary' : 'bg-gray-200'}`} 
-                />
-              )}
-            </React.Fragment>
+              <span className={`text-[9px] md:text-[10px] tracking-wider uppercase font-semibold text-center leading-tight mt-1 ${isActive ? 'text-[#eab308]' : isCompleted ? 'text-gray-400' : 'text-gray-500'}`}>
+                {stepLabels[index]}
+              </span>
+            </div>
           );
         })}
       </div>
@@ -81,22 +94,22 @@ const BookingModal = () => {
   };
 
   const renderStep1 = () => (
-    <div className="animate-fade-in">
-      <h3 className="text-2xl font-bold mb-2">What type of car do you have?</h3>
-      <p className="text-gray-500 mb-6">Search your exact car model.</p>
+    <div className="animate-fade-in text-white">
+      <h3 className="text-2xl font-bold mb-2 text-white">What type of car do you have?</h3>
+      <p className="text-gray-400 mb-6 text-sm">Search your exact car model.</p>
 
       <div className="relative mb-6">
-        <FaSearch className="absolute left-4 top-4 text-gray-400" />
+        <FaSearch className="absolute left-4 top-4 text-[#eab308]" />
         <input
           type="text"
           placeholder="Search car model (e.g. Creta, Swift)"
-          className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none text-lg"
+          className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#eab308] rounded-lg focus:outline-none text-white placeholder-gray-600 transition-colors shadow-[0_0_10px_rgba(234,179,8,0.1)]"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      <div className="max-h-64 overflow-y-auto border border-gray-100 rounded-lg">
+      <div className="max-h-72 overflow-y-auto border border-[#333] rounded-xl bg-[#0a0a0a] custom-scrollbar">
         {filteredCars.map(car => (
           <div
             key={car.id}
@@ -104,14 +117,19 @@ const BookingModal = () => {
               updateBooking('carModel', car);
               nextStep();
             }}
-            className="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer flex justify-between items-center"
+            className="p-4 border-b border-[#222] hover:bg-[#111] cursor-pointer flex justify-between items-center transition-colors group"
           >
-            <span className="font-semibold text-dark">{car.name}</span>
-            <span className="text-xs bg-gray-200 px-2 py-1 rounded text-gray-600">{car.category}</span>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                {getCarIcon(car.name)}
+              </div>
+              <span className="font-medium text-gray-300 group-hover:text-white transition-colors">{car.name}</span>
+            </div>
+            <span className="text-[11px] border border-[#eab308]/30 text-[#eab308] px-3 py-1 rounded-md bg-transparent font-medium">{car.category}</span>
           </div>
         ))}
         {filteredCars.length === 0 && (
-          <div className="p-4 text-center text-gray-500">No car found. Please try another model.</div>
+          <div className="p-8 text-center text-gray-500">No car found. Please try another model.</div>
         )}
       </div>
     </div>
@@ -122,9 +140,9 @@ const BookingModal = () => {
     const category = bookingState.carModel.category;
 
     return (
-      <div className="animate-fade-in">
-        <h3 className="text-2xl font-bold mb-2">Select Your Wash</h3>
-        <p className="text-gray-500 mb-6">Prices shown for {bookingState.carModel.name} ({category})</p>
+      <div className="animate-fade-in text-white">
+        <h3 className="text-2xl font-bold mb-2 text-white">Select Your Wash</h3>
+        <p className="text-gray-400 mb-6 text-sm">Prices shown for {bookingState.carModel.name} ({category})</p>
 
         <div className="space-y-4">
           {[
@@ -138,13 +156,13 @@ const BookingModal = () => {
                 updateBooking('service', svc.id);
                 nextStep();
               }}
-              className={`p-5 rounded-xl border-2 cursor-pointer flex justify-between items-center transition-all ${bookingState.service === svc.id ? 'border-accent bg-accent/5' : 'border-gray-200 hover:border-gray-300'}`}
+              className={`p-5 rounded-xl border cursor-pointer flex justify-between items-center transition-all bg-[#0a0a0a] ${bookingState.service === svc.id ? 'border-[#eab308] bg-[#eab308]/5 shadow-[0_0_15px_rgba(234,179,8,0.1)]' : 'border-[#333] hover:border-[#555]'}`}
             >
               <div>
-                <h4 className={`font-bold text-lg ${svc.highlight ? 'text-accent' : 'text-dark'}`}>{svc.title}</h4>
-                <p className="text-sm text-gray-500">{svc.desc}</p>
+                <h4 className={`font-bold text-lg ${svc.highlight ? 'text-[#eab308]' : 'text-gray-200'}`}>{svc.title}</h4>
+                <p className="text-sm text-gray-500 mt-1">{svc.desc}</p>
               </div>
-              <div className="text-xl font-bold">
+              <div className="text-xl font-bold text-white">
                 ₹{getPrice(category, svc.id)}
               </div>
             </div>
@@ -155,26 +173,26 @@ const BookingModal = () => {
   };
 
   const renderStep3 = () => (
-    <div className="animate-fade-in">
-      <h3 className="text-2xl font-bold mb-2">Where should we come?</h3>
-      <p className="text-gray-500 mb-6">Enter your address details.</p>
+    <div className="animate-fade-in text-white">
+      <h3 className="text-2xl font-bold mb-2 text-white">Where should we come?</h3>
+      <p className="text-gray-400 mb-6 text-sm">Enter your address details.</p>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Complete Address (House/Flat, Street, Area)</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Complete Address (House/Flat, Street, Area)</label>
           <textarea
             rows="3"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.location.address}
             onChange={(e) => updateBooking('location', { ...bookingState.location, address: e.target.value })}
             placeholder="E.g. Flat 402, Signature Towers, Gomti Nagar"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Pincode</label>
           <input
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.location.pincode}
             onChange={(e) => updateBooking('location', { ...bookingState.location, pincode: e.target.value })}
             placeholder="E.g. 226010"
@@ -183,7 +201,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.location.address || !bookingState.location.pincode}
-          className="w-full btn-primary disabled:opacity-50 mt-4"
+          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
         >
           Next Step
         </button>
@@ -194,28 +212,28 @@ const BookingModal = () => {
   const renderStep4 = () => {
     const slots = ['08:00 AM - 10:00 AM', '10:00 AM - 12:00 PM', '12:00 PM - 02:00 PM', '02:00 PM - 04:00 PM', '04:00 PM - 06:00 PM'];
     return (
-      <div className="animate-fade-in">
-        <h3 className="text-2xl font-bold mb-2">Date & Time</h3>
-        <p className="text-gray-500 mb-6">When do you want the service?</p>
+      <div className="animate-fade-in text-white">
+        <h3 className="text-2xl font-bold mb-2 text-white">Date & Time</h3>
+        <p className="text-gray-400 mb-6 text-sm">When do you want the service?</p>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Select Date</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Select Date</label>
           <input
             type="date"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white custom-date-input"
             value={bookingState.date}
             onChange={(e) => updateBooking('date', e.target.value)}
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-3">Available Time Slots</label>
+          <label className="block text-sm font-medium text-gray-400 mb-3">Available Time Slots</label>
           <div className="grid grid-cols-2 gap-3">
             {slots.map(slot => (
               <div
                 key={slot}
                 onClick={() => updateBooking('timeSlot', slot)}
-                className={`p-3 text-center text-sm font-medium rounded-lg border cursor-pointer transition-colors ${bookingState.timeSlot === slot ? 'bg-accent text-white border-accent' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                className={`p-3 text-center text-sm font-medium rounded-lg border cursor-pointer transition-all bg-[#0a0a0a] ${bookingState.timeSlot === slot ? 'text-[#eab308] border-[#eab308] shadow-[0_0_10px_rgba(234,179,8,0.15)]' : 'border-[#333] text-gray-400 hover:border-[#555]'}`}
               >
                 {slot}
               </div>
@@ -225,7 +243,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.date || !bookingState.timeSlot}
-          className="w-full btn-primary disabled:opacity-50"
+          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-2 disabled:cursor-not-allowed"
         >
           Next Step
         </button>
@@ -234,34 +252,36 @@ const BookingModal = () => {
   };
 
   const renderStep5 = () => (
-    <div className="animate-fade-in">
-      <h3 className="text-2xl font-bold mb-2">Customer Details</h3>
-      <p className="text-gray-500 mb-6">We need this to contact you.</p>
+    <div className="animate-fade-in text-white">
+      <h3 className="text-2xl font-bold mb-2 text-white">Customer Details</h3>
+      <p className="text-gray-400 mb-6 text-sm">We need this to contact you.</p>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
           <input
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.fullName}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, fullName: e.target.value })}
+            placeholder="John Doe"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Mobile Number</label>
           <input
             type="tel"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.mobile}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, mobile: e.target.value })}
+            placeholder="+91 9876543210"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Special Instructions (Optional)</label>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Special Instructions (Optional)</label>
           <input
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:border-accent focus:outline-none"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.instructions}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, instructions: e.target.value })}
             placeholder="e.g. Call before arriving"
@@ -270,7 +290,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.customerDetails.fullName || !bookingState.customerDetails.mobile}
-          className="w-full btn-primary disabled:opacity-50 mt-4"
+          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
         >
           Review Booking
         </button>
@@ -279,37 +299,37 @@ const BookingModal = () => {
   );
 
   const renderStep6 = () => (
-    <div className="animate-fade-in">
-      <h3 className="text-2xl font-bold mb-6">Review Your Booking</h3>
+    <div className="animate-fade-in text-white">
+      <h3 className="text-2xl font-bold mb-6 text-white">Review Your Booking</h3>
 
-      <div className="bg-gray-50 p-5 rounded-xl border border-gray-200 mb-6 space-y-4">
-        <div className="flex justify-between border-b border-gray-200 pb-3">
+      <div className="bg-[#0a0a0a] p-5 rounded-xl border border-[#333] mb-6 space-y-4">
+        <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Car</span>
-          <span className="font-semibold text-right">{bookingState.carModel?.name} <span className="text-xs text-gray-400 block">{bookingState.carModel?.category}</span></span>
+          <span className="font-semibold text-right text-gray-200">{bookingState.carModel?.name} <span className="text-xs text-[#eab308] block font-medium">{bookingState.carModel?.category}</span></span>
         </div>
-        <div className="flex justify-between border-b border-gray-200 pb-3">
+        <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Service</span>
-          <span className="font-semibold text-accent">{bookingState.service}</span>
+          <span className="font-semibold text-[#eab308]">{bookingState.service}</span>
         </div>
-        <div className="flex justify-between border-b border-gray-200 pb-3">
+        <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Date & Time</span>
-          <span className="font-semibold text-right">{bookingState.date}<br /><span className="text-sm font-normal">{bookingState.timeSlot}</span></span>
+          <span className="font-semibold text-right text-gray-200">{bookingState.date}<br /><span className="text-sm font-normal text-gray-400">{bookingState.timeSlot}</span></span>
         </div>
         <div className="flex justify-between pb-1">
           <span className="text-gray-500">Location</span>
-          <span className="font-semibold text-right truncate w-48">{bookingState.location.address}</span>
+          <span className="font-semibold text-right text-gray-200 truncate w-48">{bookingState.location.address}</span>
         </div>
       </div>
 
-      <div className="bg-primary/5 p-4 rounded-xl border border-primary/20 flex justify-between items-center mb-6">
-        <span className="text-xl font-bold text-primary">Total Price</span>
-        <span className="text-3xl font-bold text-dark">₹{bookingState.finalPrice}</span>
+      <div className="bg-[#eab308]/10 p-4 rounded-xl border border-[#eab308]/30 flex justify-between items-center mb-6">
+        <span className="text-xl font-bold text-[#eab308]">Total Price</span>
+        <span className="text-3xl font-bold text-white">₹{bookingState.finalPrice}</span>
       </div>
 
       <button
         onClick={handleConfirmBooking}
         disabled={isSubmitting}
-        className="w-full btn-primary py-4 text-lg"
+        className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-4 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 text-lg shadow-[0_0_20px_rgba(234,179,8,0.2)] disabled:cursor-not-allowed"
       >
         {isSubmitting ? 'Confirming...' : 'CONFIRM & BOOK'}
       </button>
@@ -317,18 +337,18 @@ const BookingModal = () => {
   );
 
   const renderSuccess = () => (
-    <div className="text-center py-8 animate-fade-in">
-      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+    <div className="text-center py-8 animate-fade-in text-white">
+      <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/30">
         <FaCheckCircle className="text-5xl text-green-500" />
       </div>
-      <h2 className="text-3xl font-bold text-dark mb-2">Booking Confirmed!</h2>
-      <p className="text-gray-500 mb-8">Thank you for choosing Car Clean Plus. You will receive a confirmation message shortly.</p>
+      <h2 className="text-3xl font-bold text-[#eab308] mb-2">Booking Confirmed!</h2>
+      <p className="text-gray-400 mb-8 text-sm">Thank you for choosing Car Clean Plus. You will receive a confirmation message shortly.</p>
 
-      <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-8 text-left">
-        <p className="text-sm text-gray-500 mb-1">Booking ID</p>
-        <p className="font-bold text-lg text-dark mb-4">CCP-{Math.floor(Math.random() * 90000) + 10000}</p>
-        <p className="text-sm text-gray-700"><strong>Service:</strong> {bookingState.service} for {bookingState.carModel?.name}</p>
-        <p className="text-sm text-gray-700"><strong>Time:</strong> {bookingState.date} at {bookingState.timeSlot}</p>
+      <div className="bg-[#0a0a0a] p-5 rounded-xl border border-[#333] mb-8 text-left">
+        <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Booking ID</p>
+        <p className="font-bold text-xl text-white mb-4">CCP-{Math.floor(Math.random() * 90000) + 10000}</p>
+        <p className="text-sm text-gray-300 mb-2"><strong className="text-gray-500">Service:</strong> {bookingState.service} for {bookingState.carModel?.name}</p>
+        <p className="text-sm text-gray-300"><strong className="text-gray-500">Time:</strong> {bookingState.date} at {bookingState.timeSlot}</p>
       </div>
 
       <button
@@ -336,7 +356,7 @@ const BookingModal = () => {
           resetBooking();
           closeModal();
         }}
-        className="btn-outline w-full"
+        className="border-2 border-[#eab308] text-[#eab308] hover:bg-[#eab308] hover:text-[#0a0a0a] font-bold py-3 px-8 rounded-lg transition-all w-full"
       >
         Done
       </button>
@@ -344,48 +364,82 @@ const BookingModal = () => {
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-10 animate-fade-in">
-      <div className="bg-white rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] w-full max-w-4xl max-h-[95vh] min-h-[80vh] md:min-h-[70vh] flex flex-col relative overflow-hidden transform transition-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-10 animate-fade-in">
+      <div className="bg-[#111111] rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] w-full max-w-lg max-h-[95vh] min-h-[85vh] flex flex-col relative overflow-hidden transform transition-all border border-[#222]">
+        
         {/* Header */}
         {!bookingConfirmed && (
-          <div className="flex justify-between items-center p-6 md:p-8 bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white flex-shrink-0 border-b border-gray-700 shadow-lg relative overflow-hidden">
-            {/* Subtle glow effect */}
-            <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-50 pointer-events-none"></div>
-
-            <div className="relative z-10">
-              <h2 className="text-2xl md:text-3xl font-heading font-extrabold tracking-tight text-white mb-1 drop-shadow-md">Book Your Premium Wash</h2>
-              <p className="text-gray-300 text-sm font-medium">Get your car shining in just a few clicks.</p>
+          <div className="flex justify-between items-start p-6 md:p-8 bg-[#0a0a0a] flex-shrink-0 border-b border-[#222] relative overflow-hidden">
+            {/* Background elements to simulate the car image */}
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-[#1a1a1a] to-transparent opacity-50"></div>
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#eab308] rounded-full blur-[100px] opacity-10"></div>
+            
+            <div className="relative z-10 flex gap-4 items-center">
+              <div className="text-[#eab308] text-4xl">
+                <FaCar className="drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+              </div>
+              <div>
+                <h2 className="text-xs md:text-sm font-semibold tracking-widest text-gray-400 uppercase mb-1">Book Your</h2>
+                <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#eab308] mb-1 tracking-wide drop-shadow-md">PREMIUM WASH</h1>
+                <p className="text-gray-400 text-sm font-medium">Get your car shining in just a few clicks.</p>
+              </div>
             </div>
-            <button onClick={closeModal} className="relative z-10 text-gray-400 hover:text-white transition-all bg-white/10 p-2.5 rounded-full hover:bg-white/20 hover:scale-110 shadow-sm">
-              <FaTimes className="text-xl" />
+            <button onClick={closeModal} className="relative z-10 text-[#eab308] border border-[#eab308]/30 hover:text-[#111] transition-all bg-[#111] p-2.5 rounded-full hover:bg-[#eab308] shadow-sm">
+              <FaTimes className="text-lg" />
             </button>
           </div>
         )}
 
         {/* Content */}
-        <div className="p-6 md:p-12 overflow-y-auto flex-1 custom-scrollbar">
+        <div className="p-6 md:p-10 overflow-y-auto flex-1 custom-scrollbar">
           {renderStepIndicator()}
 
-          {bookingConfirmed && renderSuccess()}
-          {!bookingConfirmed && currentStep === 1 && renderStep1()}
-          {!bookingConfirmed && currentStep === 2 && renderStep2()}
-          {!bookingConfirmed && currentStep === 3 && renderStep3()}
-          {!bookingConfirmed && currentStep === 4 && renderStep4()}
-          {!bookingConfirmed && currentStep === 5 && renderStep5()}
-          {!bookingConfirmed && currentStep === 6 && renderStep6()}
+          <div className="max-w-2xl mx-auto">
+            {bookingConfirmed && renderSuccess()}
+            {!bookingConfirmed && currentStep === 1 && renderStep1()}
+            {!bookingConfirmed && currentStep === 2 && renderStep2()}
+            {!bookingConfirmed && currentStep === 3 && renderStep3()}
+            {!bookingConfirmed && currentStep === 4 && renderStep4()}
+            {!bookingConfirmed && currentStep === 5 && renderStep5()}
+            {!bookingConfirmed && currentStep === 6 && renderStep6()}
+          </div>
         </div>
 
         {/* Footer Navigation */}
         {!bookingConfirmed && currentStep > 1 && currentStep < 7 && (
-          <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-center flex-shrink-0">
-            <button onClick={prevStep} className="flex items-center gap-2 text-gray-500 font-bold hover:text-gray-900 transition-colors text-sm uppercase tracking-wider">
+          <div className="p-5 bg-[#0a0a0a] border-t border-[#222] flex justify-center flex-shrink-0">
+            <button onClick={prevStep} className="flex items-center gap-2 text-gray-500 font-semibold hover:text-[#eab308] transition-colors text-xs uppercase tracking-wider">
               &larr; Go Back to Previous Step
             </button>
           </div>
         )}
       </div>
+      
+      {/* Required css for custom-scrollbar and date input */}
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #0a0a0a;
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #333;
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #eab308;
+        }
+        
+        .custom-date-input::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 };
 
 export default BookingModal;
+

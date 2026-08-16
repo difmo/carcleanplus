@@ -83,7 +83,9 @@ const HowItWorks = () => {
 
               {/* Text Section */}
               <div className="px-6 pb-8 w-full mt-2">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                <h3 className="text-xl font-serif italic font-extrabold text-gray-900 mb-3 underline decoration-red-500 decoration-4 underline-offset-[6px]">
+                  {step.title}
+                </h3>
                 <p className="text-gray-500 text-base leading-relaxed">{step.description}</p>
               </div>
             </div>
