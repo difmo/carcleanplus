@@ -5,20 +5,28 @@ import ServicesPricing from "./ServicesPricing";
 import HowItWorks from "./HowItWorks";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
 import BeforeAfterGallery from "./BeforeAfterGallery";
+
 import Testimonials from "./Testimonials";
 import Footer from "./Footer"; // Assuming footer exists
 
 function Home() {
   return (
     <>
-      <div id="home" className="section bg-[#050505] min-h-screen relative">
+      <div id="home" className="section bg-dark min-h-screen relative">
         <HeroSection />
         <TrustStats />
-        <ServicesPricing />
-        <WhyChouseUsComponents />
-        <BeforeAfterGallery />
-        <HowItWorks />
-        <Testimonials />
+        
+        <div id="pricing">
+          <ServicesPricing />
+        </div>
+        
+        <div id="gallery">
+          <BeforeAfterGallery />
+        </div>
+        
+        <div id="how-it-works">
+          <HowItWorks />
+        </div>
         
       </div>
     </>

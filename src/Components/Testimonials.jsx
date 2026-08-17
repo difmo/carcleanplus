@@ -66,35 +66,35 @@ const Testimonials = () => {
         {/* Header Area */}
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-white mb-2 tracking-tight">
-            Hear From Our <span className="text-red-500">Happy Customers</span>
+            Hear From Our <span className="text-primary">Happy Customers</span>
           </h2>
           
           <p className="text-gray-400 text-xs md:text-sm max-w-2xl mx-auto font-medium leading-relaxed mb-4">
-            Don't just take our word for it. Discover why car owners across Lucknow trust us for their <span className="text-red-500 font-bold">premium detailing</span> needs.
+            Don't just take our word for it. Discover why car owners across Lucknow trust us for their <span className="text-primary font-bold">premium detailing</span> needs.
           </p>
           
           {/* Subtle Car Separator */}
           <div className="flex items-center justify-center gap-3">
-             <div className="h-[1px] w-6 bg-red-500/30"></div>
-             <FaCar className="text-red-500 text-base" />
-             <div className="h-[1px] w-6 bg-red-500/30"></div>
+             <div className="h-[1px] w-6 bg-primary-light/30"></div>
+             <FaCar className="text-primary text-base" />
+             <div className="h-[1px] w-6 bg-primary-light/30"></div>
           </div>
         </div>
 
         {/* Testimonial Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-5xl mx-auto mb-10">
           {reviews.map((review, index) => (
-            <div key={index} className="flex flex-col bg-[#0a0a0a]/80 backdrop-blur-xl rounded-[24px] overflow-hidden shadow-2xl border border-white/10 hover:shadow-[0_15px_40px_-15px_rgba(220,38,38,0.2)] hover:border-red-500/30 transition-all duration-300 h-full group">
+            <div key={index} className="flex flex-col bg-[#0a0a0a]/80 backdrop-blur-xl rounded-[24px] overflow-hidden shadow-2xl border border-white/10 hover:shadow-[0_15px_40px_-15px_rgba(0,82,204,0.7)] hover:border-primary-light/30 transition-all duration-300 h-full group">
               
               {/* Content Top */}
               <div className="p-5 flex flex-col flex-grow relative">
                 
                 {/* Top Row: Quote Icon & Profile Image */}
                 <div className="flex justify-between items-start mb-4">
-                  <FaQuoteLeft className="text-3xl text-red-500/20 group-hover:text-red-500/40 transition-colors" />
+                  <FaQuoteLeft className="text-3xl text-primary/20 group-hover:text-primary/40 transition-colors" />
                   
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-full p-0.5 border-2 border-red-500/30 group-hover:border-red-500 transition-colors">
+                    <div className="w-12 h-12 rounded-full p-0.5 border-2 border-primary-light/30 group-hover:border-primary-light transition-colors">
                       <img 
                         src={review.image} 
                         alt={review.name} 
@@ -103,7 +103,7 @@ const Testimonials = () => {
                     </div>
                     {/* Verified Badge */}
                     <div className="absolute -bottom-1 -right-1 bg-[#0a0a0a] rounded-full p-0.5">
-                      <FaCheckCircle className="text-red-500 text-sm" />
+                      <FaCheckCircle className="text-primary text-sm" />
                     </div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ const Testimonials = () => {
                 <div className="mb-2">
                   <h4 className="font-extrabold text-white text-base">{review.name}</h4>
                   <div className="flex items-center text-gray-400 text-[10px] md:text-xs font-medium">
-                    <FaMapMarkerAlt className="text-red-500 mr-1" />
+                    <FaMapMarkerAlt className="text-primary mr-1" />
                     {review.location}
                   </div>
                 </div>
@@ -146,11 +146,11 @@ const Testimonials = () => {
         </div>
 
         {/* Bottom Trust Banner */}
-        <div className="bg-[#0a0a0a]/80 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-[0_5px_20px_-10px_rgba(220,38,38,0.2)] border border-white/10 p-4 max-w-5xl mx-auto">
+        <div className="bg-[#0a0a0a]/80 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-[0_5px_20px_-10px_rgba(0,82,204,0.7)] border border-white/10 p-4 max-w-5xl mx-auto">
            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10">
               
               <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0 first:pt-0">
-                 <div className="p-2 bg-red-500/10 text-red-500 rounded-full shrink-0">
+                 <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
                     <FaCheckCircle className="text-sm md:text-base" />
                  </div>
                  <div>
@@ -160,7 +160,7 @@ const Testimonials = () => {
               </div>
 
               <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
-                 <div className="p-2 bg-red-500/10 text-red-500 rounded-full shrink-0">
+                 <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
                     <FaTrophy className="text-sm md:text-base" />
                  </div>
                  <div>
@@ -170,7 +170,7 @@ const Testimonials = () => {
               </div>
 
               <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
-                 <div className="p-2 bg-red-500/10 text-red-500 rounded-full shrink-0">
+                 <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
                     <FaClock className="text-sm md:text-base" />
                  </div>
                  <div>
@@ -180,7 +180,7 @@ const Testimonials = () => {
               </div>
 
               <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
-                 <div className="p-2 bg-red-500/10 text-red-500 rounded-full shrink-0">
+                 <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
                     <FaHeart className="text-sm md:text-base" />
                  </div>
                  <div>

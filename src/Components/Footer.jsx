@@ -49,7 +49,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full font-sans bg-[#050b14] relative text-gray-300 border-t border-gray-900 mt-20 pt-10">
+    <footer id="contact-us" className="w-full font-sans bg-[#050b14] relative text-gray-300 border-t border-gray-900 mt-20 pt-10">
 
       {/* Background Image Overlay (Right side car fade) */}
       <div
@@ -65,7 +65,7 @@ const Footer = () => {
 
       {/* Floating CTA Banner */}
       <div className="mx-auto px-2 sm:px-4 max-w-[1920px] w-full relative z-20 -mt-24 mb-12">
-        <div className="relative overflow-hidden bg-[#050505] rounded-3xl py-3 px-5 md:py-3 md:px-8 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-gray-800/80">
+        <div className="relative overflow-hidden bg-dark rounded-3xl py-3 px-5 md:py-3 md:px-8 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-dark-light/80">
           
           {/* Background Image with Gradient Overlay */}
           <div className="absolute inset-0 z-0">
@@ -89,9 +89,9 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto relative z-10">
             <a 
               href="tel:+916392798847" 
-              className="flex items-center justify-center gap-3 px-4 py-2 bg-[#0a0a0a] hover:bg-[#111] text-white rounded-xl transition-all duration-300 border border-gray-800 hover:border-gray-600 group"
+              className="flex items-center justify-center gap-3 px-4 py-2 bg-[#0a0a0a] hover:bg-[#111] text-white rounded-xl transition-all duration-300 border border-dark-light hover:border-gray-600 group"
             >
-              <div className="w-8 h-8 rounded-full bg-black border border-gray-800 flex items-center justify-center group-hover:border-green-500/50 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-black border border-dark-light flex items-center justify-center group-hover:border-green-500/50 transition-colors">
                 <FaPhoneAlt className="text-[10px] text-green-500" />
               </div>
               <div className="text-left pr-2">
@@ -149,13 +149,13 @@ const Footer = () => {
               <a href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-colors text-gray-400">
                 <FaWhatsapp size={16} />
               </a>
-              <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 transition-colors text-gray-400">
+              <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-primary-light hover:text-primary transition-colors text-gray-400">
                 <FaYoutube size={16} />
               </a>
             </div>
 
             {/* Trusted Badge */}
-            <div className="bg-[#0f172a] rounded-xl p-4 flex items-center gap-4 border border-gray-800 shadow-md">
+            <div className="bg-[#0f172a] rounded-xl p-4 flex items-center gap-4 border border-dark-light shadow-md">
               <FaShieldAlt className="text-3xl text-blue-500" />
               <div>
                 <p className="text-white font-bold text-sm">Trusted by 1000+ Customers</p>
@@ -168,7 +168,7 @@ const Footer = () => {
           <div>
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-gray-800"><FaLink size={12} /></div>
+                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-dark-light"><FaLink size={12} /></div>
                 <h4 className="text-white font-bold text-sm tracking-widest uppercase">Quick Links</h4>
               </div>
               <div className="h-1 w-8 bg-blue-600 rounded-full ml-10"></div>
@@ -189,7 +189,7 @@ const Footer = () => {
           <div>
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-gray-800"><FaMapMarkerAlt size={12} /></div>
+                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-dark-light"><FaMapMarkerAlt size={12} /></div>
                 <h4 className="text-white font-bold text-sm tracking-widest uppercase">Service Areas</h4>
               </div>
               <div className="h-1 w-8 bg-blue-600 rounded-full ml-10"></div>
@@ -216,7 +216,7 @@ const Footer = () => {
           <div>
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-gray-800"><FaPhoneAlt size={12} /></div>
+                <div className="p-1.5 bg-gray-800/50 rounded-lg text-blue-500 border border-dark-light"><FaPhoneAlt size={12} /></div>
                 <h4 className="text-white font-bold text-sm tracking-widest uppercase">Contact Us</h4>
               </div>
               <div className="h-1 w-8 bg-blue-600 rounded-full ml-10"></div>
@@ -275,7 +275,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright Bar */}
-      <div className="border-t border-gray-800 bg-[#03060a] py-4 relative z-10">
+      <div className="border-t border-dark-light bg-[#03060a] py-4 relative z-10">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm text-center md:text-left">
             © 2025 Car Clean Plus. All Rights Reserved. <span className="hidden md:inline mx-2">|</span> <br className="md:hidden" /> Merchant ID: TPb4N2383whw9M

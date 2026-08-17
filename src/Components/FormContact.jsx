@@ -87,7 +87,7 @@ function FormContact() {
                 className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
               />
               {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name}</p>
+                <p className="text-primary text-sm">{errors.name}</p>
               )}
             </div>
 
@@ -104,7 +104,7 @@ function FormContact() {
                 className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
               />
               {errors.lastname && (
-                <p className="text-red-500 text-sm">{errors.lastname}</p>
+                <p className="text-primary text-sm">{errors.lastname}</p>
               )}
             </div>
           </div>
@@ -123,7 +123,7 @@ function FormContact() {
                 className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
               />
               {errors.mobileNumber && (
-                <p className="text-red-500 text-sm">{errors.mobileNumber}</p>
+                <p className="text-primary text-sm">{errors.mobileNumber}</p>
               )}
             </div>
 
@@ -140,7 +140,7 @@ function FormContact() {
                 className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email}</p>
+                <p className="text-primary text-sm">{errors.email}</p>
               )}
             </div>
           </div>
@@ -166,7 +166,7 @@ function FormContact() {
               ))}
             </div>
             {errors.subject && (
-              <p className="text-red-500 text-sm">{errors.subject}</p>
+              <p className="text-primary text-sm">{errors.subject}</p>
             )}
           </div>
 
@@ -183,14 +183,14 @@ function FormContact() {
               rows="2"
             />
             {errors.message && (
-              <p className="text-red-500 text-sm">{errors.message}</p>
+              <p className="text-primary text-sm">{errors.message}</p>
             )}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 text-white font-bold bg-red-500 hover:bg-red-700 transition duration-300 rounded-md"
+            className="w-full py-3 text-white font-bold bg-primary-light hover:bg-primary-dark transition duration-300 rounded-md"
           >
             Submit
           </button>

@@ -56,7 +56,7 @@ const ImageSlider = () => {
         />
 
         {/* Button */}
-        <button className="w-full bg-red-500 text-white p-3 rounded hover:bg-red-600 transition duration-300">
+        <button className="w-full bg-primary-light text-white p-3 rounded hover:bg-primary transition duration-300">
           Check Prices for Free
         </button>
 

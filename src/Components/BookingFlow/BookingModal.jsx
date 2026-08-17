@@ -72,18 +72,18 @@ const BookingModal = () => {
             <div key={step} className="flex flex-col items-center z-10 group relative w-16">
               {/* Active gold line connecting from previous */}
               {isCompleted && index < 5 && (
-                <div className="absolute top-[19px] left-[50%] w-[200%] h-[1px] bg-[#eab308] -z-10"></div>
+                <div className="absolute top-[19px] left-[50%] w-[200%] h-[1px] bg-[#0052cc] -z-10"></div>
               )}
               <div
                 onClick={() => isClickable && setStep(step)}
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all mb-2 
-                ${isClickable ? 'cursor-pointer hover:ring-1 hover:ring-[#eab308]' : ''} 
-                ${isActive ? 'bg-[#0a0a0a] text-[#eab308] border border-[#eab308] shadow-[0_0_15px_rgba(234,179,8,0.2)]' : 
+                ${isClickable ? 'cursor-pointer hover:ring-1 hover:ring-[#0052cc]' : ''} 
+                ${isActive ? 'bg-[#0a0a0a] text-[#0052cc] border border-[#0052cc] shadow-[0_0_15px_rgba(0,82,204,0.2)]' : 
                   isCompleted ? 'bg-[#111] text-gray-400 border border-[#333]' : 'bg-[#0a0a0a] text-gray-600 border border-[#333] cursor-not-allowed'}`}
               >
                 {step}
               </div>
-              <span className={`text-[9px] md:text-[10px] tracking-wider uppercase font-semibold text-center leading-tight mt-1 ${isActive ? 'text-[#eab308]' : isCompleted ? 'text-gray-400' : 'text-gray-500'}`}>
+              <span className={`text-[9px] md:text-[10px] tracking-wider uppercase font-semibold text-center leading-tight mt-1 ${isActive ? 'text-[#0052cc]' : isCompleted ? 'text-gray-400' : 'text-gray-500'}`}>
                 {stepLabels[index]}
               </span>
             </div>
@@ -99,11 +99,11 @@ const BookingModal = () => {
       <p className="text-gray-400 mb-6 text-sm">Search your exact car model.</p>
 
       <div className="relative mb-6">
-        <FaSearch className="absolute left-4 top-4 text-[#eab308]" />
+        <FaSearch className="absolute left-4 top-4 text-[#0052cc]" />
         <input
           type="text"
           placeholder="Search car model (e.g. Creta, Swift)"
-          className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#eab308] rounded-lg focus:outline-none text-white placeholder-gray-600 transition-colors shadow-[0_0_10px_rgba(234,179,8,0.1)]"
+          className="w-full pl-12 pr-4 py-3 bg-[#0a0a0a] border border-[#0052cc] rounded-lg focus:outline-none text-white placeholder-gray-600 transition-colors shadow-[0_0_10px_rgba(0,82,204,0.1)]"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -125,7 +125,7 @@ const BookingModal = () => {
               </div>
               <span className="font-medium text-gray-300 group-hover:text-white transition-colors">{car.name}</span>
             </div>
-            <span className="text-[11px] border border-[#eab308]/30 text-[#eab308] px-3 py-1 rounded-md bg-transparent font-medium">{car.category}</span>
+            <span className="text-[11px] border border-[#0052cc]/30 text-[#0052cc] px-3 py-1 rounded-md bg-transparent font-medium">{car.category}</span>
           </div>
         ))}
         {filteredCars.length === 0 && (
@@ -156,10 +156,10 @@ const BookingModal = () => {
                 updateBooking('service', svc.id);
                 nextStep();
               }}
-              className={`p-5 rounded-xl border cursor-pointer flex justify-between items-center transition-all bg-[#0a0a0a] ${bookingState.service === svc.id ? 'border-[#eab308] bg-[#eab308]/5 shadow-[0_0_15px_rgba(234,179,8,0.1)]' : 'border-[#333] hover:border-[#555]'}`}
+              className={`p-5 rounded-xl border cursor-pointer flex justify-between items-center transition-all bg-[#0a0a0a] ${bookingState.service === svc.id ? 'border-[#0052cc] bg-[#0052cc]/5 shadow-[0_0_15px_rgba(0,82,204,0.1)]' : 'border-[#333] hover:border-[#555]'}`}
             >
               <div>
-                <h4 className={`font-bold text-lg ${svc.highlight ? 'text-[#eab308]' : 'text-gray-200'}`}>{svc.title}</h4>
+                <h4 className={`font-bold text-lg ${svc.highlight ? 'text-[#0052cc]' : 'text-gray-200'}`}>{svc.title}</h4>
                 <p className="text-sm text-gray-500 mt-1">{svc.desc}</p>
               </div>
               <div className="text-xl font-bold text-white">
@@ -182,7 +182,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Complete Address (House/Flat, Street, Area)</label>
           <textarea
             rows="3"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.location.address}
             onChange={(e) => updateBooking('location', { ...bookingState.location, address: e.target.value })}
             placeholder="E.g. Flat 402, Signature Towers, Gomti Nagar"
@@ -192,7 +192,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Pincode</label>
           <input
             type="text"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.location.pincode}
             onChange={(e) => updateBooking('location', { ...bookingState.location, pincode: e.target.value })}
             placeholder="E.g. 226010"
@@ -201,7 +201,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.location.address || !bookingState.location.pincode}
-          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
+          className="w-full bg-[#0052cc] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
         >
           Next Step
         </button>
@@ -220,7 +220,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Select Date</label>
           <input
             type="date"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white custom-date-input"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white custom-date-input"
             value={bookingState.date}
             onChange={(e) => updateBooking('date', e.target.value)}
           />
@@ -233,7 +233,7 @@ const BookingModal = () => {
               <div
                 key={slot}
                 onClick={() => updateBooking('timeSlot', slot)}
-                className={`p-3 text-center text-sm font-medium rounded-lg border cursor-pointer transition-all bg-[#0a0a0a] ${bookingState.timeSlot === slot ? 'text-[#eab308] border-[#eab308] shadow-[0_0_10px_rgba(234,179,8,0.15)]' : 'border-[#333] text-gray-400 hover:border-[#555]'}`}
+                className={`p-3 text-center text-sm font-medium rounded-lg border cursor-pointer transition-all bg-[#0a0a0a] ${bookingState.timeSlot === slot ? 'text-[#0052cc] border-[#0052cc] shadow-[0_0_10px_rgba(0,82,204,0.15)]' : 'border-[#333] text-gray-400 hover:border-[#555]'}`}
               >
                 {slot}
               </div>
@@ -243,7 +243,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.date || !bookingState.timeSlot}
-          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-2 disabled:cursor-not-allowed"
+          className="w-full bg-[#0052cc] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-2 disabled:cursor-not-allowed"
         >
           Next Step
         </button>
@@ -261,7 +261,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
           <input
             type="text"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.fullName}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, fullName: e.target.value })}
             placeholder="John Doe"
@@ -271,7 +271,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Mobile Number</label>
           <input
             type="tel"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.mobile}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, mobile: e.target.value })}
             placeholder="+91 9876543210"
@@ -281,7 +281,7 @@ const BookingModal = () => {
           <label className="block text-sm font-medium text-gray-400 mb-2">Special Instructions (Optional)</label>
           <input
             type="text"
-            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#eab308] focus:outline-none text-white placeholder-gray-600"
+            className="w-full p-3 bg-[#0a0a0a] border border-[#333] rounded-lg focus:border-[#0052cc] focus:outline-none text-white placeholder-gray-600"
             value={bookingState.customerDetails.instructions}
             onChange={(e) => updateBooking('customerDetails', { ...bookingState.customerDetails, instructions: e.target.value })}
             placeholder="e.g. Call before arriving"
@@ -290,7 +290,7 @@ const BookingModal = () => {
         <button
           onClick={nextStep}
           disabled={!bookingState.customerDetails.fullName || !bookingState.customerDetails.mobile}
-          className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
+          className="w-full bg-[#0052cc] text-[#0a0a0a] font-bold py-3 px-6 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 mt-4 disabled:cursor-not-allowed"
         >
           Review Booking
         </button>
@@ -305,11 +305,11 @@ const BookingModal = () => {
       <div className="bg-[#0a0a0a] p-5 rounded-xl border border-[#333] mb-6 space-y-4">
         <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Car</span>
-          <span className="font-semibold text-right text-gray-200">{bookingState.carModel?.name} <span className="text-xs text-[#eab308] block font-medium">{bookingState.carModel?.category}</span></span>
+          <span className="font-semibold text-right text-gray-200">{bookingState.carModel?.name} <span className="text-xs text-[#0052cc] block font-medium">{bookingState.carModel?.category}</span></span>
         </div>
         <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Service</span>
-          <span className="font-semibold text-[#eab308]">{bookingState.service}</span>
+          <span className="font-semibold text-[#0052cc]">{bookingState.service}</span>
         </div>
         <div className="flex justify-between border-b border-[#222] pb-3">
           <span className="text-gray-500">Date & Time</span>
@@ -321,15 +321,15 @@ const BookingModal = () => {
         </div>
       </div>
 
-      <div className="bg-[#eab308]/10 p-4 rounded-xl border border-[#eab308]/30 flex justify-between items-center mb-6">
-        <span className="text-xl font-bold text-[#eab308]">Total Price</span>
+      <div className="bg-[#0052cc]/10 p-4 rounded-xl border border-[#0052cc]/30 flex justify-between items-center mb-6">
+        <span className="text-xl font-bold text-[#0052cc]">Total Price</span>
         <span className="text-3xl font-bold text-white">₹{bookingState.finalPrice}</span>
       </div>
 
       <button
         onClick={handleConfirmBooking}
         disabled={isSubmitting}
-        className="w-full bg-[#eab308] text-[#0a0a0a] font-bold py-4 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 text-lg shadow-[0_0_20px_rgba(234,179,8,0.2)] disabled:cursor-not-allowed"
+        className="w-full bg-[#0052cc] text-[#0a0a0a] font-bold py-4 rounded-lg transition-all hover:bg-[#d4af37] disabled:opacity-50 text-lg shadow-[0_0_20px_rgba(0,82,204,0.2)] disabled:cursor-not-allowed"
       >
         {isSubmitting ? 'Confirming...' : 'CONFIRM & BOOK'}
       </button>
@@ -341,7 +341,7 @@ const BookingModal = () => {
       <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/30">
         <FaCheckCircle className="text-5xl text-green-500" />
       </div>
-      <h2 className="text-3xl font-bold text-[#eab308] mb-2">Booking Confirmed!</h2>
+      <h2 className="text-3xl font-bold text-[#0052cc] mb-2">Booking Confirmed!</h2>
       <p className="text-gray-400 mb-8 text-sm">Thank you for choosing Car Clean Plus. You will receive a confirmation message shortly.</p>
 
       <div className="bg-[#0a0a0a] p-5 rounded-xl border border-[#333] mb-8 text-left">
@@ -356,7 +356,7 @@ const BookingModal = () => {
           resetBooking();
           closeModal();
         }}
-        className="border-2 border-[#eab308] text-[#eab308] hover:bg-[#eab308] hover:text-[#0a0a0a] font-bold py-3 px-8 rounded-lg transition-all w-full"
+        className="border-2 border-[#0052cc] text-[#0052cc] hover:bg-[#0052cc] hover:text-[#0a0a0a] font-bold py-3 px-8 rounded-lg transition-all w-full"
       >
         Done
       </button>
@@ -372,19 +372,19 @@ const BookingModal = () => {
           <div className="flex justify-between items-start p-6 md:p-8 bg-[#0a0a0a] flex-shrink-0 border-b border-[#222] relative overflow-hidden">
             {/* Background elements to simulate the car image */}
             <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-[#1a1a1a] to-transparent opacity-50"></div>
-            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#eab308] rounded-full blur-[100px] opacity-10"></div>
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#0052cc] rounded-full blur-[100px] opacity-10"></div>
             
             <div className="relative z-10 flex gap-4 items-center">
-              <div className="text-[#eab308] text-4xl">
-                <FaCar className="drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+              <div className="text-[#0052cc] text-4xl">
+                <FaCar className="drop-shadow-[0_0_8px_rgba(0,82,204,0.5)]" />
               </div>
               <div>
                 <h2 className="text-xs md:text-sm font-semibold tracking-widest text-gray-400 uppercase mb-1">Book Your</h2>
-                <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#eab308] mb-1 tracking-wide drop-shadow-md">PREMIUM WASH</h1>
+                <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#0052cc] mb-1 tracking-wide drop-shadow-md">PREMIUM WASH</h1>
                 <p className="text-gray-400 text-sm font-medium">Get your car shining in just a few clicks.</p>
               </div>
             </div>
-            <button onClick={closeModal} className="relative z-10 text-[#eab308] border border-[#eab308]/30 hover:text-[#111] transition-all bg-[#111] p-2.5 rounded-full hover:bg-[#eab308] shadow-sm">
+            <button onClick={closeModal} className="relative z-10 text-[#0052cc] border border-[#0052cc]/30 hover:text-[#111] transition-all bg-[#111] p-2.5 rounded-full hover:bg-[#0052cc] shadow-sm">
               <FaTimes className="text-lg" />
             </button>
           </div>
@@ -408,7 +408,7 @@ const BookingModal = () => {
         {/* Footer Navigation */}
         {!bookingConfirmed && currentStep > 1 && currentStep < 7 && (
           <div className="p-5 bg-[#0a0a0a] border-t border-[#222] flex justify-center flex-shrink-0">
-            <button onClick={prevStep} className="flex items-center gap-2 text-gray-500 font-semibold hover:text-[#eab308] transition-colors text-xs uppercase tracking-wider">
+            <button onClick={prevStep} className="flex items-center gap-2 text-gray-500 font-semibold hover:text-[#0052cc] transition-colors text-xs uppercase tracking-wider">
               &larr; Go Back to Previous Step
             </button>
           </div>
@@ -429,7 +429,7 @@ const BookingModal = () => {
           border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #eab308;
+          background: #0052cc;
         }
         
         .custom-date-input::-webkit-calendar-picker-indicator {

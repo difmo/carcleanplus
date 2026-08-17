@@ -58,33 +58,33 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-center text-center w-full cursor-pointer group transition-all duration-300 hover:-translate-y-2"
+              className="flex flex-col items-center text-center w-full cursor-pointer group transition-all duration-300"
               onClick={() => openModal(null, null, step.step)}
             >
               {/* Image Section */}
-              <div className="w-full h-[220px] relative mb-12 overflow-hidden rounded-[24px] border border-white/10 shadow-sm transition-all duration-300 group-hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] group-hover:border-red-500/30">
+              <div className="w-full h-[220px] relative mb-12 overflow-hidden rounded-[24px] border border-white/10 shadow-sm transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#050505] opacity-50 z-10"></div>
                 <img 
                   src={step.image} 
                   alt={step.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500"
                 />
                 {/* Number Badge */}
-                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-base shadow-md z-20">
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-base shadow-md z-20">
                   {step.step}
                 </div>
                 
                 {/* Icon Badge overlapping bottom of image */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[72px] h-[72px] bg-[#0a0a0a] border border-white/10 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(220,38,38,0.2)] z-30 group-hover:border-red-500/50 transition-colors">
-                  <div className="w-[60px] h-[60px] rounded-full border border-red-500/30 flex items-center justify-center bg-red-500/10 group-hover:bg-red-500/20 transition-colors">
-                    {React.cloneElement(step.icon, { className: 'text-2xl text-red-500' })}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[72px] h-[72px] bg-[#0a0a0a] border border-white/10 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(0,82,204,0.7)] z-30 transition-colors">
+                  <div className="w-[60px] h-[60px] rounded-full border border-primary-light/30 flex items-center justify-center bg-primary-light/10 transition-colors">
+                    {React.cloneElement(step.icon, { className: 'text-2xl text-primary' })}
                   </div>
                 </div>
               </div>
 
               {/* Text Section */}
               <div className="px-6 pb-8 w-full mt-2">
-                <h3 className="text-xl font-serif italic font-extrabold text-white mb-3 underline decoration-red-500 decoration-4 underline-offset-[6px] group-hover:text-red-400 transition-colors">
+                <h3 className="text-xl font-serif italic font-extrabold text-white mb-3 underline decoration-primary decoration-4 underline-offset-[6px] transition-colors">
                   {step.title}
                 </h3>
                 <p className="text-gray-400 text-base leading-relaxed">{step.description}</p>
