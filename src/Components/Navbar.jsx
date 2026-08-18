@@ -24,33 +24,56 @@ const Navbar = () => {
 
   // Handle scroll effect and active section
   useEffect(() => {
+    // If on separate pages, set active section based on URL
+    if (location.pathname === '/gallery') {
+      setActiveSection('Gallery');
+      const handleBasicScroll = () => setIsScrolled(window.scrollY > 10);
+      window.addEventListener("scroll", handleBasicScroll);
+      return () => window.removeEventListener("scroll", handleBasicScroll);
+    }
+    
+    if (location.pathname === '/pricing') {
+      setActiveSection('Packages');
+      const handleBasicScroll = () => setIsScrolled(window.scrollY > 10);
+      window.addEventListener("scroll", handleBasicScroll);
+      return () => window.removeEventListener("scroll", handleBasicScroll);
+    }
+
+    // Home page scroll tracking
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
       let current = 'Home';
-      for (const item of navItems) {
-        let targetId = item.name.toLowerCase().replace(/ /g, '-');
-        if (targetId === 'packages') targetId = 'pricing';
-        
-        const el = document.getElementById(targetId);
+      const sections = ['home', 'services', 'how-it-works', 'contact-us'];
+      
+      for (const sec of sections) {
+        const el = document.getElementById(sec);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 120) {
-            current = item.name;
+          if (rect.top <= 150) {
+            if (sec === 'home') current = 'Home';
+            if (sec === 'services') current = 'Services';
+            if (sec === 'how-it-works') current = 'How It Works';
+            if (sec === 'contact-us') current = 'Contact Us';
           }
         }
       }
+
+      // If at the very bottom, highlight Contact Us
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+        current = 'Contact Us';
+      }
+
       setActiveSection(current);
     };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Call once on mount
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const handleScrollToSection = (sectionId) => {
-    let targetId = sectionId.toLowerCase().replace(/ /g, '-');
-    if (targetId === 'packages') targetId = 'pricing';
-
-    const section = document.getElementById(targetId);
+    const section = document.getElementById(sectionId);
     if (section) {
       const headerOffset = 80;
       const elementPosition = section.getBoundingClientRect().top;
@@ -64,37 +87,28 @@ const Navbar = () => {
   };
 
   const handleNavigation = (sectionName) => {
-    const targetId = sectionName.toLowerCase().replace(/ /g, '-');
-    
-    if (targetId === "packages" || targetId === "pricing") {
-      if (location.pathname !== "/") {
-        navigate("/");
-        localStorage.setItem("scrollToSection", targetId);
-      } else {
-        handleScrollToSection(targetId);
-      }
+    if (sectionName === "Gallery") {
+      navigate("/gallery");
       setIsNavOpen(false);
       return;
     }
 
+    if (sectionName === "Packages") {
+      navigate("/pricing");
+      setIsNavOpen(false);
+      return;
+    }
+
+    const targetId = sectionName.toLowerCase().replace(/ /g, '-');
+    
     if (location.pathname !== "/") {
       navigate("/");
-      localStorage.setItem("scrollToSection", targetId);
+      setTimeout(() => handleScrollToSection(targetId), 100);
     } else {
       handleScrollToSection(targetId);
     }
     setIsNavOpen(false);
   };
-
-  useEffect(() => {
-    const sectionId = localStorage.getItem("scrollToSection");
-    if (sectionId) {
-      setTimeout(() => {
-        handleScrollToSection(sectionId);
-        localStorage.removeItem("scrollToSection");
-      }, 100);
-    }
-  }, [location.pathname]);
 
   return (
     <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? "bg-[#040914]/95 backdrop-blur-lg border-b border-white/5 shadow-lg" : "bg-[#040914] border-b border-white/5"}`}>
@@ -103,7 +117,7 @@ const Navbar = () => {
         {/* Left: Logo Section */}
         <div
           className="flex-1 flex items-center gap-3 cursor-pointer group"
-          onClick={() => handleNavigation("home")}
+          onClick={() => handleNavigation("Home")}
         >
           {/* Circular Logo */}
           <div className="w-10 h-10 md:w-11 md:h-11 bg-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden p-1">
@@ -128,21 +142,21 @@ const Navbar = () => {
             return (
               <button
                 key={item.name}
-                className={`relative h-full flex items-center gap-1.5 text-[13px] 2xl:text-[14px] font-semibold transition-colors capitalize group ${
-                  isActive ? 'text-primary' : 'text-[#d1d5db] hover:text-white'
-                }`}
+                className={`relative h-full flex items-center gap-1.5 text-[13px] 2xl:text-[14px] font-semibold transition-colors capitalize group ${isActive ? 'text-primary' : 'text-[#d1d5db] hover:text-white'
+                  }`}
                 onClick={() => handleNavigation(item.name)}
               >
-                {item.name}
+                <div className="relative inline-flex flex-col items-center justify-center">
+                  <span>{item.name}</span>
+                  {/* Active Line */}
+                  <span className={`absolute -bottom-[8px] h-[3px] rounded-full bg-primary transition-all duration-300 ${isActive ? 'w-full' : 'w-0'
+                    }`}></span>
+                </div>
                 {item.badge && (
                   <span className="bg-[#10b981] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none mb-0.5 ml-0.5">
                     {item.badge}
                   </span>
                 )}
-                {/* Active Line */}
-                <span className={`absolute bottom-[20px] left-1/2 -translate-x-1/2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
-                  isActive ? 'w-[70%]' : 'w-0'
-                }`}></span>
               </button>
             );
           })}
@@ -152,11 +166,11 @@ const Navbar = () => {
         <div className="flex-1 flex justify-end items-center gap-4">
           {/* Phone Number (Desktop) */}
           <a
-            href="tel:+916392798847"
+            href="tel:+919120759988"
             className="hidden lg:flex items-center gap-2.5 border border-[#333] bg-transparent text-gray-200 text-[13px] md:text-[14px] font-semibold py-2.5 px-4 rounded-lg hover:border-[#555] hover:text-white hover:bg-white/5 transition-all"
           >
             <FaPhoneAlt className="text-gray-400 text-[12px]" />
-            <span>+91 63927 98847</span>
+            <span>+91 91207 59988</span>
           </a>
 
           {/* Book a Wash Button */}
@@ -186,9 +200,8 @@ const Navbar = () => {
           {navItems.map((item) => (
             <button
               key={item.name}
-              className={`flex items-center justify-between text-left text-base font-semibold capitalize py-3 px-4 rounded-lg transition-colors ${
-                activeSection === item.name ? 'text-primary bg-primary/10' : 'text-gray-300 hover:text-white hover:bg-white/5'
-              }`}
+              className={`flex items-center justify-between text-left text-base font-semibold capitalize py-3 px-4 rounded-lg transition-colors ${activeSection === item.name ? 'text-primary bg-primary/10' : 'text-gray-300 hover:text-white hover:bg-white/5'
+                }`}
               onClick={() => handleNavigation(item.name)}
             >
               <span>{item.name}</span>
@@ -199,14 +212,14 @@ const Navbar = () => {
               )}
             </button>
           ))}
-          
+
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-[#222] px-4">
             <a
-              href="tel:+916392798847"
+              href="tel:+919120759988"
               className="flex justify-center items-center gap-2 border border-[#333] text-gray-200 text-base font-medium py-3 px-6 rounded-lg hover:bg-white/5 transition-colors"
             >
               <FaPhoneAlt className="text-gray-400" />
-              <span>+91 63927 98847</span>
+              <span>+91 91207 59988</span>
             </a>
             <button
               onClick={() => {

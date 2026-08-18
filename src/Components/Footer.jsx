@@ -87,18 +87,18 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto relative z-10">
-            <a 
-              href="tel:+916392798847" 
-              className="flex items-center justify-center gap-3 px-4 py-2 bg-[#0a0a0a] hover:bg-[#111] text-white rounded-xl transition-all duration-300 border border-dark-light hover:border-gray-600 group"
-            >
-              <div className="w-8 h-8 rounded-full bg-black border border-dark-light flex items-center justify-center group-hover:border-green-500/50 transition-colors">
-                <FaPhoneAlt className="text-[10px] text-green-500" />
+            <div className="flex items-center gap-4">
+              <a 
+              href="tel:+919120759988" 
+              className="bg-blue-600/20 w-12 h-12 rounded-xl flex items-center justify-center border border-blue-500/30 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-lg shadow-blue-500/20"
+              >
+                <FaPhoneAlt className="text-xl" />
+              </a>
+              <div className="flex flex-col">
+                <span className="text-gray-400 text-xs uppercase tracking-wider font-semibold mb-1">Call Us Now</span>
+                <p className="font-bold text-sm leading-tight tracking-wide">+91 91207 59988</p>
               </div>
-              <div className="text-left pr-2">
-                <p className="text-[9px] text-green-500 uppercase tracking-[0.2em] font-bold leading-none mb-0.5">Call Us</p>
-                <p className="font-bold text-sm leading-tight tracking-wide">+91 63927 98847</p>
-              </div>
-            </a>
+            </div>
             
             <a 
               href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash"
@@ -146,9 +146,14 @@ const Footer = () => {
               <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-pink-500 hover:text-pink-500 transition-colors text-gray-400">
                 <FaInstagram size={16} />
               </a>
-              <a href="https://wa.me/916392798847?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-colors text-gray-400">
-                <FaWhatsapp size={16} />
-              </a>
+              {/* WhatsApp */}
+              <div className="flex items-center gap-4">
+                <a 
+                href="https://wa.me/919120759988?text=Hi,%20I%20would%20like%20to%20book%20a%20car%20wash" 
+                className="bg-green-600/20 w-12 h-12 rounded-xl flex items-center justify-center border border-green-500/30 text-green-500 group-hover:bg-green-600 group-hover:text-white transition-all duration-300 shadow-lg shadow-green-500/20"
+                >  <FaWhatsapp size={16} />
+                </a>
+              </div>
               <a href="#" className="p-2.5 rounded-full border border-gray-700 hover:border-primary-light hover:text-primary transition-colors text-gray-400">
                 <FaYoutube size={16} />
               </a>
@@ -224,13 +229,13 @@ const Footer = () => {
 
             <ul className="space-y-4">
               <li>
-                <a href="tel:+916392798847" className="flex items-center gap-4 group cursor-pointer">
+                <a href="tel:+919120759988" className="flex items-center gap-4 group cursor-pointer">
                   <div className="p-3 bg-gray-800/50 rounded-full border border-gray-700 text-gray-400 group-hover:text-blue-400 group-hover:border-blue-500 transition-colors flex-shrink-0">
                     <FaPhoneAlt size={16} />
                   </div>
                   <div>
                     <p className="text-gray-500 text-[11px] uppercase tracking-wider">Call Us</p>
-                    <p className="text-gray-300 group-hover:text-blue-400 text-sm font-medium transition-colors">+91 63927 98847</p>
+                    <p className="text-gray-300 group-hover:text-blue-400 text-sm font-medium transition-colors">+91 91207 59988</p>
                   </div>
                 </a>
               </li>

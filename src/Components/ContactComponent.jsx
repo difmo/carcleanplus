@@ -29,7 +29,7 @@ function ContactComponent() {
             {/* Phone */}
             <div className="flex items-center space-x-4">
               <FaPhoneAlt className="text-[#26baf6] text-lg" />
-              <span className="text-gray-300">+91 63927 98847</span>
+              <span className="text-gray-300">+91 91207 59988</span>
             </div>
 
             {/* Email */}
