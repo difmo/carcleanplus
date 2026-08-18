@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 import { FaArrowRight } from 'react-icons/fa';
 import basicWashImg from '../assets/basic wash.png';
@@ -10,6 +11,7 @@ import completeDetailingImg from '../assets/Complete Detailing.png';
 
 const ServicesPricing = () => {
   const { openModal } = useBooking();
+  const navigate = useNavigate();
 
   const services = [
     {
@@ -108,10 +110,10 @@ const ServicesPricing = () => {
         
         <div className="text-center mt-12 flex justify-center">
           <button 
-            onClick={() => openModal()}
+            onClick={() => navigate('/pricing')}
             className="group relative flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(0,82,204,0.7)] border-b-4 border-primary-dark"
           >
-            <span className="relative z-10 tracking-widest uppercase text-sm font-extrabold">View All Services</span>
+            <span className="relative z-10 tracking-widest uppercase text-sm font-extrabold">View All Packages & Pricing</span>
             <FaArrowRight className="relative z-10 transform group-hover:translate-x-1.5 transition-transform duration-300 text-lg" />
             <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
           </button>

@@ -43,7 +43,7 @@ const Footer = () => {
     { name: 'Home', action: (e) => handleNavigation(e, '/', null) },
     { name: 'About Us', action: (e) => handleNavigation(e, null, 'about') },
     { name: 'Services', action: (e) => handleNavigation(e, null, 'services') },
-    { name: 'Packages & Pricing', action: (e) => handleNavigation(e, null, 'services') },
+    { name: 'Packages & Pricing', action: (e) => handleNavigation(e, '/pricing', null) },
     { name: 'Gallery', action: (e) => handleNavigation(e, '/gallery', null) },
     { name: 'Contact Us', action: (e) => { e.preventDefault(); window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
   ];

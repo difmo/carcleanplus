@@ -1,9 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FaSearch, FaGem } from 'react-icons/fa';
 import { CAR_MODELS, PRICING_MATRIX, SERVICES, CAR_CATEGORIES } from '../../utils/pricingLogic';
 import { useBooking } from '../../context/BookingContext';
 
 const PricingPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [searchQuery, setSearchQuery] = useState('');
   const { openModal } = useBooking();
 
