@@ -10,6 +10,7 @@ import footerBg from "../assets/footer.jpg";
 import phoneImg from "../assets/Phone.png";
 import playStoreBtn from "../assets/btn-play-store.webp";
 import appStoreBtn from "../assets/btn-app-store.webp";
+import premiumPhoneImg from "../assets/car_clean_plus_phone.jpg";
 import { useBooking } from "../context/BookingContext";
 
 const Footer = () => {
@@ -61,15 +62,17 @@ const Footer = () => {
 
       {/* App Download Banner */}
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1200px] w-full relative z-20 -mt-14 mb-4">
-        <div className="relative overflow-hidden bg-[#0957cb] rounded-[20px] flex flex-row items-center shadow-lg h-[140px] md:h-[180px] px-2 md:px-8">
+        <div className="relative overflow-hidden bg-[#0957cb] rounded-[20px] flex flex-row items-center shadow-lg min-h-[150px] md:min-h-[180px] py-4 md:py-0 px-2 md:px-8">
           
-          {/* Phone Image */}
-          <div className="relative z-10 w-[35%] md:w-[30%] h-full flex justify-end items-center">
-            <img 
-              src={phoneImg} 
-              alt="App Preview" 
-              className="h-[130px] md:h-[160px] w-auto object-contain object-center drop-shadow-xl" 
-            />
+          {/* Premium AI Generated Phone Image */}
+          <div className="relative z-10 w-[35%] md:w-[30%] h-full flex justify-end md:justify-center items-center">
+            <div className="relative h-[130px] md:h-[180px] w-auto group overflow-hidden rounded-xl md:rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border-[2px] border-white/10">
+              <img 
+                src={premiumPhoneImg} 
+                alt="Premium App Preview" 
+                className="h-full w-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 ease-out" 
+              />
+            </div>
           </div>
 
           {/* Text & Buttons Content */}
@@ -81,13 +84,18 @@ const Footer = () => {
               Book your service in just a few taps and get exciting offers!
             </p>
             
-            <div className="flex flex-row items-center gap-3">
-              <a href="#" className="hover:-translate-y-0.5 transition-transform duration-300">
-                <img src={playStoreBtn} alt="Get it on Google Play" className="h-[32px] md:h-[40px] object-contain rounded-md" />
-              </a>
-              <a href="#" className="hover:-translate-y-0.5 transition-transform duration-300">
-                <img src={appStoreBtn} alt="Download on the App Store" className="h-[32px] md:h-[40px] object-contain rounded-md" />
-              </a>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-2">
+              <div className="flex flex-row flex-wrap items-center gap-2 sm:gap-3 opacity-60 grayscale-[50%] pointer-events-none">
+                <img src={playStoreBtn} alt="Get it on Google Play" className="h-[28px] sm:h-[32px] md:h-[40px] object-contain rounded-md" />
+                <img src={appStoreBtn} alt="Download on the App Store" className="h-[28px] sm:h-[32px] md:h-[40px] object-contain rounded-md" />
+              </div>
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-amber-500 border border-yellow-300 text-yellow-950 text-xs md:text-sm font-black px-5 py-2 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] tracking-widest uppercase transform hover:scale-105 transition-all animate-pulse">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+                </span>
+                COMING SOON
+              </div>
             </div>
           </div>
 

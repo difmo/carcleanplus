@@ -3,6 +3,14 @@ import chatGptImage from '../../assets/ChatGPT Image Aug 14, 2026, 11_01_31 AM.p
 import seatImage from '../../assets/seat2.png';
 import tyerImage from '../../assets/tyer.png';
 import carImage from '../../assets/car.jpg';
+import gl1 from '../../assets/gl 1.png';
+import gl2 from '../../assets/gl 2.png';
+import gl3 from '../../assets/gl 3.png';
+import gl4 from '../../assets/gl 4.png';
+import gl5 from '../../assets/gl 5.png';
+import gl6 from '../../assets/gl 6.png';
+import gl7 from '../../assets/gl 7.png';
+import gl8 from '../../assets/gl8.png';
 
 const Gallery = () => {
   // Scroll to top on mount
@@ -15,6 +23,14 @@ const Gallery = () => {
     { src: seatImage, alt: "Seat Cleaning" },
     { src: tyerImage, alt: "Tyre Cleaning" },
     { src: carImage, alt: "Car Wash" },
+    { src: gl1, alt: "Car Detailing" },
+    { src: gl2, alt: "Premium Wash" },
+    { src: gl3, alt: "Interior Cleaning" },
+    { src: gl4, alt: "Exterior Polish" },
+    { src: gl5, alt: "Deep Cleaning" },
+    { src: gl6, alt: "Car Care" },
+    { src: gl7, alt: "Professional Wash" },
+    { src: gl8, alt: "Shiny Finish" },
   ];
 
   return (
@@ -33,9 +49,7 @@ const Gallery = () => {
                 alt={img.alt} 
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
               />
-              <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white font-bold text-xl tracking-wider">{img.alt}</span>
-              </div>
+
             </div>
           ))}
         </div>

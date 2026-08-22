@@ -39,9 +39,6 @@ const BookingModal = () => {
   const [searchModel, setSearchModel] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpInput, setOtpInput] = useState('');
-  const [otpError, setOtpError] = useState('');
 
   const CITIES = ['Lucknow', 'Mumbai', 'Indore', 'Patna', 'Ahmedabad', 'Kolkata', 'Delhi', 'Pune', 'Bangalore', 'Noida', 'Gurgaon'];
   
@@ -63,11 +60,6 @@ const BookingModal = () => {
   const filteredModels = brandModels.filter(car => car.name.toLowerCase().includes(searchModel.toLowerCase()));
 
   const handleConfirmBooking = async () => {
-    if (otpInput !== '1234') {
-      setOtpError('Invalid OTP. Please enter 1234.');
-      return;
-    }
-    setOtpError('');
     setIsSubmitting(true);
     
     // Simulating API call since backend is not running yet
@@ -326,7 +318,6 @@ const BookingModal = () => {
             </div>
             <input
               type="tel"
-              disabled={otpSent}
               className="flex-1 px-5 py-4 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 disabled:opacity-50 text-[16px] tracking-wide"
               value={bookingState.mobile}
               onChange={(e) => updateBooking('mobile', e.target.value)}
@@ -335,47 +326,21 @@ const BookingModal = () => {
             />
           </div>
 
-          {otpSent && (
-            <div className="animate-fade-in mb-6">
-              <label className="block text-[11px] font-black text-gray-400 mb-2.5 uppercase tracking-widest pl-1">Enter OTP (Hint: 1234)</label>
-              <input
-                type="text"
-                className="w-full p-4 bg-white border border-gray-200 rounded-[1.25rem] outline-none text-gray-900 font-black placeholder-gray-200 text-center tracking-[0.75em] text-2xl focus:border-[#0052cc] focus:ring-4 focus:ring-[#0052cc]/10 transition-all shadow-[0_2px_10px_rgb(0,0,0,0.02)]"
-                value={otpInput}
-                onChange={(e) => {
-                  setOtpInput(e.target.value);
-                  if (otpError) setOtpError('');
-                }}
-                placeholder="••••"
-                maxLength="4"
-              />
-              {otpError && <p className="text-red-500 text-xs mt-3 text-center font-bold bg-red-50 py-2 rounded-lg">{otpError}</p>}
-            </div>
-          )}
+          
         </div>
       </div>
 
       <div className="mt-auto pt-6 pb-2">
-        {!otpSent ? (
-          <button
-            onClick={() => {
-              if (bookingState.mobile.length === 10) setOtpSent(true);
-              else alert("Please enter a valid 10-digit number");
-            }}
-            disabled={bookingState.mobile.length < 10}
-            className="w-full bg-[#0052cc] text-gray-900 font-black py-4 rounded-[1.25rem] text-[17px] hover:bg-blue-500 transition-all disabled:opacity-50 disabled:bg-gray-100 disabled:text-gray-400 shadow-[0_8px_30px_rgb(250,204,21,0.3)] disabled:shadow-none"
-          >
-            Continue
-          </button>
-        ) : (
-          <button
-            onClick={handleConfirmBooking}
-            disabled={isSubmitting || otpInput.length < 4}
-            className="w-full bg-gray-900 text-white font-black py-4 rounded-[1.25rem] text-[17px] hover:bg-black transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 shadow-[0_8px_30px_rgb(0,0,0,0.2)] disabled:shadow-none"
-          >
-            {isSubmitting ? 'Confirming...' : 'Verify & Book'}
-          </button>
-        )}
+        <button
+          onClick={() => {
+            if (bookingState.mobile.length === 10) handleConfirmBooking();
+            else alert("Please enter a valid 10-digit number");
+          }}
+          disabled={isSubmitting || bookingState.mobile.length < 10}
+          className="w-full bg-gray-900 text-white font-black py-4 rounded-[1.25rem] text-[17px] hover:bg-black transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 shadow-[0_8px_30px_rgb(0,0,0,0.2)] disabled:shadow-none"
+        >
+          {isSubmitting ? 'Confirming...' : 'Book Now'}
+        </button>
       </div>
     </div>
   );

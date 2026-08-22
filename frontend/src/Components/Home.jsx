@@ -1,6 +1,7 @@
 import React from "react";
 import HeroSection from "./HeroSection";
 import TrustStats from "./TrustStats";
+import OfferSection from "./OfferSection";
 import ServicesPricing from "./ServicesPricing";
 import HowItWorks from "./HowItWorks";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
@@ -17,6 +18,9 @@ function Home() {
         <TrustStats />
 
         <WhyChouseUsComponents />
+
+        {/* Offer Section handles the #offer id */}
+        <OfferSection />
 
         <div id="pricing">
           <ServicesPricing />

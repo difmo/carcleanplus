@@ -8,7 +8,8 @@ export const CAR_CATEGORIES = {
 export const SERVICES = {
   BASIC: 'Basic Wash',
   PREMIUM: 'Premium Wash',
-  COMPLETE: 'Complete Clean'
+  COMPLETE: 'Complete Clean',
+  OFFER: 'Festive Offer'
 };
 
 export const PRICING_MATRIX = {
@@ -16,21 +17,25 @@ export const PRICING_MATRIX = {
     [SERVICES.BASIC]: 299,
     [SERVICES.PREMIUM]: 499,
     [SERVICES.COMPLETE]: 699,
+    [SERVICES.OFFER]: 899,
   },
   [CAR_CATEGORIES.STANDARD]: {
     [SERVICES.BASIC]: 399,
     [SERVICES.PREMIUM]: 599,
     [SERVICES.COMPLETE]: 799,
+    [SERVICES.OFFER]: 999,
   },
   [CAR_CATEGORIES.LARGE]: {
     [SERVICES.BASIC]: 499,
     [SERVICES.PREMIUM]: 699,
     [SERVICES.COMPLETE]: 899,
+    [SERVICES.OFFER]: 1199,
   },
   [CAR_CATEGORIES.PREMIUM]: {
     [SERVICES.BASIC]: 699,
     [SERVICES.PREMIUM]: 899,
     [SERVICES.COMPLETE]: 1199,
+    [SERVICES.OFFER]: 1499,
   }
 };
 
