@@ -44,7 +44,7 @@ const HowItWorks = () => {
 
         {/* Timeline wrapper */}
         <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center">
-          
+
           {/* Connecting Line (Desktop) */}
           <div className="hidden md:block absolute top-[48px] left-[12%] right-[12%] h-[2px] border-t-[2px] border-dashed border-blue-200 z-0"></div>
 
@@ -57,13 +57,13 @@ const HowItWorks = () => {
               {/* Icon Circle */}
               <div className="w-[96px] h-[96px] rounded-full bg-white border-[1.5px] border-gray-100 shadow-[0_8px_24px_rgba(0,0,0,0.04)] flex items-center justify-center mb-6 relative transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_12px_30px_rgba(0,82,204,0.15)] group-hover:border-blue-100">
                 {step.icon}
-                
+
                 {/* Number Badge */}
                 <div className="absolute -left-1 bottom-1 w-[30px] h-[30px] rounded-full bg-primary text-white flex items-center justify-center font-bold text-[14px] shadow-md border-2 border-white">
                   {step.step}
                 </div>
               </div>
-              
+
               {/* Text Content */}
               <h3 className="text-[17px] font-extrabold text-[#0a192f] mb-2 text-center group-hover:text-primary transition-colors">
                 {step.title}
