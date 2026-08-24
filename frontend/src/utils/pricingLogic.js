@@ -2,6 +2,9 @@ export const CAR_CATEGORIES = {
   COMPACT: 'Compact',
   STANDARD: 'Standard',
   LARGE: 'Large',
+  PREMIUM_COMPACT: 'Premium Compact',
+  PREMIUM_STANDARD: 'Premium Standard',
+  PREMIUM_LARGE: 'Premium Large',
   PREMIUM: 'Premium'
 };
 
@@ -30,6 +33,24 @@ export const PRICING_MATRIX = {
     [SERVICES.PREMIUM]: 699,
     [SERVICES.COMPLETE]: 899,
     [SERVICES.OFFER]: 1199,
+  },
+  [CAR_CATEGORIES.PREMIUM_COMPACT]: {
+    [SERVICES.BASIC]: 499,
+    [SERVICES.PREMIUM]: 699,
+    [SERVICES.COMPLETE]: 899,
+    [SERVICES.OFFER]: 1099,
+  },
+  [CAR_CATEGORIES.PREMIUM_STANDARD]: {
+    [SERVICES.BASIC]: 599,
+    [SERVICES.PREMIUM]: 799,
+    [SERVICES.COMPLETE]: 999,
+    [SERVICES.OFFER]: 1299,
+  },
+  [CAR_CATEGORIES.PREMIUM_LARGE]: {
+    [SERVICES.BASIC]: 699,
+    [SERVICES.PREMIUM]: 899,
+    [SERVICES.COMPLETE]: 1199,
+    [SERVICES.OFFER]: 1499,
   },
   [CAR_CATEGORIES.PREMIUM]: {
     [SERVICES.BASIC]: 699,
@@ -188,6 +209,121 @@ export const CAR_MODELS = [
 
   // Datsun
   { id: 117, name: 'Datsun GO', category: CAR_CATEGORIES.COMPACT },
+
+  // Mercedes-Benz
+  { id: 118, name: 'Mercedes-Benz CLA', category: CAR_CATEGORIES.PREMIUM_COMPACT },
+  { id: 119, name: 'Mercedes-Benz C-Class', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 120, name: 'Mercedes-Benz E-Class', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 121, name: 'Mercedes-Benz EQS', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 122, name: 'Mercedes-Benz GLA', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 123, name: 'Mercedes-Benz GLB', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 124, name: 'Mercedes-Benz GLC', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 125, name: 'Mercedes-Benz GLE', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 126, name: 'Mercedes-Benz GLS', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 127, name: 'Mercedes-Benz S-Class', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 128, name: 'Mercedes-Benz Maybach GLS', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 129, name: 'Mercedes-Benz Maybach S-Class', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // BMW
+  { id: 130, name: 'BMW 2 Series Gran Coupe', category: CAR_CATEGORIES.PREMIUM_COMPACT },
+  { id: 131, name: 'BMW X1', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 132, name: 'BMW 3 Series', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 133, name: 'BMW 5 Series', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 134, name: 'BMW 7 Series', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 135, name: 'BMW X3', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 136, name: 'BMW X5', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 137, name: 'BMW X7', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 138, name: 'BMW iX1', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 139, name: 'BMW i4', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 140, name: 'BMW i5', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 141, name: 'BMW i7', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 142, name: 'BMW iX', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Audi
+  { id: 143, name: 'Audi Q3', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 144, name: 'Audi A4', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 145, name: 'Audi A6', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 146, name: 'Audi Q5', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 147, name: 'Audi Q7', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 148, name: 'Audi Q8', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 149, name: 'Audi A8 L', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Volvo
+  { id: 150, name: 'Volvo EX30', category: CAR_CATEGORIES.PREMIUM_COMPACT },
+  { id: 151, name: 'Volvo EC40', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 152, name: 'Volvo XC40', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 153, name: 'Volvo XC60', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 154, name: 'Volvo XC90', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 155, name: 'Volvo EX90', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Jaguar
+  { id: 156, name: 'Jaguar F-Pace', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 157, name: 'Jaguar I-Pace', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Land Rover
+  { id: 158, name: 'Land Rover Defender', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 159, name: 'Land Rover Discovery Sport', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 160, name: 'Land Rover Discovery', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 161, name: 'Range Rover Evoque', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 162, name: 'Range Rover Velar', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 163, name: 'Range Rover Sport', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 164, name: 'Range Rover', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Lexus
+  { id: 165, name: 'Lexus ES', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 166, name: 'Lexus NX', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 167, name: 'Lexus RX', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 168, name: 'Lexus LM', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 169, name: 'Lexus LX', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Porsche
+  { id: 170, name: 'Porsche Macan', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 171, name: 'Porsche Cayenne', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 172, name: 'Porsche Panamera', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 173, name: 'Porsche Taycan', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 174, name: 'Porsche 911', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+
+  // MINI
+  { id: 175, name: 'MINI Cooper', category: CAR_CATEGORIES.PREMIUM_COMPACT },
+  { id: 176, name: 'MINI Countryman', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+
+  // Maserati
+  { id: 177, name: 'Maserati Grecale', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 178, name: 'Maserati Levante', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 179, name: 'Maserati GranTurismo', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+
+  // Bentley
+  { id: 180, name: 'Bentley Bentayga', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 181, name: 'Bentley Continental GT', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 182, name: 'Bentley Flying Spur', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Rolls-Royce
+  { id: 183, name: 'Rolls-Royce Ghost', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 184, name: 'Rolls-Royce Phantom', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 185, name: 'Rolls-Royce Cullinan', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 186, name: 'Rolls-Royce Spectre', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Aston Martin
+  { id: 187, name: 'Aston Martin Vantage', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 188, name: 'Aston Martin DB12', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+  { id: 189, name: 'Aston Martin DBX', category: CAR_CATEGORIES.PREMIUM_LARGE },
+
+  // Lamborghini
+  { id: 190, name: 'Lamborghini Urus', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 191, name: 'Lamborghini Revuelto', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+
+  // Ferrari
+  { id: 192, name: 'Ferrari Purosangue', category: CAR_CATEGORIES.PREMIUM_LARGE },
+  { id: 193, name: 'Ferrari 296 GTB', category: CAR_CATEGORIES.PREMIUM_STANDARD },
+
+  // Fiat
+  { id: 194, name: 'Fiat Punto', category: CAR_CATEGORIES.COMPACT },
+  { id: 195, name: 'Fiat Linea', category: CAR_CATEGORIES.STANDARD },
+
+  // Chevrolet
+  { id: 196, name: 'Chevrolet Beat', category: CAR_CATEGORIES.COMPACT },
+  { id: 197, name: 'Chevrolet Spark', category: CAR_CATEGORIES.COMPACT },
+  { id: 198, name: 'Chevrolet Cruze', category: CAR_CATEGORIES.STANDARD },
 ];
 
 export const getPrice = (category, service) => {

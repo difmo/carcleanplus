@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Booking = require('../models/Booking');
+const Contact = require('../models/Contact');
 
 // @desc    Get all users
 // @route   GET /api/admin/users
@@ -82,8 +84,67 @@ const updateUserRole = async (req, res) => {
   }
 };
 
+// @desc    Get all contact messages
+// @route   GET /api/admin/contacts
+// @access  Private/Admin
+const getContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find({}).sort({ createdAt: -1 });
+    res.status(200).json({ success: true, count: contacts.length, data: contacts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Get Admin Dashboard Stats
+// @route   GET /api/admin/dashboard
+// @access  Private/Admin
+const getDashboardStats = async (req, res) => {
+  try {
+    // Get all bookings
+    const bookings = await Booking.find({});
+    
+    // Total Bookings
+    const totalBookings = bookings.length;
+    
+    // Pending Bookings (status is pending or undefined)
+    const pendingBookings = bookings.filter(b => !b.status || b.status.toLowerCase() === 'pending').length;
+    
+    // Total Revenue (sum of finalPrice for completed or confirmed bookings)
+    const totalRevenue = bookings.reduce((sum, b) => {
+      const status = (b.status || 'pending').toLowerCase();
+      if (status !== 'cancelled' && b.finalPrice) {
+        return sum + Number(b.finalPrice);
+      }
+      return sum;
+    }, 0);
+
+    // Get all contacts
+    const totalInquiries = await Contact.countDocuments({});
+
+    // Get 5 most recent bookings
+    const recentBookings = await Booking.find({}).sort({ createdAt: -1 }).limit(5);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalBookings,
+        pendingBookings,
+        totalRevenue,
+        totalInquiries,
+        recentBookings
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getUsers,
   getUserById,
-  updateUserRole
+  updateUserRole,
+  getContacts,
+  getDashboardStats
 };

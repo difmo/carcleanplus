@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { FaSearch, FaGem } from 'react-icons/fa';
-import { CAR_MODELS, PRICING_MATRIX, SERVICES, CAR_CATEGORIES } from '../../utils/pricingLogic';
+import { CAR_MODELS, PRICING_MATRIX, SERVICES, CAR_CATEGORIES, getPrice } from '../../utils/pricingLogic';
 import { useBooking } from '../../context/BookingContext';
 
 const PricingPage = () => {
@@ -81,9 +81,9 @@ const PricingPage = () => {
                   const [brand, ...modelParts] = car.name.split(' ');
                   const modelName = modelParts.join(' ');
 
-                  const basicPrice = PRICING_MATRIX[car.category][SERVICES.BASIC];
-                  const premiumPrice = PRICING_MATRIX[car.category][SERVICES.PREMIUM];
-                  const completePrice = PRICING_MATRIX[car.category][SERVICES.COMPLETE];
+                  const basicPrice = getPrice(car.category, SERVICES.BASIC);
+                  const premiumPrice = getPrice(car.category, SERVICES.PREMIUM);
+                  const completePrice = getPrice(car.category, SERVICES.COMPLETE);
 
                   return (
                     <tr
@@ -101,28 +101,31 @@ const PricingPage = () => {
                       </td>
 
                       {/* Pricing Cells - Clickable */}
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-4 py-4 text-center">
                         <button
                           onClick={() => openModal(car, SERVICES.BASIC)}
-                          className="w-full h-full py-2 px-3 rounded-lg hover:bg-gray-100 text-gray-600 font-bold transition-all group-hover:text-gray-900"
+                          className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-bold text-sm transition-all hover:border-primary hover:text-primary flex items-center justify-between group-hover:shadow-sm"
                         >
-                          {basicPrice}
+                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-70">Book</span>
+                          <span>₹{basicPrice}</span>
                         </button>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50/30 group-hover:bg-blue-100/50 transition-colors border-x border-blue-100">
+                      <td className="px-4 py-4 text-center bg-blue-50/30 group-hover:bg-blue-50/50 transition-colors border-x border-blue-100/50">
                         <button
                           onClick={() => openModal(car, SERVICES.PREMIUM)}
-                          className="w-full h-full py-2 px-3 rounded-lg hover:bg-blue-100 text-primary font-extrabold text-lg transition-all scale-100 hover:scale-110 drop-shadow-sm"
+                          className="w-full py-2.5 px-4 rounded-xl bg-primary text-white font-bold text-sm transition-all shadow-[0_4px_14px_rgba(0,82,204,0.25)] hover:shadow-[0_6px_20px_rgba(0,82,204,0.4)] hover:bg-blue-600 flex items-center justify-between group-hover:scale-105"
                         >
-                          {premiumPrice}
+                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-90">Book</span>
+                          <span className="font-black text-base">₹{premiumPrice}</span>
                         </button>
                       </td>
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-4 py-4 text-center">
                         <button
                           onClick={() => openModal(car, SERVICES.COMPLETE)}
-                          className="w-full h-full py-2 px-3 rounded-lg hover:bg-gray-100 text-gray-600 font-bold transition-all group-hover:text-gray-900"
+                          className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-bold text-sm transition-all hover:border-primary hover:text-primary flex items-center justify-between group-hover:shadow-sm"
                         >
-                          {completePrice}
+                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-70">Book</span>
+                          <span>₹{completePrice}</span>
                         </button>
                       </td>
                     </tr>

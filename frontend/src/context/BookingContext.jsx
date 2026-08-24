@@ -47,13 +47,20 @@ export const BookingProvider = ({ children }) => {
       if (typeof specificStep === 'number') {
         step = specificStep;
       } else {
-        if (car) step = 2;
-        if (car && service) step = 3;
+        if (car && service) step = 5;
+        else if (car) step = 4;
       }
 
       const newState = { ...prev, isModalOpen: true, currentStep: step };
+      
+      // Auto-fill city if empty and we are jumping steps
+      if (!newState.city && step > 1) {
+        newState.city = 'Lucknow';
+      }
+
       if (car) {
         newState.carModel = car;
+        newState.carBrand = car.name.split(' ')[0];
       }
       if (service) {
         newState.service = service;

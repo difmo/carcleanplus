@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home" },
-    { name: "Services" },
+    { name: "Service" },
     { name: "Packages" },
     { name: "Offer" },
     { name: "Gallery" },
@@ -44,7 +44,7 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 10);
 
       let current = 'Home';
-      const sections = ['home', 'services', 'how-it-works', 'contact-us'];
+      const sections = ['home', 'service', 'packages', 'offer', 'gallery'];
 
       for (const sec of sections) {
         const el = document.getElementById(sec);
@@ -52,7 +52,10 @@ const Navbar = () => {
           const rect = el.getBoundingClientRect();
           if (rect.top <= 150) {
             if (sec === 'home') current = 'Home';
-            if (sec === 'services') current = 'Services';
+            if (sec === 'service') current = 'Service';
+            if (sec === 'packages') current = 'Packages';
+            if (sec === 'offer') current = 'Offer';
+            if (sec === 'gallery') current = 'Gallery';
           }
         }
       }
@@ -85,17 +88,7 @@ const Navbar = () => {
   };
 
   const handleNavigation = (sectionName) => {
-    if (sectionName === "Gallery") {
-      navigate("/gallery");
-      setIsNavOpen(false);
-      return;
-    }
 
-    if (sectionName === "Packages") {
-      navigate("/pricing");
-      setIsNavOpen(false);
-      return;
-    }
 
     if (sectionName === "Login") {
       navigate("/login");

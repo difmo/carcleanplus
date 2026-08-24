@@ -15,26 +15,47 @@ import Login from "./Components/Pages/Login";
 
 import PricingPage from "./Components/Pages/PricingPage";
 import BookingModal from "./Components/BookingFlow/BookingModal";
+import AdminLayout from "./Components/Admin/AdminLayout";
+import AdminBookings from "./Components/Admin/Bookings/AdminBookings";
+import AdminContacts from "./Components/Admin/Contacts/AdminContacts";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import { Outlet } from "react-router-dom";
+
+const PublicLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <BookingModal />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <BookingModal />
       <Routes>
-        {/* Render the full homepage with all sections */}
-        <Route path="/" element={<Home />} />
-        {/* Full-page routes for Privacy Policy, Disclaimer, etc. */}
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/disclaimer" element={<Disclaimer />} />
-        <Route path="/termsofservice" element={<TermsofService/>} />
-        <Route path="/helpsupport" element={<HelpSupport/>}/>
+        {/* Admin Routes (No public Navbar/Footer) */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="contacts" element={<AdminContacts />} />
+        </Route>
+
+        {/* Public Routes */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/termsofservice" element={<TermsofService/>} />
+          <Route path="/helpsupport" element={<HelpSupport/>}/>
+        </Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }

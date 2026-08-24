@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBooking } from '../context/BookingContext';
 import { FaArrowRight, FaArrowCircleRight, FaShieldAlt, FaSprayCan, FaStar, FaClock } from 'react-icons/fa';
-import heroImage from '../assets/car clean home 2.png';
+import heroImage from '../assets/car clean plus home 4.png';
 import HeroBookingForm from './HeroBookingForm';
 
 const HeroSection = () => {
@@ -14,9 +14,9 @@ const HeroSection = () => {
         <img
           src={heroImage}
           alt="Professional Car Wash"
-          className="w-full h-full object-cover object-[70%_center] md:object-right opacity-90"
+          className="w-full h-full object-cover object-[70%_center] md:object-right opacity-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 md:via-white/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/30 to-transparent"></div>
       </div>
 
       <div className="container mx-auto px-4 z-10 pt-28 pb-32 lg:pb-48">

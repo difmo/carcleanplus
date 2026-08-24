@@ -14,7 +14,7 @@ function WhyChouseUsComponents() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white relative font-sans z-10">
+    <section id="service" className="py-20 bg-white relative font-sans z-10">
       <div className="container mx-auto px-4 max-w-[1150px]">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           

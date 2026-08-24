@@ -22,7 +22,7 @@ function Home() {
         {/* Offer Section handles the #offer id */}
         <OfferSection />
 
-        <div id="pricing">
+        <div id="packages">
           <ServicesPricing />
         </div>
 
