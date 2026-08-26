@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import img from "../assets/Logo/logo.png";
+import img from "../assets/logo car22.png";
 import { FiAlignJustify, FiX } from "react-icons/fi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
@@ -116,19 +116,8 @@ const Navbar = () => {
           className="flex-1 flex items-center gap-3 cursor-pointer group"
           onClick={() => handleNavigation("Home")}
         >
-          {/* Circular Logo */}
-          <div className="w-10 h-10 md:w-11 md:h-11 bg-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden p-1">
-            <img className="w-full h-full object-contain filter brightness-0" src={img} alt="Logo" />
-          </div>
-
-          {/* Brand Name */}
-          <div className="flex flex-col justify-center leading-tight">
-            <span className="text-[20px] md:text-[24px] font-extrabold tracking-tight text-gray-900 flex items-center gap-1.5">
-              Car Clean <span className="text-primary">Plus</span>
-            </span>
-            <span className="text-[8px] md:text-[10px] font-bold text-gray-500 tracking-[0.2em] mt-0.5 uppercase">
-              Clean Car, Happy You
-            </span>
+          <div className="flex items-center h-14 md:h-16 overflow-hidden flex-shrink-0">
+            <img className="h-full w-auto object-contain" src={img} alt="Car Clean Plus" />
           </div>
         </div>
 
@@ -218,7 +207,7 @@ const Navbar = () => {
               <FaPhoneAlt className="text-gray-400" />
               <span>+91 91207 59988</span>
             </a>
-            
+
             <button
               onClick={() => {
                 setIsNavOpen(false);

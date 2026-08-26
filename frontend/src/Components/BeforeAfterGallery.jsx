@@ -25,11 +25,11 @@ const BeforeAfterGallery = () => {
   return (
     <section className="pt-10 pb-8 bg-transparent relative z-10">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-[56px] font-sans font-black text-gray-900 mb-4 tracking-tighter leading-tight">
+        <div className="text-center mb-10 md:mb-12">
+          <h2 className="text-[32px] md:text-[48px] font-extrabold text-[#0f172a] mb-2 md:mb-3 tracking-tight leading-tight" style={{ fontFamily: "'Inter', sans-serif" }}>
             See The Transformation<span className="text-[#0052cc]">.</span>
           </h2>
-          <p className="text-gray-500 text-lg md:text-[22px] font-medium tracking-wide">
+          <p className="text-[#64748b] text-[16px] md:text-[20px] font-medium tracking-normal" style={{ fontFamily: "'Inter', sans-serif" }}>
             Real results, real shine.
           </p>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaHome, FaCalendarAlt, FaSignOutAlt, FaCar, FaEnvelope } from 'react-icons/fa';
-import img from '../../assets/logo car clean.png';
+import img from '../../assets/logo car22.png';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const AdminLayout = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
-    
+
     if (!token || !userStr) {
       navigate('/login');
       return;
@@ -47,7 +47,7 @@ const AdminLayout = () => {
             <img src={img} alt="Car Clean Plus" className="h-10 w-auto object-contain" />
           </Link>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto py-6">
           <nav className="space-y-1 px-4">
             {navItems.map((item) => {
@@ -56,11 +56,10 @@ const AdminLayout = () => {
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold text-[15px] ${
-                    isActive 
-                      ? 'bg-blue-50 text-[#0052cc]' 
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold text-[15px] ${isActive
+                      ? 'bg-blue-50 text-[#0052cc]'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   <span className="text-lg">{item.icon}</span>
                   {item.name}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaGoogle, FaCar } from 'react-icons/fa';
-import img from '../../assets/logo car clean.png';
+import img from '../../assets/logo car22.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -156,7 +156,7 @@ const Login = () => {
                 Sign in with Google
               </button>
             </div>
-            
+
             <div className="mt-6 text-center text-[15px] text-gray-600 font-medium">
               Don't have an account?{' '}
               <Link to="/register" className="font-bold text-[#0052cc] hover:text-blue-800 transition-colors">

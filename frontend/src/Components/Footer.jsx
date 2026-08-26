@@ -5,7 +5,7 @@ import {
   FaChevronRight, FaShieldAlt, FaLink, FaCar, FaArrowRight
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import img from "../assets/logo car clean.png";
+import img from "../assets/logo car22.png";
 import footerBg from "../assets/footer.jpg";
 import phoneImg from "../assets/Phone.png";
 import playStoreBtn from "../assets/btn-play-store.webp";
@@ -63,14 +63,14 @@ const Footer = () => {
       {/* App Download Banner */}
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1200px] w-full relative z-20 -mt-14 mb-4">
         <div className="relative overflow-hidden bg-[#0957cb] rounded-[20px] flex flex-row items-center shadow-lg min-h-[150px] md:min-h-[180px] py-4 md:py-0 px-2 md:px-8">
-          
+
           {/* Premium AI Generated Phone Image */}
           <div className="relative z-10 w-[35%] md:w-[30%] h-full flex justify-end md:justify-center items-center">
             <div className="relative h-[130px] md:h-[180px] w-auto group overflow-hidden rounded-xl md:rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border-[2px] border-white/10">
-              <img 
-                src={premiumPhoneImg} 
-                alt="Premium App Preview" 
-                className="h-full w-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 ease-out" 
+              <img
+                src={premiumPhoneImg}
+                alt="Premium App Preview"
+                className="h-full w-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 ease-out"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ const Footer = () => {
             <p className="text-blue-100 text-[12px] md:text-[14px] mb-3 max-w-[450px] font-medium leading-snug hidden sm:block">
               Book your service in just a few taps and get exciting offers!
             </p>
-            
+
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-2">
               <div className="flex flex-row flex-wrap items-center gap-2 sm:gap-3 opacity-60 grayscale-[50%] pointer-events-none">
                 <img src={playStoreBtn} alt="Get it on Google Play" className="h-[28px] sm:h-[32px] md:h-[40px] object-contain rounded-md" />
@@ -109,12 +109,12 @@ const Footer = () => {
           {/* Column 1: Brand Info */}
           <div>
             <div className="flex flex-col mb-3">
-              <img src={img} alt="Car Clean Plus" className="h-16 w-auto object-contain filter brightness-0 self-start -ml-2" />
+              <img src={img} alt="Car Clean Plus" className="h-16 w-auto object-contain self-start -ml-2" />
               <p className="text-gray-800 text-xs leading-relaxed mt-2 font-medium">
                 Car Clean Plus provides premium car wash & detailing services at your doorstep.
               </p>
             </div>
-            
+
             <div className="flex gap-3">
               <a href="#" className="p-2 rounded-full border border-gray-400 hover:border-[#1877F2] hover:text-white hover:bg-[#1877F2] transition-colors text-gray-700">
                 <FaFacebookF size={14} />
@@ -166,7 +166,7 @@ const Footer = () => {
               <li>
                 <a href="https://www.google.com/maps/search/Lucknow,+Uttar+Pradesh" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group cursor-pointer text-gray-700">
                   <FaMapMarkerAlt className="mt-1 flex-shrink-0 text-gray-500" size={16} />
-                  <span className="text-sm font-medium group-hover:text-primary transition-colors">123, Sector 45, Noida,<br/>Uttar Pradesh - 201301</span>
+                  <span className="text-sm font-medium group-hover:text-primary transition-colors">123, Sector 45, Noida,<br />Uttar Pradesh - 201301</span>
                 </a>
               </li>
               <li>

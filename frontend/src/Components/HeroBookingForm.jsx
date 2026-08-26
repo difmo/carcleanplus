@@ -25,7 +25,7 @@ const HeroBookingForm = () => {
     if (formData.location) updateBooking('location', { address: formData.location, pincode: '' });
     if (formData.date) updateBooking('date', formData.date);
     if (formData.time) updateBooking('timeSlot', formData.time);
-    
+
     // Open modal at step 5 (customer details step)
     openModal(
       formData.carType ? { category: formData.carType, name: formData.carType } : null,
@@ -49,9 +49,9 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <FaCar className="text-sm" />
           </div>
-          <select 
-            name="carType" 
-            value={formData.carType} 
+          <select
+            name="carType"
+            value={formData.carType}
             onChange={handleChange}
             className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 appearance-none focus:outline-none focus:ring-2 focus:ring-primary font-medium"
             required
@@ -72,9 +72,9 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <MdLocalCarWash className="text-base" />
           </div>
-          <select 
-            name="service" 
-            value={formData.service} 
+          <select
+            name="service"
+            value={formData.service}
             onChange={handleChange}
             className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 appearance-none focus:outline-none focus:ring-2 focus:ring-primary font-medium"
             required
@@ -95,10 +95,10 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <FaMapMarkerAlt className="text-sm" />
           </div>
-          <input 
-            type="text" 
-            name="location" 
-            value={formData.location} 
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
             onChange={handleChange}
             placeholder="Enter Location"
             className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary font-medium"
@@ -111,10 +111,10 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <FaCalendarAlt className="text-sm" />
           </div>
-          <input 
-            type="date" 
-            name="date" 
-            value={formData.date} 
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
             onChange={handleChange}
             className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary font-medium"
             required
@@ -126,9 +126,9 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <FaClock className="text-sm" />
           </div>
-          <select 
-            name="time" 
-            value={formData.time} 
+          <select
+            name="time"
+            value={formData.time}
             onChange={handleChange}
             className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 appearance-none focus:outline-none focus:ring-2 focus:ring-primary font-medium"
             required
@@ -146,7 +146,7 @@ const HeroBookingForm = () => {
         </div>
 
         {/* Submit Button */}
-        <button 
+        <button
           type="submit"
           className="w-full bg-primary hover:bg-primary-dark text-white text-sm font-bold py-3 rounded-lg mt-1 flex items-center justify-center gap-2 transition-colors shadow-blue-glow"
         >

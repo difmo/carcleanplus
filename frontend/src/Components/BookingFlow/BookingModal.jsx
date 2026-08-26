@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, getPrice } from '../../utils/pricingLogic';
-import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight } from 'react-icons/fa';
+import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp } from 'react-icons/fa';
 import { SiSuzuki, SiHyundai, SiTata, SiHonda, SiToyota, SiVolkswagen, SiSkoda, SiKia, SiRenault, SiNissan, SiFord, SiJeep, SiAudi, SiBmw, SiFiat, SiChevrolet, SiMercedes, SiVolvo } from 'react-icons/si';
 
 const getCarIcon = (carName) => {
@@ -74,32 +74,127 @@ const BookingModal = () => {
   const brandModels = CAR_MODELS.filter(car => car.name.startsWith(bookingState.carBrand));
   const filteredModels = brandModels.filter(car => car.name.toLowerCase().includes(searchModel.toLowerCase()));
 
-  const handleConfirmBooking = async () => {
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePaymentAndBooking = async () => {
     setIsSubmitting(true);
-    
+    const price = bookingState.finalPrice || 0;
+
+    try {
+      // 1. Create order on backend
+      const orderRes = await fetch('http://localhost:5000/api/payment/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: price })
+      });
+      const orderData = await orderRes.json();
+
+      if (!orderData.success) {
+        alert("Failed to initiate payment");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. Load Razorpay
+      const res = await loadRazorpay();
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 3. Setup Razorpay options
+      const options = {
+        key: "rzp_test_TUHd7o8zEcyLCG",
+        amount: orderData.data.amount,
+        currency: "INR",
+        name: "Car Clean Plus",
+        description: "Payment for " + bookingState.service,
+        order_id: orderData.data.id,
+        handler: async function (response) {
+          // Verify on backend
+          const verifyRes = await fetch('http://localhost:5000/api/payment/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          });
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.success) {
+            // Save Booking
+            await submitFinalBooking(response.razorpay_payment_id, response.razorpay_order_id, 'paid');
+          } else {
+            alert("Payment verification failed. Please contact support.");
+            setIsSubmitting(false);
+          }
+        },
+        prefill: {
+          name: "Customer",
+          contact: bookingState.mobile
+        },
+        theme: {
+          color: "#0052cc"
+        },
+        modal: {
+          ondismiss: function () {
+            setIsSubmitting(false);
+          }
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+    } catch (err) {
+      alert("Error initializing payment. Please try again.");
+      console.error(err);
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitFinalBooking = async (paymentId, orderId, paymentStatus) => {
     try {
       const payload = {
         carModel: bookingState.carModel,
         service: bookingState.service,
         location: { address: 'To be confirmed on call', pincode: 'N/A', city: bookingState.city },
-        date: 'To be decided',
-        timeSlot: 'TBD',
-        customerDetails: { 
-          fullName: 'Customer', 
-          mobile: bookingState.mobile, 
-          instructions: 'Call customer to confirm location and time.' 
+        date: bookingState.date || 'To be decided',
+        timeSlot: bookingState.timeSlot || 'TBD',
+        customerDetails: {
+          fullName: 'Customer',
+          mobile: bookingState.mobile,
+          instructions: 'Call customer to confirm location and time.'
         },
-        finalPrice: bookingState.finalPrice || 0
+        finalPrice: bookingState.finalPrice || 0,
+        paymentId,
+        orderId,
+        paymentStatus
       };
 
-      const response = await fetch('http://localhost:5000/api/booking', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:5000/api/booking/${bookingState.bookingId}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         // Save the last 5 characters of ID as the visual Booking ID
         const shortId = data.data._id.substring(data.data._id.length - 5).toUpperCase();
@@ -139,7 +234,77 @@ const BookingModal = () => {
     </button>
   );
 
+    const handleMobileSubmit = async () => {
+    if (bookingState.mobile.length < 10) return;
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/booking/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile: bookingState.mobile })
+      });
+      const data = await response.json();
+      if (data.success) {
+        updateBooking('bookingId', data.data._id);
+        // Determine where to go next based on if car/service are pre-filled
+        if (bookingState.carModel && bookingState.service) {
+           updateBooking('currentStep', 6);
+        } else if (bookingState.carModel) {
+           updateBooking('currentStep', 5);
+        } else {
+           updateBooking('currentStep', 2); // Go to City
+        }
+      } else {
+        alert("Error saving lead");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const renderStep1 = () => (
+    <div className="animate-fade-in flex flex-col h-full relative">
+      {renderCloseButton()}
+      {renderHeaderIcon()}
+      <div className="text-center mb-5">
+        <h2 className="text-[24px] font-black text-gray-900 mb-1.5 tracking-tight">Let's get started</h2>
+        <p className="text-gray-500 text-[13px] px-6 leading-relaxed">Enter your mobile number to view exact prices and available slots.</p>
+      </div>
+
+      <div className="bg-white shadow-sm border border-gray-100 rounded-2xl p-6">
+        <label className="block text-gray-700 text-sm font-bold mb-2">Mobile Number</label>
+        <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all mb-4 shadow-sm">
+          <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center font-black text-gray-900 text-[14px]">
+            +91
+          </div>
+          <input
+            type="tel"
+            maxLength="10"
+            value={bookingState.mobile}
+            onChange={(e) => updateBooking('mobile', e.target.value.replace(/\D/g, ''))}
+            placeholder="Phone number"
+            className="flex-1 px-4 py-3 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 disabled:opacity-50 text-[15px] tracking-wide"
+          />
+        </div>
+      </div>
+
+      <div className="mt-auto pt-6">
+        <button 
+          onClick={handleMobileSubmit}
+          disabled={bookingState.mobile.length < 10 || isSubmitting}
+          className={`w-full font-extrabold py-3.5 rounded-xl text-[15px] transition-all shadow-md ${
+            bookingState.mobile.length >= 10 && !isSubmitting ? 'bg-[#0052cc] text-white hover:bg-[#003380] hover:shadow-lg' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          {isSubmitting ? 'Saving...' : 'Continue'}
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderStep2 = () => (
     <div className="animate-fade-in flex flex-col h-full relative">
       {renderCloseButton()}
       {renderHeaderIcon()}
@@ -191,7 +356,7 @@ const BookingModal = () => {
     </div>
   );
 
-  const renderStep2 = () => (
+  const renderStep3 = () => (
     <div className="animate-fade-in relative flex flex-col h-full">
       {renderCloseButton()}
       {renderBackButton()}
@@ -233,7 +398,7 @@ const BookingModal = () => {
     </div>
   );
 
-  const renderStep3 = () => (
+  const renderStep4 = () => (
     <div className="animate-fade-in relative flex flex-col h-full bg-gray-50/50 rounded-3xl p-5">
       {renderBackButton()}
 
@@ -278,7 +443,7 @@ const BookingModal = () => {
     </div>
   );
 
-  const renderStep4 = () => {
+  const renderStep5 = () => {
     const category = bookingState.carModel?.category || 'STANDARD';
     const packages = [
       { id: SERVICES.BASIC, title: 'Bucket Wash - Basic', reviews: '2.5k reviews', rating: '3.9', features: ['Exterior Ceramic Wash', 'Tyre Polish'] },
@@ -343,7 +508,73 @@ const BookingModal = () => {
     );
   };
 
-  const renderStep5 = () => (
+  const renderStep6 = () => {
+    // Get today's date in YYYY-MM-DD format for the min attribute
+    const today = new Date().toISOString().split('T')[0];
+
+    return (
+      <div className="animate-fade-in relative flex flex-col h-full pt-4">
+        {renderCloseButton()}
+        {renderBackButton()}
+
+        <div className="text-center w-full max-w-sm mx-auto mt-2 mb-5">
+          <div className="w-14 h-14 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-blue-200/50">
+            <FaCalendarAlt className="text-2xl text-blue-500" />
+          </div>
+          <h2 className="text-[22px] font-black text-gray-900 mb-1.5 tracking-tight leading-tight">When should we<br/>arrive?</h2>
+          <p className="text-gray-500 text-[13px] px-4 font-medium">
+            Select your preferred exact date and time.
+          </p>
+        </div>
+
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-1">
+          <div className="mb-5">
+            <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
+              <FaCalendarAlt className="text-[#0052cc]" /> Select Date
+            </label>
+            <div className="relative">
+              <input 
+                type="date" 
+                min={today}
+                value={bookingState.date}
+                onChange={(e) => updateBooking('date', e.target.value)}
+                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
+              <FaClock className="text-[#0052cc]" /> Select Exact Time
+            </label>
+            <div className="relative">
+              <input 
+                type="time" 
+                value={bookingState.timeSlot}
+                onChange={(e) => updateBooking('timeSlot', e.target.value)}
+                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
+              />
+            </div>
+            <p className="text-[10px] text-gray-400 mt-2 ml-1">
+              Choose the exact time. The admin will review and accept this slot.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4 pt-1 pb-1 shrink-0">
+          <button
+            onClick={nextStep}
+            disabled={!bookingState.date || !bookingState.timeSlot}
+            className="w-full bg-[#0052cc] text-white font-black py-3.5 rounded-xl text-[16px] transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 hover:bg-blue-600 shadow-md disabled:shadow-none"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderStep7 = () => (
     <div className="animate-fade-in relative flex flex-col h-full pt-4">
       {renderCloseButton()}
       {renderBackButton()}
@@ -357,38 +588,27 @@ const BookingModal = () => {
           Login to book top car wash and car services at your doorstep.
         </p>
 
-        <div className="w-full text-left">
-          <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-widest pl-1">Mobile Number</label>
-          <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all mb-4 shadow-sm">
-            <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center font-black text-gray-900 text-[14px]">
-              +91
-            </div>
-            <input
-              type="tel"
-              className="flex-1 px-4 py-3 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 disabled:opacity-50 text-[15px] tracking-wide"
-              value={bookingState.mobile}
-              onChange={(e) => updateBooking('mobile', e.target.value)}
-              placeholder="Phone number"
-              maxLength="10"
-            />
-          </div>
-        </div>
+
       </div>
 
       <div className="mt-auto pt-4 pb-1">
         <button
-          onClick={() => {
-            if (bookingState.mobile.length === 10) handleConfirmBooking();
-            else alert("Please enter a valid 10-digit number");
-          }}
-          disabled={isSubmitting || bookingState.mobile.length < 10}
+          onClick={handlePaymentAndBooking}
+          disabled={isSubmitting}
           className="w-full bg-gray-900 text-white font-black py-3.5 rounded-xl text-[16px] hover:bg-black transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 shadow-md disabled:shadow-none"
         >
-          {isSubmitting ? 'Confirming...' : 'Book Now'}
+          {isSubmitting ? 'Processing...' : `Pay ₹${bookingState.finalPrice || 0}`}
         </button>
       </div>
     </div>
   );
+
+  const getWhatsAppLink = () => {
+    const adminPhone = "919120759988";
+    const bookingId = `CCP-${createdBookingId || Math.floor(Math.random() * 90000) + 10000}`;
+    const message = `Hello Car Clean Plus, my booking is confirmed!\n\n*Booking ID:* ${bookingId}\n*Service:* ${bookingState.service}\n*Vehicle:* ${bookingState.carModel?.name}\n*City:* ${bookingState.city}\n*Mobile:* ${bookingState.mobile}\n*Amount Paid:* ₹${bookingState.finalPrice}\n\nPlease contact me to confirm the location and time.`;
+    return `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+  };
 
   const renderSuccess = () => (
     <div className="text-center py-4 animate-fade-in flex flex-col h-full justify-center">
@@ -418,15 +638,26 @@ const BookingModal = () => {
         </div>
       </div>
 
-      <button
-        onClick={() => {
-          resetBooking();
-          closeModal();
-        }}
-        className="w-full bg-gray-900 text-white hover:bg-black font-black py-3.5 px-6 rounded-xl transition-all text-[16px] shadow-md"
-      >
-        Done
-      </button>
+      <div className="flex gap-3 mt-2">
+        <button
+          onClick={() => {
+            resetBooking();
+            closeModal();
+          }}
+          className="w-1/2 bg-gray-100 text-gray-900 hover:bg-gray-200 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-sm"
+        >
+          Close
+        </button>
+        <a
+          href={getWhatsAppLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-1/2 bg-[#25D366] text-white hover:bg-[#1ebe5d] flex items-center justify-center gap-2 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-md"
+        >
+          <FaWhatsapp className="text-xl" />
+          WhatsApp
+        </a>
+      </div>
     </div>
   );
 
@@ -439,6 +670,8 @@ const BookingModal = () => {
           {!bookingConfirmed && currentStep === 3 && renderStep3()}
           {!bookingConfirmed && currentStep === 4 && renderStep4()}
           {!bookingConfirmed && currentStep === 5 && renderStep5()}
+          {!bookingConfirmed && currentStep === 6 && renderStep6()}
+          {!bookingConfirmed && currentStep === 7 && renderStep7()}
           {bookingConfirmed && renderSuccess()}
         </div>
       </div>
