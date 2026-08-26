@@ -116,17 +116,17 @@ const Footer = () => {
             </div>
 
             <div className="flex gap-3">
-              <a href="#" className="p-2 rounded-full border border-gray-400 hover:border-[#1877F2] hover:text-white hover:bg-[#1877F2] transition-colors text-gray-700">
-                <FaFacebookF size={14} />
+              <a href="#" className="p-2 rounded-full border border-[#1877F2] text-[#1877F2] hover:text-white hover:bg-[#1877F2] transition-colors">
+                <FaFacebookF size={16} />
               </a>
-              <a href="#" className="p-2 rounded-full border border-gray-400 hover:border-[#E1306C] hover:text-white hover:bg-[#E1306C] transition-colors text-gray-700">
-                <FaInstagram size={14} />
+              <a href="#" className="p-2 rounded-full border border-[#E1306C] text-[#E1306C] hover:text-white hover:bg-[#E1306C] transition-colors">
+                <FaInstagram size={16} />
               </a>
-              <a href="#" className="p-2 rounded-full border border-gray-400 hover:border-[#FF0000] hover:text-white hover:bg-[#FF0000] transition-colors text-gray-700">
-                <FaYoutube size={14} />
+              <a href="#" className="p-2 rounded-full border border-[#FF0000] text-[#FF0000] hover:text-white hover:bg-[#FF0000] transition-colors">
+                <FaYoutube size={16} />
               </a>
-              <a href="https://wa.me/919120759988?text=Hi" className="p-2 rounded-full border border-gray-400 hover:border-[#25D366] hover:text-white hover:bg-[#25D366] transition-colors text-gray-700">
-                <FaWhatsapp size={14} />
+              <a href="https://wa.me/919120759988?text=Hi" className="p-2 rounded-full border border-[#25D366] text-[#25D366] hover:text-white hover:bg-[#25D366] transition-colors">
+                <FaWhatsapp size={16} />
               </a>
             </div>
           </div>
