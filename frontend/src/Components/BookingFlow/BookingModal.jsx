@@ -168,7 +168,12 @@ const BookingModal = () => {
     }
   };
 
-  const submitFinalBooking = async (paymentId, orderId, paymentStatus) => {
+  const handleCashPayment = async () => {
+    setIsSubmitting(true);
+    await submitFinalBooking(null, null, 'pending', 'Cash');
+  };
+
+  const submitFinalBooking = async (paymentId, orderId, paymentStatus, paymentMethod = 'Online') => {
     try {
       const payload = {
         carModel: bookingState.carModel,
@@ -184,7 +189,8 @@ const BookingModal = () => {
         finalPrice: bookingState.finalPrice || 0,
         paymentId,
         orderId,
-        paymentStatus
+        paymentStatus,
+        paymentMethod
       };
 
       const response = await fetch(`http://localhost:5000/api/booking/${bookingState.bookingId}`, {
@@ -591,13 +597,27 @@ const BookingModal = () => {
 
       </div>
 
-      <div className="mt-auto pt-4 pb-1">
+      <div className="mt-auto pt-4 pb-1 space-y-3">
         <button
           onClick={handlePaymentAndBooking}
           disabled={isSubmitting}
           className="w-full bg-gray-900 text-white font-black py-3.5 rounded-xl text-[16px] hover:bg-black transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 shadow-md disabled:shadow-none"
         >
-          {isSubmitting ? 'Processing...' : `Pay ₹${bookingState.finalPrice || 0}`}
+          {isSubmitting ? 'Processing...' : `Pay Online ₹${bookingState.finalPrice || 0}`}
+        </button>
+
+        <div className="flex items-center justify-center space-x-2">
+          <hr className="w-1/3 border-gray-300" />
+          <span className="text-gray-500 text-[12px] font-bold">OR</span>
+          <hr className="w-1/3 border-gray-300" />
+        </div>
+
+        <button
+          onClick={handleCashPayment}
+          disabled={isSubmitting}
+          className="w-full bg-white text-gray-900 border-2 border-gray-900 font-black py-3.5 rounded-xl text-[16px] hover:bg-gray-50 transition-all disabled:opacity-50 disabled:border-gray-200 disabled:text-gray-400 shadow-sm disabled:shadow-none"
+        >
+          {isSubmitting ? 'Processing...' : 'Pay with Cash'}
         </button>
       </div>
     </div>
@@ -606,7 +626,7 @@ const BookingModal = () => {
   const getWhatsAppLink = () => {
     const adminPhone = "919120759988";
     const bookingId = `CCP-${createdBookingId || Math.floor(Math.random() * 90000) + 10000}`;
-    const message = `Hello Car Clean Plus, my booking is confirmed!\n\n*Booking ID:* ${bookingId}\n*Service:* ${bookingState.service}\n*Vehicle:* ${bookingState.carModel?.name}\n*City:* ${bookingState.city}\n*Mobile:* ${bookingState.mobile}\n*Amount Paid:* ₹${bookingState.finalPrice}\n\nPlease contact me to confirm the location and time.`;
+    const message = `Hello Car Clean Plus, my booking is confirmed!\n\n*Booking ID:* ${bookingId}\n*Service:* ${bookingState.service}\n*Vehicle:* ${bookingState.carModel?.name}\n*City:* ${bookingState.city}\n*Mobile:* ${bookingState.mobile}\n*Amount:* ₹${bookingState.finalPrice}\n\nPlease contact me to confirm the location and time.`;
     return `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
   };
 

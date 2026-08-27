@@ -23,6 +23,7 @@ const bookingSchema = new mongoose.Schema(
     paymentId: { type: String },
     orderId: { type: String },
     paymentStatus: { type: String },
+    paymentMethod: { type: String, enum: ['Online', 'Cash'], default: 'Online' },
     status: {
       type: String,
       enum: ['lead', 'pending', 'confirmed', 'completed', 'cancelled'],

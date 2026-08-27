@@ -39,7 +39,8 @@ const updateBooking = async (req, res) => {
       finalPrice,
       paymentId,
       orderId,
-      paymentStatus
+      paymentStatus,
+      paymentMethod
     } = req.body;
 
     const booking = await Booking.findById(id);
@@ -62,6 +63,9 @@ const updateBooking = async (req, res) => {
     booking.paymentId = paymentId || booking.paymentId;
     booking.orderId = orderId || booking.orderId;
     booking.paymentStatus = paymentStatus || booking.paymentStatus;
+    if (paymentMethod) {
+      booking.paymentMethod = paymentMethod;
+    }
     
     // Upgrade status from lead to pending (or paid if you want)
     if (booking.status === 'lead') {
@@ -123,7 +127,8 @@ const createBooking = async (req, res) => {
       date,
       timeSlot,
       customerDetails,
-      finalPrice
+      finalPrice,
+      paymentMethod
     } = req.body;
 
     // Validate required fields (Basic validation)
@@ -142,7 +147,8 @@ const createBooking = async (req, res) => {
       date,
       timeSlot,
       customerDetails,
-      finalPrice
+      finalPrice,
+      paymentMethod: paymentMethod || 'Online'
     });
 
     // Email details
