@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, getPrice } from '../../utils/pricingLogic';
 import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp } from 'react-icons/fa';
+import { BASE_URL } from '../../utils/api';
 import { SiSuzuki, SiHyundai, SiTata, SiHonda, SiToyota, SiVolkswagen, SiSkoda, SiKia, SiRenault, SiNissan, SiFord, SiJeep, SiAudi, SiBmw, SiFiat, SiChevrolet, SiMercedes, SiVolvo } from 'react-icons/si';
 
 const getCarIcon = (carName) => {
@@ -94,7 +95,7 @@ const BookingModal = () => {
 
     try {
       // 1. Create order on backend
-      const orderRes = await fetch('/api/payment/create-order', {
+      const orderRes = await fetch(`${BASE_URL}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: price })
@@ -125,7 +126,7 @@ const BookingModal = () => {
         order_id: orderData.data.id,
         handler: async function (response) {
           // Verify on backend
-          const verifyRes = await fetch('/api/payment/verify-payment', {
+          const verifyRes = await fetch(`${BASE_URL}/api/payment/verify-payment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -193,7 +194,7 @@ const BookingModal = () => {
         paymentMethod
       };
 
-      const response = await fetch(`/api/booking/${bookingState.bookingId}`, {
+      const response = await fetch(`${BASE_URL}/api/booking/${bookingState.bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -244,7 +245,7 @@ const BookingModal = () => {
     if (bookingState.mobile.length < 10) return;
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/booking/lead', {
+      const response = await fetch(`${BASE_URL}/api/booking/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile: bookingState.mobile })

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { BASE_URL } from "../utils/api";
 
 function FormContact() {
   const form = useRef();
@@ -52,7 +53,7 @@ function FormContact() {
         message: formData.message.trim(),
       };
 
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${BASE_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

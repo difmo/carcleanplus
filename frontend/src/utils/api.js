@@ -1,6 +1,6 @@
 // Helper utility for making API requests with authentication token
 
-const BASE_URL = ''; // Uses relative path for proxy
+export const BASE_URL = import.meta.env.VITE_API_URL || '';
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
