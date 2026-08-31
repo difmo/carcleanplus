@@ -130,7 +130,7 @@ const Navbar = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavigation("Home")}
-                  className="bg-[#d31225] hover:bg-[#a60b1b] text-white flex flex-col items-center justify-center w-[72px] h-[48px] rounded-full shadow-[0_4px_12px_rgba(211,18,37,0.4)] transition-all flex-shrink-0"
+                  className="bg-[#d31225] hover:bg-[#a60b1b] text-white flex flex-col items-center justify-center w-[72px] h-[48px] rounded-full transition-all flex-shrink-0"
                 >
                   <FiHome className="text-[20px] mb-[2px]" strokeWidth="2.5" />
                   <span className="text-[11px] font-bold tracking-wider leading-none">Home</span>
@@ -174,7 +174,7 @@ const Navbar = () => {
           {/* Book a Wash Button */}
           <button
             onClick={openModal}
-            className="hidden md:flex items-center justify-center bg-primary text-white text-[14px] font-bold py-2.5 px-7 rounded-full shadow-lg shadow-primary/30 hover:bg-[#0043a8] hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-300"
+            className="hidden md:flex items-center justify-center bg-primary text-white text-[14px] font-bold py-2.5 px-7 rounded-full hover:bg-[#0043a8] hover:-translate-y-0.5 transition-all duration-300"
           >
             Book a Wash
           </button>
