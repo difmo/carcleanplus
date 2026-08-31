@@ -1,0 +1,9 @@
+{
+  "name": "carcleanplus",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "frontend:install": "npm install --prefix frontend",
+    "backend:install": "npm install --prefix backend"
+  }
+}
