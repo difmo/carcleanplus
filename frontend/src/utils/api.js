@@ -1,6 +1,6 @@
 // Helper utility for making API requests with authentication token
 
-const BASE_URL = 'http://localhost:5000'; // Adjust as needed if backend URL changes
+const BASE_URL = ''; // Uses relative path for proxy
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');

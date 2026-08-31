@@ -77,14 +77,14 @@ function Card({ heading, description }) {
         <div className="text-center font-bold text-black text-4xl md:text-5xl lg:text-6xl py-7">
           <h1>Our Services</h1>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-4 md:mx-10 lg:mx-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-4 md:mx-8 lg:mx-12">
           {mydata.map((item) => (
             <div
               key={item.key}
-              className="rounded-md shadow-md bg-slate-100  sm:mx-6 md:mx-4 lg:mx-5 mt-5 w-full border-1 border-gray-100  "
+              className="rounded-xl bg-slate-50 mt-5 w-full border border-gray-200 hover:-translate-y-1 transition-transform duration-300"
             >
               <div className="flex items-center justify-center mt-6">
-                <div className="object-cover object-center rounded-t-md">
+                <div className="object-cover object-center text-4xl text-primary">
                   {item.icon}
                 </div>
               </div>

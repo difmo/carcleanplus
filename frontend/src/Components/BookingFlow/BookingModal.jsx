@@ -94,7 +94,7 @@ const BookingModal = () => {
 
     try {
       // 1. Create order on backend
-      const orderRes = await fetch('http://localhost:5000/api/payment/create-order', {
+      const orderRes = await fetch('/api/payment/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: price })
@@ -125,7 +125,7 @@ const BookingModal = () => {
         order_id: orderData.data.id,
         handler: async function (response) {
           // Verify on backend
-          const verifyRes = await fetch('http://localhost:5000/api/payment/verify-payment', {
+          const verifyRes = await fetch('/api/payment/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -193,7 +193,7 @@ const BookingModal = () => {
         paymentMethod
       };
 
-      const response = await fetch(`http://localhost:5000/api/booking/${bookingState.bookingId}`, {
+      const response = await fetch(`/api/booking/${bookingState.bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -244,7 +244,7 @@ const BookingModal = () => {
     if (bookingState.mobile.length < 10) return;
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:5000/api/booking/lead', {
+      const response = await fetch('/api/booking/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile: bookingState.mobile })

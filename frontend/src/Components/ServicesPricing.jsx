@@ -74,13 +74,13 @@ const ServicesPricing = () => {
           {packages.map((pkg, index) => (
             <div
               key={index}
-              className={`relative rounded-[20px] transition-all duration-300 ease-out flex flex-col border-[1.5px] p-6 lg:p-8 hover:-translate-y-2 hover:shadow-2xl ${pkg.bgColor} ${pkg.borderColor} ${
-                pkg.popular ? 'shadow-[0_10px_40px_-10px_rgba(0,82,204,0.3)] md:-translate-y-2 hover:md:-translate-y-4' : 'shadow-md'
+              className={`relative rounded-[20px] transition-all duration-300 ease-out flex flex-col border-[1.5px] p-6 lg:p-8 hover:-translate-y-2 ${pkg.bgColor} ${pkg.borderColor} ${
+                pkg.popular ? 'md:-translate-y-2 hover:md:-translate-y-4' : ''
               }`}
             >
               {/* Popular Badge */}
               {pkg.popular && (
-                <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#0052cc] to-[#3377ff] text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.15em] rounded-full shadow-lg z-10 whitespace-nowrap border border-[#0052cc]/20">
+                <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#0052cc] to-[#3377ff] text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.15em] rounded-full z-10 whitespace-nowrap border border-[#0052cc]/20">
                   Most Popular
                 </div>
               )}
@@ -125,8 +125,8 @@ const ServicesPricing = () => {
                   onClick={() => openModal(null, pkg.id)}
                   className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 transform active:scale-95 border-2 ${
                     pkg.popular
-                      ? 'bg-primary border-primary text-white hover:bg-primary-dark hover:border-primary-dark shadow-[0_4px_14px_0_rgba(0,82,204,0.3)] hover:shadow-[0_6px_20px_rgba(0,82,204,0.5)] hover:-translate-y-1'
-                      : 'bg-transparent border-primary text-primary hover:bg-primary hover:text-white hover:border-primary hover:shadow-[0_6px_20px_rgba(0,82,204,0.4)] hover:-translate-y-1'
+                      ? 'bg-primary border-primary text-white hover:bg-primary-dark hover:border-primary-dark hover:-translate-y-1'
+                      : 'bg-transparent border-primary text-primary hover:bg-primary hover:text-white hover:border-primary hover:-translate-y-1'
                   }`}
                 >
                   Book Now
@@ -139,7 +139,7 @@ const ServicesPricing = () => {
         <div className="text-center mt-12 flex justify-center flex-col items-center gap-4">
           <button
             onClick={() => navigate('/pricing')}
-            className="group relative flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-8 rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(0,82,204,0.7)]"
+            className="group relative flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-8 rounded-full overflow-hidden transition-all duration-300"
           >
             <span className="relative z-10 tracking-widest uppercase text-xs font-extrabold">View All Packages</span>
             <FaArrowRight className="relative z-10 transform group-hover:translate-x-1 transition-transform duration-300 text-sm" />
