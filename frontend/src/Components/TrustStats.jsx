@@ -45,15 +45,7 @@ const TrustStats = () => {
       {/* Outer wrapper to hold the dark background like a floating card */}
       <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-gray-200 overflow-hidden p-6 md:p-8 transform transition-transform duration-500">
 
-        {/* Subtle Background Image within the floating box */}
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        ></div>
+
 
         <div className="relative z-10">
 

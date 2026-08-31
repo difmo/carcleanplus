@@ -133,8 +133,8 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-gray-900 font-extrabold text-lg tracking-wide mb-3">Quick Links</h4>
-            <ul className="space-y-1.5">
+            <h4 className="text-gray-900 font-bold text-[17px] mb-3">Quick Links</h4>
+            <ul className="flex flex-col gap-1.5">
               {quickLinks.map(link => (
                 <li key={link.name}>
                   <a href="#" onClick={link.action} className="text-gray-700 hover:text-primary text-sm transition-colors font-medium">
@@ -147,8 +147,8 @@ const Footer = () => {
 
           {/* Column 3: Our Packages */}
           <div>
-            <h4 className="text-gray-900 font-extrabold text-lg tracking-wide mb-3">Our Packages</h4>
-            <ul className="space-y-1.5">
+            <h4 className="text-gray-900 font-bold text-[17px] mb-3">Our Packages</h4>
+            <ul className="flex flex-col gap-1.5">
               {packagesList.map(pkg => (
                 <li key={pkg.name}>
                   <a href="#" onClick={pkg.action} className="text-gray-700 hover:text-[#0052cc] text-sm transition-colors font-medium">
@@ -161,28 +161,28 @@ const Footer = () => {
 
           {/* Column 4: Contact Us */}
           <div>
-            <h4 className="text-gray-900 font-extrabold text-lg tracking-wide mb-3">Contact Us</h4>
-            <ul className="space-y-2">
+            <h4 className="text-gray-900 font-bold text-[17px] mb-3">Contact Us</h4>
+            <ul className="flex flex-col gap-2">
               <li>
                 <a href="https://www.google.com/maps/search/Lucknow,+Uttar+Pradesh" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group cursor-pointer text-gray-700">
-                  <FaMapMarkerAlt className="mt-1 flex-shrink-0 text-gray-500" size={16} />
-                  <span className="text-sm font-medium group-hover:text-primary transition-colors">123, Sector 45, Noida,<br />Uttar Pradesh - 201301</span>
+                  <FaMapMarkerAlt className="mt-1 flex-shrink-0 text-gray-500" size={14} />
+                  <span className="text-sm font-medium group-hover:text-primary transition-colors leading-tight">123, Sector 45, Noida,<br />Uttar Pradesh - 201301</span>
                 </a>
               </li>
               <li>
                 <a href="tel:+919120759988" className="flex items-center gap-3 group cursor-pointer text-gray-700">
-                  <FaPhoneAlt className="flex-shrink-0 text-gray-500" size={14} />
+                  <FaPhoneAlt className="flex-shrink-0 text-gray-500" size={12} />
                   <span className="text-sm font-medium group-hover:text-primary transition-colors">+91 91207 59988</span>
                 </a>
               </li>
               <li>
                 <a href="mailto:info@carcleanplus.com" className="flex items-center gap-3 group cursor-pointer text-gray-700">
-                  <FaEnvelope className="flex-shrink-0 text-gray-500" size={14} />
+                  <FaEnvelope className="flex-shrink-0 text-gray-500" size={12} />
                   <span className="text-sm font-medium group-hover:text-primary transition-colors">info@carcleanplus.com</span>
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-700">
-                <FaClock className="flex-shrink-0 text-gray-500" size={14} />
+                <FaClock className="flex-shrink-0 text-gray-500" size={12} />
                 <span className="text-sm font-medium">Mon - Sun: 8:00 AM - 8:00 PM</span>
               </li>
             </ul>

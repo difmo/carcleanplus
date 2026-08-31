@@ -10,15 +10,18 @@ const BeforeAfterGallery = () => {
   const transformations = [
     {
       singleImage: beforeAfter1,
-      title: 'Exterior Wash'
+      title: 'Exterior Wash',
+      imgClass: 'object-cover'
     },
     {
       singleImage: beforeAfter2,
-      title: 'Interior Cleaning'
+      title: 'Interior Cleaning',
+      imgClass: 'object-cover scale-[1.15] object-top'
     },
     {
       singleImage: beforeAfter3,
-      title: 'Tyre & Alloy'
+      title: 'Tyre & Alloy',
+      imgClass: 'object-cover'
     }
   ];
 
@@ -39,7 +42,7 @@ const BeforeAfterGallery = () => {
             <div key={index} className="w-full flex gap-2 rounded-[24px] bg-white border border-gray-200 shadow-lg p-2 transition-transform duration-300">
               {item.singleImage ? (
                 <div className="relative w-full rounded-[16px] overflow-hidden group flex items-center justify-center bg-gray-100 h-[250px] md:h-[300px]">
-                  <img src={item.singleImage} alt={`${item.title}`} className="w-full h-full object-cover transition-transform duration-500 relative z-0 opacity-100" />
+                  <img src={item.singleImage} alt={`${item.title}`} className={`w-full h-full transition-transform duration-500 relative z-0 opacity-100 ${item.imgClass || 'object-cover'}`} />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
                   <h3 className="absolute bottom-4 left-4 text-white font-bold text-lg tracking-wide drop-shadow-md">{item.title}</h3>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/logo car22.png";
-import { FiAlignJustify, FiX } from "react-icons/fi";
+import { FiAlignJustify, FiX, FiHome } from "react-icons/fi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
 
@@ -125,6 +125,18 @@ const Navbar = () => {
         <nav className="hidden xl:flex flex-none justify-center items-center gap-7 2xl:gap-9 h-full">
           {navItems.map((item) => {
             const isActive = activeSection === item.name;
+            if (item.name === "Home") {
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavigation("Home")}
+                  className="bg-[#d31225] hover:bg-[#a60b1b] text-white flex flex-col items-center justify-center w-[72px] h-[48px] rounded-full shadow-[0_4px_12px_rgba(211,18,37,0.4)] transition-all flex-shrink-0"
+                >
+                  <FiHome className="text-[20px] mb-[2px]" strokeWidth="2.5" />
+                  <span className="text-[11px] font-bold tracking-wider leading-none">Home</span>
+                </button>
+              );
+            }
             return (
               <button
                 key={item.name}

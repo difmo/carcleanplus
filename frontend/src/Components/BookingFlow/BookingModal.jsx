@@ -386,7 +386,7 @@ const BookingModal = () => {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-2 overflow-y-auto custom-scrollbar flex-1 pb-4 content-start min-h-[160px]">
+      <div className="grid grid-cols-3 gap-2 overflow-y-auto custom-scrollbar flex-1 pt-1 pb-4 px-1 content-start min-h-[160px]">
         {filteredBrands.map(brand => (
           <div
             key={brand}
@@ -427,7 +427,7 @@ const BookingModal = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-3 overflow-y-auto custom-scrollbar flex-1 pb-4 content-start min-h-[160px] px-1">
+      <div className="grid grid-cols-2 gap-3 overflow-y-auto custom-scrollbar flex-1 pt-1 pb-4 content-start min-h-[160px] px-1">
         {filteredModels.map(car => (
           <div
             key={car.id}
