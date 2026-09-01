@@ -17,14 +17,14 @@ function WhyChouseUsComponents() {
     <section id="service" className="py-20 bg-white relative font-sans z-10">
       <div className="container mx-auto px-4 max-w-[1150px]">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          
+
           {/* Left Content */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
             <p className="text-[#0033cc] font-bold text-[12px] tracking-widest uppercase mb-3">
               WHY CHOOSE US
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-[42px] font-extrabold text-[#0a192f] leading-[1.1] mb-5 tracking-tight">
-              We Care For Your Car <br className="hidden lg:block"/> Like It's Our Own
+              We Care For Your Car <br className="hidden lg:block" /> Like It's Our Own
             </h2>
             <p className="text-gray-500 text-[15px] mb-8 leading-relaxed font-medium max-w-[90%]">
               At Car Clean Plus, we use the best products and techniques to give your car the care it deserves. Your satisfaction is our priority.

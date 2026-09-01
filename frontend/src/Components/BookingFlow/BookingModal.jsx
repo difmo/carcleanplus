@@ -528,10 +528,13 @@ const BookingModal = () => {
           <div className="w-14 h-14 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-blue-200/50">
             <FaCalendarAlt className="text-2xl text-blue-500" />
           </div>
-          <h2 className="text-[22px] font-black text-gray-900 mb-1.5 tracking-tight leading-tight">When should we<br/>arrive?</h2>
-          <p className="text-gray-500 text-[13px] px-4 font-medium">
-            Select your preferred exact date and time.
-          </p>
+          <h2 className="text-[22px] font-black text-gray-900 mb-1.5 tracking-tight leading-tight uppercase">Car Clean Plus<br/>Book Your Slot</h2>
+          <div className="flex justify-center mt-3 mb-1">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-gradient-to-r from-[#0052cc]/5 via-[#0052cc]/10 to-[#3377ff]/5 border border-[#0052cc]/20 rounded-full shadow-sm backdrop-blur-sm">
+              <span className="text-[#0052cc] text-[13px]"><FaCalendarAlt /></span>
+              <span className="text-[11px] font-black text-gray-800 tracking-widest uppercase mt-0.5">Monday - Saturday</span>
+            </div>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto custom-scrollbar px-1">
@@ -554,22 +557,27 @@ const BookingModal = () => {
             <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
               <FaClock className="text-[#0052cc]" /> Select Slot
             </label>
-            <div className="relative">
-              <select 
-                value={bookingState.timeSlot}
-                onChange={(e) => updateBooking('timeSlot', e.target.value)}
-                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm appearance-none"
-              >
-                <option value="">Select a time slot</option>
-                <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
-                <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
-                <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
-                <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
-                <option value="05:00 PM - 07:00 PM">05:00 PM - 07:00 PM</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
-                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { id: 'Slot 1 – 08:30 AM', label: '08:30 AM' },
+                { id: 'Slot 2 – 10:00 AM', label: '10:00 AM' },
+                { id: 'Slot 3 – 11:30 AM', label: '11:30 AM' },
+                { id: 'Slot 4 – 01:30 PM', label: '01:30 PM' },
+                { id: 'Slot 5 – 03:00 PM', label: '03:00 PM' },
+                { id: 'Slot 6 – 04:30 PM', label: '04:30 PM' },
+              ].map((slot) => (
+                <button
+                  key={slot.id}
+                  onClick={() => updateBooking('timeSlot', slot.id)}
+                  className={`py-2 px-1 rounded-xl text-[13px] font-bold border-2 transition-all ${
+                    bookingState.timeSlot === slot.id
+                      ? 'border-[#0052cc] bg-[#0052cc] text-white shadow-sm'
+                      : 'border-gray-100 bg-white text-gray-700 hover:border-[#0052cc]/40'
+                  }`}
+                >
+                  {slot.label}
+                </button>
+              ))}
             </div>
             <p className="text-[10px] text-gray-400 mt-2 ml-1">
               Choose the exact slot. The admin will review and accept this slot.

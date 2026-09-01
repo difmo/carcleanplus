@@ -140,14 +140,14 @@ const Navbar = () => {
             return (
               <button
                 key={item.name}
-                className={`relative h-full flex items-center gap-1.5 text-[14px] 2xl:text-[15px] font-bold transition-colors capitalize group ${isActive ? 'text-primary' : 'text-gray-800 hover:text-primary'
+                className={`relative h-full flex items-center gap-1.5 text-[14px] 2xl:text-[15px] font-bold transition-colors capitalize ${isActive ? 'text-primary' : 'text-gray-800 hover:text-primary'
                   }`}
                 onClick={() => handleNavigation(item.name)}
               >
                 <div className="relative inline-flex flex-col items-center justify-center">
                   <span>{item.name}</span>
                   {/* Active Line */}
-                  <span className={`absolute -bottom-[6px] h-[3px] rounded-full bg-primary transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-[70%]'
+                  <span className={`absolute -bottom-[6px] h-[3px] rounded-full bg-primary transition-all duration-300 ${isActive ? 'w-full' : 'w-0'
                     }`}></span>
                 </div>
                 {item.badge && (
