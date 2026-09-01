@@ -56,7 +56,7 @@ const BookingModal = () => {
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [createdBookingId, setCreatedBookingId] = useState('');
 
-  const CITIES = ['Lucknow'];
+  const CITIES = ['Gomti Nagar', 'Aliganj', 'Indira Nagar', 'Hazratganj', 'Mahanagar', 'Alambagh', 'Aashiana', 'Rajajipuram', 'Vikas Nagar', 'Jankipuram', 'Aminabad', 'Chowk'];
 
   const BRANDS = useMemo(() => {
     const brandSet = new Set();
@@ -323,7 +323,7 @@ const BookingModal = () => {
       <div className="bg-white shadow-sm border border-gray-100 rounded-2xl overflow-hidden flex flex-col flex-1 min-h-[160px]">
         <div className="p-4 flex items-center gap-3 border-b border-gray-50 bg-gray-50/50">
           <FaMapMarkerAlt className="text-gray-800 text-base" />
-          <span className="font-extrabold text-gray-900 text-base">Select City</span>
+          <span className="font-extrabold text-gray-900 text-base">Select Area (Lucknow)</span>
         </div>
         <div className="p-3 bg-white border-b border-gray-50 sticky top-0 z-10">
           <div className="relative group">
@@ -332,7 +332,7 @@ const BookingModal = () => {
             </div>
             <input
               type="text"
-              placeholder="Search city..."
+              placeholder="Search area..."
               className="w-full bg-white border-2 border-[#0052cc]/15 hover:border-[#0052cc]/40 focus:border-[#0052cc] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
               value={searchCity}
               onChange={e => setSearchCity(e.target.value)}
@@ -552,18 +552,27 @@ const BookingModal = () => {
 
           <div>
             <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
-              <FaClock className="text-[#0052cc]" /> Select Exact Time
+              <FaClock className="text-[#0052cc]" /> Select Slot
             </label>
             <div className="relative">
-              <input 
-                type="time" 
+              <select 
                 value={bookingState.timeSlot}
                 onChange={(e) => updateBooking('timeSlot', e.target.value)}
-                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
-              />
+                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm appearance-none"
+              >
+                <option value="">Select a time slot</option>
+                <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
+                <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
+                <option value="05:00 PM - 07:00 PM">05:00 PM - 07:00 PM</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
             </div>
             <p className="text-[10px] text-gray-400 mt-2 ml-1">
-              Choose the exact time. The admin will review and accept this slot.
+              Choose the exact slot. The admin will review and accept this slot.
             </p>
           </div>
         </div>
