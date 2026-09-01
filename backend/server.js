@@ -6,12 +6,30 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// Database
-connectDB();
+// Database initialization
+connectDB().catch((err) => console.error('Initial DB connection failed:', err.message));
 
 // Middleware
-app.use(cors({ origin: '*' }));
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
+
+// Ensure DB is connected for incoming API requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error('DB connect middleware error:', err.message);
+  }
+  next();
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -30,8 +48,10 @@ app.use('/api/payment', require('./routes/paymentRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
