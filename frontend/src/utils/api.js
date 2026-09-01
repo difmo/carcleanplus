@@ -1,6 +1,6 @@
 // Helper utility for making API requests with authentication token
 
-export const BASE_URL = import.meta.env.VITE_API_URL || '';
+export const BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
