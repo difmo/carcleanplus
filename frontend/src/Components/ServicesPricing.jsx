@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
+import { SERVICES } from '../utils/pricingLogic';
 import { FaArrowRight, FaCheck, FaCarSide, FaRegClock } from 'react-icons/fa';
 
 const ServicesPricing = () => {
@@ -9,7 +10,7 @@ const ServicesPricing = () => {
 
   const packages = [
     {
-      id: 'basic',
+      id: SERVICES.BASIC,
       name: 'Basic Wash',
       price: '299',
       desc: 'Basic = Outside',
@@ -26,7 +27,7 @@ const ServicesPricing = () => {
       borderColor: 'border-gray-100',
     },
     {
-      id: 'premium',
+      id: SERVICES.PREMIUM,
       name: 'Premium Wash',
       price: '499',
       desc: 'Premium = Outside + Inside',
@@ -44,7 +45,7 @@ const ServicesPricing = () => {
       borderColor: 'border-2 border-[#0052cc]',
     },
     {
-      id: 'complete',
+      id: SERVICES.COMPLETE,
       name: 'Complete Clean',
       price: '699',
       desc: 'Complete = Full Deep Clean',

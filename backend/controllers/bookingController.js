@@ -1,16 +1,47 @@
 const Booking = require('../models/Booking');
 const transporter = require('../config/mail');
 
+// Get Booked Slots for a date
+const getBookedSlots = async (req, res) => {
+  try {
+    const { date } = req.query;
+    if (!date) {
+      return res.status(400).json({ success: false, message: 'Date query parameter is required' });
+    }
+
+    const bookings = await Booking.find({
+      date,
+      status: { $in: ['pending', 'confirmed', 'completed'] }
+    }).select('timeSlot');
+
+    const bookedSlots = bookings.map(b => b.timeSlot).filter(Boolean);
+
+    return res.status(200).json({
+      success: true,
+      date,
+      bookedSlots
+    });
+  } catch (error) {
+    console.error('Get Booked Slots Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to fetch booked slots', error: error.message });
+  }
+};
+
 // Create Lead
 const createLead = async (req, res) => {
   try {
-    const { mobile } = req.body;
+    const { mobile, name, fullName } = req.body;
     if (!mobile) {
       return res.status(400).json({ success: false, message: 'Mobile number is required' });
     }
 
+    const customerName = fullName || name || '';
+
     const lead = await Booking.create({
-      customerDetails: { mobile },
+      customerDetails: { 
+        mobile,
+        fullName: customerName 
+      },
       status: 'lead'
     });
 
@@ -46,6 +77,22 @@ const updateBooking = async (req, res) => {
     const booking = await Booking.findById(id);
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    // Check if slot on that date is already booked by another active booking
+    if (date && timeSlot) {
+      const existingBooking = await Booking.findOne({
+        _id: { $ne: id },
+        date,
+        timeSlot,
+        status: { $in: ['pending', 'confirmed', 'completed'] }
+      });
+      if (existingBooking) {
+        return res.status(400).json({
+          success: false,
+          message: `Slot '${timeSlot}' on ${date} is already booked. Please choose another slot.`
+        });
+      }
     }
 
     booking.carModel = carModel || booking.carModel;
@@ -139,6 +186,19 @@ const createBooking = async (req, res) => {
       });
     }
 
+    // Check if slot on that date is already booked
+    const existingBooking = await Booking.findOne({
+      date,
+      timeSlot,
+      status: { $in: ['pending', 'confirmed', 'completed'] }
+    });
+    if (existingBooking) {
+      return res.status(400).json({
+        success: false,
+        message: `Slot '${timeSlot}' on ${date} is already booked. Please choose another slot.`
+      });
+    }
+
     // Save booking in MongoDB
     const booking = await Booking.create({
       carModel,
@@ -202,6 +262,7 @@ const createBooking = async (req, res) => {
 };
 
 module.exports = {
+  getBookedSlots,
   createLead,
   updateBooking,
   createBooking

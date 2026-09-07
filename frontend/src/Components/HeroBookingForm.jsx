@@ -83,7 +83,6 @@ const HeroBookingForm = () => {
             <option value="Basic Wash">Basic Wash</option>
             <option value="Premium Wash">Premium Wash</option>
             <option value="Complete Clean">Complete Clean</option>
-            <option value="Car Interior Cleaning">Car Interior Cleaning</option>
           </select>
           <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-500">
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>

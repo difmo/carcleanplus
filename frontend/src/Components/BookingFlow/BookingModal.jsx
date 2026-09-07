@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, getPrice } from '../../utils/pricingLogic';
-import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp } from 'react-icons/fa';
+import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp, FaUser } from 'react-icons/fa';
 import { BASE_URL } from '../../utils/api';
 import { SiSuzuki, SiHyundai, SiTata, SiHonda, SiToyota, SiVolkswagen, SiSkoda, SiKia, SiRenault, SiNissan, SiFord, SiJeep, SiAudi, SiBmw, SiFiat, SiChevrolet, SiMercedes, SiVolvo } from 'react-icons/si';
 
@@ -55,6 +55,39 @@ const BookingModal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [createdBookingId, setCreatedBookingId] = useState('');
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+
+  useEffect(() => {
+    if (!bookingState.date) {
+      setBookedSlots([]);
+      return;
+    }
+
+    let isCurrent = true;
+    setIsLoadingSlots(true);
+    fetch(`${BASE_URL}/api/booking/booked-slots?date=${bookingState.date}`)
+      .then(res => res.json())
+      .then(data => {
+        if (isCurrent && data.success) {
+          const slots = data.bookedSlots || [];
+          setBookedSlots(slots);
+          if (slots.includes(bookingState.timeSlot)) {
+            updateBooking('timeSlot', '');
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching booked slots:', err);
+      })
+      .finally(() => {
+        if (isCurrent) setIsLoadingSlots(false);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [bookingState.date]);
 
   const CITIES = ['Gomti Nagar', 'Aliganj', 'Indira Nagar', 'Hazratganj', 'Mahanagar', 'Alambagh', 'Aashiana', 'Rajajipuram', 'Vikas Nagar', 'Jankipuram', 'Aminabad', 'Chowk'];
 
@@ -146,7 +179,7 @@ const BookingModal = () => {
           }
         },
         prefill: {
-          name: "Customer",
+          name: bookingState.name?.trim() || "Customer",
           contact: bookingState.mobile
         },
         theme: {
@@ -183,7 +216,7 @@ const BookingModal = () => {
         date: bookingState.date || 'To be decided',
         timeSlot: bookingState.timeSlot || 'TBD',
         customerDetails: {
-          fullName: 'Customer',
+          fullName: bookingState.name?.trim() || 'Customer',
           mobile: bookingState.mobile,
           instructions: 'Call customer to confirm location and time.'
         },
@@ -248,7 +281,10 @@ const BookingModal = () => {
       const response = await fetch(`${BASE_URL}/api/booking/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobile: bookingState.mobile })
+        body: JSON.stringify({ 
+          mobile: bookingState.mobile,
+          fullName: bookingState.name?.trim() || ''
+        })
       });
       const data = await response.json();
       if (data.success) {
@@ -277,32 +313,50 @@ const BookingModal = () => {
       {renderHeaderIcon()}
       <div className="text-center mb-5">
         <h2 className="text-[24px] font-black text-gray-900 mb-1.5 tracking-tight">Let's get started</h2>
-        <p className="text-gray-500 text-[13px] px-6 leading-relaxed">Enter your mobile number to view exact prices and available slots.</p>
+        <p className="text-gray-500 text-[13px] px-6 leading-relaxed">Enter your name and mobile number to view exact prices and available slots.</p>
       </div>
 
-      <div className="bg-white shadow-sm border border-gray-100 rounded-2xl p-6">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Mobile Number</label>
-        <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all mb-4 shadow-sm">
-          <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center font-black text-gray-900 text-[14px]">
-            +91
+      <div className="bg-white shadow-sm border border-gray-100 rounded-2xl p-5 space-y-4">
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+          <div className="flex items-center bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all shadow-sm">
+            <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center text-gray-400">
+              <FaUser className="text-[14px]" />
+            </div>
+            <input
+              type="text"
+              value={bookingState.name || ''}
+              onChange={(e) => updateBooking('name', e.target.value)}
+              placeholder="Enter your name"
+              className="flex-1 px-4 py-3 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 text-[15px]"
+            />
           </div>
-          <input
-            type="tel"
-            maxLength="10"
-            value={bookingState.mobile}
-            onChange={(e) => updateBooking('mobile', e.target.value.replace(/\D/g, ''))}
-            placeholder="Phone number"
-            className="flex-1 px-4 py-3 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 disabled:opacity-50 text-[15px] tracking-wide"
-          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Mobile Number</label>
+          <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all shadow-sm">
+            <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center font-black text-gray-900 text-[14px]">
+              +91
+            </div>
+            <input
+              type="tel"
+              maxLength="10"
+              value={bookingState.mobile}
+              onChange={(e) => updateBooking('mobile', e.target.value.replace(/\D/g, ''))}
+              placeholder="Phone number"
+              className="flex-1 px-4 py-3 bg-transparent outline-none text-gray-900 font-bold placeholder-gray-300 disabled:opacity-50 text-[15px] tracking-wide"
+            />
+          </div>
         </div>
       </div>
 
       <div className="mt-auto pt-6">
         <button 
           onClick={handleMobileSubmit}
-          disabled={bookingState.mobile.length < 10 || isSubmitting}
+          disabled={bookingState.mobile.length < 10 || !bookingState.name?.trim() || isSubmitting}
           className={`w-full font-extrabold py-3.5 rounded-xl text-[15px] transition-all shadow-md ${
-            bookingState.mobile.length >= 10 && !isSubmitting ? 'bg-[#0052cc] text-white hover:bg-[#003380] hover:shadow-lg' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            bookingState.mobile.length >= 10 && bookingState.name?.trim() && !isSubmitting ? 'bg-[#0052cc] text-white hover:bg-[#003380] hover:shadow-lg' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >
           {isSubmitting ? 'Saving...' : 'Continue'}
@@ -453,9 +507,31 @@ const BookingModal = () => {
   const renderStep5 = () => {
     const category = bookingState.carModel?.category || 'STANDARD';
     const packages = [
-      { id: SERVICES.BASIC, title: 'Bucket Wash - Basic', reviews: '2.5k reviews', rating: '3.9', features: ['Exterior Ceramic Wash', 'Tyre Polish'] },
-      { id: SERVICES.PREMIUM, title: 'Pressure Wash - Premium', reviews: '6.8k reviews', rating: '4.6', features: ['Exterior High Pressure Wash', 'Tyre Polish'] },
-      { id: SERVICES.COMPLETE, title: '360 Deep Cleaning', reviews: '3.2k reviews', rating: '4.4', features: ['Interior Vacuum', 'Roof Cleaning', 'Seat Cleaning'] }
+      { 
+        id: SERVICES.BASIC, 
+        title: 'Basic Wash', 
+        desc: 'Basic = Outside',
+        time: '30 - 40 mins',
+        rating: '4.7', 
+        features: ['Exterior Wash', 'Wheel Cleaning', 'Tyre Shine', 'Drying'] 
+      },
+      { 
+        id: SERVICES.PREMIUM, 
+        title: 'Premium Wash', 
+        desc: 'Premium = Outside + Inside',
+        time: '45 - 60 mins',
+        rating: '4.9', 
+        popular: true,
+        features: ['Everything in Basic Plus', 'Interior Vacuum', 'Dashboard Cleaning', 'Mat Cleaning', 'Tyre & Rim Shine'] 
+      },
+      { 
+        id: SERVICES.COMPLETE, 
+        title: 'Complete Clean', 
+        desc: 'Complete = Full Deep Clean',
+        time: '60 - 90 mins',
+        rating: '4.8', 
+        features: ['Everything in Premium', 'Deep Interior Cleaning', 'Seat & Mat Cleaning', 'Interior Detailing', 'Air Freshener'] 
+      }
     ];
 
     return (
@@ -477,13 +553,22 @@ const BookingModal = () => {
                 <FaCar className="text-gray-300 text-xl" />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-extrabold text-gray-900 text-[13px] leading-tight truncate">{pkg.title}</h4>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-extrabold text-gray-900 text-[13px] leading-tight truncate">{pkg.title}</h4>
+                  {pkg.popular && (
+                    <span className="bg-[#0052cc] text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                      Popular
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-gray-500 font-semibold mb-1">{pkg.desc}</p>
                 <div className="flex items-center gap-2 mt-0.5 mb-1">
                   <div className="font-black text-gray-900 text-[16px]">₹{getPrice(category, pkg.id)}</div>
                   <div className="bg-blue-100/80 px-1.5 py-0.5 rounded flex items-center gap-1">
                     <span className="text-[#0052cc] text-[9px]">★</span>
                     <span className="font-bold text-gray-900 text-[10px]">{pkg.rating}</span>
                   </div>
+                  <span className="text-[10px] text-gray-400 font-medium">({pkg.time})</span>
                 </div>
                 <ul className="space-y-0.5">
                   {pkg.features.map((f, i) => (
@@ -554,9 +639,21 @@ const BookingModal = () => {
           </div>
 
           <div>
-            <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
-              <FaClock className="text-[#0052cc]" /> Select Slot
-            </label>
+            <div className="flex items-center justify-between mb-2 pl-1 pr-1">
+              <label className="text-[11px] font-black text-gray-800 uppercase tracking-widest flex items-center gap-1.5">
+                <FaClock className="text-[#0052cc]" /> Select Slot
+              </label>
+              {isLoadingSlots && (
+                <span className="text-[10px] font-bold text-[#0052cc] animate-pulse">Checking...</span>
+              )}
+            </div>
+
+            {!bookingState.date && (
+              <div className="p-2.5 mb-2 bg-blue-50/70 border border-blue-100 rounded-xl text-center text-[12px] font-bold text-[#0052cc]">
+                Please choose a date above to check slots
+              </div>
+            )}
+
             <div className="grid grid-cols-2 gap-2">
               {[
                 { id: 'Slot 1 – 08:30 AM', label: '08:30 AM' },
@@ -565,22 +662,51 @@ const BookingModal = () => {
                 { id: 'Slot 4 – 01:30 PM', label: '01:30 PM' },
                 { id: 'Slot 5 – 03:00 PM', label: '03:00 PM' },
                 { id: 'Slot 6 – 04:30 PM', label: '04:30 PM' },
-              ].map((slot) => (
-                <button
-                  key={slot.id}
-                  onClick={() => updateBooking('timeSlot', slot.id)}
-                  className={`py-2 px-1 rounded-xl text-[13px] font-bold border-2 transition-all ${
-                    bookingState.timeSlot === slot.id
-                      ? 'border-[#0052cc] bg-[#0052cc] text-white shadow-sm'
-                      : 'border-gray-100 bg-white text-gray-700 hover:border-[#0052cc]/40'
-                  }`}
-                >
-                  {slot.label}
-                </button>
-              ))}
+              ].map((slot) => {
+                const isBooked = bookedSlots.includes(slot.id) || bookedSlots.includes(slot.label);
+                const isSelected = bookingState.timeSlot === slot.id;
+
+                if (isBooked) {
+                  return (
+                    <button
+                      key={slot.id}
+                      type="button"
+                      disabled={true}
+                      className="py-2.5 px-2 rounded-xl text-[13px] font-bold border-2 border-red-200/60 bg-red-50/60 text-red-400 cursor-not-allowed flex flex-col items-center justify-center opacity-75 shadow-none select-none transition-all"
+                      title="This slot is already booked for this date"
+                    >
+                      <span className="line-through">{slot.label}</span>
+                      <span className="text-[9px] font-black tracking-wider text-red-500 uppercase mt-0.5">Booked</span>
+                    </button>
+                  );
+                }
+
+                return (
+                  <button
+                    key={slot.id}
+                    type="button"
+                    disabled={!bookingState.date}
+                    onClick={() => updateBooking('timeSlot', slot.id)}
+                    className={`py-2 px-1 rounded-xl text-[13px] font-bold border-2 transition-all flex flex-col items-center justify-center ${
+                      !bookingState.date
+                        ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
+                        : isSelected
+                        ? 'border-[#0052cc] bg-[#0052cc] text-white shadow-md'
+                        : 'border-gray-100 bg-white text-gray-700 hover:border-[#0052cc]/40 hover:bg-blue-50/30'
+                    }`}
+                  >
+                    <span>{slot.label}</span>
+                    {bookingState.date && (
+                      <span className={`text-[9px] font-bold ${isSelected ? 'text-blue-100' : 'text-emerald-600'}`}>
+                        Available
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
             <p className="text-[10px] text-gray-400 mt-2 ml-1">
-              Choose the exact slot. The admin will review and accept this slot.
+              Slots marked as Booked are already booked by another customer.
             </p>
           </div>
         </div>
@@ -644,7 +770,8 @@ const BookingModal = () => {
   const getWhatsAppLink = () => {
     const adminPhone = "919120759988";
     const bookingId = `CCP-${createdBookingId || Math.floor(Math.random() * 90000) + 10000}`;
-    const message = `Hello Car Clean Plus, my booking is confirmed!\n\n*Booking ID:* ${bookingId}\n*Service:* ${bookingState.service}\n*Vehicle:* ${bookingState.carModel?.name}\n*City:* ${bookingState.city}\n*Mobile:* ${bookingState.mobile}\n*Amount:* ₹${bookingState.finalPrice}\n\nPlease contact me to confirm the location and time.`;
+    const nameLine = bookingState.name?.trim() ? `*Name:* ${bookingState.name.trim()}\n` : '';
+    const message = `Hello Car Clean Plus, my booking is confirmed!\n\n*Booking ID:* ${bookingId}\n${nameLine}*Service:* ${bookingState.service}\n*Vehicle:* ${bookingState.carModel?.name}\n*City:* ${bookingState.city}\n*Mobile:* ${bookingState.mobile}\n*Amount:* ₹${bookingState.finalPrice}\n\nPlease contact me to confirm the location and time.`;
     return `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
   };
 
@@ -661,6 +788,12 @@ const BookingModal = () => {
         <p className="font-black text-[20px] text-gray-900 mb-3 tracking-tight">CCP-{createdBookingId || Math.floor(Math.random() * 90000) + 10000}</p>
 
         <div className="space-y-2.5 pt-3 border-t border-gray-200/60">
+          {bookingState.name?.trim() && (
+            <div className="flex justify-between items-center">
+              <span className="text-[12px] text-gray-500 font-bold">Customer Name</span>
+              <span className="text-[12px] font-black text-gray-900">{bookingState.name}</span>
+            </div>
+          )}
           <div className="flex justify-between items-center">
             <span className="text-[12px] text-gray-500 font-bold">Service</span>
             <span className="text-[12px] font-black text-gray-900">{bookingState.service}</span>

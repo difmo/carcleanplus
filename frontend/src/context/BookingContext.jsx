@@ -8,6 +8,7 @@ export const useBooking = () => useContext(BookingContext);
 export const BookingProvider = ({ children }) => {
   const [bookingState, setBookingState] = useState({
     bookingId: null,
+    name: '',
     mobile: '',
     city: '',
     carBrand: null,
@@ -27,7 +28,7 @@ export const BookingProvider = ({ children }) => {
       if (key === 'carModel' || key === 'service') {
         const category = newState.carModel?.category;
         const service = newState.service;
-        if (category && service) {
+        if (service) {
           newState.finalPrice = getPrice(category, service);
         } else {
           newState.finalPrice = 0;
@@ -65,9 +66,7 @@ export const BookingProvider = ({ children }) => {
       }
       if (service) {
         newState.service = service;
-        if (car) {
-          newState.finalPrice = getPrice(car.category, service);
-        }
+        newState.finalPrice = getPrice(car?.category, service);
       }
       
       // Auto-fill city if empty
@@ -84,6 +83,7 @@ export const BookingProvider = ({ children }) => {
   const resetBooking = () => {
     setBookingState({
       bookingId: null,
+      name: '',
       mobile: '',
       city: '',
       carBrand: null,
