@@ -1,6 +1,37 @@
 const Booking = require('../models/Booking');
 const transporter = require('../config/mail');
 
+// Helper to build date format variations
+const getDateVariations = (dateStr) => {
+  if (!dateStr) return [];
+  const clean = String(dateStr).trim();
+  const variations = new Set([clean]);
+
+  // If YYYY-MM-DD
+  const ymdMatch = clean.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (ymdMatch) {
+    const [_, y, m, d] = ymdMatch;
+    const mm = m.padStart(2, '0');
+    const dd = d.padStart(2, '0');
+    variations.add(`${dd}-${mm}-${y}`);
+    variations.add(`${dd}/${mm}/${y}`);
+    variations.add(`${y}-${parseInt(m, 10)}-${parseInt(d, 10)}`);
+  }
+
+  // If DD-MM-YYYY
+  const dmyMatch = clean.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+  if (dmyMatch) {
+    const [_, d, m, y] = dmyMatch;
+    const mm = m.padStart(2, '0');
+    const dd = d.padStart(2, '0');
+    variations.add(`${y}-${mm}-${dd}`);
+    variations.add(`${dd}/${mm}/${y}`);
+    variations.add(`${y}-${parseInt(m, 10)}-${parseInt(d, 10)}`);
+  }
+
+  return Array.from(variations);
+};
+
 // Get Booked Slots for a date
 const getBookedSlots = async (req, res) => {
   try {
@@ -9,9 +40,11 @@ const getBookedSlots = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Date query parameter is required' });
     }
 
+    const dateVariations = getDateVariations(date);
+
     const bookings = await Booking.find({
-      date,
-      status: { $in: ['pending', 'confirmed', 'completed'] }
+      date: { $in: dateVariations },
+      status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
     }).select('timeSlot');
 
     const bookedSlots = bookings.map(b => b.timeSlot).filter(Boolean);
@@ -81,11 +114,12 @@ const updateBooking = async (req, res) => {
 
     // Check if slot on that date is already booked by another active booking
     if (date && timeSlot) {
+      const dateVariations = getDateVariations(date);
       const existingBooking = await Booking.findOne({
         _id: { $ne: id },
-        date,
-        timeSlot,
-        status: { $in: ['pending', 'confirmed', 'completed'] }
+        date: { $in: dateVariations },
+        timeSlot: { $regex: new RegExp(timeSlot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-–]/g, '.*'), 'i') },
+        status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
       });
       if (existingBooking) {
         return res.status(400).json({
@@ -187,10 +221,11 @@ const createBooking = async (req, res) => {
     }
 
     // Check if slot on that date is already booked
+    const dateVariations = getDateVariations(date);
     const existingBooking = await Booking.findOne({
-      date,
-      timeSlot,
-      status: { $in: ['pending', 'confirmed', 'completed'] }
+      date: { $in: dateVariations },
+      timeSlot: { $regex: new RegExp(timeSlot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-–]/g, '.*'), 'i') },
+      status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
     });
     if (existingBooking) {
       return res.status(400).json({

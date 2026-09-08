@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/logo car22.png";
-import { FiAlignJustify, FiX, FiHome } from "react-icons/fi";
+import { FiAlignJustify, FiX, FiHome, FiLogOut } from "react-icons/fi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
 
@@ -13,13 +13,38 @@ const Navbar = () => {
   const location = useLocation();
   const { openModal } = useBooking();
 
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const checkUser = () => {
+      try {
+        const u = localStorage.getItem('user');
+        setCurrentUser(u ? JSON.parse(u) : null);
+      } catch (e) {
+        setCurrentUser(null);
+      }
+    };
+    checkUser();
+    window.addEventListener('storage', checkUser);
+    return () => window.removeEventListener('storage', checkUser);
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+    navigate('/');
+  };
+
   const navItems = [
     { name: "Home" },
     { name: "Service" },
     { name: "Packages" },
     { name: "Offer" },
     { name: "Gallery" },
-    { name: "Login" }
+    ...(currentUser 
+      ? [{ name: "Logout", isLogout: true }]
+      : [{ name: "Login" }])
   ];
 
   // Handle scroll effect and active section
@@ -34,6 +59,13 @@ const Navbar = () => {
 
     if (location.pathname === '/pricing') {
       setActiveSection('Packages');
+      const handleBasicScroll = () => setIsScrolled(window.scrollY > 10);
+      window.addEventListener("scroll", handleBasicScroll);
+      return () => window.removeEventListener("scroll", handleBasicScroll);
+    }
+
+    if (location.pathname === '/login') {
+      setActiveSection('Login');
       const handleBasicScroll = () => setIsScrolled(window.scrollY > 10);
       window.addEventListener("scroll", handleBasicScroll);
       return () => window.removeEventListener("scroll", handleBasicScroll);
@@ -88,7 +120,11 @@ const Navbar = () => {
   };
 
   const handleNavigation = (sectionName) => {
-
+    if (sectionName === "Logout") {
+      handleLogout();
+      setIsNavOpen(false);
+      return;
+    }
 
     if (sectionName === "Login") {
       navigate("/login");
@@ -113,7 +149,7 @@ const Navbar = () => {
 
         {/* Left: Logo Section */}
         <div
-          className="flex-1 flex items-center gap-3 cursor-pointer group"
+          className="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
           onClick={() => handleNavigation("Home")}
         >
           <div className="flex items-center h-14 md:h-16 overflow-hidden flex-shrink-0">
@@ -122,7 +158,7 @@ const Navbar = () => {
         </div>
 
         {/* Middle: Desktop Menu */}
-        <nav className="hidden xl:flex flex-none justify-center items-center gap-7 2xl:gap-9 h-full">
+        <nav className="hidden xl:flex flex-1 justify-center items-center gap-6 2xl:gap-8 h-full px-2">
           {navItems.map((item) => {
             const isActive = activeSection === item.name;
             if (item.name === "Home") {
@@ -130,9 +166,9 @@ const Navbar = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavigation("Home")}
-                  className="bg-[#d31225] hover:bg-[#a60b1b] text-white flex flex-col items-center justify-center w-[72px] h-[48px] rounded-full transition-all flex-shrink-0"
+                  className="bg-[#d31225] hover:bg-[#a60b1b] text-white flex flex-col items-center justify-center w-[68px] h-[46px] rounded-full transition-all flex-shrink-0 cursor-pointer shadow-sm"
                 >
-                  <FiHome className="text-[20px] mb-[2px]" strokeWidth="2.5" />
+                  <FiHome className="text-[18px] mb-[1px]" strokeWidth="2.5" />
                   <span className="text-[11px] font-bold tracking-wider leading-none">Home</span>
                 </button>
               );
@@ -140,7 +176,7 @@ const Navbar = () => {
             return (
               <button
                 key={item.name}
-                className={`relative h-full flex items-center gap-1.5 text-[14px] 2xl:text-[15px] font-bold transition-colors capitalize ${isActive ? 'text-primary' : 'text-gray-800 hover:text-primary'
+                className={`relative h-full flex items-center gap-1 text-[13px] 2xl:text-[14px] font-bold transition-colors capitalize whitespace-nowrap cursor-pointer ${isActive ? 'text-primary' : 'text-gray-800 hover:text-primary'
                   }`}
                 onClick={() => handleNavigation(item.name)}
               >
@@ -161,20 +197,40 @@ const Navbar = () => {
         </nav>
 
         {/* Right: Action Buttons & Mobile Toggle */}
-        <div className="flex-1 flex justify-end items-center gap-4">
+        <div className="flex-shrink-0 flex justify-end items-center gap-2.5 sm:gap-3">
+          {/* User Account Pill when Logged In */}
+          {currentUser && (
+            <div className="hidden sm:flex items-center gap-2 bg-blue-50 border border-blue-100/80 py-1.5 pl-2 pr-3 rounded-full flex-shrink-0 whitespace-nowrap shadow-xs">
+              <div className="w-7 h-7 rounded-full bg-[#0052cc] text-white flex items-center justify-center text-xs font-black shadow-xs">
+                {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <span className="text-xs font-bold text-gray-800 max-w-[85px] truncate">
+                {currentUser.name?.split(' ')[0] || 'User'}
+              </span>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-gray-400 hover:text-red-600 transition-colors p-0.5 cursor-pointer ml-0.5"
+                title="Logout"
+              >
+                <FiLogOut size={13} />
+              </button>
+            </div>
+          )}
+
           {/* Phone Number (Desktop) */}
           <a
             href="tel:+919120759988"
-            className="hidden lg:flex items-center gap-2.5 bg-gray-50/80 text-gray-800 text-[14px] font-bold py-2.5 px-6 rounded-full hover:bg-gray-100 hover:text-primary transition-all duration-300 border border-gray-200"
+            className="hidden lg:flex items-center gap-2 bg-gray-50/90 text-gray-800 text-[13px] font-bold py-2.5 px-4 2xl:px-5 rounded-full hover:bg-gray-100 hover:text-primary transition-all duration-300 border border-gray-200 whitespace-nowrap flex-shrink-0"
           >
-            <FaPhoneAlt className="text-primary text-[13px]" />
-            <span>+91 91207 59988</span>
+            <FaPhoneAlt className="text-primary text-[12px] flex-shrink-0" />
+            <span className="whitespace-nowrap">+91 91207 59988</span>
           </a>
 
           {/* Book a Wash Button */}
           <button
             onClick={openModal}
-            className="hidden md:flex items-center justify-center bg-primary text-white text-[14px] font-bold py-2.5 px-7 rounded-full hover:bg-[#0043a8] hover:-translate-y-0.5 transition-all duration-300"
+            className="hidden md:flex items-center justify-center bg-primary text-white text-[13px] 2xl:text-[14px] font-bold py-2.5 px-5 2xl:px-6 rounded-full hover:bg-[#0043a8] hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap flex-shrink-0 shadow-sm cursor-pointer"
           >
             Book a Wash
           </button>
@@ -182,7 +238,7 @@ const Navbar = () => {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsNavOpen(!isNavOpen)}
-            className="xl:hidden w-10 h-10 flex items-center justify-center text-xl text-gray-900 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none border border-gray-300"
+            className="xl:hidden w-10 h-10 flex items-center justify-center text-xl text-gray-900 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none border border-gray-300 flex-shrink-0 cursor-pointer"
           >
             {isNavOpen ? <FiX /> : <FiAlignJustify />}
           </button>

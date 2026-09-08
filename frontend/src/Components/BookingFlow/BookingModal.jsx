@@ -1,48 +1,178 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useBooking } from '../../context/BookingContext';
-import { CAR_MODELS, SERVICES, getPrice } from '../../utils/pricingLogic';
-import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp, FaUser } from 'react-icons/fa';
+import { CAR_MODELS, SERVICES, CAR_CATEGORIES, getPrice } from '../../utils/pricingLogic';
+import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp, FaUser, FaQuestionCircle } from 'react-icons/fa';
 import { BASE_URL } from '../../utils/api';
-import { SiSuzuki, SiHyundai, SiTata, SiHonda, SiToyota, SiVolkswagen, SiSkoda, SiKia, SiRenault, SiNissan, SiFord, SiJeep, SiAudi, SiBmw, SiFiat, SiChevrolet, SiMercedes, SiVolvo } from 'react-icons/si';
+import {
+  SiSuzuki,
+  SiHyundai,
+  SiTata,
+  SiHonda,
+  SiToyota,
+  SiVolkswagen,
+  SiSkoda,
+  SiKia,
+  SiRenault,
+  SiNissan,
+  SiFord,
+  SiJeep,
+  SiAudi,
+  SiBmw,
+  SiFiat,
+  SiChevrolet,
+  SiMercedes,
+  SiVolvo,
+  SiMg,
+  SiMahindra,
+  SiCitroen,
+  SiJaguar,
+  SiLandrover,
+  SiPorsche,
+  SiMini,
+  SiMaserati,
+  SiBentley,
+  SiRollsroyce,
+  SiAstonmartin,
+  SiLamborghini,
+  SiFerrari
+} from 'react-icons/si';
 
-const getCarIcon = (carName) => {
-  if (!carName) return <FaCar />;
-  const name = carName.toLowerCase();
-  if (name.includes('maruti') || name.includes('suzuki')) return <SiSuzuki />;
-  if (name.includes('hyundai')) return <SiHyundai />;
-  if (name.includes('tata')) return <SiTata />;
-  if (name.includes('honda')) return <SiHonda />;
-  if (name.includes('toyota')) return <SiToyota />;
-  if (name.includes('volkswagen')) return <SiVolkswagen />;
-  if (name.includes('skoda')) return <SiSkoda />;
-  if (name.includes('kia')) return <SiKia />;
-  if (name.includes('renault')) return <SiRenault />;
-  if (name.includes('nissan')) return <SiNissan />;
-  if (name.includes('ford')) return <SiFord />;
-  if (name.includes('jeep')) return <SiJeep />;
-  if (name.includes('audi')) return <SiAudi />;
-  if (name.includes('bmw')) return <SiBmw />;
-  if (name.includes('fiat')) return <SiFiat />;
-  if (name.includes('chevrolet')) return <SiChevrolet />;
-  if (name.includes('mercedes')) return <SiMercedes />;
-  if (name.includes('volvo')) return <SiVolvo />;
-  if (name.includes('mg')) return <span className="font-black font-serif text-xl">MG</span>;
-  if (name.includes('mahindra')) return <span className="font-black font-serif text-xl">M</span>;
-  if (name.includes('citroën') || name.includes('citroen')) return <span className="font-black font-serif text-xl">C</span>;
-  if (name.includes('datsun')) return <span className="font-black font-serif text-xl">D</span>;
-  if (name.includes('bajaj')) return <span className="font-black font-serif text-xl">B</span>;
-  if (name.includes('jaguar')) return <span className="font-black font-serif text-xl">J</span>;
-  if (name.includes('land rover') || name.includes('range rover')) return <span className="font-black font-serif text-xl">LR</span>;
-  if (name.includes('lexus')) return <span className="font-black font-serif text-xl">L</span>;
-  if (name.includes('porsche')) return <span className="font-black font-serif text-xl">P</span>;
-  if (name.includes('mini')) return <span className="font-black font-serif text-xl">M</span>;
-  if (name.includes('maserati')) return <span className="font-black font-serif text-xl">M</span>;
-  if (name.includes('bentley')) return <span className="font-black font-serif text-xl">B</span>;
-  if (name.includes('rolls-royce') || name.includes('rolls royce')) return <span className="font-black font-serif text-xl">RR</span>;
-  if (name.includes('aston martin')) return <span className="font-black font-serif text-xl">AM</span>;
-  if (name.includes('lamborghini')) return <span className="font-black font-serif text-xl">L</span>;
-  if (name.includes('ferrari')) return <span className="font-black font-serif text-xl">F</span>;
-  return <FaCar />;
+const getCarIcon = (brandOrKey) => {
+  if (!brandOrKey) return <FaCar className="text-gray-700" />;
+  const name = (typeof brandOrKey === 'string' ? brandOrKey : brandOrKey.name || '').toLowerCase();
+  
+  if (name.includes('suzuki') || name.includes('maruti')) return <SiSuzuki className="text-[#002f6c]" />;
+  if (name.includes('hyundai')) return <SiHyundai className="text-[#002c5f]" />;
+  if (name.includes('tata')) return <SiTata className="text-[#004f9e]" />;
+  if (name.includes('honda')) return <SiHonda className="text-[#cc0000]" />;
+  if (name.includes('mahindra')) return <SiMahindra className="text-[#c3002f]" />;
+  if (name.includes('kia')) return <SiKia className="text-[#05141f]" />;
+  if (name.includes('toyota')) return <SiToyota className="text-[#d71921]" />;
+  if (name.includes('volkswagen')) return <SiVolkswagen className="text-[#001e50]" />;
+  if (name.includes('ford')) return <SiFord className="text-[#002c6c]" />;
+  if (name.includes('skoda')) return <SiSkoda className="text-[#0e3b2e]" />;
+  if (name.includes('mg')) return <SiMg className="text-[#b31412]" />;
+  if (name.includes('renault')) return <SiRenault className="text-[#1b1b1b]" />;
+  if (name.includes('bmw')) return <SiBmw className="text-[#0066b1]" />;
+  if (name.includes('nissan')) return <SiNissan className="text-[#c3002f]" />;
+  if (name.includes('mercedes')) return <SiMercedes className="text-[#24272a]" />;
+  if (name.includes('audi')) return <SiAudi className="text-[#111827]" />;
+  if (name.includes('jeep')) return <SiJeep className="text-[#1f2937]" />;
+  if (name.includes('volvo')) return <SiVolvo className="text-[#003057]" />;
+  if (name.includes('citroën') || name.includes('citroen')) return <SiCitroen className="text-[#990000]" />;
+  if (name.includes('jaguar')) return <SiJaguar className="text-[#111827]" />;
+  if (name.includes('land rover') || name.includes('range rover') || name.includes('land') || name.includes('range')) return <SiLandrover className="text-[#0c4323]" />;
+  if (name.includes('porsche')) return <SiPorsche className="text-[#8b0000]" />;
+  if (name.includes('mini')) return <SiMini className="text-[#111827]" />;
+  if (name.includes('fiat')) return <SiFiat className="text-[#a51c30]" />;
+  if (name.includes('chevrolet')) return <SiChevrolet className="text-[#cba052]" />;
+  if (name.includes('maserati')) return <SiMaserati className="text-[#0c2340]" />;
+  if (name.includes('bentley')) return <SiBentley className="text-[#002b49]" />;
+  if (name.includes('rolls-royce') || name.includes('rolls royce')) return <SiRollsroyce className="text-[#111827]" />;
+  if (name.includes('aston martin') || name.includes('aston')) return <SiAstonmartin className="text-[#004225]" />;
+  if (name.includes('lamborghini')) return <SiLamborghini className="text-[#d6a127]" />;
+  if (name.includes('ferrari')) return <SiFerrari className="text-[#e32119]" />;
+  if (name.includes('lexus')) return <span className="font-serif font-black text-xl text-gray-800">L</span>;
+  if (name.includes('datsun')) return <span className="font-bold text-[11px] px-1 border border-gray-700 rounded text-gray-800">DATSUN</span>;
+  
+  return <FaCar className="text-gray-700" />;
+};
+
+// Popular Vehicles exactly ordered as in screenshot Image 1
+const POPULAR_BRANDS = [
+  { key: 'Maruti', name: 'Maruti Suzuki', color: '#002f6c' },
+  { key: 'Hyundai', name: 'Hyundai', color: '#002c5f' },
+  { key: 'Tata', name: 'Tata', color: '#004f9e' },
+  { key: 'Honda', name: 'Honda', color: '#cc0000' },
+  { key: 'Mahindra', name: 'Mahindra', color: '#c3002f' },
+  { key: 'Kia', name: 'Kia', color: '#05141f' },
+];
+
+// All Brands ordered exactly as in screenshot Image 1, followed by remaining catalog
+const ALL_OTHER_BRANDS = [
+  // 1 to 9 exactly matching user image:
+  { key: 'Toyota', name: 'Toyota', color: '#d71921' },
+  { key: 'Volkswagen', name: 'Volkswagen', color: '#001e50' },
+  { key: 'Ford', name: 'Ford', color: '#002c6c' },
+  { key: 'Skoda', name: 'Skoda', color: '#0e3b2e' },
+  { key: 'MG', name: 'MG', color: '#b31412' },
+  { key: 'Renault', name: 'Renault', color: '#1b1b1b' },
+  { key: 'BMW', name: 'BMW', color: '#0066b1' },
+  { key: 'Nissan', name: 'Nissan', color: '#c3002f' },
+  { key: 'Mercedes-Benz', name: 'Mercedes-Benz', color: '#24272a' },
+
+  // Remaining catalog brands:
+  { key: 'Audi', name: 'Audi', color: '#111827' },
+  { key: 'Jeep', name: 'Jeep', color: '#1f2937' },
+  { key: 'Volvo', name: 'Volvo', color: '#003057' },
+  { key: 'Citroën', name: 'Citroën', color: '#990000' },
+  { key: 'Jaguar', name: 'Jaguar', color: '#111827' },
+  { key: 'Land Rover', name: 'Land Rover', color: '#0c4323' },
+  { key: 'Lexus', name: 'Lexus', color: '#111827' },
+  { key: 'Porsche', name: 'Porsche', color: '#8b0000' },
+  { key: 'MINI', name: 'MINI', color: '#111827' },
+  { key: 'Fiat', name: 'Fiat', color: '#a51c30' },
+  { key: 'Chevrolet', name: 'Chevrolet', color: '#cba052' },
+  { key: 'Datsun', name: 'Datsun', color: '#003399' },
+  { key: 'Maserati', name: 'Maserati', color: '#0c2340' },
+  { key: 'Bentley', name: 'Bentley', color: '#002b49' },
+  { key: 'Rolls-Royce', name: 'Rolls-Royce', color: '#111827' },
+  { key: 'Aston Martin', name: 'Aston Martin', color: '#004225' },
+  { key: 'Lamborghini', name: 'Lamborghini', color: '#d6a127' },
+  { key: 'Ferrari', name: 'Ferrari', color: '#e32119' },
+];
+
+const getModelDisplayName = (carName) => {
+  return carName.replace(
+    /^(Maruti Suzuki|Maruti|Hyundai|Tata|Honda|Mahindra|Kia|Toyota|Volkswagen|Ford|Skoda|MG|Renault|BMW|Nissan|Mercedes-Benz|Audi|Jeep|Volvo|Citroën|Jaguar|Land Rover|Range Rover|Lexus|Porsche|MINI|Maserati|Bentley|Rolls-Royce|Aston Martin|Lamborghini|Ferrari|Fiat|Chevrolet|Datsun)\s+/i,
+    ''
+  );
+};
+
+const TIME_SLOTS = [
+  { id: 'Slot 1 – 08:30 AM', label: '08:30 AM', timeKey: '08:30', period: 'AM' },
+  { id: 'Slot 2 – 10:00 AM', label: '10:00 AM', timeKey: '10:00', period: 'AM' },
+  { id: 'Slot 3 – 11:30 AM', label: '11:30 AM', timeKey: '11:30', period: 'AM' },
+  { id: 'Slot 4 – 01:30 PM', label: '01:30 PM', timeKey: '01:30', period: 'PM' },
+  { id: 'Slot 5 – 03:00 PM', label: '03:00 PM', timeKey: '03:00', period: 'PM' },
+  { id: 'Slot 6 – 04:30 PM', label: '04:30 PM', timeKey: '04:30', period: 'PM' },
+];
+
+const isSlotPastForDate = (selectedDateStr, slot) => {
+  if (!selectedDateStr) return false;
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const todayStr = `${y}-${m}-${d}`;
+
+  // Only check past time if selected date is today
+  if (selectedDateStr !== todayStr) return false;
+
+  const [hStr, mStr] = slot.timeKey.split(':');
+  let hours = parseInt(hStr, 10);
+  const minutes = parseInt(mStr, 10);
+  if (slot.period === 'PM' && hours < 12) hours += 12;
+  if (slot.period === 'AM' && hours === 12) hours = 0;
+
+  const slotDate = new Date();
+  slotDate.setHours(hours, minutes, 0, 0);
+
+  return now.getTime() >= slotDate.getTime();
+};
+
+const isSlotBookedForDate = (slot, bookedList) => {
+  if (!Array.isArray(bookedList) || bookedList.length === 0) return false;
+  return bookedList.some(booked => {
+    if (!booked) return false;
+    const b = String(booked).toLowerCase();
+    const idLower = slot.id.toLowerCase();
+    const labelLower = slot.label.toLowerCase();
+    if (b === idLower || b === labelLower) return true;
+    if (slot.timeKey && b.includes(slot.timeKey)) return true;
+    if (slot.timeKey && slot.timeKey.startsWith('0') && b.includes(slot.timeKey.slice(1))) return true;
+    return false;
+  });
 };
 
 const BookingModal = () => {
@@ -57,6 +187,20 @@ const BookingModal = () => {
   const [createdBookingId, setCreatedBookingId] = useState('');
   const [bookedSlots, setBookedSlots] = useState([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [showCantFindModal, setShowCantFindModal] = useState(false);
+  const [customCarName, setCustomCarName] = useState('');
+  const [customCategory, setCustomCategory] = useState(CAR_CATEGORIES.STANDARD);
+
+  // Auto-initialize today's date if user reaches step 6 without choosing a date
+  useEffect(() => {
+    if (currentStep === 6 && !bookingState.date) {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      updateBooking('date', `${y}-${m}-${d}`);
+    }
+  }, [currentStep, bookingState.date]);
 
   useEffect(() => {
     if (!bookingState.date) {
@@ -72,8 +216,11 @@ const BookingModal = () => {
         if (isCurrent && data.success) {
           const slots = data.bookedSlots || [];
           setBookedSlots(slots);
-          if (slots.includes(bookingState.timeSlot)) {
-            updateBooking('timeSlot', '');
+          if (bookingState.timeSlot) {
+            const currentSlotObj = TIME_SLOTS.find(s => s.id === bookingState.timeSlot);
+            if (currentSlotObj && (isSlotBookedForDate(currentSlotObj, slots) || isSlotPastForDate(bookingState.date, currentSlotObj))) {
+              updateBooking('timeSlot', '');
+            }
           }
         }
       })
@@ -91,22 +238,32 @@ const BookingModal = () => {
 
   const CITIES = ['Gomti Nagar', 'Aliganj', 'Indira Nagar', 'Hazratganj', 'Mahanagar', 'Alambagh', 'Aashiana', 'Rajajipuram', 'Vikas Nagar', 'Jankipuram', 'Aminabad', 'Chowk'];
 
-  const BRANDS = useMemo(() => {
-    const brandSet = new Set();
-    CAR_MODELS.forEach(car => {
-      const brand = car.name.split(' ')[0];
-      brandSet.add(brand);
+  const filteredCities = CITIES.filter(c => c.toLowerCase().includes(searchCity.toLowerCase()));
+
+  const brandModels = useMemo(() => {
+    if (!bookingState.carBrand) return [];
+    const brandLower = bookingState.carBrand.toLowerCase();
+    return CAR_MODELS.filter(car => {
+      const carLower = car.name.toLowerCase();
+      if (brandLower === 'maruti' || brandLower === 'maruti suzuki') {
+        return carLower.startsWith('maruti');
+      }
+      if (brandLower === 'land rover' || brandLower === 'range rover' || brandLower === 'land' || brandLower === 'range') {
+        return carLower.startsWith('land rover') || carLower.startsWith('range rover');
+      }
+      if (brandLower === 'aston martin' || brandLower === 'aston') {
+        return carLower.startsWith('aston martin');
+      }
+      if (brandLower === 'rolls-royce' || brandLower === 'rolls royce') {
+        return carLower.startsWith('rolls-royce') || carLower.startsWith('rolls royce');
+      }
+      return carLower.startsWith(brandLower);
     });
-    return Array.from(brandSet).sort();
-  }, []);
+  }, [bookingState.carBrand]);
+
+  const filteredModels = brandModels.filter(car => car.name.toLowerCase().includes(searchModel.toLowerCase()));
 
   if (!isModalOpen) return null;
-
-  const filteredCities = CITIES.filter(c => c.toLowerCase().includes(searchCity.toLowerCase()));
-  const filteredBrands = BRANDS.filter(b => b.toLowerCase().includes(searchBrand.toLowerCase()));
-
-  const brandModels = CAR_MODELS.filter(car => car.name.startsWith(bookingState.carBrand));
-  const filteredModels = brandModels.filter(car => car.name.toLowerCase().includes(searchModel.toLowerCase()));
 
   const loadRazorpay = () => {
     return new Promise((resolve) => {
@@ -417,47 +574,301 @@ const BookingModal = () => {
     </div>
   );
 
-  const renderStep3 = () => (
-    <div className="animate-fade-in relative flex flex-col h-full">
-      {renderCloseButton()}
-      {renderBackButton()}
-
-      {renderHeaderIcon()}
-      <div className="text-center mb-5">
-        <h2 className="text-[24px] font-black text-gray-900 mb-1.5 tracking-tight">Select Vehicle Make</h2>
-        <p className="text-gray-500 text-[13px] px-6 leading-relaxed">Choose your car details to see exact prices and available slots.</p>
+  const renderCantFindModal = () => (
+    <div className="absolute inset-0 bg-white z-20 flex flex-col p-5 animate-fade-in">
+      <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-3">
+        <h3 className="font-bold text-gray-900 text-[16px] flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#facc15]"></span>
+          Can't find your Vehicle?
+        </h3>
+        <button
+          onClick={() => setShowCantFindModal(false)}
+          className="p-1.5 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all"
+        >
+          <FaTimes className="text-sm" />
+        </button>
       </div>
 
-      <div className="relative mb-4 group">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <FaSearch className="text-[#0052cc]/40 group-hover:text-[#0052cc]/70 group-focus-within:text-[#0052cc] transition-colors duration-300 text-sm" />
+      <div className="flex-1 overflow-y-auto space-y-4 pr-1">
+        <p className="text-[12px] text-gray-500 leading-relaxed">
+          Type your car make and model name below. We'll automatically determine the right service package for you.
+        </p>
+
+        <div>
+          <label className="block text-xs font-bold text-gray-700 mb-1.5">
+            Car Make & Model Name
+          </label>
+          <input
+            type="text"
+            placeholder="e.g. Nissan Magnite, Mahindra Thar Roxx..."
+            value={customCarName}
+            onChange={e => setCustomCarName(e.target.value)}
+            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10"
+          />
         </div>
-        <input
-          type="text"
-          placeholder="Search car brand..."
-          className="w-full bg-white border-2 border-[#0052cc]/15 hover:border-[#0052cc]/40 focus:border-[#0052cc] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
-          value={searchBrand}
-          onChange={e => setSearchBrand(e.target.value)}
-        />
+
+        <div>
+          <label className="block text-xs font-bold text-gray-700 mb-1.5">
+            Select Car Segment / Body Type
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { id: CAR_CATEGORIES.COMPACT, label: 'Hatchback', sub: 'Compact' },
+              { id: CAR_CATEGORIES.STANDARD, label: 'Sedan/CUV', sub: 'Standard' },
+              { id: CAR_CATEGORIES.LARGE, label: 'SUV/MUV', sub: 'Large' },
+            ].map(type => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => setCustomCategory(type.id)}
+                className={`py-2 px-1 rounded-xl border text-center transition-all ${
+                  customCategory === type.id
+                    ? 'border-[#0052cc] bg-blue-50/70 text-[#0052cc] font-bold shadow-sm'
+                    : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 font-medium'
+                }`}
+              >
+                <div className="text-xs">{type.label}</div>
+                <div className="text-[10px] text-gray-400 uppercase">{type.sub}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl text-xs text-amber-900 flex items-start gap-2">
+          <FaQuestionCircle className="text-amber-500 mt-0.5 flex-shrink-0" />
+          <span>Need help? Choose your best estimate or chat with our team directly.</span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 overflow-y-auto custom-scrollbar flex-1 pt-1 pb-4 px-1 content-start min-h-[160px]">
-        {filteredBrands.map(brand => (
-          <div
-            key={brand}
-            onClick={() => {
-              updateBooking('carBrand', brand);
-              nextStep();
-            }}
-            className="flex flex-col items-center justify-center p-3 rounded-xl border border-gray-100 bg-white shadow-sm hover:border-[#0052cc] hover:-translate-y-0.5 cursor-pointer transition-all aspect-[4/3] gap-1.5 group"
-          >
-            <div className="text-2xl text-gray-700 group-hover:text-blue-500 flex items-center justify-center h-6 transition-colors">{getCarIcon(brand)}</div>
-            <span className="text-[10px] font-extrabold text-gray-800 tracking-wide text-center uppercase group-hover:text-[#0043a8] transition-colors">{brand}</span>
-          </div>
-        ))}
+      <div className="pt-3 border-t border-gray-100 flex gap-2">
+        <button
+          onClick={() => setShowCantFindModal(false)}
+          className="w-1/3 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-bold text-xs hover:bg-gray-50"
+        >
+          Back
+        </button>
+        <button
+          disabled={!customCarName.trim()}
+          onClick={() => {
+            const trimmed = customCarName.trim();
+            const brandGuess = trimmed.split(' ')[0];
+            updateBooking('carBrand', brandGuess);
+            updateBooking('carModel', {
+              id: Date.now(),
+              name: trimmed,
+              category: customCategory,
+            });
+            setShowCantFindModal(false);
+            updateBooking('currentStep', 5);
+          }}
+          className={`flex-1 py-2.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
+            customCarName.trim()
+              ? 'bg-[#0052cc] text-white hover:bg-[#003380]'
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          Continue
+        </button>
       </div>
     </div>
   );
+
+  const renderStep3 = () => {
+    const isSearching = searchBrand.trim().length > 0;
+    const query = searchBrand.trim().toLowerCase();
+
+    const matchesBrand = (brand) => {
+      if (!isSearching) return true;
+      if (brand.name.toLowerCase().includes(query) || brand.key.toLowerCase().includes(query)) return true;
+      return CAR_MODELS.some(car => {
+        const cLower = car.name.toLowerCase();
+        if (!cLower.includes(query)) return false;
+        if (brand.key === 'Maruti') return cLower.startsWith('maruti');
+        if (brand.key === 'Land Rover') return cLower.startsWith('land') || cLower.startsWith('range');
+        if (brand.key === 'Aston Martin') return cLower.startsWith('aston');
+        return cLower.startsWith(brand.key.toLowerCase());
+      });
+    };
+
+    const matchingPopular = POPULAR_BRANDS.filter(matchesBrand);
+    const matchingAll = ALL_OTHER_BRANDS.filter(matchesBrand);
+
+    const directMatchingCars = isSearching
+      ? CAR_MODELS.filter(car => car.name.toLowerCase().includes(query)).slice(0, 6)
+      : [];
+
+    return (
+      <div className="animate-fade-in relative flex flex-col h-full">
+        {/* Top bar matching Image 1 */}
+        <div className="flex items-center justify-between pb-3 pt-1 border-b border-gray-100 mb-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={prevStep}
+              className="p-2 -ml-1 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all"
+              title="Back"
+            >
+              <FaArrowLeft className="text-sm" />
+            </button>
+            <h2 className="text-[19px] font-bold text-gray-900 tracking-tight">
+              Select Vehicle
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowCantFindModal(true)}
+              className="bg-[#facc15] hover:bg-[#eab308] text-gray-950 text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm active:scale-95 transition-all whitespace-nowrap"
+            >
+              Can't find your Vehicle?
+            </button>
+            <button
+              onClick={closeModal}
+              className="p-1.5 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all"
+              title="Close"
+            >
+              <FaTimes className="text-xs" />
+            </button>
+          </div>
+        </div>
+
+        {/* Search bar matching Image 1 */}
+        <div className="relative mb-3 group">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+            <FaSearch className="text-amber-500 text-sm" />
+          </div>
+          <input
+            type="text"
+            placeholder='Search "Audi A4"'
+            className="w-full bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 pl-10 pr-8 py-2.5 rounded-xl text-[14px] font-medium text-gray-900 placeholder-gray-400 outline-none transition-all shadow-sm"
+            value={searchBrand}
+            onChange={e => setSearchBrand(e.target.value)}
+          />
+          {searchBrand && (
+            <button
+              onClick={() => setSearchBrand('')}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <FaTimes className="text-xs" />
+            </button>
+          )}
+        </div>
+
+        {/* Brands Container with Popular & All Brands */}
+        <div className="overflow-y-auto custom-scrollbar flex-1 pr-1 pb-2 space-y-4">
+          {/* Direct Matching Cars if searching */}
+          {isSearching && directMatchingCars.length > 0 && (
+            <div>
+              <h3 className="text-[13px] font-bold text-gray-700 mb-2 px-1">
+                Direct Car Matches
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                {directMatchingCars.map(car => (
+                  <div
+                    key={car.id}
+                    onClick={() => {
+                      updateBooking('carBrand', car.name.split(' ')[0]);
+                      updateBooking('carModel', car);
+                      updateBooking('currentStep', 5);
+                    }}
+                    className="p-2.5 bg-blue-50/50 hover:bg-blue-100/70 border border-blue-200/60 rounded-xl cursor-pointer transition-all flex items-center gap-2"
+                  >
+                    <div className="text-lg">{getCarIcon(car.name.split(' ')[0])}</div>
+                    <div className="overflow-hidden">
+                      <div className="text-xs font-bold text-gray-900 truncate">{car.name}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">{car.category}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Section 1: Popular Vehicles */}
+          {matchingPopular.length > 0 && (
+            <div>
+              <h3 className="text-[15px] font-bold text-gray-900 mb-2.5 px-1">
+                Popular Vehicles
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {matchingPopular.map(brand => (
+                  <div
+                    key={brand.name}
+                    onClick={() => {
+                      updateBooking('carBrand', brand.name);
+                      nextStep();
+                    }}
+                    className="flex flex-col items-center justify-center py-3.5 px-1.5 rounded-2xl bg-white hover:bg-gray-50/90 border border-gray-100/80 hover:border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-md cursor-pointer transition-all aspect-[4/3] group"
+                  >
+                    <div className="text-[34px] flex items-center justify-center h-10 transition-transform duration-200 group-hover:scale-110">
+                      {getCarIcon(brand.name)}
+                    </div>
+                    <span className="text-[12px] font-medium text-gray-800 text-center tracking-tight mt-1.5 line-clamp-1 group-hover:text-primary transition-colors">
+                      {brand.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Section 2: All Brands */}
+          {matchingAll.length > 0 && (
+            <div>
+              <h3 className="text-[15px] font-bold text-gray-900 mb-2.5 px-1">
+                All Brands
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {matchingAll.map(brand => (
+                  <div
+                    key={brand.name}
+                    onClick={() => {
+                      updateBooking('carBrand', brand.name);
+                      nextStep();
+                    }}
+                    className="flex flex-col items-center justify-center py-3.5 px-1.5 rounded-2xl bg-white hover:bg-gray-50/90 border border-gray-100/80 hover:border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-md cursor-pointer transition-all aspect-[4/3] group"
+                  >
+                    <div className="text-[34px] flex items-center justify-center h-10 transition-transform duration-200 group-hover:scale-110">
+                      {getCarIcon(brand.name)}
+                    </div>
+                    <span className="text-[12px] font-medium text-gray-800 text-center tracking-tight mt-1.5 line-clamp-1 group-hover:text-primary transition-colors">
+                      {brand.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* No search results */}
+          {matchingPopular.length === 0 && matchingAll.length === 0 && directMatchingCars.length === 0 && (
+            <div className="text-center py-8 px-4">
+              <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                <FaCar />
+              </div>
+              <p className="text-[14px] font-bold text-gray-800 mb-1">
+                No vehicle found matching "{searchBrand}"
+              </p>
+              <p className="text-[12px] text-gray-500 mb-4">
+                Don't worry! You can type your car name manually to continue booking.
+              </p>
+              <button
+                onClick={() => {
+                  setCustomCarName(searchBrand);
+                  setShowCantFindModal(true);
+                }}
+                className="bg-[#facc15] hover:bg-[#eab308] text-gray-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all active:scale-95"
+              >
+                Enter "{searchBrand}" manually
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Can't find vehicle drawer */}
+        {showCantFindModal && renderCantFindModal()}
+      </div>
+    );
+  };
 
   const renderStep4 = () => (
     <div className="animate-fade-in relative flex flex-col h-full bg-gray-50/50 rounded-3xl p-5">
@@ -494,7 +905,7 @@ const BookingModal = () => {
           >
             <FaCar className="text-4xl text-gray-300 group-hover:text-blue-300 transition-colors" />
             <div className="text-center mt-2 w-full">
-              <h4 className="font-extrabold text-gray-900 text-[13px] truncate">{car.name.replace(`${bookingState.carBrand} `, '')}</h4>
+              <h4 className="font-extrabold text-gray-900 text-[13px] truncate">{getModelDisplayName(car.name)}</h4>
               <span className="text-[9px] uppercase tracking-widest text-gray-400 font-extrabold mt-0.5 block">{car.category}</span>
             </div>
           </div>
@@ -632,8 +1043,11 @@ const BookingModal = () => {
                 type="date" 
                 min={today}
                 value={bookingState.date}
-                onChange={(e) => updateBooking('date', e.target.value)}
-                className="w-full bg-white border-2 border-gray-100 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
+                onChange={(e) => {
+                  updateBooking('date', e.target.value);
+                  updateBooking('timeSlot', '');
+                }}
+                className="w-full bg-white border-2 border-gray-200 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
               />
             </div>
           </div>
@@ -654,29 +1068,26 @@ const BookingModal = () => {
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { id: 'Slot 1 – 08:30 AM', label: '08:30 AM' },
-                { id: 'Slot 2 – 10:00 AM', label: '10:00 AM' },
-                { id: 'Slot 3 – 11:30 AM', label: '11:30 AM' },
-                { id: 'Slot 4 – 01:30 PM', label: '01:30 PM' },
-                { id: 'Slot 5 – 03:00 PM', label: '03:00 PM' },
-                { id: 'Slot 6 – 04:30 PM', label: '04:30 PM' },
-              ].map((slot) => {
-                const isBooked = bookedSlots.includes(slot.id) || bookedSlots.includes(slot.label);
+            <div className="grid grid-cols-2 gap-2.5">
+              {TIME_SLOTS.map((slot) => {
+                const isBooked = isSlotBookedForDate(slot, bookedSlots);
+                const isPast = isSlotPastForDate(bookingState.date, slot);
+                const isUnavailable = isBooked || isPast;
                 const isSelected = bookingState.timeSlot === slot.id;
 
-                if (isBooked) {
+                if (isUnavailable) {
                   return (
                     <button
                       key={slot.id}
                       type="button"
                       disabled={true}
-                      className="py-2.5 px-2 rounded-xl text-[13px] font-bold border-2 border-red-200/60 bg-red-50/60 text-red-400 cursor-not-allowed flex flex-col items-center justify-center opacity-75 shadow-none select-none transition-all"
-                      title="This slot is already booked for this date"
+                      className="py-3 px-2 rounded-xl text-[13px] font-bold border-2 border-red-200/80 bg-red-50/50 text-gray-400 cursor-not-allowed flex flex-col items-center justify-center opacity-85 shadow-none select-none transition-all"
+                      title={isBooked ? "This slot is already booked for this date" : "This slot time has already passed for today"}
                     >
-                      <span className="line-through">{slot.label}</span>
-                      <span className="text-[9px] font-black tracking-wider text-red-500 uppercase mt-0.5">Booked</span>
+                      <span className="line-through text-gray-400 font-extrabold">{slot.label}</span>
+                      <span className="text-[10px] font-black tracking-wider text-red-500 uppercase mt-0.5">
+                        Not Available
+                      </span>
                     </button>
                   );
                 }
@@ -687,17 +1098,17 @@ const BookingModal = () => {
                     type="button"
                     disabled={!bookingState.date}
                     onClick={() => updateBooking('timeSlot', slot.id)}
-                    className={`py-2 px-1 rounded-xl text-[13px] font-bold border-2 transition-all flex flex-col items-center justify-center ${
+                    className={`py-3 px-2 rounded-xl text-[13px] font-bold border-2 transition-all flex flex-col items-center justify-center ${
                       !bookingState.date
                         ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
                         : isSelected
                         ? 'border-[#0052cc] bg-[#0052cc] text-white shadow-md'
-                        : 'border-gray-100 bg-white text-gray-700 hover:border-[#0052cc]/40 hover:bg-blue-50/30'
+                        : 'border-gray-100 bg-white text-gray-800 hover:border-[#0052cc]/40 hover:bg-blue-50/30'
                     }`}
                   >
-                    <span>{slot.label}</span>
+                    <span className="font-extrabold">{slot.label}</span>
                     {bookingState.date && (
-                      <span className={`text-[9px] font-bold ${isSelected ? 'text-blue-100' : 'text-emerald-600'}`}>
+                      <span className={`text-[10px] font-extrabold mt-0.5 ${isSelected ? 'text-blue-100' : 'text-emerald-600'}`}>
                         Available
                       </span>
                     )}
@@ -705,8 +1116,8 @@ const BookingModal = () => {
                 );
               })}
             </div>
-            <p className="text-[10px] text-gray-400 mt-2 ml-1">
-              Slots marked as Booked are already booked by another customer.
+            <p className="text-[11px] text-gray-400 mt-2.5 ml-1">
+              Slots marked as <span className="text-red-500 font-bold">Not Available</span> are already booked or past schedule.
             </p>
           </div>
         </div>
@@ -834,7 +1245,7 @@ const BookingModal = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-[360px] max-h-[90vh] flex flex-col relative overflow-hidden transform transition-all border border-gray-100">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-[390px] sm:max-w-[430px] max-h-[92vh] flex flex-col relative overflow-hidden transform transition-all border border-gray-100">
         <div className="flex-1 p-5 sm:p-6 overflow-y-auto flex flex-col relative custom-scrollbar">
           {!bookingConfirmed && currentStep === 1 && renderStep1()}
           {!bookingConfirmed && currentStep === 2 && renderStep2()}

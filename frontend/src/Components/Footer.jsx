@@ -57,6 +57,25 @@ const Footer = () => {
     { name: 'Complete Clean', action: (e) => handleNavigation(e, '/pricing', null) }
   ];
 
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
+  if (isAuthPage) {
+    return (
+      <footer className="w-full font-sans bg-white border-t border-gray-100 py-4 mt-auto relative z-10">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 font-medium gap-2">
+          <p>© {new Date().getFullYear()} Car Clean Plus. All Rights Reserved.</p>
+          <div className="flex items-center gap-4 text-xs text-gray-400">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <span className="text-gray-300">|</span>
+            <Link to="/termsofservice" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <span className="text-gray-300">|</span>
+            <Link to="/helpsupport" className="hover:text-primary transition-colors">Help & Support</Link>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer id="contact-us" className="w-full font-sans bg-white relative text-gray-800 border-t border-gray-200 mt-16 pt-4">
 

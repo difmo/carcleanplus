@@ -108,8 +108,94 @@ const getMe = async (req, res) => {
   }
 };
 
+// @desc    Google Sign In / Register
+// @route   POST /api/auth/google
+// @access  Public
+const googleAuth = async (req, res) => {
+  try {
+    const { credential, email: bodyEmail, name: bodyName, picture: bodyPicture } = req.body;
+    let email = bodyEmail;
+    let name = bodyName;
+    let avatar = bodyPicture;
+    let googleId = null;
+
+    // Decode Google GSI credential JWT if provided
+    if (credential) {
+      try {
+        const payload = JSON.parse(Buffer.from(credential.split('.')[1], 'base64').toString('utf8'));
+        if (payload.email) email = payload.email;
+        if (payload.name) name = payload.name;
+        if (payload.picture) avatar = payload.picture;
+        if (payload.sub) googleId = payload.sub;
+      } catch (err) {
+        console.error("Failed to decode Google token:", err);
+      }
+    }
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Google account email is required' });
+    }
+
+    // Check if user already exists
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // User exists -> return token
+      if (googleId && !user.googleId) {
+        user.googleId = googleId;
+        if (avatar) user.avatar = avatar;
+        await user.save();
+      }
+
+      return res.status(200).json({
+        success: true,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone || '',
+          role: user.role,
+          avatar: user.avatar || avatar || '',
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
+        },
+        token: generateToken(user._id)
+      });
+    }
+
+    // Auto create user for Google sign in
+    user = await User.create({
+      name: name || email.split('@')[0],
+      email,
+      phone: '',
+      googleId: googleId || 'google_' + Date.now(),
+      avatar: avatar || '',
+      role: 'customer'
+    });
+
+    return res.status(201).json({
+      success: true,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        avatar: user.avatar,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+      },
+      token: generateToken(user._id)
+    });
+  } catch (error) {
+    console.error('Google login error:', error);
+    res.status(500).json({ success: false, message: error.message || 'Google login failed' });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  googleAuth,
   getMe,
 };
