@@ -457,6 +457,24 @@ const Login = () => {
               <button
                 type="button"
                 disabled={googleLoading}
+                onClick={() => executeGoogleLogin({ email: 'admin@carcleanplus.com', name: 'Super Admin' })}
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-amber-200 bg-amber-50/40 hover:border-amber-400 hover:bg-amber-50 transition-all text-left cursor-pointer group"
+              >
+                <div className="w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs">
+                  A
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs font-bold text-gray-900 group-hover:text-amber-800 truncate">Super Admin</p>
+                    <span className="bg-amber-200/80 text-amber-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md">Admin</span>
+                  </div>
+                  <p className="text-[11px] text-gray-500 truncate">admin@carcleanplus.com</p>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                disabled={googleLoading}
                 onClick={() => executeGoogleLogin({ email: 'vishal.yadav@gmail.com', name: 'Vishal Yadav' })}
                 className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 hover:border-[#0052cc] hover:bg-blue-50/50 transition-all text-left cursor-pointer group"
               >
@@ -464,7 +482,10 @@ const Login = () => {
                   V
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-gray-900 group-hover:text-[#0052cc] truncate">Vishal Yadav</p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs font-bold text-gray-900 group-hover:text-[#0052cc] truncate">Vishal Yadav</p>
+                    <span className="bg-blue-100 text-[#0052cc] text-[9px] font-extrabold px-1.5 py-0.5 rounded-md">Admin</span>
+                  </div>
                   <p className="text-[11px] text-gray-500 truncate">vishal.yadav@gmail.com</p>
                 </div>
               </button>
@@ -473,13 +494,13 @@ const Login = () => {
                 type="button"
                 disabled={googleLoading}
                 onClick={() => executeGoogleLogin({ email: 'customer.demo@gmail.com', name: 'Demo Customer' })}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 hover:border-[#0052cc] hover:bg-blue-50/50 transition-all text-left cursor-pointer group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-all text-left cursor-pointer group"
               >
                 <div className="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
                   D
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-gray-900 group-hover:text-[#0052cc] truncate">Demo Customer</p>
+                  <p className="text-xs font-bold text-gray-900 truncate">Demo Customer</p>
                   <p className="text-[11px] text-gray-500 truncate">customer.demo@gmail.com</p>
                 </div>
               </button>

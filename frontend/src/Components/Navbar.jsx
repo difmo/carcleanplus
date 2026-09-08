@@ -36,12 +36,15 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
+
   const navItems = [
     { name: "Home" },
     { name: "Service" },
     { name: "Packages" },
     { name: "Offer" },
     { name: "Gallery" },
+    ...(isAdmin ? [{ name: "Admin Panel", badge: "Admin" }] : []),
     ...(currentUser 
       ? [{ name: "Logout", isLogout: true }]
       : [{ name: "Login" }])
@@ -126,6 +129,12 @@ const Navbar = () => {
       return;
     }
 
+    if (sectionName === "Admin Panel") {
+      navigate("/admin");
+      setIsNavOpen(false);
+      return;
+    }
+
     if (sectionName === "Login") {
       navigate("/login");
       setIsNavOpen(false);
@@ -200,13 +209,30 @@ const Navbar = () => {
         <div className="flex-shrink-0 flex justify-end items-center gap-2.5 sm:gap-3">
           {/* User Account Pill when Logged In */}
           {currentUser && (
-            <div className="hidden sm:flex items-center gap-2 bg-blue-50 border border-blue-100/80 py-1.5 pl-2 pr-3 rounded-full flex-shrink-0 whitespace-nowrap shadow-xs">
-              <div className="w-7 h-7 rounded-full bg-[#0052cc] text-white flex items-center justify-center text-xs font-black shadow-xs">
+            <div className={`hidden sm:flex items-center gap-2 border py-1.5 pl-2 pr-3 rounded-full flex-shrink-0 whitespace-nowrap shadow-xs ${
+              isAdmin ? 'bg-amber-50/80 border-amber-200' : 'bg-blue-50 border-blue-100/80'
+            }`}>
+              <div className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-xs font-black shadow-xs ${
+                isAdmin ? 'bg-amber-600' : 'bg-[#0052cc]'
+              }`}>
                 {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
               </div>
-              <span className="text-xs font-bold text-gray-800 max-w-[85px] truncate">
+              <span 
+                onClick={() => isAdmin && navigate('/admin')}
+                className={`text-xs font-bold text-gray-800 max-w-[90px] truncate ${isAdmin ? 'cursor-pointer hover:text-amber-800' : ''}`}
+                title={isAdmin ? "Open Admin Panel" : ""}
+              >
                 {currentUser.name?.split(' ')[0] || 'User'}
               </span>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => navigate('/admin')}
+                  className="bg-amber-200/90 text-amber-900 text-[10px] font-extrabold px-1.5 py-0.5 rounded cursor-pointer hover:bg-amber-300 transition-colors"
+                >
+                  Admin
+                </button>
+              )}
               <button
                 type="button"
                 onClick={handleLogout}
