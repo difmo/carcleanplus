@@ -49,20 +49,23 @@ const updateBookingStatus = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide a status' });
     }
 
-    if (!['pending', 'confirmed', 'completed', 'cancelled'].includes(status)) {
-      return res.status(400).json({ success: false, message: 'Invalid status' });
+    const normalizedStatus = status.toLowerCase();
+    const validStatuses = ['lead', 'pending', 'confirmed', 'completed', 'cancelled'];
+    if (!validStatuses.includes(normalizedStatus)) {
+      return res.status(400).json({ success: false, message: `Invalid status: ${status}. Must be one of: ${validStatuses.join(', ')}` });
     }
 
-    const booking = await Booking.findById(req.params.id);
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { $set: { status: normalizedStatus } },
+      { new: true, runValidators: false }
+    );
 
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
     }
 
-    booking.status = status;
-    await booking.save();
-
-    res.status(200).json({ success: true, message: 'Booking status updated', data: booking });
+    res.status(200).json({ success: true, message: 'Booking status updated successfully', data: booking });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
