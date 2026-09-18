@@ -19,6 +19,7 @@ import AdminLayout from "./Components/Admin/AdminLayout";
 import AdminBookings from "./Components/Admin/Bookings/AdminBookings";
 import AdminContacts from "./Components/Admin/Contacts/AdminContacts";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
+import AdminGallery from "./Components/Admin/Gallery/AdminGallery";
 import { Outlet } from "react-router-dom";
 
 const PublicLayout = () => {
@@ -41,6 +42,7 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="contacts" element={<AdminContacts />} />
+          <Route path="gallery" element={<AdminGallery />} />
         </Route>
 
         {/* Public Routes */}

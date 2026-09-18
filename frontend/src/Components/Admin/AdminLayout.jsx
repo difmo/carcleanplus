@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaHome, FaCalendarAlt, FaSignOutAlt, FaCar, FaEnvelope } from 'react-icons/fa';
+import { FaHome, FaCalendarAlt, FaSignOutAlt, FaCar, FaEnvelope, FaImages } from 'react-icons/fa';
 import img from '../../assets/logo car22.png';
 
 const AdminLayout = () => {
@@ -36,6 +36,7 @@ const AdminLayout = () => {
     { name: 'Dashboard', path: '/admin', icon: <FaHome /> },
     { name: 'Bookings', path: '/admin/bookings', icon: <FaCalendarAlt /> },
     { name: 'Messages', path: '/admin/contacts', icon: <FaEnvelope /> },
+    { name: 'Gallery', path: '/admin/gallery', icon: <FaImages /> },
   ];
 
   return (
