@@ -308,7 +308,7 @@ const BookingModal = () => {
 
       // 3. Setup Razorpay options
       const options = {
-        key: "rzp_test_TUHd7o8zEcyLCG",
+        key: "rzp_live_TTu3MMKBj7TYqO",
         amount: orderData.data.amount,
         currency: "INR",
         name: "Car Clean Plus",
