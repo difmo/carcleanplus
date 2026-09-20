@@ -11,8 +11,8 @@ const createOrder = async (req, res) => {
     dotenv.config({ override: true });
 
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID || 'dummy',
-      key_secret: process.env.RAZORPAY_KEY_SECRET || 'dummy'
+      key_id: process.env.RAZORPAY_KEY_ID || 'rzp_live_TTu3MMKBj7TYqO',
+      key_secret: process.env.RAZORPAY_KEY_SECRET || 'HcKFw9vT6VMDxgb3GX08kOSb'
     });
 
     const { amount } = req.body;
@@ -47,7 +47,7 @@ const verifyPayment = async (req, res) => {
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || 'dummy')
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || 'HcKFw9vT6VMDxgb3GX08kOSb')
       .update(sign.toString())
       .digest("hex");
 
