@@ -138,13 +138,13 @@ const Footer = () => {
               <a href="#" className="p-2 rounded-full border border-[#1877F2] text-[#1877F2] hover:text-white hover:bg-[#1877F2] transition-colors">
                 <FaFacebookF size={16} />
               </a>
-              <a href="#" className="p-2 rounded-full border border-[#E1306C] text-[#E1306C] hover:text-white hover:bg-[#E1306C] transition-colors">
+              <a href="https://www.instagram.com/carcleanplus_?utm_source=qr&stkn=MTljbDgyZWRocsRkZQ==" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-[#E1306C] text-[#E1306C] hover:text-white hover:bg-[#E1306C] transition-colors">
                 <FaInstagram size={16} />
               </a>
               <a href="#" className="p-2 rounded-full border border-[#FF0000] text-[#FF0000] hover:text-white hover:bg-[#FF0000] transition-colors">
                 <FaYoutube size={16} />
               </a>
-              <a href="https://wa.me/919120759988?text=Hi" className="p-2 rounded-full border border-[#25D366] text-[#25D366] hover:text-white hover:bg-[#25D366] transition-colors">
+              <a href="https://wa.me/message/KKFVEXXXUXFXE1" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-[#25D366] text-[#25D366] hover:text-white hover:bg-[#25D366] transition-colors">
                 <FaWhatsapp size={16} />
               </a>
             </div>
