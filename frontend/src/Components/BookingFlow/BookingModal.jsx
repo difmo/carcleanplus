@@ -1220,21 +1220,12 @@ const BookingModal = () => {
         </div>
       </div>
 
-      <div className="flex gap-3 mt-2">
-        <button
-          onClick={() => {
-            resetBooking();
-            closeModal();
-          }}
-          className="w-1/2 bg-gray-100 text-gray-900 hover:bg-gray-200 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-sm"
-        >
-          Close
-        </button>
+      <div className="mt-2">
         <a
           href={getWhatsAppLink()}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-1/2 bg-[#25D366] text-white hover:bg-[#1ebe5d] flex items-center justify-center gap-2 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-md"
+          className="w-full bg-[#25D366] text-white hover:bg-[#1ebe5d] flex items-center justify-center gap-2 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-md"
         >
           <FaWhatsapp className="text-xl" />
           WhatsApp
