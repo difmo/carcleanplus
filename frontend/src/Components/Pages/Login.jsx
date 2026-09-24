@@ -173,15 +173,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-60px)] bg-gradient-to-b from-blue-50/40 via-white to-gray-50 flex flex-col justify-center items-center pt-20 pb-6 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="w-full max-w-[420px]">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50/40 via-white to-gray-50 flex flex-col justify-start md:justify-center items-center pt-32 sm:pt-36 pb-10 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="w-full max-w-[400px]">
         {/* Card */}
-        <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-[0_10px_35px_rgba(0,82,204,0.06)] border border-gray-100 relative">
+        <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,82,204,0.07)] border border-gray-100 relative">
           
           {/* Top Brand Badge */}
-          <div className="flex flex-col items-center text-center mb-3.5">
-            <div className="w-10 h-10 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-xl flex items-center justify-center mb-2 shadow-sm border border-blue-200/50">
-              <FaCar className="text-xl text-[#0052cc]" />
+          <div className="flex flex-col items-center text-center mb-3">
+            <div className="w-9 h-9 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-xl flex items-center justify-center mb-1.5 shadow-xs border border-blue-200/50">
+              <FaCar className="text-lg text-[#0052cc]" />
             </div>
             <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
               {isRegister ? 'Create an Account' : 'Welcome Back'}
@@ -194,14 +194,14 @@ const Login = () => {
           </div>
 
           {/* Tab Switcher */}
-          <div className="flex bg-gray-100 p-1 rounded-xl mb-3.5 text-xs font-bold">
+          <div className="flex bg-gray-100/90 p-1 rounded-xl mb-3 text-xs font-bold">
             <button
               type="button"
               id="signin-tab-btn"
               onClick={() => { setIsRegister(false); setError(null); setSuccessMsg(null); }}
               className={`flex-1 py-1.5 rounded-lg transition-all ${
                 !isRegister 
-                  ? 'bg-white text-gray-900 shadow-sm' 
+                  ? 'bg-white text-gray-900 shadow-xs' 
                   : 'text-gray-500 hover:text-gray-900'
               }`}
             >
