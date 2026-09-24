@@ -10,15 +10,18 @@ const createOrder = async (req, res) => {
     // Force reload .env file so it picks up Live Keys without restarting server!
     dotenv.config({ override: true });
 
+    const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_live_TTu3MMKBj7TYqO';
+    const key_secret = process.env.RAZORPAY_KEY_SECRET || 'HcKFw9vT6VMDxgb3GX08kOSb';
+
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID || 'rzp_live_TTu3MMKBj7TYqO',
-      key_secret: process.env.RAZORPAY_KEY_SECRET || 'HcKFw9vT6VMDxgb3GX08kOSb'
+      key_id,
+      key_secret
     });
 
     const { amount } = req.body;
 
     const options = {
-      amount: amount * 100, // amount in smallest currency unit (paise)
+      amount: Math.round(Number(amount) * 100), // amount in smallest currency unit (paise)
       currency: "INR",
       receipt: "receipt_order_" + Math.floor(Math.random() * 1000000),
     };
@@ -29,7 +32,7 @@ const createOrder = async (req, res) => {
       return res.status(500).json({ success: false, message: 'Some error occurred' });
     }
 
-    res.json({ success: true, data: order });
+    res.json({ success: true, key_id, data: order });
   } catch (error) {
     console.error('Razorpay Create Order Error:', error);
     res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });

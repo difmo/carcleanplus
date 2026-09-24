@@ -317,12 +317,13 @@ const BookingModal = () => {
       }
 
       // 3. Setup Razorpay options
+      const activeRazorpayKey = orderData.key_id || import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TUHd7o8zEcyLCG";
       const options = {
-        key: "rzp_live_TTu3MMKBj7TYqO",
+        key: activeRazorpayKey,
         amount: orderData.data.amount,
         currency: "INR",
         name: "Car Clean Plus",
-        description: "Payment for " + bookingState.service,
+        description: "Payment for " + (bookingState.service || "Doorstep Car Wash"),
         order_id: orderData.data.id,
         handler: async function (response) {
           // Verify on backend
@@ -360,6 +361,10 @@ const BookingModal = () => {
       };
 
       const paymentObject = new window.Razorpay(options);
+      paymentObject.on('payment.failed', function (resp) {
+        alert(resp.error?.description || "Payment failed or was cancelled.");
+        setIsSubmitting(false);
+      });
       paymentObject.open();
 
     } catch (err) {
