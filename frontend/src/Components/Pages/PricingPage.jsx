@@ -1,146 +1,175 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { FaSearch, FaGem } from 'react-icons/fa';
-import { CAR_MODELS, PRICING_MATRIX, SERVICES, CAR_CATEGORIES, getPrice } from '../../utils/pricingLogic';
+import React, { useEffect } from 'react';
+import { FaCarSide, FaCheck, FaRegClock, FaShieldAlt } from 'react-icons/fa';
+import { HiSparkles } from 'react-icons/hi2';
 import { useBooking } from '../../context/BookingContext';
+import { SERVICES } from '../../utils/pricingLogic';
 
 const PricingPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [searchQuery, setSearchQuery] = useState('');
   const { openModal } = useBooking();
 
-  const filteredCars = useMemo(() => {
-    return CAR_MODELS.filter(car =>
-      car.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery]);
-
-  const getCategoryBadge = (category) => {
-    switch (category) {
-      case CAR_CATEGORIES.COMPACT:
-        return <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider">{category}</span>;
-      case CAR_CATEGORIES.STANDARD:
-        return <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold uppercase tracking-wider">{category}</span>;
-      case CAR_CATEGORIES.LARGE:
-        return <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold uppercase tracking-wider">{category}</span>;
-      case CAR_CATEGORIES.PREMIUM:
-        return <span className="px-3 py-1 rounded-full bg-primary-light/10 text-red-400 border border-primary-light/20 text-xs font-bold uppercase tracking-wider">{category}</span>;
-      default:
-        return <span className="px-3 py-1 rounded-full bg-gray-500/10 text-gray-400 border border-gray-500/20 text-xs font-bold uppercase tracking-wider">{category}</span>;
+  const packages = [
+    {
+      id: SERVICES.BASIC,
+      name: 'Basic Wash',
+      price: '299',
+      desc: 'Exterior Foam Wash & Quick Shine',
+      features: [
+        'High-Pressure Exterior Foam Wash',
+        'Alloy Wheel & Rim Cleaning',
+        'Tyre Dressing & Long-Lasting Shine',
+        'Scratch-Free Microfiber Hand Drying',
+        'Exterior Glass & Mirror Wipe'
+      ],
+      time: '30 - 40 mins',
+      popular: false,
+      accentColor: 'border-gray-200'
+    },
+    {
+      id: SERVICES.PREMIUM,
+      name: 'Premium Wash',
+      price: '499',
+      desc: 'Complete Inside + Outside Clean',
+      features: [
+        'Everything in Basic Wash',
+        'Deep High-Power Interior Vacuum',
+        'Dashboard & Console Dressing',
+        'Foot Mat Deep Scrubbing & Wash',
+        'Door Panels & Boot Vacuuming',
+        'UV Protectant Conditioning'
+      ],
+      time: '45 - 60 mins',
+      popular: true,
+      accentColor: 'border-[#0052cc]'
+    },
+    {
+      id: SERVICES.COMPLETE,
+      name: 'Complete Clean',
+      price: '699',
+      desc: 'Deep Interior Spa & Exterior Wax',
+      features: [
+        'Everything in Premium Wash',
+        'Seat Upholstery Foam Shampoo',
+        'Roof Liner & Carpet Dry Clean',
+        'AC Vent Sanitization & Steam Spray',
+        'High-Gloss Liquid Carnauba Wax',
+        'Premium Long-Lasting Aroma Spray'
+      ],
+      time: '60 - 90 mins',
+      popular: false,
+      accentColor: 'border-gray-200'
     }
-  };
+  ];
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-36 sm:pt-40 md:pt-44 pb-20 relative overflow-hidden font-sans">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <div className="bg-gradient-to-b from-blue-50/40 via-white to-gray-50 min-h-screen pt-32 sm:pt-36 md:pt-40 pb-20 relative overflow-hidden font-sans">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-blue-100/60 blur-[130px] rounded-full pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
-
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        
         {/* Header Section */}
-        <div className="text-center mb-10 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight font-heading">
-            Exclusive <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Pricing Matrix</span>
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052cc] text-xs font-black uppercase tracking-wider mb-3">
+            <HiSparkles className="text-xs" />
+            <span>Honest & Transparent Rates</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+            Doorstep Wash <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-blue-600">Packages</span>
           </h1>
+          <p className="text-gray-500 text-sm sm:text-base mt-2 max-w-xl mx-auto font-medium">
+            Professional doorstep car detailing in Lucknow with zero hidden fees. Book online in 60 seconds.
+          </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="max-w-2xl mx-auto mb-16 animate-fade-in relative" style={{ animationDelay: '0.1s' }}>
-          <div className="relative group p-[1px] rounded-full bg-white border border-gray-200 hover:border-primary/50 transition-all duration-300 shadow-md hover:shadow-lg focus-within:shadow-lg focus-within:border-primary">
-            <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none z-10">
-              <FaSearch className="text-gray-400 group-focus-within:text-primary transition-colors duration-300" />
+        {/* Pricing Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto mb-16">
+          {packages.map((pkg) => (
+            <div
+              key={pkg.id}
+              className={`relative bg-white rounded-3xl p-6 sm:p-7 flex flex-col border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                pkg.popular 
+                  ? 'border-[#0052cc] shadow-lg shadow-blue-500/10' 
+                  : 'border-gray-200/80 shadow-xs'
+              }`}
+            >
+              {pkg.popular && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0052cc] text-white text-[10px] font-black px-4 py-1 uppercase tracking-widest rounded-full shadow-md whitespace-nowrap">
+                  Most Popular
+                </div>
+              )}
+
+              {/* Package Title & Price */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xl font-black text-gray-900">{pkg.name}</h3>
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-[#0052cc]">
+                    <FaCarSide className="text-lg" />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 font-medium mb-3">{pkg.desc}</p>
+                
+                <div className="flex items-baseline gap-1 pt-2 border-t border-gray-100">
+                  <span className="text-xs font-bold text-gray-400">Starting from</span>
+                  <span className="text-3xl font-black text-gray-900 tracking-tight">₹{pkg.price}</span>
+                </div>
+              </div>
+
+              {/* Time Estimate */}
+              <div className="flex items-center gap-2 text-xs font-bold text-gray-600 bg-gray-50 px-3 py-2 rounded-xl mb-5">
+                <FaRegClock className="text-[#0052cc]" />
+                <span>Service Duration: {pkg.time}</span>
+              </div>
+
+              {/* Features List */}
+              <ul className="space-y-2.5 mb-7 flex-1 text-left">
+                {pkg.features.map((feat, idx) => (
+                  <li key={idx} className="flex items-start text-xs font-medium text-gray-700 gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
+                      <FaCheck className="text-[9px]" />
+                    </div>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Book Button */}
+              <button
+                type="button"
+                onClick={() => openModal(null, pkg.id)}
+                className={`w-full py-3 rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-98 cursor-pointer ${
+                  pkg.popular
+                    ? 'bg-[#0052cc] hover:bg-[#003380] text-white shadow-blue-500/25 hover:shadow-lg'
+                    : 'bg-gray-900 hover:bg-black text-white hover:shadow-lg'
+                }`}
+              >
+                Book {pkg.name}
+              </button>
             </div>
-            <input
-              type="text"
-              placeholder="Search by make or model (e.g., Maruti, Nexon)..."
-              className="w-full pl-16 pr-6 py-4 rounded-full bg-white outline-none transition-all text-lg font-medium text-gray-900 placeholder-gray-400 relative z-0"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+          ))}
         </div>
 
-        {/* Premium Table Layout */}
-        <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200 text-primary font-bold text-xs md:text-sm uppercase tracking-widest">
-                  <th className="px-6 py-5 font-bold text-gray-700">Brand</th>
-                  <th className="px-6 py-5 font-bold text-gray-700">Car Model</th>
-                  <th className="px-6 py-5 font-bold text-center text-gray-700">Category</th>
-                  <th className="px-6 py-5 font-bold text-center text-gray-700">Basic Wash (₹)</th>
-                  <th className="px-6 py-5 font-bold text-center text-primary drop-shadow-sm">Premium Wash (₹)</th>
-                  <th className="px-6 py-5 font-bold text-center text-gray-700">Complete Clean (₹)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filteredCars.map((car, index) => {
-                  const [brand, ...modelParts] = car.name.split(' ');
-                  const modelName = modelParts.join(' ');
-
-                  const basicPrice = getPrice(car.category, SERVICES.BASIC);
-                  const premiumPrice = getPrice(car.category, SERVICES.PREMIUM);
-                  const completePrice = getPrice(car.category, SERVICES.COMPLETE);
-
-                  return (
-                    <tr
-                      key={car.id}
-                      className="group hover:bg-blue-50/50 transition-all duration-300"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-gray-500 font-medium">{brand}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-gray-900 font-bold text-base">{modelName}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center">
-                        {getCategoryBadge(car.category)}
-                      </td>
-
-                      {/* Pricing Cells - Clickable */}
-                      <td className="px-4 py-4 text-center">
-                        <button
-                          onClick={() => openModal(car, SERVICES.BASIC)}
-                          className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-bold text-sm transition-all hover:border-primary hover:text-primary flex items-center justify-between group-hover:shadow-sm"
-                        >
-                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-70">Book</span>
-                          <span>₹{basicPrice}</span>
-                        </button>
-                      </td>
-                      <td className="px-4 py-4 text-center bg-blue-50/30 group-hover:bg-blue-50/50 transition-colors border-x border-blue-100/50">
-                        <button
-                          onClick={() => openModal(car, SERVICES.PREMIUM)}
-                          className="w-full py-2.5 px-4 rounded-xl bg-primary text-white font-bold text-sm transition-all shadow-[0_4px_14px_rgba(0,82,204,0.25)] hover:shadow-[0_6px_20px_rgba(0,82,204,0.4)] hover:bg-blue-600 flex items-center justify-between group-hover:scale-105"
-                        >
-                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-90">Book</span>
-                          <span className="font-black text-base">₹{premiumPrice}</span>
-                        </button>
-                      </td>
-                      <td className="px-4 py-4 text-center">
-                        <button
-                          onClick={() => openModal(car, SERVICES.COMPLETE)}
-                          className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-white text-gray-600 font-bold text-sm transition-all hover:border-primary hover:text-primary flex items-center justify-between group-hover:shadow-sm"
-                        >
-                          <span className="text-xs uppercase tracking-wider font-extrabold opacity-70">Book</span>
-                          <span>₹{completePrice}</span>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {filteredCars.length === 0 && (
-            <div className="text-center py-20 px-6">
-              <p className="text-2xl font-bold text-gray-900 mb-2">No cars found matching "{searchQuery}"</p>
-              <p className="text-gray-500">Please try a different model or brand name.</p>
+        {/* Guarantee Banner */}
+        <div className="max-w-3xl mx-auto bg-gradient-to-r from-blue-900 to-[#0052cc] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shrink-0 text-white text-2xl">
+              <FaShieldAlt />
             </div>
-          )}
+            <div>
+              <h4 className="text-lg font-black tracking-tight">100% Satisfaction Guarantee</h4>
+              <p className="text-blue-100 text-xs mt-1">If you're not completely satisfied with our wash, we'll re-clean it for free.</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => openModal()}
+            className="px-6 py-3 bg-white text-[#0052cc] font-black text-xs uppercase tracking-wider rounded-2xl hover:bg-blue-50 transition-all shadow-md shrink-0 cursor-pointer"
+          >
+            Custom Quote
+          </button>
         </div>
 
       </div>
@@ -149,4 +178,3 @@ const PricingPage = () => {
 };
 
 export default PricingPage;
-
