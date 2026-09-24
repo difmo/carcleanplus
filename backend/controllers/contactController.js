@@ -32,7 +32,7 @@ const createContact = async (req, res) => {
     // Email details
     const mailOptions = {
       from: `"Car Clean Plus" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_TO,
+      to: process.env.MAIL_TO || 'carcleanplusofficial@gmail.com',
       replyTo: email,
 
       subject: `New Contact Enquiry - ${subject}`,

@@ -158,7 +158,7 @@ const updateBooking = async (req, res) => {
     // Send email to admin since booking is now complete
     const mailOptions = {
       from: `"Car Clean Plus" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_TO,
+      to: process.env.MAIL_TO || 'carcleanplusofficial@gmail.com',
       subject: `New Booking Confirmed - ${service}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -256,7 +256,7 @@ const createBooking = async (req, res) => {
     // Email details
     const mailOptions = {
       from: `"Car Clean Plus" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_TO,
+      to: process.env.MAIL_TO || 'carcleanplusofficial@gmail.com',
       subject: `New Booking Request - ${service}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
