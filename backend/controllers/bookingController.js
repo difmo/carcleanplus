@@ -185,7 +185,14 @@ const updateBooking = async (req, res) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    // Send email notification safely (will not crash booking if SMTP is misconfigured)
+    try {
+      if (process.env.MAIL_USER && process.env.MAIL_PASS) {
+        await transporter.sendMail(mailOptions);
+      }
+    } catch (mailError) {
+      console.warn('Booking confirmation email could not be sent (non-critical):', mailError.message);
+    }
 
     return res.status(200).json({
       success: true,
@@ -276,8 +283,14 @@ const createBooking = async (req, res) => {
       `
     };
 
-    // Send email to admin
-    await transporter.sendMail(mailOptions);
+    // Send email notification safely
+    try {
+      if (process.env.MAIL_USER && process.env.MAIL_PASS) {
+        await transporter.sendMail(mailOptions);
+      }
+    } catch (mailError) {
+      console.warn('Booking creation email could not be sent (non-critical):', mailError.message);
+    }
 
     // Success response
     return res.status(201).json({

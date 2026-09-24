@@ -84,8 +84,14 @@ const createContact = async (req, res) => {
       `
     };
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+    // Send email safely (will not crash if SMTP credentials need update)
+    try {
+      if (process.env.MAIL_USER && process.env.MAIL_PASS) {
+        await transporter.sendMail(mailOptions);
+      }
+    } catch (mailError) {
+      console.warn('Contact enquiry email could not be sent (non-critical):', mailError.message);
+    }
 
     // Success response
     return res.status(201).json({
