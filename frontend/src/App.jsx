@@ -20,7 +20,10 @@ import AdminBookings from "./Components/Admin/Bookings/AdminBookings";
 import AdminContacts from "./Components/Admin/Contacts/AdminContacts";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import AdminGallery from "./Components/Admin/Gallery/AdminGallery";
+import AdminFestivals from "./Components/Admin/Festivals/AdminFestivals";
 import { Outlet } from "react-router-dom";
+import { FestivalThemeProvider } from "./context/FestivalThemeContext";
+import FestivalSwitcherWidget from "./Components/FestivalSwitcherWidget";
 
 const PublicLayout = () => {
   return (
@@ -28,6 +31,7 @@ const PublicLayout = () => {
       <Navbar />
       <BookingModal />
       <Outlet />
+      <FestivalSwitcherWidget />
       <Footer />
     </>
   );
@@ -35,12 +39,14 @@ const PublicLayout = () => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <FestivalThemeProvider>
+      <BrowserRouter>
+        <Routes>
         {/* Admin Routes (No public Navbar/Footer) */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
+          <Route path="festivals" element={<AdminFestivals />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="gallery" element={<AdminGallery />} />
         </Route>
@@ -59,7 +65,8 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  );
+  </FestivalThemeProvider>
+);
 }
 
 export default App;

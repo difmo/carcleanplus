@@ -5,7 +5,7 @@ import {
   FaChevronRight, FaShieldAlt, FaLink, FaCar, FaArrowRight
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import img from "../assets/logo car22.png";
+import img from "../assets/carcleanplus.logo.jpeg";
 import footerBg from "../assets/footer.jpg";
 import phoneImg from "../assets/Phone.png";
 import playStoreBtn from "../assets/btn-play-store.webp";
@@ -14,7 +14,7 @@ import premiumPhoneImg from "../assets/car_clean_plus_phone.jpg";
 import { useBooking } from "../context/BookingContext";
 
 const Footer = () => {
-  const { openModal } = useBooking();
+  const { openModal, updateBooking } = useBooking();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -128,7 +128,7 @@ const Footer = () => {
           {/* Column 1: Brand Info */}
           <div>
             <div className="flex flex-col mb-3">
-              <img src={img} alt="Car Clean Plus" className="h-16 w-auto object-contain self-start -ml-2" />
+              <img src={img} alt="Car Clean Plus" className="h-20 md:h-24 w-auto object-contain self-start -ml-2" />
               <p className="text-gray-800 text-xs leading-relaxed mt-2 font-medium">
                 Car Clean Plus provides premium car wash & detailing services at your doorstep.
               </p>
@@ -207,6 +207,45 @@ const Footer = () => {
             </ul>
           </div>
 
+        </div>
+      </div>
+
+      {/* Lucknow Service Areas Banner */}
+      <div className="w-full border-t border-gray-100 bg-gray-50/70 py-4 relative z-10">
+        <div className="mx-auto px-4 max-w-6xl">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-3 text-center lg:text-left">
+            <div className="flex items-center gap-2 shrink-0">
+              <FaMapMarkerAlt className="text-primary text-sm" />
+              <span className="text-xs font-bold text-gray-900 uppercase tracking-wider">
+                Doorstep Service Areas (Lucknow):
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center lg:justify-end gap-1.5 text-xs text-gray-600 font-medium">
+              {[
+                'Gomti Nagar',
+                'Gomti Nagar Extension',
+                'Sushant Golf City',
+                'Vibhuti Khand',
+                'Indira Nagar',
+                'Mahanagar',
+                'Aliganj',
+                'Jankipuram / Extension'
+              ].map((area, idx, arr) => (
+                <button
+                  key={area}
+                  type="button"
+                  onClick={() => {
+                    updateBooking('city', area);
+                    openModal();
+                  }}
+                  className="inline-flex items-center hover:text-[#0052cc] hover:underline transition-colors cursor-pointer group"
+                >
+                  <span className="group-hover:font-semibold">{area}</span>
+                  {idx < arr.length - 1 && <span className="ml-2 text-gray-300 no-underline">•</span>}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

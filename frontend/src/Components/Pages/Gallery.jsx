@@ -114,7 +114,7 @@ const Gallery = () => {
   }, [allImages, selectedCategory]);
 
   return (
-    <div className="pt-24 pb-20 bg-gray-50 min-h-screen">
+    <div className="pt-36 sm:pt-40 md:pt-44 pb-20 bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Admin Quick Action Bar (Visible when Admin/Superadmin is logged in) */}
         {isAdmin && (
@@ -154,9 +154,6 @@ const Gallery = () => {
 
         {/* Hero Title */}
         <div className="text-center mb-12">
-          <span className="px-4 py-1.5 rounded-full bg-blue-50 text-[#0052cc] text-xs font-extrabold uppercase tracking-wider inline-block mb-4 border border-blue-100">
-            Real Transformations
-          </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-dark mb-4 tracking-tight">
             Our <span className="text-[#0052cc]">Work Gallery</span>
           </h1>

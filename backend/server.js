@@ -47,6 +47,7 @@ app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/booking', require('./routes/bookingRoutes'));
 app.use('/api/payment', require('./routes/paymentRoutes'));
+app.use('/api/festival', require('./routes/festivalRoutes'));
 
 const PORT = process.env.PORT || 5000;
 

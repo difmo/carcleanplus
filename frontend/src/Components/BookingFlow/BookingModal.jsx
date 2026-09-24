@@ -3,6 +3,7 @@ import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, CAR_CATEGORIES, getPrice } from '../../utils/pricingLogic';
 import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp, FaUser, FaQuestionCircle } from 'react-icons/fa';
 import { BASE_URL } from '../../utils/api';
+import CarVisualIcon, { getCarBodyType, getCarBodyLabel } from './CarVisualIcon';
 import {
   SiSuzuki,
   SiHyundai,
@@ -236,7 +237,16 @@ const BookingModal = () => {
     };
   }, [bookingState.date]);
 
-  const CITIES = ['Gomti Nagar', 'Aliganj', 'Indira Nagar', 'Hazratganj', 'Mahanagar', 'Alambagh', 'Aashiana', 'Rajajipuram', 'Vikas Nagar', 'Jankipuram', 'Aminabad', 'Chowk'];
+  const CITIES = [
+    'Gomti Nagar',
+    'Gomti Nagar Extension',
+    'Sushant Golf City',
+    'Vibhuti Khand',
+    'Indira Nagar',
+    'Mahanagar',
+    'Aliganj',
+    'Jankipuram / Extension'
+  ];
 
   const filteredCities = CITIES.filter(c => c.toLowerCase().includes(searchCity.toLowerCase()));
 
@@ -558,13 +568,23 @@ const BookingModal = () => {
                 updateBooking('city', city);
                 nextStep();
               }}
-              className="px-5 py-3.5 mx-2 my-1 rounded-xl text-gray-600 text-[15px] font-bold hover:bg-blue-50 hover:text-[#003380] cursor-pointer transition-all flex justify-between items-center group"
+              className="px-4 py-3 mx-1 my-1 rounded-xl text-gray-700 text-[14px] font-bold hover:bg-blue-50/70 hover:text-[#0052cc] cursor-pointer transition-all flex justify-between items-center group border border-gray-100 hover:border-blue-200 shadow-sm"
             >
-              {city}
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#0052cc] flex items-center justify-center text-sm group-hover:bg-[#0052cc] group-hover:text-white transition-colors shrink-0">
+                  <FaMapMarkerAlt />
+                </div>
+                <div>
+                  <span className="text-gray-900 font-extrabold text-[14px] block group-hover:text-[#0052cc] transition-colors">{city}</span>
+                  <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Doorstep Service Available
+                  </span>
+                </div>
+              </div>
               <FaChevronRight className="text-[#0052cc] opacity-0 group-hover:opacity-100 transition-opacity text-xs" />
             </div>
           ))}
-          {filteredCities.length === 0 && <div className="p-4 text-center text-[14px] text-gray-400 font-medium">No city found</div>}
+          {filteredCities.length === 0 && <div className="p-4 text-center text-[14px] text-gray-400 font-medium">No area found matching "{searchCity}"</div>}
         </div>
       </div>
 
@@ -894,22 +914,37 @@ const BookingModal = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 overflow-y-auto custom-scrollbar flex-1 pt-1 pb-4 content-start min-h-[160px] px-1">
-        {filteredModels.map(car => (
-          <div
-            key={car.id}
-            onClick={() => {
-              updateBooking('carModel', car);
-              nextStep();
-            }}
-            className="flex flex-col items-center justify-between p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:border-[#0052cc] hover:-translate-y-1 cursor-pointer transition-all aspect-[4/3] group"
-          >
-            <FaCar className="text-4xl text-gray-300 group-hover:text-blue-300 transition-colors" />
-            <div className="text-center mt-2 w-full">
-              <h4 className="font-extrabold text-gray-900 text-[13px] truncate">{getModelDisplayName(car.name)}</h4>
-              <span className="text-[9px] uppercase tracking-widest text-gray-400 font-extrabold mt-0.5 block">{car.category}</span>
+        {filteredModels.map(car => {
+          const bodyType = getCarBodyType(car.name);
+          const bodyLabel = getCarBodyLabel(bodyType);
+          return (
+            <div
+              key={car.id}
+              onClick={() => {
+                updateBooking('carModel', car);
+                nextStep();
+              }}
+              className="flex flex-col items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#0052cc] hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all aspect-[4/3] group relative overflow-hidden"
+            >
+              <div className="w-full flex items-center justify-center pt-1 transition-transform duration-200 group-hover:scale-110">
+                <CarVisualIcon carName={car.name} className="w-[88px] h-[42px] drop-shadow-sm" />
+              </div>
+              <div className="text-center mt-1 w-full">
+                <h4 className="font-extrabold text-gray-900 text-[13px] truncate group-hover:text-[#0052cc] transition-colors">
+                  {getModelDisplayName(car.name)}
+                </h4>
+                <div className="flex items-center justify-center gap-1.5 mt-0.5">
+                  <span className="text-[8px] uppercase tracking-wider text-[#0052cc] font-extrabold px-1.5 py-0.5 bg-blue-50 rounded-md">
+                    {bodyLabel}
+                  </span>
+                  <span className="text-[9px] uppercase tracking-wider text-gray-400 font-bold truncate">
+                    {car.category}
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         {filteredModels.length === 0 && <div className="col-span-2 text-center py-6 text-gray-400 text-[14px] font-medium">No models found</div>}
       </div>
     </div>
@@ -960,8 +995,12 @@ const BookingModal = () => {
               onClick={() => updateBooking('service', pkg.id)}
               className={`p-3 rounded-xl border transition-all cursor-pointer flex gap-3 shadow-sm ${bookingState.service === pkg.id ? 'bg-blue-50/50 border-[#0052cc] ring-1 ring-[#0052cc]/20' : 'bg-white border-gray-100 hover:border-gray-200'}`}
             >
-              <div className="w-[50px] h-[50px] bg-gray-50 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100">
-                <FaCar className="text-gray-300 text-xl" />
+              <div className="w-[50px] h-[50px] bg-gray-50 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100 p-1">
+                {bookingState.carModel ? (
+                  <CarVisualIcon carName={bookingState.carModel.name} className="w-10 h-6" />
+                ) : (
+                  <FaCar className="text-gray-300 text-xl" />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">

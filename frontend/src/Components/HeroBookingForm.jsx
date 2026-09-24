@@ -22,7 +22,10 @@ const HeroBookingForm = () => {
     // Update context
     if (formData.carType) updateBooking('carModel', { category: formData.carType, name: formData.carType });
     if (formData.service) updateBooking('service', formData.service);
-    if (formData.location) updateBooking('location', { address: formData.location, pincode: '' });
+    if (formData.location) {
+      updateBooking('city', formData.location);
+      updateBooking('location', { address: formData.location, pincode: '' });
+    }
     if (formData.date) updateBooking('date', formData.date);
     if (formData.time) updateBooking('timeSlot', formData.time);
 
@@ -94,15 +97,26 @@ const HeroBookingForm = () => {
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
             <FaMapMarkerAlt className="text-sm" />
           </div>
-          <input
-            type="text"
+          <select
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="Enter Location"
-            className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary font-medium"
+            className="w-full bg-white text-gray-800 text-sm rounded-lg py-2.5 pl-10 pr-4 appearance-none focus:outline-none focus:ring-2 focus:ring-primary font-medium"
             required
-          />
+          >
+            <option value="" disabled>Select Area (Lucknow)</option>
+            <option value="Gomti Nagar">Gomti Nagar</option>
+            <option value="Gomti Nagar Extension">Gomti Nagar Extension</option>
+            <option value="Sushant Golf City">Sushant Golf City</option>
+            <option value="Vibhuti Khand">Vibhuti Khand</option>
+            <option value="Indira Nagar">Indira Nagar</option>
+            <option value="Mahanagar">Mahanagar</option>
+            <option value="Aliganj">Aliganj</option>
+            <option value="Jankipuram / Extension">Jankipuram / Extension</option>
+          </select>
+          <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-500">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
         </div>
 
         {/* Date */}

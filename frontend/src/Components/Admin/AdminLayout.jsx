@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaHome, FaCalendarAlt, FaSignOutAlt, FaCar, FaEnvelope, FaImages } from 'react-icons/fa';
-import img from '../../assets/logo car22.png';
+import { HiSparkles } from 'react-icons/hi2';
+import img from '../../assets/carcleanplus.logo.jpeg';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const AdminLayout = () => {
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: <FaHome /> },
     { name: 'Bookings', path: '/admin/bookings', icon: <FaCalendarAlt /> },
+    { name: 'Festival Offers', path: '/admin/festivals', icon: <HiSparkles /> },
     { name: 'Messages', path: '/admin/contacts', icon: <FaEnvelope /> },
     { name: 'Gallery', path: '/admin/gallery', icon: <FaImages /> },
   ];
@@ -43,9 +45,9 @@ const AdminLayout = () => {
     <div className="flex h-screen bg-gray-50 font-sans">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-100 flex flex-col hidden md:flex">
-        <div className="h-20 flex items-center justify-center border-b border-gray-100 px-6">
+        <div className="h-24 flex items-center justify-center border-b border-gray-100 px-4">
           <Link to="/">
-            <img src={img} alt="Car Clean Plus" className="h-10 w-auto object-contain" />
+            <img src={img} alt="Car Clean Plus" className="h-16 w-auto object-contain" />
           </Link>
         </div>
 

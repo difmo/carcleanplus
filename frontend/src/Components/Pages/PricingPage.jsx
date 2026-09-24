@@ -33,7 +33,7 @@ const PricingPage = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-32 pb-20 relative overflow-hidden font-sans">
+    <div className="bg-gray-50 min-h-screen pt-36 sm:pt-40 md:pt-44 pb-20 relative overflow-hidden font-sans">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 

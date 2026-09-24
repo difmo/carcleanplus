@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import img from "../assets/logo car22.png";
+import img from "../assets/carcleanplus.logo.jpeg";
 import { FiAlignJustify, FiX, FiHome, FiLogOut } from "react-icons/fi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
+import { useFestivalTheme } from "../context/FestivalThemeContext";
 
 const Navbar = () => {
+  const { currentTheme } = useFestivalTheme();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('Home');
@@ -154,15 +156,28 @@ const Navbar = () => {
 
   return (
     <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? "bg-white/95 backdrop-blur-lg shadow-md" : "bg-white/90 backdrop-blur-sm border-b border-gray-100"}`}>
-      <div className="w-[96%] max-w-[1400px] mx-auto flex justify-between items-center px-4 md:px-6 h-[85px]">
+      {/* Festival Announcement Bar */}
+      <div className={`w-full py-1.5 px-3 text-center text-[11px] sm:text-xs font-black text-white flex items-center justify-center gap-2 shadow-inner select-none transition-colors duration-500 ${currentTheme.themeColors.bannerBg}`}>
+        <span className="animate-pulse">{currentTheme.icon}</span>
+        <span>{currentTheme.greeting}</span>
+        <button
+          onClick={() => handleNavigation("Offer")}
+          className="hidden md:inline-flex items-center gap-1 bg-white text-gray-900 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider hover:bg-yellow-300 transition-colors shadow-xs ml-1 cursor-pointer"
+        >
+          <span>{currentTheme.discount}</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <div className="w-[96%] max-w-[1400px] mx-auto flex justify-between items-center px-4 md:px-6 h-[88px]">
 
         {/* Left: Logo Section */}
         <div
           className="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
           onClick={() => handleNavigation("Home")}
         >
-          <div className="flex items-center h-14 md:h-16 overflow-hidden flex-shrink-0">
-            <img className="h-full w-auto object-contain" src={img} alt="Car Clean Plus" />
+          <div className="flex items-center h-16 md:h-20 overflow-hidden flex-shrink-0">
+            <img className="h-full w-auto object-contain transition-transform duration-200 group-hover:scale-105" src={img} alt="Car Clean Plus" />
           </div>
         </div>
 
