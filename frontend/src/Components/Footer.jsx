@@ -183,9 +183,9 @@ const Footer = () => {
             <h4 className="text-gray-900 font-bold text-[17px] mb-3">Contact Us</h4>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="https://www.google.com/maps/search/Lucknow,+Uttar+Pradesh" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group cursor-pointer text-gray-700">
+                <a href="https://www.google.com/maps/search/4%2F37+Vibhav+Khand+near+Mantri+Awas+Gomti+Nagar+Lucknow" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group cursor-pointer text-gray-700">
                   <FaMapMarkerAlt className="mt-1 flex-shrink-0 text-gray-500" size={14} />
-                  <span className="text-sm font-medium group-hover:text-primary transition-colors leading-tight">123, Sector 45, Noida,<br />Uttar Pradesh - 201301</span>
+                  <span className="text-sm font-medium group-hover:text-primary transition-colors leading-tight">3rd Floor, 4/37 Vibhav Khand, near Mantri Awas Colony, Gomti Nagar, Lucknow, Uttar Pradesh 226010</span>
                 </a>
               </li>
               <li>
@@ -195,14 +195,14 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@carcleanplus.com" className="flex items-center gap-3 group cursor-pointer text-gray-700">
+                <a href="mailto:carcleanplusofficial@gmail.com" className="flex items-center gap-3 group cursor-pointer text-gray-700">
                   <FaEnvelope className="flex-shrink-0 text-gray-500" size={12} />
-                  <span className="text-sm font-medium group-hover:text-primary transition-colors">info@carcleanplus.com</span>
+                  <span className="text-sm font-medium group-hover:text-primary transition-colors">carcleanplusofficial@gmail.com</span>
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-700">
                 <FaClock className="flex-shrink-0 text-gray-500" size={12} />
-                <span className="text-sm font-medium">Mon - Sun: 8:00 AM - 8:00 PM</span>
+                <span className="text-sm font-medium">Mon - Sat: 8:00 AM - 8:00 PM</span>
               </li>
             </ul>
           </div>
