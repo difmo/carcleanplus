@@ -1,155 +1,178 @@
-import React from "react";
-import Viresonapp from "../Viresonapp";
+import React, { useEffect } from "react";
+import { 
+  FaShieldAlt, FaLock, FaUserCheck, FaDatabase, 
+  FaEnvelope, FaMapMarkerAlt, FaFileContract, FaCheckCircle 
+} from "react-icons/fa";
 
 function PrivacyPolicy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <>
-     <div className="mt-24">
-     
-        <div className="object-cover mx-4 md:mx-48 my-8 md:my-16 h-36 md:h-72 bg-[rgb(0,69,120)] rounded-3xl">
-          <div className="px-6 py-12 text-4xl font-medium text-center md:text-7xl text-cyan-50 md:py-20 md:px-64">
-            Privacy Policy
+    <div className="bg-gradient-to-b from-blue-50/50 via-white to-gray-50 min-h-screen pt-32 sm:pt-36 md:pt-40 pb-20 font-sans">
+      <div className="container mx-auto px-4 max-w-4xl relative z-10">
+        
+        {/* Compact Hero Header */}
+        <div className="text-center mb-10 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052cc] text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
+            <FaShieldAlt className="text-xs" />
+            <span>Trust & Transparency</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+            Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-blue-600">Policy</span>
+          </h1>
+
+          <p className="text-gray-500 text-xs sm:text-sm mt-2 font-medium max-w-lg mx-auto">
+            Learn how Car Clean Plus collects, uses, and protects your personal information when you use our doorstep detailing services.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-4 text-[11px] font-bold text-gray-400">
+            <span className="bg-white border border-gray-200 px-3 py-1 rounded-full shadow-2xs">
+              Effective Date: July 01, 2024
+            </span>
+            <span className="bg-white border border-gray-200 px-3 py-1 rounded-full shadow-2xs">
+              Last Updated: September 2026
+            </span>
           </div>
         </div>
-        <div className="px-2 md:px-20">
-          <div className="pl-5 font-medium">
-            <h1 className="font-serif font-extrabold">
-              Effective Date: July 01, 2024
-            </h1>
-          </div>
-          <div className="p-5">
-            Car Clean Plus ("We," "Us," or "Our") is committed to protecting and
-            respecting the privacy of our customers and website visitors. This
-            Privacy Policy outlines how we collect, use, disclose, and safeguard
-            your personal information when you use our website, mobile
-            application, and related services (collectively, the "Services"). By
-            using our Services, you agree to the collection and use of
-            information in accordance with this Privacy Policy.
-            {/* This Privacy Policy outlines how Car Clean Plus (“We”), collects,
-            uses, discloses, and protects your personal information when you use
-            our mobile application and website (collectively, the “Services”).
-            We are committed to protecting and respecting your privacy and
-            ensuring compliance with all applicable data protection regulations
-            and laws. */}
-            <br />
-            <br />
-            <p>
-              Please read the following carefully to understand our views and
-              practices regarding your personal data and how we will treat it.
-              By using our Services, you agree to the collection and use of
-              information in accordance with this Privacy Policy.
+
+        {/* Main Content Card */}
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.04)] p-6 sm:p-10 space-y-8 text-gray-700 leading-relaxed text-sm">
+
+          {/* Section 1: Introduction */}
+          <div>
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                01
+              </div>
+              <h2 className="text-lg font-black tracking-tight">Introduction & Commitment</h2>
+            </div>
+            <p className="text-gray-600 text-xs sm:text-sm pl-10.5">
+              Car Clean Plus ("We", "Us", or "Our") is dedicated to protecting and respecting your privacy. 
+              This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information 
+              when you visit our website, book our doorstep wash services, or communicate with us. 
+              By using our services, you consent to the data practices described in this document.
             </p>
           </div>
-          <div className="p-5 font-serif font-extrabold">
-            Types of Information We May Collect from You
+
+          {/* Section 2: Information We Collect */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                02
+              </div>
+              <h2 className="text-lg font-black tracking-tight">Information We Collect</h2>
+            </div>
+            <div className="space-y-3 pl-10.5 text-xs sm:text-sm text-gray-600">
+              <p>We may collect personal details necessary to schedule and fulfill doorstep car wash requests:</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                <div className="bg-gray-50/70 p-3.5 rounded-2xl border border-gray-100">
+                  <span className="font-bold text-gray-900 block text-xs mb-1">Customer Identifiers</span>
+                  <span className="text-[12px] text-gray-500">Full Name, 10-digit Mobile Number, Email Address.</span>
+                </div>
+                <div className="bg-gray-50/70 p-3.5 rounded-2xl border border-gray-100">
+                  <span className="font-bold text-gray-900 block text-xs mb-1">Service & Vehicle Details</span>
+                  <span className="text-[12px] text-gray-500">Car make/model, body category, doorstep address in Lucknow, appointment date & slot.</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="p-5">
-            We may collect, store, and use the following kinds of personal
-            information about individuals who visit and use our website and
-            social media sites:
-            <br />
-            <b>Information you supply to us.</b> You may supply us with
-            information about you by filling in forms on our website or social
-            media. This includes information you provide when you submit a
-            contact/inquiry form. The information you give us may include, but
-            is not limited to, your name, address, email address, and phone
-            number.
-          </div>
-          <div className="pl-5 pr-5 font-serif font-medium">
-            <h1 className="font-extrabold">
-              How We May Use the Information We Collect
-            </h1>
-          </div>
-          <div className="p-5">
-            We use the information in the following ways:
-            <br />
-            <p>
-              <b>Information you supply to us. </b>We will use this information:
-            </p>
-            <ul>
-              <li>
-                To provide you with information and/or services that you request
-                from us;
+
+          {/* Section 3: How We Use Your Data */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                03
+              </div>
+              <h2 className="text-lg font-black tracking-tight">How We Use Your Data</h2>
+            </div>
+            <ul className="space-y-2 pl-10.5 text-xs sm:text-sm text-gray-600">
+              <li className="flex items-start gap-2">
+                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <span>To dispatch trained car cleaning technicians directly to your specified address.</span>
               </li>
-              <li>To contact you to provide the information requested.</li>
+              <li className="flex items-start gap-2">
+                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <span>To send appointment confirmations, reminder SMS/WhatsApp notifications, and receipts.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <span>To respond to your inquiries, customer support questions, and service feedback.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <span>To prevent fraudulent activities and ensure safe, verified payment processing.</span>
+              </li>
             </ul>
           </div>
-          <div className="px-5 font-serif font-medium">
-            <h1 className="font-extrabold">Disclosure of Your Information</h1>
+
+          {/* Section 4: Data Protection & Sharing */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                04
+              </div>
+              <h2 className="text-lg font-black tracking-tight">Zero Selling & Secure Storage</h2>
+            </div>
+            <div className="pl-10.5 space-y-2 text-xs sm:text-sm text-gray-600">
+              <p>
+                <strong>We NEVER rent, sell, or trade your personal data.</strong> Your information is stored on 
+                secure, encrypted databases protected by modern industry security standards. 
+                Information is only shared with trusted payment infrastructure (Razorpay) strictly to process your transactions.
+              </p>
+            </div>
           </div>
-          <div className="p-5">
-            Any information you provide to us will either be emailed directly to
-            us or may be stored on a secure server. We do not rent, sell, or
-            share personal information about you with other people or
-            non-affiliated companies. We will use all reasonable efforts to
-            ensure that your personal data is not disclosed to regional/national
-            institutions and authorities unless required by law or other
-            regulations. Unfortunately, the transmission of information via the
-            internet is not completely secure. Although we will do our best to
-            protect your personal data, we cannot guarantee the security of your
-            data transmitted to our site; any transmission is at your own risk.
-            Once we have received your information, we will use strict
-            procedures and security features to try to prevent unauthorized
-            access.
+
+          {/* Section 5: Your Rights */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                05
+              </div>
+              <h2 className="text-lg font-black tracking-tight">Your Rights & Control</h2>
+            </div>
+            <p className="text-gray-600 text-xs sm:text-sm pl-10.5">
+              You retain full rights to request access, correction, or deletion of your personal records from our database. 
+              If you wish to update your details or request data deletion, simply send an email request to our support desk.
+            </p>
           </div>
-          <div className="px-5 font-medium">
-            <h1 className="font-serif font-extrabold">
-              Your Rights – Access to Your Personal Data
-            </h1>
+
+          {/* Section 6: Office & Contact Info */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+                06
+              </div>
+              <h2 className="text-lg font-black tracking-tight">Grievance & Contact Information</h2>
+            </div>
+            
+            <div className="pl-10.5 mt-3 bg-gradient-to-r from-blue-50/60 to-indigo-50/50 p-4 sm:p-5 rounded-2xl border border-blue-100 space-y-2.5">
+              <div className="flex items-start gap-2.5 text-xs text-gray-700">
+                <FaMapMarkerAlt className="text-[#0052cc] text-sm shrink-0 mt-0.5" />
+                <span>
+                  <strong>Office Address:</strong> 3rd Floor, 4/37 Vibhav Khand, near Mantri Awas Colony, Gomti Nagar, Lucknow, Uttar Pradesh 226010
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2.5 text-xs text-gray-700">
+                <FaEnvelope className="text-[#0052cc] text-sm shrink-0" />
+                <span>
+                  <strong>Email:</strong>{" "}
+                  <a href="mailto:carcleanplusofficial@gmail.com" className="text-[#0052cc] font-bold hover:underline">
+                    carcleanplusofficial@gmail.com
+                  </a>
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="p-5">
-            You have the right to ensure that your personal data is being
-            processed lawfully (“Subject Access Right”). Your subject access
-            right can be exercised in accordance with data protection laws and
-            regulations. Any subject access request must be made in writing to
-            Car Clean Plus, 4/37 Vibhav Khand, Gomtinagr, Lucknow 226010. We
-            will provide your personal data to you within the statutory time
-            frames. To enable us to trace any of your personal data that we may
-            be holding, we may need to request further information from you. If
-            you complain about how we have used your information, you have the
-            right to complain to the Information.
-          </div>
-          <div className="px-5 font-medium">
-            <h1 className="font-serif font-extrabold">
-              Changes to Our Privacy Policy
-            </h1>
-          </div>
-          <div className="p-5">
-            We may update this Privacy Policy from time to time. Any changes
-            will be posted on this page, and where appropriate, notified to you
-            by email or through the Services. Please check back regularly to see
-            any updates or changes to our Privacy Policy.
-          </div>
-          <div className="px-5 font-medium">
-            <h1 className="font-serif font-extrabold">Contact</h1>
-          </div>
-          <div className="p-5">
-            If you have any questions, comments, or concerns about this Privacy
-            Policy or our privacy practices, please contact us at:
-            carcleanplusofficial@gmail.com.
-          </div>
-          <div className="px-5 font-medium">
-            <h1 className="pb-2 font-serif font-extrabold">
-              App Access Instructions
-            </h1>
-          </div>
-          <div className="py-2 ml-4 pl-2 border-2 border-myyellow">
-            The user enters their identifier, such as a <b>Email address</b> -
-            carcleanplusofficial@gmail.com. <br /> The user inputs their
-            <b> Password - </b> Testing@123 associated with their account.
-          </div>
-          <div className="px-5 font-medium ">
-            <h1 className="font-serif font-extrabold py-2">Effective Date</h1>
-          </div>
-          <div className="p-5">
-            This one is not save This Privacy Policy is effective as of July 01,
-            2024, and was last updated on October 08, 2024.
-          </div>
+
         </div>
-        {/* <Viresonapp /> */}
-      
-     </div>
-    </>
+
+      </div>
+    </div>
   );
 }
 
