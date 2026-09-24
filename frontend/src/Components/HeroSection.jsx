@@ -8,7 +8,7 @@ const HeroSection = () => {
   const { openModal } = useBooking();
 
   return (
-    <div className="relative bg-white min-h-[90vh] flex items-center overflow-hidden">
+    <div className="relative bg-white min-h-[90vh] flex items-start lg:items-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 bg-white">
         <img
@@ -19,11 +19,11 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/30 to-transparent"></div>
       </div>
 
-      <div className="container mx-auto px-4 z-10 pt-28 pb-32 lg:pb-48">
+      <div className="container mx-auto px-4 z-10 pt-36 sm:pt-40 md:pt-44 lg:pt-44 pb-20 sm:pb-32 lg:pb-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column */}
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-gray-900 mb-4 leading-tight pt-2 sm:pt-4">
               A Cleaner Car, <br />
               A <span className="text-primary">Better You.</span>
             </h1>
