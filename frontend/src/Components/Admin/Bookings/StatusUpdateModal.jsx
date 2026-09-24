@@ -37,6 +37,13 @@ const STATUS_CONFIG = {
     icon: <FaUserTag className="text-purple-500 shrink-0" />,
     badgeClass: 'bg-purple-100 text-purple-800 border-purple-200',
     activeClass: 'border-purple-500 bg-purple-50/50'
+  },
+  blocked: {
+    label: 'Blocked',
+    desc: 'Slot blocked by admin (Maintenance/Offline)',
+    icon: <FaBan className="text-amber-600 shrink-0" />,
+    badgeClass: 'bg-amber-100 text-amber-900 border-amber-300',
+    activeClass: 'border-amber-500 bg-amber-50/50'
   }
 };
 

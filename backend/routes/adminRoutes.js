@@ -10,7 +10,9 @@ const {
 const {
   getAllBookings,
   getBookingById,
-  updateBookingStatus
+  updateBookingStatus,
+  createManualBooking,
+  deleteBooking
 } = require('../controllers/adminBookingController');
 const { protect, admin, superadmin } = require('../middleware/authMiddleware');
 
@@ -34,8 +36,12 @@ router.route('/users/:id/role')
 router.route('/bookings')
   .get(admin, getAllBookings);
 
+router.route('/bookings/manual')
+  .post(admin, createManualBooking);
+
 router.route('/bookings/:id')
-  .get(admin, getBookingById);
+  .get(admin, getBookingById)
+  .delete(admin, deleteBooking);
 
 router.route('/bookings/:id/status')
   .put(admin, updateBookingStatus);

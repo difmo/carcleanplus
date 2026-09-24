@@ -44,7 +44,7 @@ const getBookedSlots = async (req, res) => {
 
     const bookings = await Booking.find({
       date: { $in: dateVariations },
-      status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
+      status: { $in: ['pending', 'confirmed', 'completed', 'paid', 'blocked'] }
     }).select('timeSlot');
 
     const bookedSlots = bookings.map(b => b.timeSlot).filter(Boolean);
@@ -119,7 +119,7 @@ const updateBooking = async (req, res) => {
         _id: { $ne: id },
         date: { $in: dateVariations },
         timeSlot: { $regex: new RegExp(timeSlot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-–]/g, '.*'), 'i') },
-        status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
+        status: { $in: ['pending', 'confirmed', 'completed', 'paid', 'blocked'] }
       });
       if (existingBooking) {
         return res.status(400).json({
@@ -225,7 +225,7 @@ const createBooking = async (req, res) => {
     const existingBooking = await Booking.findOne({
       date: { $in: dateVariations },
       timeSlot: { $regex: new RegExp(timeSlot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-–]/g, '.*'), 'i') },
-      status: { $in: ['pending', 'confirmed', 'completed', 'paid'] }
+      status: { $in: ['pending', 'confirmed', 'completed', 'paid', 'blocked'] }
     });
     if (existingBooking) {
       return res.status(400).json({
