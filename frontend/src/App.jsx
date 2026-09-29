@@ -12,6 +12,7 @@ import HelpSupport from "./Components/Pages/HelpSupport";
 import Faq from "./Components/Pages/Faq";
 import Gallery from "./Components/Pages/Gallery";
 import Login from "./Components/Pages/Login";
+import DeleteAccount from "./Components/Pages/DeleteAccount";
 
 import PricingPage from "./Components/Pages/PricingPage";
 import BookingModal from "./Components/BookingFlow/BookingModal";
@@ -59,6 +60,7 @@ function App() {
           <Route path="/faq" element={<Faq />} />
           <Route path="/login" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/termsofservice" element={<TermsofService/>} />
           <Route path="/helpsupport" element={<HelpSupport/>}/>
