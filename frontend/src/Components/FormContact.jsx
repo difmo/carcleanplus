@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { FiMail, FiMessageCircle, FiPhone, FiSend, FiUser } from "react-icons/fi";
 import { BASE_URL } from "../utils/api";
 
 function FormContact() {
@@ -83,141 +84,92 @@ function FormContact() {
     }
   };
 
+  const fieldClass = "w-full min-h-[44px] border border-gray-200 rounded-2xl pl-10 pr-3 py-2.5 text-sm text-[#111827] focus:outline-none focus:border-[#1D4ED8] bg-white";
+
   return (
-    <div className="flex justify-center items-center px-2 sm:px-2 md:px-4">
-      <div className="w-full  bg-white shadow-lg rounded-lg p-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#26baf6]">
-          Contact Us
-        </h2>
-        <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
-              />
-              {errors.name && (
-                <p className="text-primary text-sm">{errors.name}</p>
-              )}
-            </div>
-
-            {/* Last Name */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600">
-                Last Name
-              </label>
-              <input
-                type="text"
-                name="lastname"
-                value={formData.lastname}
-                onChange={handleChange}
-                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
-              />
-              {errors.lastname && (
-                <p className="text-primary text-sm">{errors.lastname}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Mobile Number */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600">
-                Mobile Number
-              </label>
-              <input
-                type="tel"
-                name="mobileNumber"
-                value={formData.mobileNumber}
-                onChange={handleChange}
-                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
-              />
-              {errors.mobileNumber && (
-                <p className="text-primary text-sm">{errors.mobileNumber}</p>
-              )}
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none "
-              />
-              {errors.email && (
-                <p className="text-primary text-sm">{errors.email}</p>
-              )}
-            </div>
-          </div>
-
-          {/* Subject Selection */}
+    <div className="w-full">
+      <h2 className="text-2xl font-black text-[#111827] mb-1 flex items-center gap-2">
+        <span className="icon-circle"><FiMessageCircle /></span>
+        Send a message
+      </h2>
+      <p className="text-sm text-[#6B7280] mb-5">We reply on the same business day whenever we can.</p>
+      <form ref={form} onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-600">
-              Select Subject
-            </label>
-            <div className="flex flex-wrap gap-4 mt-2">
-              {["General Inquiry", "car Inquiry", "washing Inquiry", " Inquiry"].map((subject) => (
-                <label key={subject} className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="subject"
-                    value={subject}
-                    checked={formData.subject === subject}
-                    onChange={handleChange}
-                    className="form-radio text-blue-500  "
-                  />
-                  <span className="text-gray-700">{subject}</span>
-                </label>
-              ))}
+            <label className="block text-xs font-bold text-[#111827] mb-1">Name</label>
+            <div className="relative">
+              <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-[#1D4ED8]" />
+              <input type="text" name="name" value={formData.name} onChange={handleChange} className={fieldClass} />
             </div>
-            {errors.subject && (
-              <p className="text-primary text-sm">{errors.subject}</p>
-            )}
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
-
-          {/* Message */}
           <div>
-            <label className="block text-sm font-semibold text-gray-600">
-              Message
-            </label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full border-b border-gray-600  px-4 text-gray-700 focus:outline-none  "
-              rows="2"
-            />
-            {errors.message && (
-              <p className="text-primary text-sm">{errors.message}</p>
-            )}
+            <label className="block text-xs font-bold text-[#111827] mb-1">Last Name</label>
+            <div className="relative">
+              <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-[#1D4ED8]" />
+              <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} className={fieldClass} />
+            </div>
+            {errors.lastname && <p className="text-red-500 text-xs mt-1">{errors.lastname}</p>}
           </div>
+        </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-3 text-white font-bold bg-primary-light hover:bg-primary-dark transition duration-300 rounded-md"
-          >
-            Submit
-          </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-bold text-[#111827] mb-1">Mobile Number</label>
+            <div className="relative">
+              <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#1D4ED8]" />
+              <input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} className={fieldClass} />
+            </div>
+            {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-[#111827] mb-1">Email</label>
+            <div className="relative">
+              <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#1D4ED8]" />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className={fieldClass} />
+            </div>
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+          </div>
+        </div>
 
-          {/* Status Message */}
-          {status && (
-            <p className="mt-4 text-green-500 text-center">{status}</p>
-          )}
-        </form>
-      </div>
+        <div>
+          <label className="block text-xs font-bold text-[#111827] mb-2">Select Subject</label>
+          <div className="flex flex-wrap gap-2">
+            {["General Inquiry", "car Inquiry", "washing Inquiry", " Inquiry"].map((subject) => (
+              <label key={subject} className="inline-flex items-center gap-2 min-h-[40px] px-3 rounded-full border border-gray-200 text-sm text-[#111827]">
+                <input
+                  type="radio"
+                  name="subject"
+                  value={subject}
+                  checked={formData.subject === subject}
+                  onChange={handleChange}
+                  className="text-[#1D4ED8]"
+                />
+                <span>{subject}</span>
+              </label>
+            ))}
+          </div>
+          {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-bold text-[#111827] mb-1">Message</label>
+          <div className="relative">
+            <FiMessageCircle className="absolute left-3 top-3 text-[#1D4ED8]" />
+            <textarea name="message" value={formData.message} onChange={handleChange} className={`${fieldClass} min-h-[96px] py-3`} rows="3" />
+          </div>
+          {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+        </div>
+
+        <button type="submit" className="btn-primary w-full">
+          <FiSend />
+          Submit
+        </button>
+
+        {status && (
+          <p className="text-sm text-center text-[#111827]">{status}</p>
+        )}
+      </form>
     </div>
   );
 }

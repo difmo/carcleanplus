@@ -1,15 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  FaTimes,
-  FaCloudUploadAlt,
-  FaCropAlt,
-  FaCheck,
-  FaTag,
-  FaHeading,
-  FaAlignLeft,
-  FaSpinner,
-  FaImage
-} from 'react-icons/fa';
+import { FiAlignLeft, FiCheck, FiCrop, FiImage, FiLoader, FiTag, FiType, FiUpload, FiX } from 'react-icons/fi';
 import ImageCropperModal from './ImageCropperModal';
 import { fetchWithAuth } from '../../../utils/api';
 
@@ -164,8 +154,8 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
           {/* Header */}
           <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/70">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center font-bold">
-                <FaImage className="text-xl" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center font-bold">
+                <FiImage className="text-xl" />
               </div>
               <div>
                 <h2 className="text-lg font-black text-gray-900">
@@ -181,7 +171,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
               disabled={isSubmitting}
               className="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
             >
-              <FaTimes className="text-lg" />
+              <FiX className="text-lg" />
             </button>
           </div>
 
@@ -210,10 +200,10 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
               {!imageUrl ? (
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-gray-300 hover:border-[#0052cc] bg-gray-50/80 hover:bg-blue-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all group"
+                  className="border-2 border-dashed border-gray-300 hover:border-[#1D4ED8] bg-gray-50/80 hover:bg-blue-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all group"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0052cc] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-sm">
-                    <FaCloudUploadAlt className="text-2xl" />
+                  <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-sm">
+                    <FiUpload className="text-2xl" />
                   </div>
                   <p className="font-bold text-sm text-gray-800">
                     Click to browse or drop image here
@@ -245,16 +235,16 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                         onClick={() => setIsCropperOpen(true)}
                         className="px-4 py-2 bg-white text-gray-900 rounded-xl font-bold text-xs shadow-lg hover:bg-gray-100 flex items-center gap-2 transition-transform hover:scale-105"
                       >
-                        <FaCropAlt className="text-[#0052cc]" />
+                        <FiCrop className="text-[#1D4ED8]" />
                         Re-Crop Image
                       </button>
                     )}
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-4 py-2 bg-[#0052cc] text-white rounded-xl font-bold text-xs shadow-lg hover:bg-[#0747a6] flex items-center gap-2 transition-transform hover:scale-105"
+                      className="px-4 py-2 bg-[#1D4ED8] text-white rounded-xl font-bold text-xs shadow-lg hover:bg-[#0747a6] flex items-center gap-2 transition-transform hover:scale-105"
                     >
-                      <FaCloudUploadAlt />
+                      <FiUpload />
                       Change Photo
                     </button>
                   </div>
@@ -265,7 +255,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
             {/* Title / Heading */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5 flex items-center gap-1.5">
-                <FaHeading className="text-gray-400" />
+                <FiType className="text-gray-400" />
                 Image Title / Headline
               </label>
               <input
@@ -273,14 +263,14 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Deep Paint Correction on Mercedes C-Class"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0052cc] focus:border-transparent"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1D4ED8] focus:border-transparent"
               />
             </div>
 
             {/* Category / Tags */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5 flex items-center gap-1.5">
-                <FaTag className="text-gray-400" />
+                <FiTag className="text-gray-400" />
                 Category
               </label>
               <div className="flex flex-wrap gap-2 mb-2">
@@ -296,7 +286,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                       }}
                       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                         isSelected
-                          ? 'bg-[#0052cc] text-white shadow-sm'
+                          ? 'bg-[#1D4ED8] text-white shadow-sm'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -309,7 +299,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                   onClick={() => setIsCustomCategory(true)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     isCustomCategory
-                      ? 'bg-[#0052cc] text-white shadow-sm'
+                      ? 'bg-[#1D4ED8] text-white shadow-sm'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -323,7 +313,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                   value={customCategory}
                   onChange={(e) => setCustomCategory(e.target.value)}
                   placeholder="Enter custom category name..."
-                  className="w-full px-4 py-2 bg-white border border-blue-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0052cc]"
+                  className="w-full px-4 py-2 bg-white border border-blue-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]"
                 />
               )}
             </div>
@@ -331,7 +321,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
             {/* Description / Caption */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5 flex items-center gap-1.5">
-                <FaAlignLeft className="text-gray-400" />
+                <FiAlignLeft className="text-gray-400" />
                 Description / Details (Optional)
               </label>
               <textarea
@@ -339,7 +329,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
                 placeholder="Describe the detailing steps, products used, or customer feedback..."
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0052cc] focus:border-transparent leading-relaxed resize-none"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1D4ED8] focus:border-transparent leading-relaxed resize-none"
               />
             </div>
 
@@ -353,7 +343,7 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
                 value={altText}
                 onChange={(e) => setAltText(e.target.value)}
                 placeholder="Short description for search engines"
-                className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0052cc]"
+                className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]"
               />
             </div>
 
@@ -370,16 +360,16 @@ const UploadGalleryModal = ({ isOpen, onClose, onSuccess, editItem = null }) => 
               <button
                 type="submit"
                 disabled={isSubmitting || !imageUrl}
-                className="px-6 py-2.5 rounded-xl bg-[#0052cc] hover:bg-[#0747a6] text-white font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center gap-2 disabled:opacity-50"
+                className="px-6 py-2.5 rounded-xl bg-[#1D4ED8] hover:bg-[#0747a6] text-white font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center gap-2 disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
-                    <FaSpinner className="animate-spin text-sm" />
+                    <FiLoader className="animate-spin text-sm" />
                     <span>Saving...</span>
                   </>
                 ) : (
                   <>
-                    <FaCheck />
+                    <FiCheck />
                     <span>{editItem ? 'Update Photo' : 'Publish to Gallery'}</span>
                   </>
                 )}

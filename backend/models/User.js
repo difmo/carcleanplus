@@ -34,9 +34,27 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['customer', 'admin', 'superadmin'],
+    enum: ['customer', 'staff', 'admin', 'superadmin'],
     default: 'customer'
-  }
+  },
+  onShift: { type: Boolean, default: false },
+  branch: { type: String, default: '' },
+  referralCode: { type: String, default: '' },
+  credit: { type: Number, default: 0 },
+  planName: { type: String, default: '' },
+  planWashesLeft: { type: Number, default: 0 },
+  planExpiresAt: { type: Date },
+  planPayments: { type: [String], default: [] },
+  pushTokens: {
+    type: [
+      {
+        token: { type: String, required: true },
+        updatedAt: { type: Date, default: Date.now },
+      },
+    ],
+    select: false,
+    default: undefined,
+  },
 }, {
   timestamps: true // Adds createdAt and updatedAt
 });

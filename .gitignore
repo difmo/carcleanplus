@@ -31,3 +31,8 @@ dist-ssr
 
 # Vercel
 .vercel
+.env*
+
+# Flutter apps kept beside the web project
+/admin/
+/app/

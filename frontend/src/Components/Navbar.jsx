@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { FiAlignJustify, FiDroplet, FiHome, FiImage, FiLogIn, FiLogOut, FiPhone, FiSettings, FiTag, FiX } from 'react-icons/fi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/carcleanplus.logo.jpeg";
-import { FiAlignJustify, FiX, FiHome, FiLogOut } from "react-icons/fi";
-import { FaPhoneAlt } from "react-icons/fa";
 import { useBooking } from "../context/BookingContext";
 import { useFestivalTheme } from "../context/FestivalThemeContext";
+import NotificationBell from "./NotificationBell";
+import { clearWebPush, emitAuthChange } from "../utils/push";
 
 const Navbar = () => {
   const { currentTheme } = useFestivalTheme();
@@ -32,8 +34,10 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const handleLogout = () => {
+    clearWebPush();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    emitAuthChange();
     setCurrentUser(null);
     navigate('/');
   };
@@ -41,15 +45,15 @@ const Navbar = () => {
   const isAdmin = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
 
   const navItems = [
-    { name: "Home" },
-    { name: "Service" },
-    { name: "Packages" },
-    { name: "Offer" },
-    { name: "Gallery" },
-    ...(isAdmin ? [{ name: "Admin Panel", badge: "Admin" }] : []),
+    { name: "Home", icon: FiHome },
+    { name: "Service", icon: FiDroplet },
+    { name: "Packages", icon: FiTag },
+    { name: "Offer", icon: HiOutlineSparkles },
+    { name: "Gallery", icon: FiImage },
+    ...(isAdmin ? [{ name: "Admin Panel", icon: FiSettings, badge: "Admin" }] : []),
     ...(currentUser 
-      ? [{ name: "Logout", isLogout: true }]
-      : [{ name: "Login" }])
+      ? [{ name: "Logout", icon: FiLogOut, isLogout: true }]
+      : [{ name: "Login", icon: FiLogIn }])
   ];
 
   // Handle scroll effect and active section
@@ -154,6 +158,10 @@ const Navbar = () => {
     setIsNavOpen(false);
   };
 
+  if (location.pathname === '/login') {
+    return null;
+  }
+
   return (
     <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? "bg-white/95 backdrop-blur-lg shadow-md" : "bg-white/90 backdrop-blur-sm border-b border-gray-100"}`}>
       {/* Festival Announcement Bar */}
@@ -204,7 +212,10 @@ const Navbar = () => {
                   }`}
                 onClick={() => handleNavigation(item.name)}
               >
-                <div className="relative inline-flex flex-col items-center justify-center">
+                <div className="relative inline-flex items-center gap-2">
+                  <span className="icon-circle w-9 h-9">
+                    <item.icon />
+                  </span>
                   <span>{item.name}</span>
                   {/* Active Line */}
                   <span className={`absolute -bottom-[6px] h-[3px] rounded-full bg-primary transition-all duration-300 ${isActive ? 'w-full' : 'w-0'
@@ -222,13 +233,14 @@ const Navbar = () => {
 
         {/* Right: Action Buttons & Mobile Toggle */}
         <div className="flex-shrink-0 flex justify-end items-center gap-2.5 sm:gap-3">
+          <NotificationBell />
           {/* User Account Pill when Logged In */}
           {currentUser && (
             <div className={`hidden sm:flex items-center gap-2 border py-1.5 pl-2 pr-3 rounded-full flex-shrink-0 whitespace-nowrap shadow-xs ${
               isAdmin ? 'bg-amber-50/80 border-amber-200' : 'bg-blue-50 border-blue-100/80'
             }`}>
               <div className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-xs font-black shadow-xs ${
-                isAdmin ? 'bg-amber-600' : 'bg-[#0052cc]'
+                isAdmin ? 'bg-amber-600' : 'bg-[#1D4ED8]'
               }`}>
                 {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
               </div>
@@ -264,7 +276,7 @@ const Navbar = () => {
             href="tel:+919120759988"
             className="hidden lg:flex items-center gap-2 bg-gray-50/90 text-gray-800 text-[13px] font-bold py-2.5 px-4 2xl:px-5 rounded-full hover:bg-gray-100 hover:text-primary transition-all duration-300 border border-gray-200 whitespace-nowrap flex-shrink-0"
           >
-            <FaPhoneAlt className="text-primary text-[12px] flex-shrink-0" />
+            <FiPhone className="text-primary text-[12px] flex-shrink-0" />
             <span className="whitespace-nowrap">+91 91207 59988</span>
           </a>
 
@@ -288,18 +300,23 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`xl:hidden absolute top-full left-0 w-full bg-white shadow-lg transition-all duration-300 overflow-hidden border-b border-gray-200 ${isNavOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 border-transparent"
+        className={`xl:hidden absolute top-full left-0 w-full bg-white shadow-lg transition-all duration-300 overflow-hidden border-b border-gray-200 ${isNavOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0 border-transparent"
           }`}
       >
-        <div className="flex flex-col p-4 md:p-6 gap-1">
+        <div className="flex flex-col p-4 md:p-6 gap-1 overflow-y-auto max-h-[70vh]">
           {navItems.map((item) => (
             <button
               key={item.name}
-              className={`flex items-center justify-between text-left text-base font-semibold capitalize py-3 px-4 rounded-lg transition-colors ${activeSection === item.name ? 'text-primary bg-primary/10' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+              className={`flex items-center justify-between text-left text-base font-semibold capitalize min-h-[44px] py-2 px-3 rounded-2xl transition-colors ${activeSection === item.name ? 'text-primary bg-[#E8F0FE]' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               onClick={() => handleNavigation(item.name)}
             >
-              <span>{item.name}</span>
+              <span className="inline-flex items-center gap-3">
+                <span className="icon-circle">
+                  <item.icon />
+                </span>
+                <span>{item.name}</span>
+              </span>
               {item.badge && (
                 <span className="bg-[#10b981] text-white text-[10px] font-bold px-2 py-0.5 rounded-sm">
                   {item.badge}
@@ -313,7 +330,7 @@ const Navbar = () => {
               href="tel:+919120759988"
               className="flex justify-center items-center gap-2 border border-gray-300 text-gray-700 text-base font-medium py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <FaPhoneAlt className="text-gray-400" />
+              <FiPhone className="text-gray-400" />
               <span>+91 91207 59988</span>
             </a>
 
@@ -322,7 +339,7 @@ const Navbar = () => {
                 setIsNavOpen(false);
                 openModal();
               }}
-              className="flex justify-center items-center gap-2 bg-[#0052cc] text-white text-base font-bold py-3 px-6 rounded-lg hover:bg-[#0043a8] transition-colors"
+              className="flex justify-center items-center gap-2 min-h-[44px] bg-[#1D4ED8] text-white text-base font-bold py-3 px-6 rounded-full hover:bg-[#1E40AF] transition-colors"
             >
               Book a Wash
             </button>

@@ -1,30 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { FiAlertCircle, FiCheckCircle, FiChevronLeft, FiEye, FiEyeOff, FiX } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../utils/api';
-import { 
-  FaEnvelope, FaLock, FaGoogle, FaCar, FaEye, FaEyeSlash, 
-  FaUser, FaPhoneAlt, FaTimes, FaCheckCircle, FaExclamationCircle 
-} from 'react-icons/fa';
+import { emitAuthChange } from '../../utils/push';
+
+const fieldClass =
+  'w-full h-12 rounded-xl border border-gray-200 bg-white px-3.5 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#1D4ED8] focus:ring-4 focus:ring-[#1D4ED8]/10';
+
+const BrandMark = () => (
+  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[18px] bg-[#1D4ED8] shadow-[0_12px_28px_rgba(29,78,216,0.28)]">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
+      <path
+        d="M3.8 14.2h16.4M6 14.2l1.35-4.05A2 2 0 0 1 9.25 8.7h5.5a2 2 0 0 1 1.9 1.45L18 14.2"
+        stroke="white"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M5.2 14.2v1.6M18.8 14.2v1.6" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="7.4" cy="16.6" r="1.35" fill="white" />
+      <circle cx="16.6" cy="16.6" r="1.35" fill="white" />
+      <path
+        d="M16.1 4.15l.55 1.15 1.25.1-1 .85.32 1.2-1.12-.68-1.12.68.32-1.2-1-.85 1.25-.1.55-1.15z"
+        fill="white"
+      />
+    </svg>
+  </div>
+);
+
+const GoogleIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+    <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z" />
+    <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z" />
+    <path fill="#FBBC05" d="M3.97 10.72A5.41 5.41 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.05l3.01-2.33z" />
+    <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z" />
+  </svg>
+);
+
+const AppleIcon = () => (
+  <svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true">
+    <path
+      fill="#111827"
+      d="M13.05 9.47c-.02-2.14 1.75-3.17 1.83-3.22-1-1.46-2.55-1.66-3.1-1.68-1.32-.13-2.58.78-3.25.78-.67 0-1.7-.76-2.8-.74-1.44.02-2.77.84-3.51 2.13-1.5 2.6-.38 6.45 1.08 8.55.71 1.03 1.56 2.18 2.67 2.14 1.07-.04 1.48-.69 2.77-.69 1.29 0 1.66.69 2.8.67 1.16-.02 1.89-1.05 2.6-2.08.82-1.2 1.16-2.36 1.18-2.42-.03-.01-2.25-.86-2.27-3.44zM10.95 3.3c.59-.72.99-1.71.88-2.7-.85.03-1.88.57-2.49 1.28-.55.63-1.03 1.64-.9 2.61.95.07 1.92-.48 2.51-1.19z"
+    />
+  </svg>
+);
+
+const OrDivider = () => (
+  <div className="flex items-center gap-4 py-1">
+    <div className="h-px flex-1 bg-gray-200" />
+    <span className="text-sm text-gray-400">or</span>
+    <div className="h-px flex-1 bg-gray-200" />
+  </div>
+);
 
 const Login = () => {
-  const [isRegister, setIsRegister] = useState(false);
-  const [name, setName] = useState('');
+  const [screen, setScreen] = useState('welcome');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  const [notice, setNotice] = useState(null);
 
-  // Google Sign-In States
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [googleEmailInput, setGoogleEmailInput] = useState('');
   const [googleNameInput, setGoogleNameInput] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  // Forgot Password States
-  const [showForgotModal, setShowForgotModal] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSuccess, setForgotSuccess] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
@@ -34,8 +84,12 @@ const Login = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const saved = localStorage.getItem('ccp_remember_email');
+    if (saved) {
+      setEmail(saved);
+      setRememberMe(true);
+    }
 
-    // Initialize Google Identity Services if client ID is configured
     if (googleClientId && !window.google) {
       const script = document.createElement('script');
       script.src = 'https://accounts.google.com/gsi/client';
@@ -53,13 +107,19 @@ const Login = () => {
     }
   }, [googleClientId]);
 
-  // Handle response from Google official OAuth popup/credential
+  const goTo = (next) => {
+    setScreen(next);
+    setError(null);
+    setSuccessMsg(null);
+    setNotice(null);
+    window.scrollTo(0, 0);
+  };
+
   const handleGoogleCredentialResponse = async (response) => {
     if (!response?.credential) return;
     await executeGoogleLogin({ credential: response.credential });
   };
 
-  // Perform backend Google login call
   const executeGoogleLogin = async (payload) => {
     setGoogleLoading(true);
     setError(null);
@@ -67,7 +127,7 @@ const Login = () => {
       const res = await fetch(`${BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -77,6 +137,7 @@ const Login = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      emitAuthChange();
 
       setShowGoogleModal(false);
       setSuccessMsg(`Welcome, ${data.user.name || 'User'}! Logged in successfully.`);
@@ -87,7 +148,7 @@ const Login = () => {
         } else {
           navigate('/');
         }
-      }, 1000);
+      }, 800);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -95,9 +156,8 @@ const Login = () => {
     }
   };
 
-  // Trigger Google Login
   const handleGoogleBtnClick = () => {
-    // If official Google Client ID is configured and loaded, try standard prompt
+    setNotice(null);
     if (googleClientId && window.google?.accounts?.id) {
       try {
         window.google.accounts.id.prompt((notification) => {
@@ -110,27 +170,38 @@ const Login = () => {
         console.warn('Google prompt fallback:', err);
       }
     }
-    // Open Google Login Dialog
     setShowGoogleModal(true);
   };
 
-  // Standard Email / Password Submit
+  const handleAppleClick = () => {
+    setError(null);
+    setNotice('Apple sign-in is not available yet. Continue with Google or email.');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isRegister = screen === 'signup';
     setLoading(true);
     setError(null);
     setSuccessMsg(null);
+    setNotice(null);
+
+    if (isRegister && password !== confirmPassword) {
+      setError('Passwords do not match.');
+      setLoading(false);
+      return;
+    }
 
     try {
       const endpoint = isRegister ? `${BASE_URL}/api/auth/register` : `${BASE_URL}/api/auth/login`;
-      const payload = isRegister 
-        ? { name, email, phone, password }
+      const payload = isRegister
+        ? { name: `${firstName.trim()} ${lastName.trim()}`.trim(), email, phone, password }
         : { email, password };
 
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -139,20 +210,22 @@ const Login = () => {
         throw new Error(data.message || (isRegister ? 'Registration failed' : 'Login failed'));
       }
 
+      if (!isRegister) {
+        if (rememberMe) localStorage.setItem('ccp_remember_email', email);
+        else localStorage.removeItem('ccp_remember_email');
+      }
+
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      emitAuthChange();
 
       if (isRegister) {
         setSuccessMsg('Account created successfully! Redirecting...');
-        setTimeout(() => {
-          navigate('/');
-        }, 1000);
+        setTimeout(() => navigate('/'), 800);
+      } else if (data.user.role === 'admin' || data.user.role === 'superadmin') {
+        navigate('/admin/bookings');
       } else {
-        if (data.user.role === 'admin' || data.user.role === 'superadmin') {
-          navigate('/admin/bookings');
-        } else {
-          navigate('/');
-        }
+        navigate('/');
       }
     } catch (err) {
       setError(err.message);
@@ -161,7 +234,6 @@ const Login = () => {
     }
   };
 
-  // Handle Forgot Password Submit
   const handleForgotSubmit = (e) => {
     e.preventDefault();
     if (!forgotEmail) return;
@@ -172,446 +244,415 @@ const Login = () => {
     }, 800);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50/40 via-white to-gray-50 flex flex-col justify-start md:justify-center items-center pt-32 sm:pt-36 pb-10 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="w-full max-w-[400px]">
-        {/* Card */}
-        <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,82,204,0.07)] border border-gray-100 relative">
-          
-          {/* Top Brand Badge */}
-          <div className="flex flex-col items-center text-center mb-3">
-            <div className="w-9 h-9 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-xl flex items-center justify-center mb-1.5 shadow-xs border border-blue-200/50">
-              <FaCar className="text-lg text-[#0052cc]" />
-            </div>
-            <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
-              {isRegister ? 'Create an Account' : 'Welcome Back'}
-            </h1>
-            <p className="text-[11px] text-gray-500 font-medium mt-0.5">
-              {isRegister 
-                ? 'Sign up to manage your doorstep car wash bookings'
-                : 'Sign in to access your bookings and account details'}
-            </p>
-          </div>
-
-          {/* Tab Switcher */}
-          <div className="flex bg-gray-100/90 p-1 rounded-xl mb-3 text-xs font-bold">
-            <button
-              type="button"
-              id="signin-tab-btn"
-              onClick={() => { setIsRegister(false); setError(null); setSuccessMsg(null); }}
-              className={`flex-1 py-1.5 rounded-lg transition-all ${
-                !isRegister 
-                  ? 'bg-white text-gray-900 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-900'
-              }`}
-            >
-              Sign In
-            </button>
-            <button
-              type="button"
-              id="register-tab-btn"
-              onClick={() => { setIsRegister(true); setError(null); setSuccessMsg(null); }}
-              className={`flex-1 py-1.5 rounded-lg transition-all ${
-                isRegister 
-                  ? 'bg-white text-gray-900 shadow-sm' 
-                  : 'text-gray-500 hover:text-gray-900'
-              }`}
-            >
-              Register
-            </button>
-          </div>
-
-          {/* Feedback alerts */}
-          {error && (
-            <div className="mb-3 p-2.5 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100 animate-fade-in flex items-center gap-2">
-              <FaExclamationCircle className="shrink-0 text-red-500" />
-              <span>{error}</span>
-            </div>
-          )}
-
-          {successMsg && (
-            <div className="mb-3 p-2.5 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-bold border border-emerald-100 animate-fade-in flex items-center gap-2">
-              <FaCheckCircle className="shrink-0 text-emerald-500" />
-              <span>{successMsg}</span>
-            </div>
-          )}
-
-          <form className="space-y-2.5" onSubmit={handleSubmit}>
-            {isRegister && (
-              <div>
-                <label className="block text-[11px] font-bold text-gray-700 mb-0.5">
-                  Full Name
-                </label>
-                <div className="relative rounded-xl shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
-                    <FaUser />
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10 text-xs text-gray-900 font-medium bg-gray-50/50 focus:bg-white transition-all"
-                    placeholder="e.g. John Doe"
-                  />
-                </div>
-              </div>
-            )}
-
-            {isRegister && (
-              <div>
-                <label className="block text-[11px] font-bold text-gray-700 mb-0.5">
-                  Phone Number
-                </label>
-                <div className="relative rounded-xl shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
-                    <FaPhoneAlt />
-                  </div>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10 text-xs text-gray-900 font-medium bg-gray-50/50 focus:bg-white transition-all"
-                    placeholder="10-digit mobile number"
-                  />
-                </div>
-              </div>
-            )}
-
-            <div>
-              <label className="block text-[11px] font-bold text-gray-700 mb-0.5">
-                Email Address
-              </label>
-              <div className="relative rounded-xl shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
-                  <FaEnvelope />
-                </div>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-8 pr-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10 text-xs text-gray-900 font-medium bg-gray-50/50 focus:bg-white transition-all"
-                  placeholder="you@example.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[11px] font-bold text-gray-700 mb-0.5">
-                Password
-              </label>
-              <div className="relative rounded-xl shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
-                  <FaLock />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete={isRegister ? 'new-password' : 'current-password'}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-8 pr-9 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10 text-xs text-gray-900 font-medium bg-gray-50/50 focus:bg-white transition-all"
-                  placeholder="••••••••"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
-                  title={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? <FaEyeSlash className="text-xs" /> : <FaEye className="text-xs" />}
-                </button>
-              </div>
-            </div>
-
-            {!isRegister && (
-              <div className="flex items-center justify-between pt-0.5">
-                <label className="flex items-center text-[11px] text-gray-600 font-medium cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    className="h-3.5 w-3.5 text-[#0052cc] focus:ring-[#0052cc] border-gray-300 rounded cursor-pointer mr-1.5"
-                  />
-                  Remember me
-                </label>
-
-                <button
-                  type="button"
-                  onClick={() => { setShowForgotModal(true); setForgotSuccess(false); }}
-                  className="text-[11px] font-bold text-[#0052cc] hover:text-blue-800 transition-colors cursor-pointer bg-transparent border-none p-0"
-                >
-                  Forgot password?
-                </button>
-              </div>
-            )}
-
-            <div className="pt-1.5">
-              <button
-                type="submit"
-                id="submit-auth-btn"
-                disabled={loading}
-                className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm text-white bg-[#0052cc] hover:bg-[#003380] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0052cc] shadow-md hover:shadow-lg transition-all active:scale-[0.99] cursor-pointer ${
-                  loading ? 'opacity-75 cursor-not-allowed' : ''
-                }`}
-              >
-                {loading 
-                  ? (isRegister ? 'Creating Account...' : 'Signing in...') 
-                  : (isRegister ? 'Create Account' : 'Sign In')}
-              </button>
-            </div>
-          </form>
-
-          {/* Social login divider */}
-          <div className="mt-3">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-100" />
-              </div>
-              <div className="relative flex justify-center text-[11px]">
-                <span className="px-2 bg-white text-gray-400 font-medium">Or continue with</span>
-              </div>
-            </div>
-
-            {/* Google Sign In Button */}
-            <div className="mt-2.5">
-              <button
-                type="button"
-                id="google-signin-btn"
-                onClick={handleGoogleBtnClick}
-                className="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-200 rounded-xl shadow-sm bg-white text-xs font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-300 focus:outline-none transition-all active:scale-[0.99] cursor-pointer"
-              >
-                <FaGoogle className="h-3.5 w-3.5 text-red-500 mr-2" />
-                Sign in with Google
-              </button>
-            </div>
-
-            {/* Toggle Between Sign In and Sign Up */}
-            <div className="mt-3.5 text-center text-xs text-gray-600 font-medium">
-              {isRegister ? (
-                <span>
-                  Already have an account?{' '}
-                  <button
-                    type="button"
-                    id="switch-to-signin-btn"
-                    onClick={(e) => { 
-                      e.preventDefault(); 
-                      setIsRegister(false); 
-                      setError(null); 
-                      setSuccessMsg(null); 
-                    }}
-                    className="font-bold text-[#0052cc] hover:text-[#003380] hover:underline cursor-pointer bg-transparent border-none p-0 inline-block"
-                  >
-                    Sign In
-                  </button>
-                </span>
-              ) : (
-                <span>
-                  Don't have an account?{' '}
-                  <button
-                    type="button"
-                    id="switch-to-signup-btn"
-                    onClick={(e) => { 
-                      e.preventDefault(); 
-                      setIsRegister(true); 
-                      setError(null); 
-                      setSuccessMsg(null); 
-                    }}
-                    className="font-bold text-[#0052cc] hover:text-[#003380] hover:underline cursor-pointer bg-transparent border-none p-0 inline-block"
-                  >
-                    Sign Up
-                  </button>
-                </span>
-              )}
-            </div>
-          </div>
-
+  const alerts = (
+    <>
+      {error && (
+        <div className="mb-3 flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-600">
+          <FiAlertCircle className="shrink-0" />
+          <span>{error}</span>
         </div>
-      </div>
+      )}
+      {successMsg && (
+        <div className="mb-3 flex items-center gap-2 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-600">
+          <FiCheckCircle className="shrink-0" />
+          <span>{successMsg}</span>
+        </div>
+      )}
+      {notice && (
+        <div className="mb-3 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2.5 text-sm font-medium text-[#1D4ED8]">
+          {notice}
+        </div>
+      )}
+    </>
+  );
 
-      {/* Google Sign-In Modal / Account Selector */}
+  const primaryBtn =
+    'flex h-12 w-full items-center justify-center rounded-xl bg-[#1D4ED8] text-[15px] font-semibold text-white shadow-[0_8px_18px_rgba(29,78,216,0.28)] transition hover:bg-[#1E40AF] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70';
+
+  const socialBtn =
+    'flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-white text-[15px] font-semibold text-gray-800 transition hover:bg-gray-50 active:scale-[0.99]';
+
+  const switchLink = (prompt, label, target) => (
+    <p className="pt-8 text-center text-sm text-gray-500">
+      {prompt}{' '}
+      <button
+        type="button"
+        onClick={() => goTo(target)}
+        className="font-semibold text-[#1D4ED8] hover:text-[#1E40AF]"
+      >
+        {label}
+      </button>
+    </p>
+  );
+
+  const shell = (children) => (
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#e7efff_0%,_#f5f8fd_38%,_#ffffff_72%)] font-sans text-gray-900">
+      <div className="mx-auto flex min-h-screen w-full max-w-[440px] flex-col px-6 pb-8 pt-5">
+        {children}
+      </div>
       {showGoogleModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-sm rounded-3xl border border-gray-100 bg-white p-6 shadow-2xl">
             <button
               type="button"
               onClick={() => setShowGoogleModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 cursor-pointer p-1"
+              className="absolute right-4 top-4 p-1 text-gray-400 hover:text-gray-600"
             >
-              <FaTimes size={16} />
+              <FiX size={16} />
             </button>
-
-            <div className="text-center mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-2.5 shadow-sm">
-                <FaGoogle size={24} />
+            <div className="mb-4 text-center">
+              <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8F0FE] text-[#1D4ED8]">
+                <GoogleIcon />
               </div>
-              <h3 className="text-base font-bold text-gray-900">Sign in with Google</h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Choose a Google account or enter your email to continue to Car Clean Plus.
+              <h3 className="text-base font-bold text-gray-900">Continue with Google</h3>
+              <p className="mt-0.5 text-xs text-gray-500">
+                Choose an account or enter your email to continue to Car Clean Plus.
               </p>
             </div>
-
-            {/* Quick 1-Click Demo Accounts */}
-            <div className="space-y-2 mb-4">
+            <div className="mb-4 space-y-2">
               <button
                 type="button"
                 disabled={googleLoading}
                 onClick={() => executeGoogleLogin({ email: 'admin@carcleanplus.com', name: 'Super Admin' })}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-amber-200 bg-amber-50/40 hover:border-amber-400 hover:bg-amber-50 transition-all text-left cursor-pointer group"
+                className="group flex w-full items-center gap-3 rounded-xl border border-amber-200 bg-amber-50/40 p-2.5 text-left transition hover:border-amber-400 hover:bg-amber-50"
               >
-                <div className="w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs">
-                  A
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-xs font-bold text-gray-900 group-hover:text-amber-800 truncate">Super Admin</p>
-                    <span className="bg-amber-200/80 text-amber-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md">Admin</span>
-                  </div>
-                  <p className="text-[11px] text-gray-500 truncate">admin@carcleanplus.com</p>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-600 text-xs font-bold text-white">A</div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-bold text-gray-900">Super Admin</p>
+                  <p className="truncate text-[11px] text-gray-500">admin@carcleanplus.com</p>
                 </div>
               </button>
-
-              <button
-                type="button"
-                disabled={googleLoading}
-                onClick={() => executeGoogleLogin({ email: 'vishal.yadav@gmail.com', name: 'Vishal Yadav' })}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 hover:border-[#0052cc] hover:bg-blue-50/50 transition-all text-left cursor-pointer group"
-              >
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
-                  V
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-xs font-bold text-gray-900 group-hover:text-[#0052cc] truncate">Vishal Yadav</p>
-                    <span className="bg-blue-100 text-[#0052cc] text-[9px] font-extrabold px-1.5 py-0.5 rounded-md">Admin</span>
-                  </div>
-                  <p className="text-[11px] text-gray-500 truncate">vishal.yadav@gmail.com</p>
-                </div>
-              </button>
-
               <button
                 type="button"
                 disabled={googleLoading}
                 onClick={() => executeGoogleLogin({ email: 'customer.demo@gmail.com', name: 'Demo Customer' })}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-all text-left cursor-pointer group"
+                className="flex w-full items-center gap-3 rounded-xl border border-gray-200 p-2.5 text-left transition hover:border-[#1D4ED8] hover:bg-blue-50/50"
               >
-                <div className="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
-                  D
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-gray-900 truncate">Demo Customer</p>
-                  <p className="text-[11px] text-gray-500 truncate">customer.demo@gmail.com</p>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">D</div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-bold text-gray-900">Demo Customer</p>
+                  <p className="truncate text-[11px] text-gray-500">customer.demo@gmail.com</p>
                 </div>
               </button>
             </div>
-
-            {/* Or custom Google Email input */}
-            <div className="relative my-3 text-center">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
-              <span className="relative bg-white px-2 text-[10px] text-gray-400 font-bold uppercase">Or enter custom Gmail</span>
-            </div>
-
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (!googleEmailInput) return;
                 executeGoogleLogin({
                   email: googleEmailInput,
-                  name: googleNameInput || googleEmailInput.split('@')[0]
+                  name: googleNameInput || googleEmailInput.split('@')[0],
                 });
               }}
               className="space-y-2.5"
             >
               <input
                 type="text"
-                placeholder="Your Name (optional)"
+                placeholder="Your name (optional)"
                 value={googleNameInput}
                 onChange={(e) => setGoogleNameInput(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0052cc]"
+                className={fieldClass}
               />
               <input
                 type="email"
                 required
-                placeholder="e.g. name@gmail.com"
+                placeholder="name@gmail.com"
                 value={googleEmailInput}
                 onChange={(e) => setGoogleEmailInput(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0052cc]"
+                className={fieldClass}
               />
-              <button
-                type="submit"
-                disabled={googleLoading}
-                className="w-full py-2 px-4 rounded-xl bg-[#0052cc] hover:bg-[#003380] text-white text-xs font-bold transition-colors cursor-pointer shadow-sm disabled:opacity-50"
-              >
-                {googleLoading ? 'Signing in...' : 'Continue with Google Account'}
+              <button type="submit" disabled={googleLoading} className={primaryBtn}>
+                {googleLoading ? 'Signing in...' : 'Continue'}
               </button>
             </form>
           </div>
         </div>
       )}
+    </div>
+  );
 
-      {/* Forgot Password Modal */}
-      {showForgotModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 relative">
-            <button
-              type="button"
-              onClick={() => setShowForgotModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 cursor-pointer p-1"
-            >
-              <FaTimes size={16} />
+  if (screen === 'welcome') {
+    return shell(
+      <>
+        <div className="flex flex-1 flex-col items-center justify-center pb-10">
+          <BrandMark />
+          <h1 className="mt-8 text-center text-[32px] font-bold leading-tight tracking-tight text-[#0f172a]">
+            Welcome to
+            <br />
+            Car Clean Plus
+          </h1>
+          <p className="mt-2 text-center text-sm text-gray-500">A cleaner car, at your doorstep.</p>
+
+          <div className="mt-10 w-full space-y-3">
+            {alerts}
+            <button type="button" id="continue-email-btn" onClick={() => goTo('signin')} className={primaryBtn}>
+              Continue with Email
             </button>
+            <OrDivider />
+            <button type="button" id="google-signin-btn" onClick={handleGoogleBtnClick} className={socialBtn}>
+              <GoogleIcon />
+              Continue with Google
+            </button>
+            <button type="button" onClick={handleAppleClick} className={socialBtn}>
+              <AppleIcon />
+              Continue with Apple
+            </button>
+          </div>
+        </div>
+        <p className="pb-2 text-center text-sm text-gray-500">
+          Have an account?{' '}
+          <button type="button" onClick={() => goTo('signin')} className="font-semibold text-[#1D4ED8]">
+            Sign in
+          </button>
+        </p>
+      </>
+    );
+  }
 
-            <div className="text-center mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#0052cc] flex items-center justify-center mx-auto mb-2 shadow-sm">
-                <FaLock size={18} />
-              </div>
-              <h3 className="text-base font-bold text-gray-900">Reset Password</h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Enter your registered email and we'll send you a password reset link.
-              </p>
+  if (screen === 'forgot') {
+    return shell(
+      <>
+        <button
+          type="button"
+          onClick={() => {
+            setForgotSuccess(false);
+            goTo('signin');
+          }}
+          className="mb-6 flex h-10 w-10 items-center justify-center rounded-full text-gray-700 hover:bg-white/70"
+          aria-label="Back"
+        >
+          <FiChevronLeft size={22} />
+        </button>
+        <BrandMark />
+        <h1 className="mt-6 text-center text-[28px] font-bold tracking-tight text-[#0f172a]">Reset password</h1>
+        <p className="mt-1 text-center text-sm text-gray-500">
+          Enter your registered email and we&apos;ll send a reset link.
+        </p>
+        {forgotSuccess ? (
+          <div className="mt-8 text-center">
+            <FiCheckCircle className="mx-auto mb-2 text-3xl text-emerald-500" />
+            <p className="text-sm font-semibold text-gray-800">Reset link sent</p>
+            <p className="mt-1 text-sm text-gray-500">Check {forgotEmail} for instructions.</p>
+            <button type="button" onClick={() => goTo('signin')} className={`${primaryBtn} mt-6`}>
+              Back to sign in
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleForgotSubmit} className="mt-8 space-y-4">
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+                Email<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                required
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                placeholder="Email"
+                className={fieldClass}
+              />
             </div>
+            <button type="submit" disabled={forgotLoading} className={primaryBtn}>
+              {forgotLoading ? 'Sending...' : 'Send reset link'}
+            </button>
+          </form>
+        )}
+      </>
+    );
+  }
 
-            {forgotSuccess ? (
-              <div className="text-center py-4">
-                <FaCheckCircle className="text-emerald-500 text-3xl mx-auto mb-2" />
-                <p className="text-xs font-bold text-gray-800">Reset Link Sent!</p>
-                <p className="text-[11px] text-gray-500 mt-1">Check your email ({forgotEmail}) for instructions.</p>
+  const isRegister = screen === 'signup';
+
+  return shell(
+    <>
+      <button
+        type="button"
+        onClick={() => goTo('welcome')}
+        className="mb-4 flex h-10 w-10 items-center justify-center rounded-full text-gray-700 hover:bg-white/70"
+        aria-label="Back"
+      >
+        <FiChevronLeft size={22} />
+      </button>
+      <BrandMark />
+      <h1 className="mt-5 text-center text-[28px] font-bold tracking-tight text-[#0f172a]">
+        {isRegister ? 'Sign up' : 'Sign in'}
+      </h1>
+      <p className="mt-1 text-center text-sm leading-relaxed text-gray-500">
+        {isRegister
+          ? 'Create your Car Clean Plus account'
+          : 'Sign in to book a cleaner car at your doorstep'}
+      </p>
+
+      <form className="mt-6" onSubmit={handleSubmit}>
+        {alerts}
+
+        {isRegister && (
+          <div className="mb-4 grid grid-cols-2 gap-3">
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+                First name<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First name"
+                className={fieldClass}
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+                Last name<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Last name"
+                className={fieldClass}
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="mb-4">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+            Email<span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className={fieldClass}
+          />
+        </div>
+
+        {isRegister && (
+          <div className="mb-4">
+            <label className="mb-1.5 block text-sm font-semibold text-gray-900">Phone number</label>
+            <div className="flex h-12 overflow-hidden rounded-xl border border-gray-200 bg-white focus-within:border-[#1D4ED8] focus-within:ring-4 focus-within:ring-[#1D4ED8]/10">
+              <span className="flex items-center border-r border-gray-200 px-3 text-sm font-semibold text-gray-700">+91</span>
+              <input
+                type="tel"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone number"
+                className="w-full bg-transparent px-3 text-[15px] text-gray-900 outline-none placeholder:text-gray-400"
+              />
+            </div>
+          </div>
+        )}
+
+        <div className={isRegister ? 'grid grid-cols-2 gap-3' : ''}>
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+              Password<span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                autoComplete={isRegister ? 'new-password' : 'current-password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className={`${fieldClass} pr-11`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          {isRegister && (
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+                Confirm<span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirm ? 'text' : 'password'}
+                  autoComplete="new-password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm"
+                  className={`${fieldClass} pr-11`}
+                />
                 <button
                   type="button"
-                  onClick={() => setShowForgotModal(false)}
-                  className="mt-4 px-4 py-1.5 bg-[#0052cc] text-white text-xs font-bold rounded-xl"
+                  onClick={() => setShowConfirm((v) => !v)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+                  aria-label={showConfirm ? 'Hide password' : 'Show password'}
                 >
-                  Back to Sign In
+                  {showConfirm ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                 </button>
               </div>
-            ) : (
-              <form onSubmit={handleForgotSubmit} className="space-y-3">
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    value={forgotEmail}
-                    onChange={(e) => setForgotEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0052cc]"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={forgotLoading}
-                  className="w-full py-2 px-4 rounded-xl bg-[#0052cc] hover:bg-[#003380] text-white text-xs font-bold transition-colors cursor-pointer shadow-sm disabled:opacity-50"
-                >
-                  {forgotLoading ? 'Sending...' : 'Send Reset Link'}
-                </button>
-              </form>
-            )}
+            </div>
+          )}
+        </div>
+
+        {!isRegister && (
+          <div className="mt-3 flex items-center justify-between">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-[#1D4ED8] focus:ring-[#1D4ED8]"
+              />
+              Remember me
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setForgotEmail(email);
+                setForgotSuccess(false);
+                goTo('forgot');
+              }}
+              className="text-sm text-gray-500 hover:text-gray-800"
+            >
+              Forgot Password?
+            </button>
+          </div>
+        )}
+
+        <button type="submit" id="submit-auth-btn" disabled={loading} className={`${primaryBtn} mt-5`}>
+          {loading ? (isRegister ? 'Creating account...' : 'Signing in...') : isRegister ? 'Sign up' : 'Sign in'}
+        </button>
+      </form>
+
+      {isRegister && (
+        <div className="mt-4 space-y-3">
+          <OrDivider />
+          <div className="grid grid-cols-2 gap-3">
+            <button type="button" onClick={handleGoogleBtnClick} className={socialBtn}>
+              <GoogleIcon />
+              Google
+            </button>
+            <button type="button" onClick={handleAppleClick} className={socialBtn}>
+              <AppleIcon />
+              Apple
+            </button>
           </div>
         </div>
       )}
 
-    </div>
+      {isRegister
+        ? switchLink('Already have an account?', 'Sign in', 'signin')
+        : switchLink("Don't have an account?", 'Sign up', 'signup')}
+    </>
   );
 };
 

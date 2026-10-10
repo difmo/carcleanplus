@@ -1,82 +1,20 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { FiArrowLeft, FiCalendar, FiCheckCircle, FiChevronRight, FiClock, FiHelpCircle, FiMapPin, FiMessageCircle, FiSearch, FiUser, FiX } from 'react-icons/fi';
+import { HiOutlineTruck } from 'react-icons/hi';
 import { useBooking } from '../../context/BookingContext';
 import { CAR_MODELS, SERVICES, CAR_CATEGORIES, getPrice } from '../../utils/pricingLogic';
-import { FaTimes, FaSearch, FaCar, FaCheckCircle, FaMapMarkerAlt, FaArrowLeft, FaChevronRight, FaCalendarAlt, FaClock, FaWhatsapp, FaUser, FaQuestionCircle } from 'react-icons/fa';
 import { BASE_URL } from '../../utils/api';
 import CarVisualIcon, { getCarBodyType, getCarBodyLabel } from './CarVisualIcon';
-import {
-  SiSuzuki,
-  SiHyundai,
-  SiTata,
-  SiHonda,
-  SiToyota,
-  SiVolkswagen,
-  SiSkoda,
-  SiKia,
-  SiRenault,
-  SiNissan,
-  SiFord,
-  SiJeep,
-  SiAudi,
-  SiBmw,
-  SiFiat,
-  SiChevrolet,
-  SiMercedes,
-  SiVolvo,
-  SiMg,
-  SiMahindra,
-  SiCitroen,
-  SiJaguar,
-  SiLandrover,
-  SiPorsche,
-  SiMini,
-  SiMaserati,
-  SiBentley,
-  SiRollsroyce,
-  SiAstonmartin,
-  SiLamborghini,
-  SiFerrari
-} from 'react-icons/si';
+import bookingPhoto from '../../assets/wash car.png';
 
 const getCarIcon = (brandOrKey) => {
-  if (!brandOrKey) return <FaCar className="text-gray-700" />;
-  const name = (typeof brandOrKey === 'string' ? brandOrKey : brandOrKey.name || '').toLowerCase();
-  
-  if (name.includes('suzuki') || name.includes('maruti')) return <SiSuzuki className="text-[#002f6c]" />;
-  if (name.includes('hyundai')) return <SiHyundai className="text-[#002c5f]" />;
-  if (name.includes('tata')) return <SiTata className="text-[#004f9e]" />;
-  if (name.includes('honda')) return <SiHonda className="text-[#cc0000]" />;
-  if (name.includes('mahindra')) return <SiMahindra className="text-[#c3002f]" />;
-  if (name.includes('kia')) return <SiKia className="text-[#05141f]" />;
-  if (name.includes('toyota')) return <SiToyota className="text-[#d71921]" />;
-  if (name.includes('volkswagen')) return <SiVolkswagen className="text-[#001e50]" />;
-  if (name.includes('ford')) return <SiFord className="text-[#002c6c]" />;
-  if (name.includes('skoda')) return <SiSkoda className="text-[#0e3b2e]" />;
-  if (name.includes('mg')) return <SiMg className="text-[#b31412]" />;
-  if (name.includes('renault')) return <SiRenault className="text-[#1b1b1b]" />;
-  if (name.includes('bmw')) return <SiBmw className="text-[#0066b1]" />;
-  if (name.includes('nissan')) return <SiNissan className="text-[#c3002f]" />;
-  if (name.includes('mercedes')) return <SiMercedes className="text-[#24272a]" />;
-  if (name.includes('audi')) return <SiAudi className="text-[#111827]" />;
-  if (name.includes('jeep')) return <SiJeep className="text-[#1f2937]" />;
-  if (name.includes('volvo')) return <SiVolvo className="text-[#003057]" />;
-  if (name.includes('citroën') || name.includes('citroen')) return <SiCitroen className="text-[#990000]" />;
-  if (name.includes('jaguar')) return <SiJaguar className="text-[#111827]" />;
-  if (name.includes('land rover') || name.includes('range rover') || name.includes('land') || name.includes('range')) return <SiLandrover className="text-[#0c4323]" />;
-  if (name.includes('porsche')) return <SiPorsche className="text-[#8b0000]" />;
-  if (name.includes('mini')) return <SiMini className="text-[#111827]" />;
-  if (name.includes('fiat')) return <SiFiat className="text-[#a51c30]" />;
-  if (name.includes('chevrolet')) return <SiChevrolet className="text-[#cba052]" />;
-  if (name.includes('maserati')) return <SiMaserati className="text-[#0c2340]" />;
-  if (name.includes('bentley')) return <SiBentley className="text-[#002b49]" />;
-  if (name.includes('rolls-royce') || name.includes('rolls royce')) return <SiRollsroyce className="text-[#111827]" />;
-  if (name.includes('aston martin') || name.includes('aston')) return <SiAstonmartin className="text-[#004225]" />;
-  if (name.includes('lamborghini')) return <SiLamborghini className="text-[#d6a127]" />;
-  if (name.includes('ferrari')) return <SiFerrari className="text-[#e32119]" />;
-  if (name.includes('lexus')) return <span className="font-serif font-black text-xl text-gray-800">L</span>;
-  if (name.includes('datsun')) return <span className="font-bold text-[11px] px-1 border border-gray-700 rounded text-gray-800">DATSUN</span>;
-  
-  return <FaCar className="text-gray-700" />;
+  const raw = !brandOrKey ? '' : (typeof brandOrKey === 'string' ? brandOrKey : brandOrKey.name || '');
+  const letter = (raw.trim().charAt(0) || 'C').toUpperCase();
+  return (
+    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#E8F0FE] text-[#1D4ED8] text-[11px] font-bold leading-none">
+      {letter}
+    </span>
+  );
 };
 
 // Popular Vehicles exactly ordered as in screenshot Image 1
@@ -294,7 +232,6 @@ const BookingModal = () => {
     const price = bookingState.finalPrice || 0;
 
     try {
-      // 1. Create order on backend
       const orderRes = await fetch(`${BASE_URL}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -308,7 +245,6 @@ const BookingModal = () => {
         return;
       }
 
-      // 2. Load Razorpay
       const res = await loadRazorpay();
       if (!res) {
         alert("Razorpay SDK failed to load. Are you online?");
@@ -316,7 +252,6 @@ const BookingModal = () => {
         return;
       }
 
-      // 3. Setup Razorpay options
       const activeRazorpayKey = orderData.key_id || import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TUHd7o8zEcyLCG";
       const options = {
         key: activeRazorpayKey,
@@ -326,7 +261,6 @@ const BookingModal = () => {
         description: "Payment for " + (bookingState.service || "Doorstep Car Wash"),
         order_id: orderData.data.id,
         handler: async function (response) {
-          // Verify on backend
           const verifyRes = await fetch(`${BASE_URL}/api/payment/verify-payment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -339,7 +273,6 @@ const BookingModal = () => {
           const verifyData = await verifyRes.json();
 
           if (verifyData.success) {
-            // Save Booking
             await submitFinalBooking(response.razorpay_payment_id, response.razorpay_order_id, 'paid');
           } else {
             alert("Payment verification failed. Please contact support.");
@@ -351,7 +284,7 @@ const BookingModal = () => {
           contact: bookingState.mobile
         },
         theme: {
-          color: "#0052cc"
+          color: "#1D4ED8"
         },
         modal: {
           ondismiss: function () {
@@ -366,7 +299,6 @@ const BookingModal = () => {
         setIsSubmitting(false);
       });
       paymentObject.open();
-
     } catch (err) {
       alert("Error initializing payment. Please try again.");
       console.error(err);
@@ -423,11 +355,11 @@ const BookingModal = () => {
     }
   };
 
-  const renderHeaderIcon = (icon = <FaCar />, cornerIcon = <FaMapMarkerAlt />) => (
+  const renderHeaderIcon = (icon = <HiOutlineTruck />, cornerIcon = <FiMapPin />) => (
     <div className="flex justify-center mb-4 relative">
       <div className="w-16 h-16 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center relative shadow-sm border border-white">
         <div className="text-3xl text-gray-800 drop-shadow-sm">{icon}</div>
-        <div className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-[#0052cc] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+        <div className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-[#1D4ED8] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
           <div className="text-white text-[9px]">{cornerIcon}</div>
         </div>
       </div>
@@ -436,13 +368,13 @@ const BookingModal = () => {
 
   const renderCloseButton = () => (
     <button onClick={closeModal} className="absolute right-4 top-4 p-2.5 bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-gray-900 rounded-full transition-all z-10">
-      <FaTimes className="text-sm" />
+      <FiX className="text-sm" />
     </button>
   );
 
   const renderBackButton = () => (
     <button onClick={prevStep} className="absolute left-4 top-4 p-2.5 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-full transition-all z-10 shadow-sm border border-gray-100">
-      <FaArrowLeft className="text-sm" />
+      <FiArrowLeft className="text-sm" />
     </button>
   );
 
@@ -483,6 +415,9 @@ const BookingModal = () => {
     <div className="animate-fade-in flex flex-col h-full relative">
       {renderCloseButton()}
       {renderHeaderIcon()}
+      <div className="photo-frame h-28 mx-1 mb-4">
+        <img src={bookingPhoto} alt="Doorstep car wash" />
+      </div>
       <div className="text-center mb-5">
         <h2 className="text-[24px] font-black text-gray-900 mb-1.5 tracking-tight">Let's get started</h2>
         <p className="text-gray-500 text-[13px] px-6 leading-relaxed">Enter your name and mobile number to view exact prices and available slots.</p>
@@ -491,9 +426,9 @@ const BookingModal = () => {
       <div className="bg-white shadow-sm border border-gray-100 rounded-2xl p-5 space-y-4">
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
-          <div className="flex items-center bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all shadow-sm">
+          <div className="flex items-center bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#1D4ED8] focus-within:ring-2 focus-within:ring-[#1D4ED8]/10 transition-all shadow-sm">
             <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center text-gray-400">
-              <FaUser className="text-[14px]" />
+              <FiUser className="text-[14px]" />
             </div>
             <input
               type="text"
@@ -507,7 +442,7 @@ const BookingModal = () => {
 
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">Mobile Number</label>
-          <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#0052cc] focus-within:ring-2 focus-within:ring-[#0052cc]/10 transition-all shadow-sm">
+          <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#1D4ED8] focus-within:ring-2 focus-within:ring-[#1D4ED8]/10 transition-all shadow-sm">
             <div className="bg-gray-50/50 px-4 py-3 border-r border-gray-100 flex items-center font-black text-gray-900 text-[14px]">
               +91
             </div>
@@ -528,7 +463,7 @@ const BookingModal = () => {
           onClick={handleMobileSubmit}
           disabled={bookingState.mobile.length < 10 || !bookingState.name?.trim() || isSubmitting}
           className={`w-full font-extrabold py-3.5 rounded-xl text-[15px] transition-all shadow-md ${
-            bookingState.mobile.length >= 10 && bookingState.name?.trim() && !isSubmitting ? 'bg-[#0052cc] text-white hover:bg-[#003380] hover:shadow-lg' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            bookingState.mobile.length >= 10 && bookingState.name?.trim() && !isSubmitting ? 'bg-[#1D4ED8] text-white hover:bg-[#003380] hover:shadow-lg' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >
           {isSubmitting ? 'Saving...' : 'Continue'}
@@ -548,18 +483,18 @@ const BookingModal = () => {
 
       <div className="bg-white shadow-sm border border-gray-100 rounded-2xl overflow-hidden flex flex-col flex-1 min-h-[160px]">
         <div className="p-4 flex items-center gap-3 border-b border-gray-50 bg-gray-50/50">
-          <FaMapMarkerAlt className="text-gray-800 text-base" />
+          <FiMapPin className="text-gray-800 text-base" />
           <span className="font-extrabold text-gray-900 text-base">Select Area (Lucknow)</span>
         </div>
         <div className="p-3 bg-white border-b border-gray-50 sticky top-0 z-10">
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaSearch className="text-[#0052cc]/40 group-hover:text-[#0052cc]/70 group-focus-within:text-[#0052cc] transition-colors duration-300 text-sm" />
+              <FiSearch className="text-[#1D4ED8]/40 group-hover:text-[#1D4ED8]/70 group-focus-within:text-[#1D4ED8] transition-colors duration-300 text-sm" />
             </div>
             <input
               type="text"
               placeholder="Search area..."
-              className="w-full bg-white border-2 border-[#0052cc]/15 hover:border-[#0052cc]/40 focus:border-[#0052cc] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
+              className="w-full bg-white border-2 border-[#1D4ED8]/15 hover:border-[#1D4ED8]/40 focus:border-[#1D4ED8] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
               value={searchCity}
               onChange={e => setSearchCity(e.target.value)}
             />
@@ -573,20 +508,20 @@ const BookingModal = () => {
                 updateBooking('city', city);
                 nextStep();
               }}
-              className="px-4 py-3 mx-1 my-1 rounded-xl text-gray-700 text-[14px] font-bold hover:bg-blue-50/70 hover:text-[#0052cc] cursor-pointer transition-all flex justify-between items-center group border border-gray-100 hover:border-blue-200 shadow-sm"
+              className="px-4 py-3 mx-1 my-1 rounded-xl text-gray-700 text-[14px] font-bold hover:bg-blue-50/70 hover:text-[#1D4ED8] cursor-pointer transition-all flex justify-between items-center group border border-gray-100 hover:border-blue-200 shadow-sm"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#0052cc] flex items-center justify-center text-sm group-hover:bg-[#0052cc] group-hover:text-white transition-colors shrink-0">
-                  <FaMapMarkerAlt />
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-sm group-hover:bg-[#1D4ED8] group-hover:text-white transition-colors shrink-0">
+                  <FiMapPin />
                 </div>
                 <div>
-                  <span className="text-gray-900 font-extrabold text-[14px] block group-hover:text-[#0052cc] transition-colors">{city}</span>
+                  <span className="text-gray-900 font-extrabold text-[14px] block group-hover:text-[#1D4ED8] transition-colors">{city}</span>
                   <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Doorstep Service Available
                   </span>
                 </div>
               </div>
-              <FaChevronRight className="text-[#0052cc] opacity-0 group-hover:opacity-100 transition-opacity text-xs" />
+              <FiChevronRight className="text-[#1D4ED8] opacity-0 group-hover:opacity-100 transition-opacity text-xs" />
             </div>
           ))}
           {filteredCities.length === 0 && <div className="p-4 text-center text-[14px] text-gray-400 font-medium">No area found matching "{searchCity}"</div>}
@@ -610,7 +545,7 @@ const BookingModal = () => {
           onClick={() => setShowCantFindModal(false)}
           className="p-1.5 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all"
         >
-          <FaTimes className="text-sm" />
+          <FiX className="text-sm" />
         </button>
       </div>
 
@@ -628,7 +563,7 @@ const BookingModal = () => {
             placeholder="e.g. Nissan Magnite, Mahindra Thar Roxx..."
             value={customCarName}
             onChange={e => setCustomCarName(e.target.value)}
-            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10"
+            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/10"
           />
         </div>
 
@@ -648,7 +583,7 @@ const BookingModal = () => {
                 onClick={() => setCustomCategory(type.id)}
                 className={`py-2 px-1 rounded-xl border text-center transition-all ${
                   customCategory === type.id
-                    ? 'border-[#0052cc] bg-blue-50/70 text-[#0052cc] font-bold shadow-sm'
+                    ? 'border-[#1D4ED8] bg-blue-50/70 text-[#1D4ED8] font-bold shadow-sm'
                     : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 font-medium'
                 }`}
               >
@@ -660,7 +595,7 @@ const BookingModal = () => {
         </div>
 
         <div className="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl text-xs text-amber-900 flex items-start gap-2">
-          <FaQuestionCircle className="text-amber-500 mt-0.5 flex-shrink-0" />
+          <FiHelpCircle className="text-amber-500 mt-0.5 flex-shrink-0" />
           <span>Need help? Choose your best estimate or chat with our team directly.</span>
         </div>
       </div>
@@ -688,7 +623,7 @@ const BookingModal = () => {
           }}
           className={`flex-1 py-2.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
             customCarName.trim()
-              ? 'bg-[#0052cc] text-white hover:bg-[#003380]'
+              ? 'bg-[#1D4ED8] text-white hover:bg-[#003380]'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >
@@ -732,7 +667,7 @@ const BookingModal = () => {
               className="p-2 -ml-1 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all"
               title="Back"
             >
-              <FaArrowLeft className="text-sm" />
+              <FiArrowLeft className="text-sm" />
             </button>
             <h2 className="text-[19px] font-bold text-gray-900 tracking-tight">
               Select Vehicle
@@ -751,7 +686,7 @@ const BookingModal = () => {
               className="p-1.5 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all"
               title="Close"
             >
-              <FaTimes className="text-xs" />
+              <FiX className="text-xs" />
             </button>
           </div>
         </div>
@@ -759,7 +694,7 @@ const BookingModal = () => {
         {/* Search bar matching Image 1 */}
         <div className="relative mb-3 group">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-            <FaSearch className="text-amber-500 text-sm" />
+            <FiSearch className="text-amber-500 text-sm" />
           </div>
           <input
             type="text"
@@ -773,7 +708,7 @@ const BookingModal = () => {
               onClick={() => setSearchBrand('')}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >
-              <FaTimes className="text-xs" />
+              <FiX className="text-xs" />
             </button>
           )}
         </div>
@@ -868,7 +803,7 @@ const BookingModal = () => {
           {matchingPopular.length === 0 && matchingAll.length === 0 && directMatchingCars.length === 0 && (
             <div className="text-center py-8 px-4">
               <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
-                <FaCar />
+                <HiOutlineTruck />
               </div>
               <p className="text-[14px] font-bold text-gray-800 mb-1">
                 No vehicle found matching "{searchBrand}"
@@ -907,12 +842,12 @@ const BookingModal = () => {
 
       <div className="relative mb-4 group">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <FaSearch className="text-[#0052cc]/40 group-hover:text-[#0052cc]/70 group-focus-within:text-[#0052cc] transition-colors duration-300 text-sm" />
+          <FiSearch className="text-[#1D4ED8]/40 group-hover:text-[#1D4ED8]/70 group-focus-within:text-[#1D4ED8] transition-colors duration-300 text-sm" />
         </div>
         <input
           type="text"
           placeholder={`Search ${bookingState.carBrand} models...`}
-          className="w-full bg-white border-2 border-[#0052cc]/15 hover:border-[#0052cc]/40 focus:border-[#0052cc] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
+          className="w-full bg-white border-2 border-[#1D4ED8]/15 hover:border-[#1D4ED8]/40 focus:border-[#1D4ED8] pl-9 pr-3 py-2.5 rounded-xl text-[14px] font-bold text-gray-900 placeholder-gray-400 outline-none transition-all duration-300"
           value={searchModel}
           onChange={e => setSearchModel(e.target.value)}
         />
@@ -929,17 +864,17 @@ const BookingModal = () => {
                 updateBooking('carModel', car);
                 nextStep();
               }}
-              className="flex flex-col items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#0052cc] hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all aspect-[4/3] group relative overflow-hidden"
+              className="flex flex-col items-center justify-between p-3.5 rounded-2xl border border-gray-100 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#1D4ED8] hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all aspect-[4/3] group relative overflow-hidden"
             >
               <div className="w-full flex items-center justify-center pt-1 transition-transform duration-200 group-hover:scale-110">
                 <CarVisualIcon carName={car.name} className="w-[88px] h-[42px] drop-shadow-sm" />
               </div>
               <div className="text-center mt-1 w-full">
-                <h4 className="font-extrabold text-gray-900 text-[13px] truncate group-hover:text-[#0052cc] transition-colors">
+                <h4 className="font-extrabold text-gray-900 text-[13px] truncate group-hover:text-[#1D4ED8] transition-colors">
                   {getModelDisplayName(car.name)}
                 </h4>
                 <div className="flex items-center justify-center gap-1.5 mt-0.5">
-                  <span className="text-[8px] uppercase tracking-wider text-[#0052cc] font-extrabold px-1.5 py-0.5 bg-blue-50 rounded-md">
+                  <span className="text-[8px] uppercase tracking-wider text-[#1D4ED8] font-extrabold px-1.5 py-0.5 bg-blue-50 rounded-md">
                     {bodyLabel}
                   </span>
                   <span className="text-[9px] uppercase tracking-wider text-gray-400 font-bold truncate">
@@ -982,13 +917,13 @@ const BookingModal = () => {
         time: '60 - 90 mins',
         rating: '4.8', 
         features: ['Everything in Premium', 'Deep Interior Cleaning', 'Seat & Mat Cleaning', 'Interior Detailing', 'Air Freshener'] 
-      }
+      },
     ];
 
     return (
       <div className="animate-fade-in relative flex flex-col h-full bg-gray-50/50 rounded-3xl p-5">
         <div className="flex items-center gap-3 mb-2 pt-1">
-          <button onClick={prevStep} className="p-2 bg-white text-gray-600 hover:text-gray-900 rounded-full shadow-sm border border-gray-100 transition-all"><FaArrowLeft className="text-sm" /></button>
+          <button onClick={prevStep} className="p-2 bg-white text-gray-600 hover:text-gray-900 rounded-full shadow-sm border border-gray-100 transition-all"><FiArrowLeft className="text-sm" /></button>
           <h2 className="text-[20px] font-black text-gray-900 tracking-tight">Choose a Package</h2>
         </div>
         <p className="text-gray-500 text-[11px] font-semibold mb-3 px-1 tracking-wide">All Packages include doorstep service & premium products</p>
@@ -998,20 +933,20 @@ const BookingModal = () => {
             <div
               key={pkg.id}
               onClick={() => updateBooking('service', pkg.id)}
-              className={`p-3 rounded-xl border transition-all cursor-pointer flex gap-3 shadow-sm ${bookingState.service === pkg.id ? 'bg-blue-50/50 border-[#0052cc] ring-1 ring-[#0052cc]/20' : 'bg-white border-gray-100 hover:border-gray-200'}`}
+              className={`p-3 rounded-xl border transition-all cursor-pointer flex gap-3 shadow-sm ${bookingState.service === pkg.id ? 'bg-blue-50/50 border-[#1D4ED8] ring-1 ring-[#1D4ED8]/20' : 'bg-white border-gray-100 hover:border-gray-200'}`}
             >
               <div className="w-[50px] h-[50px] bg-gray-50 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100 p-1">
                 {bookingState.carModel ? (
                   <CarVisualIcon carName={bookingState.carModel.name} className="w-10 h-6" />
                 ) : (
-                  <FaCar className="text-gray-300 text-xl" />
+                  <HiOutlineTruck className="text-gray-300 text-xl" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h4 className="font-extrabold text-gray-900 text-[13px] leading-tight truncate">{pkg.title}</h4>
                   {pkg.popular && (
-                    <span className="bg-[#0052cc] text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="bg-[#1D4ED8] text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
                       Popular
                     </span>
                   )}
@@ -1020,7 +955,7 @@ const BookingModal = () => {
                 <div className="flex items-center gap-2 mt-0.5 mb-1">
                   <div className="font-black text-gray-900 text-[16px]">₹{getPrice(category, pkg.id)}</div>
                   <div className="bg-blue-100/80 px-1.5 py-0.5 rounded flex items-center gap-1">
-                    <span className="text-[#0052cc] text-[9px]">★</span>
+                    <span className="text-[#1D4ED8] text-[9px]">★</span>
                     <span className="font-bold text-gray-900 text-[10px]">{pkg.rating}</span>
                   </div>
                   <span className="text-[10px] text-gray-400 font-medium">({pkg.time})</span>
@@ -1028,14 +963,14 @@ const BookingModal = () => {
                 <ul className="space-y-0.5">
                   {pkg.features.map((f, i) => (
                     <li key={i} className="text-[10px] text-gray-600 font-semibold flex items-center gap-2">
-                      <FaCheckCircle className="text-green-500 text-[8px] flex-shrink-0" /> <span className="truncate">{f}</span>
+                      <FiCheckCircle className="text-green-500 text-[8px] flex-shrink-0" /> <span className="truncate">{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="flex flex-col justify-center pl-1">
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${bookingState.service === pkg.id ? 'border-[#0052cc] bg-blue-50' : 'border-gray-200 bg-gray-50'}`}>
-                  {bookingState.service === pkg.id && <div className="w-2 h-2 bg-[#0052cc] rounded-full"></div>}
+                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${bookingState.service === pkg.id ? 'border-[#1D4ED8] bg-blue-50' : 'border-gray-200 bg-gray-50'}`}>
+                  {bookingState.service === pkg.id && <div className="w-2 h-2 bg-[#1D4ED8] rounded-full"></div>}
                 </div>
               </div>
             </div>
@@ -1046,7 +981,7 @@ const BookingModal = () => {
           <button
             onClick={nextStep}
             disabled={!bookingState.service}
-            className="w-full bg-[#0052cc] text-white font-black py-3.5 rounded-xl text-[16px] transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 hover:bg-blue-600 shadow-md disabled:shadow-none"
+            className="w-full bg-[#1D4ED8] text-white font-black py-3.5 rounded-xl text-[16px] transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 hover:bg-blue-600 shadow-md disabled:shadow-none"
           >
             Continue
           </button>
@@ -1066,12 +1001,12 @@ const BookingModal = () => {
 
         <div className="text-center w-full max-w-sm mx-auto mt-2 mb-5">
           <div className="w-14 h-14 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-blue-200/50">
-            <FaCalendarAlt className="text-2xl text-blue-500" />
+            <FiCalendar className="text-2xl text-blue-500" />
           </div>
           <h2 className="text-[22px] font-black text-gray-900 mb-1.5 tracking-tight leading-tight uppercase">Car Clean Plus<br/>Book Your Slot</h2>
           <div className="flex justify-center mt-3 mb-1">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-gradient-to-r from-[#0052cc]/5 via-[#0052cc]/10 to-[#3377ff]/5 border border-[#0052cc]/20 rounded-full shadow-sm backdrop-blur-sm">
-              <span className="text-[#0052cc] text-[13px]"><FaCalendarAlt /></span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-gradient-to-r from-[#1D4ED8]/5 via-[#1D4ED8]/10 to-[#3377ff]/5 border border-[#1D4ED8]/20 rounded-full shadow-sm backdrop-blur-sm">
+              <span className="text-[#1D4ED8] text-[13px]"><FiCalendar /></span>
               <span className="text-[11px] font-black text-gray-800 tracking-widest uppercase mt-0.5">Monday - Saturday</span>
             </div>
           </div>
@@ -1080,7 +1015,7 @@ const BookingModal = () => {
         <div className="flex-1 overflow-y-auto custom-scrollbar px-1">
           <div className="mb-5">
             <label className="block text-[11px] font-black text-gray-800 mb-2 uppercase tracking-widest pl-1 flex items-center gap-1.5">
-              <FaCalendarAlt className="text-[#0052cc]" /> Select Date
+              <FiCalendar className="text-[#1D4ED8]" /> Select Date
             </label>
             <div className="relative">
               <input 
@@ -1091,7 +1026,7 @@ const BookingModal = () => {
                   updateBooking('date', e.target.value);
                   updateBooking('timeSlot', '');
                 }}
-                className="w-full bg-white border-2 border-gray-200 hover:border-[#0052cc]/40 focus:border-[#0052cc] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
+                className="w-full bg-white border-2 border-gray-200 hover:border-[#1D4ED8]/40 focus:border-[#1D4ED8] px-4 py-3 rounded-xl text-[14px] font-bold text-gray-900 outline-none transition-all shadow-sm"
               />
             </div>
           </div>
@@ -1099,15 +1034,15 @@ const BookingModal = () => {
           <div>
             <div className="flex items-center justify-between mb-2 pl-1 pr-1">
               <label className="text-[11px] font-black text-gray-800 uppercase tracking-widest flex items-center gap-1.5">
-                <FaClock className="text-[#0052cc]" /> Select Slot
+                <FiClock className="text-[#1D4ED8]" /> Select Slot
               </label>
               {isLoadingSlots && (
-                <span className="text-[10px] font-bold text-[#0052cc] animate-pulse">Checking...</span>
+                <span className="text-[10px] font-bold text-[#1D4ED8] animate-pulse">Checking...</span>
               )}
             </div>
 
             {!bookingState.date && (
-              <div className="p-2.5 mb-2 bg-blue-50/70 border border-blue-100 rounded-xl text-center text-[12px] font-bold text-[#0052cc]">
+              <div className="p-2.5 mb-2 bg-blue-50/70 border border-blue-100 rounded-xl text-center text-[12px] font-bold text-[#1D4ED8]">
                 Please choose a date above to check slots
               </div>
             )}
@@ -1146,8 +1081,8 @@ const BookingModal = () => {
                       !bookingState.date
                         ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
                         : isSelected
-                        ? 'border-[#0052cc] bg-[#0052cc] text-white shadow-md'
-                        : 'border-gray-100 bg-white text-gray-800 hover:border-[#0052cc]/40 hover:bg-blue-50/30'
+                        ? 'border-[#1D4ED8] bg-[#1D4ED8] text-white shadow-md'
+                        : 'border-gray-100 bg-white text-gray-800 hover:border-[#1D4ED8]/40 hover:bg-blue-50/30'
                     }`}
                   >
                     <span className="font-extrabold">{slot.label}</span>
@@ -1170,7 +1105,7 @@ const BookingModal = () => {
           <button
             onClick={nextStep}
             disabled={!bookingState.date || !bookingState.timeSlot}
-            className="w-full bg-[#0052cc] text-white font-black py-3.5 rounded-xl text-[16px] transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 hover:bg-blue-600 shadow-md disabled:shadow-none"
+            className="w-full bg-[#1D4ED8] text-white font-black py-3.5 rounded-xl text-[16px] transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 hover:bg-blue-600 shadow-md disabled:shadow-none"
           >
             Continue
           </button>
@@ -1186,14 +1121,12 @@ const BookingModal = () => {
 
       <div className="text-center w-full max-w-sm mx-auto mt-6">
         <div className="w-14 h-14 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-blue-200/50">
-          <FaCar className="text-2xl text-blue-500" />
+          <HiOutlineTruck className="text-2xl text-blue-500" />
         </div>
         <h2 className="text-[26px] font-black text-gray-900 mb-2 tracking-tight leading-tight">Welcome to<br />Car Clean Plus</h2>
         <p className="text-gray-500 text-[13px] mb-8 leading-relaxed px-4 font-medium">
           Login to book top car wash and car services at your doorstep.
         </p>
-
-
       </div>
 
       <div className="mt-auto pt-4 pb-1 space-y-3">
@@ -1233,7 +1166,7 @@ const BookingModal = () => {
   const renderSuccess = () => (
     <div className="text-center py-4 animate-fade-in flex flex-col h-full justify-center">
       <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 border-[4px] border-green-100/50 shadow-sm relative">
-        <FaCheckCircle className="text-4xl text-green-500 relative z-10 bg-white rounded-full" />
+        <FiCheckCircle className="text-4xl text-green-500 relative z-10 bg-white rounded-full" />
       </div>
       <h2 className="text-[24px] font-black text-gray-900 mb-2 tracking-tight">Booking Confirmed!</h2>
       <p className="text-gray-500 text-[13px] mb-6 px-2 leading-relaxed font-medium">Thank you for choosing Car Clean Plus. Our executive will call you shortly to confirm your exact location and preferred time.</p>
@@ -1271,7 +1204,7 @@ const BookingModal = () => {
           rel="noopener noreferrer"
           className="w-full bg-[#25D366] text-white hover:bg-[#1ebe5d] flex items-center justify-center gap-2 font-black py-3.5 px-2 rounded-xl transition-all text-[14px] shadow-md"
         >
-          <FaWhatsapp className="text-xl" />
+          <FiMessageCircle className="text-xl" />
           WhatsApp
         </a>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
+import { FiArrowRight, FiClock, FiDroplet, FiShield, FiStar } from 'react-icons/fi';
 import { useBooking } from '../context/BookingContext';
-import { FaArrowRight, FaArrowCircleRight, FaShieldAlt, FaSprayCan, FaStar, FaClock } from 'react-icons/fa';
 import heroImage from '../assets/car clean plus home 4.png';
 import HeroBookingForm from './HeroBookingForm';
 
@@ -35,10 +35,10 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
                 onClick={() => openModal()}
-                className="flex items-center justify-center gap-2 bg-[#0052cc] text-white font-extrabold text-lg md:text-xl py-3.5 px-8 rounded-full transition-all duration-300 hover:bg-[#0043a8] hover:-translate-y-1 group w-fit"
+                className="flex items-center justify-center gap-2 bg-[#1D4ED8] text-white font-extrabold text-lg md:text-xl py-3.5 px-8 rounded-full transition-all duration-300 hover:bg-[#0043a8] hover:-translate-y-1 group w-fit"
               >
                 <span>Starting at ₹299</span>
-                <FaArrowRight className="text-white text-lg ml-1 group-hover:translate-x-1.5 transition-transform duration-300" />
+                <FiArrowRight className="text-white text-lg ml-1 group-hover:translate-x-1.5 transition-transform duration-300" />
               </button>
               
               <button
@@ -46,18 +46,18 @@ const HeroSection = () => {
                   const section = document.getElementById("services");
                   if (section) section.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="flex items-center justify-center gap-2 bg-white/80 backdrop-blur-md border-[2px] border-[#0052cc] text-[#0052cc] font-bold text-lg md:text-xl py-3.5 px-8 rounded-full transition-all duration-300 hover:bg-[#0052cc] hover:text-white hover:-translate-y-1 group w-fit"
+                className="flex items-center justify-center gap-2 bg-white/80 backdrop-blur-md border-[2px] border-[#1D4ED8] text-[#1D4ED8] font-bold text-lg md:text-xl py-3.5 px-8 rounded-full transition-all duration-300 hover:bg-[#1D4ED8] hover:text-white hover:-translate-y-1 group w-fit"
               >
                 <span>Explore Services</span>
-                <FaArrowCircleRight className="text-xl group-hover:translate-x-1 transition-transform duration-300" />
+                <FiArrowRight className="text-xl group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3 mt-5 w-full max-w-xl">
               {/* Feature 1 */}
               <div className="flex items-center gap-2.5 bg-white p-2.5 md:p-3 rounded-xl border border-gray-100 w-full hover:-translate-y-0.5 transition-transform duration-300">
-                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <FaShieldAlt className="text-primary text-base md:text-lg" />
+                <div className="icon-circle">
+                  <FiShield className="text-primary text-base md:text-lg" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-extrabold text-gray-900 text-[13px] md:text-[14px] leading-tight">Professional Experts</span>
@@ -67,8 +67,8 @@ const HeroSection = () => {
               
               {/* Feature 2 */}
               <div className="flex items-center gap-2.5 bg-white p-2.5 md:p-3 rounded-xl border border-gray-100 w-full hover:-translate-y-0.5 transition-transform duration-300">
-                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <FaSprayCan className="text-primary text-base md:text-lg" />
+                <div className="icon-circle">
+                  <FiDroplet className="text-primary text-base md:text-lg" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-extrabold text-gray-900 text-[13px] md:text-[14px] leading-tight">Premium Products</span>
@@ -78,8 +78,8 @@ const HeroSection = () => {
               
               {/* Feature 3 */}
               <div className="flex items-center gap-2.5 bg-white p-2.5 md:p-3 rounded-xl border border-gray-100 w-full hover:-translate-y-0.5 transition-transform duration-300">
-                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <FaStar className="text-primary text-base md:text-lg" />
+                <div className="icon-circle">
+                  <FiStar className="text-primary text-base md:text-lg" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-extrabold text-gray-900 text-[13px] md:text-[14px] leading-tight">100% Satisfaction</span>
@@ -89,8 +89,8 @@ const HeroSection = () => {
               
               {/* Feature 4 */}
               <div className="flex items-center gap-2.5 bg-white p-2.5 md:p-3 rounded-xl border border-gray-100 w-full hover:-translate-y-0.5 transition-transform duration-300">
-                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <FaClock className="text-primary text-base md:text-lg" />
+                <div className="icon-circle">
+                  <FiClock className="text-primary text-base md:text-lg" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-extrabold text-gray-900 text-[13px] md:text-[14px] leading-tight">On-time Service</span>

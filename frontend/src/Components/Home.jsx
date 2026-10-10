@@ -6,6 +6,7 @@ import ServicesPricing from "./ServicesPricing";
 import HowItWorks from "./HowItWorks";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
 import BeforeAfterGallery from "./BeforeAfterGallery";
+import ContactComponent from "./ContactComponent";
 
 import Testimonials from "./Testimonials";
 import Footer from "./Footer"; // Assuming footer exists
@@ -33,6 +34,8 @@ function Home() {
         <div id="how-it-works">
           <HowItWorks />
         </div>
+
+        <ContactComponent />
 
       </div>
     </>

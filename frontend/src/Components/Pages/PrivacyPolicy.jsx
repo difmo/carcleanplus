@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { 
-  FaShieldAlt, FaLock, FaUserCheck, FaDatabase, 
-  FaEnvelope, FaMapMarkerAlt, FaFileContract, FaCheckCircle 
-} from "react-icons/fa";
+import { FiCheckCircle, FiMail, FiMapPin, FiShield } from 'react-icons/fi';
+import policyPhoto from "../../assets/about section .jpeg";
 
 function PrivacyPolicy() {
   useEffect(() => {
@@ -15,13 +13,13 @@ function PrivacyPolicy() {
         
         {/* Compact Hero Header */}
         <div className="text-center mb-10 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052cc] text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
-            <FaShieldAlt className="text-xs" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-[#1D4ED8] text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
+            <FiShield className="text-xs" />
             <span>Trust & Transparency</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-            Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-blue-600">Policy</span>
+            Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] to-blue-600">Policy</span>
           </h1>
 
           <p className="text-gray-500 text-xs sm:text-sm mt-2 font-medium max-w-lg mx-auto">
@@ -38,13 +36,17 @@ function PrivacyPolicy() {
           </div>
         </div>
 
+        <div className="photo-frame h-48 sm:h-64 mb-8">
+          <img src={policyPhoto} alt="Car Clean Plus" />
+        </div>
+
         {/* Main Content Card */}
         <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.04)] p-6 sm:p-10 space-y-8 text-gray-700 leading-relaxed text-sm">
 
           {/* Section 1: Introduction */}
           <div>
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 01
               </div>
               <h2 className="text-lg font-black tracking-tight">Introduction & Commitment</h2>
@@ -60,7 +62,7 @@ function PrivacyPolicy() {
           {/* Section 2: Information We Collect */}
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 02
               </div>
               <h2 className="text-lg font-black tracking-tight">Information We Collect</h2>
@@ -84,26 +86,26 @@ function PrivacyPolicy() {
           {/* Section 3: How We Use Your Data */}
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 03
               </div>
               <h2 className="text-lg font-black tracking-tight">How We Use Your Data</h2>
             </div>
             <ul className="space-y-2 pl-10.5 text-xs sm:text-sm text-gray-600">
               <li className="flex items-start gap-2">
-                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <FiCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
                 <span>To dispatch trained car cleaning technicians directly to your specified address.</span>
               </li>
               <li className="flex items-start gap-2">
-                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <FiCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
                 <span>To send appointment confirmations, reminder SMS/WhatsApp notifications, and receipts.</span>
               </li>
               <li className="flex items-start gap-2">
-                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <FiCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
                 <span>To respond to your inquiries, customer support questions, and service feedback.</span>
               </li>
               <li className="flex items-start gap-2">
-                <FaCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
+                <FiCheckCircle className="text-emerald-500 text-xs mt-1 shrink-0" />
                 <span>To prevent fraudulent activities and ensure safe, verified payment processing.</span>
               </li>
             </ul>
@@ -112,7 +114,7 @@ function PrivacyPolicy() {
           {/* Section 4: Data Protection & Sharing */}
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 04
               </div>
               <h2 className="text-lg font-black tracking-tight">Zero Selling & Secure Storage</h2>
@@ -129,7 +131,7 @@ function PrivacyPolicy() {
           {/* Section 5: Your Rights */}
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 05
               </div>
               <h2 className="text-lg font-black tracking-tight">Your Rights & Control</h2>
@@ -143,7 +145,7 @@ function PrivacyPolicy() {
           {/* Section 6: Office & Contact Info */}
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center gap-2.5 mb-3 text-gray-900">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xs font-black shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
                 06
               </div>
               <h2 className="text-lg font-black tracking-tight">Grievance & Contact Information</h2>
@@ -151,17 +153,17 @@ function PrivacyPolicy() {
             
             <div className="pl-10.5 mt-3 bg-gradient-to-r from-blue-50/60 to-indigo-50/50 p-4 sm:p-5 rounded-2xl border border-blue-100 space-y-2.5">
               <div className="flex items-start gap-2.5 text-xs text-gray-700">
-                <FaMapMarkerAlt className="text-[#0052cc] text-sm shrink-0 mt-0.5" />
+                <FiMapPin className="text-[#1D4ED8] text-sm shrink-0 mt-0.5" />
                 <span>
                   <strong>Office Address:</strong> 3rd Floor, 4/37 Vibhav Khand, near Mantri Awas Colony, Gomti Nagar, Lucknow, Uttar Pradesh 226010
                 </span>
               </div>
               
               <div className="flex items-center gap-2.5 text-xs text-gray-700">
-                <FaEnvelope className="text-[#0052cc] text-sm shrink-0" />
+                <FiMail className="text-[#1D4ED8] text-sm shrink-0" />
                 <span>
                   <strong>Email:</strong>{" "}
-                  <a href="mailto:carcleanplusofficial@gmail.com" className="text-[#0052cc] font-bold hover:underline">
+                  <a href="mailto:carcleanplusofficial@gmail.com" className="text-[#1D4ED8] font-bold hover:underline">
                     carcleanplusofficial@gmail.com
                   </a>
                 </span>

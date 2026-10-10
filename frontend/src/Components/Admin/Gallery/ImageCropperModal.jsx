@@ -1,15 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import { FiCheck, FiCrop, FiMaximize2, FiRotateCw, FiSliders, FiX, FiZoomIn, FiZoomOut } from 'react-icons/fi';
 import Cropper from 'react-easy-crop';
-import {
-  FaTimes,
-  FaSearchPlus,
-  FaSearchMinus,
-  FaRedo,
-  FaCheck,
-  FaCropAlt,
-  FaExpandArrowsAlt,
-  FaSlidersH
-} from 'react-icons/fa';
 import getCroppedImg from '../../../utils/cropImageHelper';
 
 const ASPECT_RATIOS = [
@@ -81,8 +72,8 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center font-bold">
-              <FaCropAlt className="text-xl" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center font-bold">
+              <FiCrop className="text-xl" />
             </div>
             <div>
               <h2 className="text-lg font-black text-gray-900">Crop & Resize Image</h2>
@@ -95,7 +86,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
             onClick={onClose}
             className="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
           >
-            <FaTimes className="text-lg" />
+            <FiX className="text-lg" />
           </button>
         </div>
 
@@ -121,7 +112,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                 height: '100%'
               },
               cropAreaStyle: {
-                border: '2px solid #0052cc',
+                border: '2px solid #1D4ED8',
                 boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.65)'
               }
             }}
@@ -130,7 +121,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
           {/* Dimension Tag */}
           {croppedAreaPixels && (
             <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-mono font-semibold flex items-center gap-2 border border-white/10 pointer-events-none">
-              <FaExpandArrowsAlt className="text-blue-400 text-xs" />
+              <FiMaximize2 className="text-blue-400 text-xs" />
               <span>
                 Crop: {Math.round(croppedAreaPixels.width)} × {Math.round(croppedAreaPixels.height)} px
               </span>
@@ -149,7 +140,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
               <button
                 type="button"
                 onClick={handleReset}
-                className="text-xs font-semibold text-[#0052cc] hover:underline"
+                className="text-xs font-semibold text-[#1D4ED8] hover:underline"
               >
                 Reset All
               </button>
@@ -164,7 +155,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                     onClick={() => setAspect(item.value)}
                     className={`px-3 py-2 rounded-xl text-xs font-bold transition-all border text-center ${
                       isActive
-                        ? 'bg-blue-50 border-[#0052cc] text-[#0052cc] shadow-sm'
+                        ? 'bg-blue-50 border-[#1D4ED8] text-[#1D4ED8] shadow-sm'
                         : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                     }`}
                   >
@@ -181,9 +172,9 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
             <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
               <div className="flex items-center justify-between text-xs font-bold text-gray-700 mb-2">
                 <span className="flex items-center gap-1.5">
-                  <FaSlidersH className="text-gray-400" /> Zoom Level
+                  <FiSliders className="text-gray-400" /> Zoom Level
                 </span>
-                <span className="font-mono text-[#0052cc] font-semibold">{zoom.toFixed(1)}x</span>
+                <span className="font-mono text-[#1D4ED8] font-semibold">{zoom.toFixed(1)}x</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -192,7 +183,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                   className="p-1.5 text-gray-500 hover:text-gray-800 rounded-lg hover:bg-gray-200 transition-colors"
                   title="Zoom Out"
                 >
-                  <FaSearchMinus className="text-sm" />
+                  <FiZoomOut className="text-sm" />
                 </button>
                 <input
                   type="range"
@@ -201,7 +192,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                   step={0.05}
                   value={zoom}
                   onChange={(e) => setZoom(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#0052cc]"
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#1D4ED8]"
                 />
                 <button
                   type="button"
@@ -209,7 +200,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                   className="p-1.5 text-gray-500 hover:text-gray-800 rounded-lg hover:bg-gray-200 transition-colors"
                   title="Zoom In"
                 >
-                  <FaSearchPlus className="text-sm" />
+                  <FiZoomIn className="text-sm" />
                 </button>
               </div>
             </div>
@@ -222,7 +213,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
                 onClick={handleRotate}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl text-gray-700 font-bold text-xs transition-colors"
               >
-                <FaRedo className="text-sm text-gray-500" />
+                <FiRotateCw className="text-sm text-gray-500" />
                 <span>Rotate 90° ({rotation}°)</span>
               </button>
 
@@ -261,7 +252,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
             type="button"
             onClick={handleApplyCrop}
             disabled={isProcessing}
-            className="px-6 py-2.5 rounded-xl bg-[#0052cc] hover:bg-[#0747a6] text-white font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center gap-2 disabled:opacity-60"
+            className="px-6 py-2.5 rounded-xl bg-[#1D4ED8] hover:bg-[#0747a6] text-white font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center gap-2 disabled:opacity-60"
           >
             {isProcessing ? (
               <>
@@ -270,7 +261,7 @@ const ImageCropperModal = ({ imageSrc, isOpen, onClose, onCropDone }) => {
               </>
             ) : (
               <>
-                <FaCheck />
+                <FiCheck />
                 <span>Apply Crop & Continue</span>
               </>
             )}

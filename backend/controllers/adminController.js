@@ -40,7 +40,7 @@ const updateUserRole = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide a role' });
     }
 
-    if (!['customer', 'admin', 'superadmin'].includes(role)) {
+    if (!['customer', 'staff', 'admin', 'superadmin'].includes(role)) {
       return res.status(400).json({ success: false, message: 'Invalid role' });
     }
 
@@ -53,13 +53,12 @@ const updateUserRole = async (req, res) => {
     // Role-based security checks
     if (req.user.role === 'admin') {
       // 1. Admin cannot target an admin or superadmin
-      if (targetUser.role === 'admin' || targetUser.role === 'superadmin') {
-        return res.status(403).json({ success: false, message: 'Admins cannot modify another admin or superadmin' });
+      if (['admin', 'superadmin', 'staff'].includes(targetUser.role)) {
+        return res.status(403).json({ success: false, message: 'Admins cannot modify staff, admin, or superadmin accounts' });
       }
 
-      // 2. Admin cannot promote to admin or superadmin
-      if (role === 'admin' || role === 'superadmin') {
-        return res.status(403).json({ success: false, message: 'Only superadmin can promote to admin or superadmin' });
+      if (['admin', 'superadmin', 'staff'].includes(role)) {
+        return res.status(403).json({ success: false, message: 'Only a superadmin can assign staff, admin, or superadmin' });
       }
     }
 

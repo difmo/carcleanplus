@@ -46,10 +46,13 @@ app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/booking', require('./routes/bookingRoutes'));
+app.use('/api/staff', require('./routes/staffRoutes'));
 app.use('/api/payment', require('./routes/paymentRoutes'));
 app.use('/api/festival', require('./routes/festivalRoutes'));
+app.use('/api/catalog', require('./routes/catalogRoutes'));
+app.use('/api/account', require('./routes/accountRoutes'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5001;
 
 if (require.main === module) {
   app.listen(PORT, () => {

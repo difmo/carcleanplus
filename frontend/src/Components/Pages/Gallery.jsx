@@ -1,17 +1,19 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { FiMaximize2, FiPlus, FiShield, FiSliders, FiTag, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import {
-  FaPlus,
-  FaImages,
-  FaTag,
-  FaTimes,
-  FaExpand,
-  FaShieldAlt,
-  FaSlidersH
-} from 'react-icons/fa';
 import UploadGalleryModal from '../Admin/Gallery/UploadGalleryModal';
 
 // Starter static images
+import basicWash from '../../assets/basic wash.png';
+import interiorImg from '../../assets/Interior Cleaning.png';
+import completeImg from '../../assets/Complete Detailing.png';
+import tyreImg from '../../assets/Tyre & Rim Shine.png';
+import before1 from '../../assets/befor vs after1.png';
+import before2 from '../../assets/before vs after2.png';
+import landingImg from '../../assets/landing.jpg';
+import washImg from '../../assets/wash car.png';
+import aboutImg from '../../assets/about section .jpeg';
+import homeImg from '../../assets/home section.png';
 import chatGptImage from '../../assets/ChatGPT Image Aug 14, 2026, 11_01_31 AM.png';
 import seatImage from '../../assets/seat2.png';
 import tyerImage from '../../assets/tyer.png';
@@ -26,6 +28,16 @@ import gl7 from '../../assets/gl 7.png';
 import gl8 from '../../assets/gl8.png';
 
 const STARTER_IMAGES = [
+  { id: 'p1', src: basicWash, title: 'Basic Wash', category: 'Exterior Cleaning', desc: 'Foam wash, wheel clean, and a quick exterior shine at your door.' },
+  { id: 'p2', src: interiorImg, title: 'Interior Cleaning', category: 'Interior Detailing', desc: 'Vacuum, dashboard care, and a fresher cabin.' },
+  { id: 'p3', src: completeImg, title: 'Complete Detailing', category: 'Deep Cleaning', desc: 'Full interior and exterior care for a showroom finish.' },
+  { id: 'p4', src: tyreImg, title: 'Tyre & Rim Shine', category: 'Tyre & Wheels', desc: 'Clean alloys and a dressed tyre sidewall.' },
+  { id: 'p5', src: before1, title: 'Before and After', category: 'Exterior Cleaning', desc: 'A real doorstep transformation.' },
+  { id: 'p6', src: before2, title: 'Interior Before and After', category: 'Interior Detailing', desc: 'Cabin reset after a deep clean.' },
+  { id: 'p7', src: landingImg, title: 'Doorstep Arrival', category: 'Exterior Cleaning', desc: 'The team comes to your parking spot.' },
+  { id: 'p8', src: washImg, title: 'Foam Wash', category: 'Exterior Cleaning', desc: 'Hands-on wash with safe products.' },
+  { id: 'p9', src: aboutImg, title: 'Our Crew', category: 'Deep Cleaning', desc: 'Trained technicians for Lucknow doorstep bookings.' },
+  { id: 'p10', src: homeImg, title: 'Home Service', category: 'Exterior Cleaning', desc: 'A cleaner car without leaving home.' },
   { id: 's1', src: chatGptImage, title: 'Exterior Foam Wash & Polish', category: 'Exterior Cleaning', desc: 'High-gloss deep foam bath removing contaminants while protecting clear coat.' },
   { id: 's2', src: seatImage, title: 'Deep Seat Extraction & Sanitization', category: 'Interior Detailing', desc: 'Deep steam cleaning and hot water extraction on premium car seats.' },
   { id: 's3', src: tyerImage, title: 'Alloy Decontamination & Tyre Dressing', category: 'Tyre & Wheels', desc: 'Iron fallout removal and ultra-rich hydrophobic tyre shine coat.' },
@@ -121,7 +133,7 @@ const Gallery = () => {
           <div className="mb-8 p-4 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg text-white flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
-                <FaShieldAlt />
+                <FiShield />
               </div>
               <div>
                 <h3 className="font-black text-sm tracking-wide">Admin Gallery Controls</h3>
@@ -135,9 +147,9 @@ const Gallery = () => {
               <button
                 type="button"
                 onClick={() => setIsUploadOpen(true)}
-                className="flex-1 sm:flex-none px-4 py-2 bg-white text-[#0052cc] hover:bg-blue-50 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-none px-4 py-2 bg-white text-[#1D4ED8] hover:bg-blue-50 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <FaPlus />
+                <FiPlus />
                 <span>Upload New Photo</span>
               </button>
 
@@ -145,7 +157,7 @@ const Gallery = () => {
                 to="/admin/gallery"
                 className="flex-1 sm:flex-none px-4 py-2 bg-black/25 hover:bg-black/35 text-white rounded-xl font-bold text-xs border border-white/20 transition-all flex items-center justify-center gap-2"
               >
-                <FaSlidersH />
+                <FiSliders />
                 <span>Manage Gallery</span>
               </Link>
             </div>
@@ -155,7 +167,7 @@ const Gallery = () => {
         {/* Hero Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-dark mb-4 tracking-tight">
-            Our <span className="text-[#0052cc]">Work Gallery</span>
+            Our <span className="text-[#1D4ED8]">Work Gallery</span>
           </h1>
           <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
             Take a look at some of the premium car detailing, paint correction, and deep cleaning services we've delivered.
@@ -173,7 +185,7 @@ const Gallery = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                   isSelected
-                    ? 'bg-[#0052cc] text-white shadow-md shadow-blue-500/25 scale-105'
+                    ? 'bg-[#1D4ED8] text-white shadow-md shadow-blue-500/25 scale-105'
                     : 'bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 border border-gray-200'
                 }`}
               >
@@ -205,13 +217,13 @@ const Gallery = () => {
 
                 {/* Category badge */}
                 <div className="absolute top-3.5 left-3.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-xl text-white text-xs font-bold border border-white/15 flex items-center gap-1.5 shadow-sm">
-                  <FaTag className="text-blue-400 text-[10px]" />
+                  <FiTag className="text-blue-400 text-[10px]" />
                   <span>{img.category}</span>
                 </div>
 
                 {/* Expand icon on hover */}
                 <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <FaExpand className="text-xs" />
+                  <FiMaximize2 className="text-xs" />
                 </div>
 
                 {/* Bottom Overlay Title on image */}
@@ -228,7 +240,7 @@ const Gallery = () => {
                   <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">
                     {img.desc}
                   </p>
-                  <div className="mt-2 text-[11px] font-bold text-[#0052cc] group-hover:underline flex items-center gap-1">
+                  <div className="mt-2 text-[11px] font-bold text-[#1D4ED8] group-hover:underline flex items-center gap-1">
                     View full details &rarr;
                   </div>
                 </div>
@@ -260,15 +272,15 @@ const Gallery = () => {
                 onClick={() => setActiveLightbox(null)}
                 className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors cursor-pointer"
               >
-                <FaTimes />
+                <FiX />
               </button>
             </div>
 
             {/* Metadata / Text write-up */}
             <div className="p-6">
               <div className="flex items-center justify-between gap-4 mb-2">
-                <span className="px-3 py-1 bg-blue-50 text-[#0052cc] rounded-lg text-xs font-bold flex items-center gap-1.5">
-                  <FaTag className="text-[10px]" />
+                <span className="px-3 py-1 bg-blue-50 text-[#1D4ED8] rounded-lg text-xs font-bold flex items-center gap-1.5">
+                  <FiTag className="text-[10px]" />
                   {activeLightbox.category}
                 </span>
               </div>

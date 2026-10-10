@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { FiCheck, FiChevronDown, FiTag, FiX } from 'react-icons/fi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { useFestivalTheme } from '../context/FestivalThemeContext';
-import { FaCheck, FaTimes, FaChevronUp, FaChevronDown, FaTag } from 'react-icons/fa';
-import { HiSparkles } from 'react-icons/hi2';
 
 const FestivalSwitcherWidget = () => {
   const { festivals, activeFestivalKey, setFestival, currentTheme } = useFestivalTheme();
@@ -75,7 +75,7 @@ const FestivalSwitcherWidget = () => {
           <div className="relative flex items-center justify-between pb-3 border-b border-white/10">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center text-white shadow-md shadow-amber-500/30">
-                <HiSparkles className="text-base animate-pulse" />
+                <HiOutlineSparkles className="text-base animate-pulse" />
               </div>
               <div>
                 <h3 className="font-extrabold text-[14px] text-white tracking-tight leading-tight">
@@ -90,7 +90,7 @@ const FestivalSwitcherWidget = () => {
               onClick={() => setIsOpen(false)}
               className="w-7 h-7 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white transition-all"
             >
-              <FaTimes className="text-xs" />
+              <FiX className="text-xs" />
             </button>
           </div>
 
@@ -138,7 +138,7 @@ const FestivalSwitcherWidget = () => {
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-[10px] font-bold text-amber-300 flex items-center gap-1">
-                          <FaTag className="text-[8px]" /> {f.discount}
+                          <FiTag className="text-[8px]" /> {f.discount}
                         </span>
                         <span className="text-[10px] text-gray-400 font-medium truncate">
                           ₹{f.offerPrice}
@@ -150,7 +150,7 @@ const FestivalSwitcherWidget = () => {
                   {/* Active Indicator Checkmark */}
                   {isSelected ? (
                     <div className="w-6 h-6 rounded-full bg-white text-gray-950 flex items-center justify-center text-[10px] font-black shadow-md flex-shrink-0">
-                      <FaCheck />
+                      <FiCheck />
                     </div>
                   ) : (
                     <div className="w-6 h-6 rounded-full border border-white/10 group-hover:border-white/30 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-gray-400">
@@ -208,9 +208,9 @@ const FestivalSwitcherWidget = () => {
         {/* Sparkles Action Icon */}
         <div className="flex items-center text-amber-400 text-xs pl-1">
           {isOpen ? (
-            <FaChevronDown className="transition-transform duration-200" />
+            <FiChevronDown className="transition-transform duration-200" />
           ) : (
-            <HiSparkles className="text-sm group-hover:rotate-45 transition-transform duration-300 text-amber-300 animate-pulse" />
+            <HiOutlineSparkles className="text-sm group-hover:rotate-45 transition-transform duration-300 text-amber-300 animate-pulse" />
           )}
         </div>
       </button>

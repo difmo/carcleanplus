@@ -1,47 +1,47 @@
 import React, { useState } from 'react';
-import { FaTimes, FaSave, FaSpinner, FaCheckCircle, FaClock, FaCalendarCheck, FaBan, FaUserTag, FaExclamationCircle } from 'react-icons/fa';
+import { FiAlertCircle, FiCalendar, FiCheckCircle, FiClock, FiLoader, FiSave, FiSlash, FiUser, FiX } from 'react-icons/fi';
 import { fetchWithAuth } from '../../../utils/api';
 
 const STATUS_CONFIG = {
   pending: {
     label: 'Pending',
     desc: 'Waiting for confirmation',
-    icon: <FaClock className="text-amber-500 shrink-0" />,
+    icon: <FiClock className="text-amber-500 shrink-0" />,
     badgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
     activeClass: 'border-amber-500 bg-amber-50/50'
   },
   confirmed: {
     label: 'Confirmed',
     desc: 'Booking accepted & scheduled',
-    icon: <FaCalendarCheck className="text-blue-500 shrink-0" />,
-    badgeClass: 'bg-blue-100 text-[#0052cc] border-blue-200',
-    activeClass: 'border-[#0052cc] bg-blue-50/50'
+    icon: <FiCalendar className="text-blue-500 shrink-0" />,
+    badgeClass: 'bg-blue-100 text-[#1D4ED8] border-blue-200',
+    activeClass: 'border-[#1D4ED8] bg-blue-50/50'
   },
   completed: {
     label: 'Completed',
     desc: 'Service successfully delivered',
-    icon: <FaCheckCircle className="text-emerald-500 shrink-0" />,
+    icon: <FiCheckCircle className="text-emerald-500 shrink-0" />,
     badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200',
     activeClass: 'border-emerald-500 bg-emerald-50/50'
   },
   cancelled: {
     label: 'Cancelled',
     desc: 'Booking cancelled / rejected',
-    icon: <FaBan className="text-rose-500 shrink-0" />,
+    icon: <FiSlash className="text-rose-500 shrink-0" />,
     badgeClass: 'bg-rose-100 text-rose-800 border-rose-200',
     activeClass: 'border-rose-500 bg-rose-50/50'
   },
   lead: {
     label: 'Lead',
     desc: 'Customer inquiry / Step 1 lead',
-    icon: <FaUserTag className="text-purple-500 shrink-0" />,
+    icon: <FiUser className="text-purple-500 shrink-0" />,
     badgeClass: 'bg-purple-100 text-purple-800 border-purple-200',
     activeClass: 'border-purple-500 bg-purple-50/50'
   },
   blocked: {
     label: 'Blocked',
     desc: 'Slot blocked by admin (Maintenance/Offline)',
-    icon: <FaBan className="text-amber-600 shrink-0" />,
+    icon: <FiSlash className="text-amber-600 shrink-0" />,
     badgeClass: 'bg-amber-100 text-amber-900 border-amber-300',
     activeClass: 'border-amber-500 bg-amber-50/50'
   }
@@ -81,7 +81,7 @@ const StatusUpdateModal = ({ booking, onClose, onUpdateSuccess }) => {
         {/* Header - Compact */}
         <div className="bg-gray-50/90 px-4 py-2.5 sm:px-5 sm:py-3 border-b border-gray-100 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#0052cc]" />
+            <div className="w-2 h-2 rounded-full bg-[#1D4ED8]" />
             <h2 className="text-sm sm:text-base font-bold text-gray-900">Update Booking Status</h2>
           </div>
           <button 
@@ -90,7 +90,7 @@ const StatusUpdateModal = ({ booking, onClose, onUpdateSuccess }) => {
             disabled={loading}
             className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 p-1 cursor-pointer"
           >
-            <FaTimes className="text-base" />
+            <FiX className="text-base" />
           </button>
         </div>
 
@@ -115,7 +115,7 @@ const StatusUpdateModal = ({ booking, onClose, onUpdateSuccess }) => {
 
           {error && (
             <div className="p-2.5 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100 flex items-start gap-2">
-              <FaExclamationCircle className="shrink-0 text-red-500 mt-0.5" />
+              <FiAlertCircle className="shrink-0 text-red-500 mt-0.5" />
               <span className="leading-tight">{error}</span>
             </div>
           )}
@@ -141,7 +141,7 @@ const StatusUpdateModal = ({ booking, onClose, onUpdateSuccess }) => {
                       value={s}
                       checked={isSelected}
                       onChange={(e) => setStatus(e.target.value)}
-                      className="w-3.5 h-3.5 text-[#0052cc] border-gray-300 focus:ring-[#0052cc] cursor-pointer"
+                      className="w-3.5 h-3.5 text-[#1D4ED8] border-gray-300 focus:ring-[#1D4ED8] cursor-pointer"
                     />
                     <div className="flex items-center gap-2">
                       {config.icon}
@@ -174,9 +174,9 @@ const StatusUpdateModal = ({ booking, onClose, onUpdateSuccess }) => {
             type="button"
             onClick={handleSave}
             disabled={loading || status === currentBookingStatus}
-            className="flex items-center gap-1.5 px-4 py-1.5 bg-[#0052cc] text-white text-xs font-bold rounded-lg hover:bg-[#003380] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-1.5 bg-[#1D4ED8] text-white text-xs font-bold rounded-lg hover:bg-[#003380] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-xs cursor-pointer"
           >
-            {loading ? <FaSpinner className="animate-spin text-xs" /> : <FaSave className="text-xs" />}
+            {loading ? <FiLoader className="animate-spin text-xs" /> : <FiSave className="text-xs" />}
             <span>{loading ? 'Updating...' : 'Save Status'}</span>
           </button>
         </div>

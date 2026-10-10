@@ -164,7 +164,7 @@ const CarVisualIcon = ({ carName = '', className = 'w-16 h-10' }) => {
             </linearGradient>
             <linearGradient id="hbHover" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="100%" stopColor="#0052cc" />
+              <stop offset="100%" stopColor="#1D4ED8" />
             </linearGradient>
           </defs>
           {/* Main Body */}

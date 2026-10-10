@@ -1,37 +1,37 @@
 import React from 'react';
-import { FaUsers, FaShieldAlt, FaClock, FaStar } from 'react-icons/fa';
+import { FiClock, FiShield, FiStar, FiUsers } from 'react-icons/fi';
 
 import bgImage from '../assets/landing.jpg';
 import img1 from '../assets/car.jpg';
 import img2 from '../assets/wash car.png';
-import img3 from '../assets/home1.png';
-import img4 from '../assets/Complete Detailing.png';
+import img3 from '../assets/home section.png';
+import img4 from '../assets/Tyre & Rim Shine.png';
 
 const TrustStats = () => {
   const stats = [
     {
-      icon: <FaUsers className="text-xl md:text-2xl text-white" />,
+      icon: <FiUsers className="text-xl md:text-2xl text-white" />,
       value: '500+',
       label: 'HAPPY CUSTOMERS',
       desc: 'Trusted by thousands',
       image: img1
     },
     {
-      icon: <FaShieldAlt className="text-xl md:text-2xl text-white" />,
+      icon: <FiShield className="text-xl md:text-2xl text-white" />,
       value: '100%',
       label: 'SATISFACTION',
       desc: 'Guaranteed service',
       image: img2
     },
     {
-      icon: <FaClock className="text-xl md:text-2xl text-white" />,
+      icon: <FiClock className="text-xl md:text-2xl text-white" />,
       value: 'On-Time',
       label: 'SERVICE',
       desc: 'Always on schedule',
       image: img3
     },
     {
-      icon: <FaStar className="text-xl md:text-2xl text-white" />,
+      icon: <FiStar className="text-xl md:text-2xl text-white" />,
       value: '4.8/5',
       label: 'RATING',
       desc: 'Highly rated by users',
@@ -44,8 +44,6 @@ const TrustStats = () => {
 
       {/* Outer wrapper to hold the dark background like a floating card */}
       <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-gray-200 overflow-hidden p-6 md:p-8 transform transition-transform duration-500">
-
-
 
         <div className="relative z-10">
 
@@ -69,8 +67,8 @@ const TrustStats = () => {
 
                 {/* Content Area */}
                 <div className="p-4 md:p-5 flex flex-col items-center text-center flex-grow">
-                  <div className="mb-3 bg-blue-100 p-3 rounded-full border border-blue-200 transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.1)]">
-                    {React.cloneElement(stat.icon, { className: 'text-xl md:text-2xl text-blue-600' })}
+                  <div className="icon-circle mb-3">
+                    {React.cloneElement(stat.icon, { className: 'text-[#1D4ED8]' })}
                   </div>
                   <h3 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-blue-500 to-blue-700 mb-1 tracking-tight">
                     {stat.value}

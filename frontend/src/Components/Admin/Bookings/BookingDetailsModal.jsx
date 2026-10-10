@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaTimes, FaCalendarAlt, FaUser, FaCar, FaMapMarkerAlt, FaMoneyBillWave, FaInfoCircle } from 'react-icons/fa';
+import { FiCalendar, FiInfo, FiMapPin, FiUser, FiX } from 'react-icons/fi';
+import { HiOutlineCurrencyRupee, HiOutlineTruck } from 'react-icons/hi';
 
 const BookingDetailsModal = ({ booking, onClose }) => {
   if (!booking) return null;
@@ -10,14 +11,14 @@ const BookingDetailsModal = ({ booking, onClose }) => {
         {/* Header */}
         <div className="bg-gray-50 px-5 py-3 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <FaInfoCircle className="text-[#0052cc] text-lg" />
+            <FiInfo className="text-[#1D4ED8] text-lg" />
             <h2 className="text-lg font-bold text-gray-900">Booking Details</h2>
           </div>
           <button 
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <FaTimes className="text-lg" />
+            <FiX className="text-lg" />
           </button>
         </div>
 
@@ -28,7 +29,7 @@ const BookingDetailsModal = ({ booking, onClose }) => {
             {/* Customer Info */}
             <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
               <div className="flex items-center gap-2 mb-2 text-gray-800 font-bold text-sm">
-                <FaUser className="text-[#0052cc]" />
+                <FiUser className="text-[#1D4ED8]" />
                 Customer Information
               </div>
               <div className="space-y-1.5 text-[13px]">
@@ -43,27 +44,27 @@ const BookingDetailsModal = ({ booking, onClose }) => {
             {/* Car Info */}
             <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
               <div className="flex items-center gap-2 mb-2 text-gray-800 font-bold text-sm">
-                <FaCar className="text-[#0052cc]" />
+                <HiOutlineTruck className="text-[#1D4ED8]" />
                 Vehicle Information
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <p><span className="text-gray-500">Model:</span> <span className="font-medium text-gray-900">{booking.carModel?.name}</span></p>
                 <p><span className="text-gray-500">Category:</span> <span className="font-medium text-gray-900 capitalize">{booking.carModel?.category}</span></p>
-                <p><span className="text-gray-500">Service:</span> <span className="font-bold text-[#0052cc]">{booking.service}</span></p>
+                <p><span className="text-gray-500">Service:</span> <span className="font-bold text-[#1D4ED8]">{booking.service}</span></p>
               </div>
             </div>
 
             {/* Schedule & Location */}
             <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
               <div className="flex items-center gap-2 mb-2 text-gray-800 font-bold text-sm">
-                <FaCalendarAlt className="text-[#0052cc]" />
+                <FiCalendar className="text-[#1D4ED8]" />
                 Schedule & Location
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <p><span className="text-gray-500">Date:</span> <span className="font-medium text-gray-900">{booking.date}</span></p>
                 <p><span className="text-gray-500">Time:</span> <span className="font-medium text-gray-900">{booking.timeSlot}</span></p>
                 <p className="flex items-start gap-1">
-                  <FaMapMarkerAlt className="text-gray-400 mt-1 flex-shrink-0" />
+                  <FiMapPin className="text-gray-400 mt-1 flex-shrink-0" />
                   <span className="font-medium text-gray-900 leading-tight">
                     {booking.location?.address} {booking.location?.pincode ? `(${booking.location.pincode})` : ''}
                   </span>
@@ -74,7 +75,7 @@ const BookingDetailsModal = ({ booking, onClose }) => {
             {/* Billing */}
             <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
               <div className="flex items-center gap-2 mb-2 text-gray-800 font-bold text-sm">
-                <FaMoneyBillWave className="text-[#0052cc]" />
+                <HiOutlineCurrencyRupee className="text-[#1D4ED8]" />
                 Billing & Status
               </div>
               <div className="space-y-1.5 text-[13px]">

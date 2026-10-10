@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaTrashAlt, FaLock, FaEnvelope, FaExclamationTriangle, FaCheckCircle, FaSpinner } from "react-icons/fa";
+import { FiAlertTriangle, FiCheckCircle, FiLoader, FiLock, FiMail, FiTrash2 } from 'react-icons/fi';
+import deletePhoto from "../../assets/car.jpg";
 
 const BACKEND_URL = "https://carcleanplus-backend.vercel.app/api";
 
@@ -58,10 +59,14 @@ function DeleteAccount() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 flex items-center justify-center px-4 py-20">
       <div className="w-full max-w-md">
 
+        <div className="photo-frame h-40 mb-6">
+          <img src={deletePhoto} alt="Your car" />
+        </div>
+
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-4">
-            <FaTrashAlt className="text-red-500 text-2xl" />
+            <FiTrash2 className="text-red-500 text-2xl" />
           </div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">Delete Account</h1>
           <p className="text-gray-500 text-sm mt-2 leading-relaxed">
@@ -74,7 +79,7 @@ function DeleteAccount() {
           <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.06)] p-8">
             {/* Warning Banner */}
             <div className="flex items-start gap-3 bg-red-50 border border-red-100 rounded-2xl p-4 mb-6">
-              <FaExclamationTriangle className="text-red-500 text-sm shrink-0 mt-0.5" />
+              <FiAlertTriangle className="text-red-500 text-sm shrink-0 mt-0.5" />
               <div className="text-xs text-red-700 leading-relaxed">
                 <strong>This action is irreversible.</strong> Deleting your account will permanently erase your
                 profile, booking history, and all personal data from our servers.
@@ -86,7 +91,7 @@ function DeleteAccount() {
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1.5">Email Address</label>
                 <div className="relative">
-                  <FaEnvelope className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+                  <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
                   <input
                     type="email"
                     required
@@ -102,7 +107,7 @@ function DeleteAccount() {
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1.5">Password</label>
                 <div className="relative">
-                  <FaLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+                  <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
                   <input
                     type="password"
                     required
@@ -124,7 +129,7 @@ function DeleteAccount() {
 
             <p className="text-center text-xs text-gray-400 mt-5">
               Changed your mind?{" "}
-              <a href="/" className="text-[#0052cc] font-semibold hover:underline">
+              <a href="/" className="text-[#1D4ED8] font-semibold hover:underline">
                 Go back to homepage
               </a>
             </p>
@@ -135,7 +140,7 @@ function DeleteAccount() {
         {step === "confirm" && (
           <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.06)] p-8 text-center">
             <div className="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-              <FaExclamationTriangle className="text-red-500 text-xl" />
+              <FiAlertTriangle className="text-red-500 text-xl" />
             </div>
             <h2 className="text-lg font-black text-gray-900 mb-2">Are you absolutely sure?</h2>
             <p className="text-xs text-gray-500 leading-relaxed mb-6">
@@ -151,12 +156,12 @@ function DeleteAccount() {
               >
                 {loading ? (
                   <>
-                    <FaSpinner className="animate-spin text-xs" />
+                    <FiLoader className="animate-spin text-xs" />
                     Deleting Account...
                   </>
                 ) : (
                   <>
-                    <FaTrashAlt className="text-xs" />
+                    <FiTrash2 className="text-xs" />
                     Yes, Delete My Account
                   </>
                 )}
@@ -176,7 +181,7 @@ function DeleteAccount() {
         {step === "success" && (
           <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.06)] p-8 text-center">
             <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-              <FaCheckCircle className="text-emerald-500 text-2xl" />
+              <FiCheckCircle className="text-emerald-500 text-2xl" />
             </div>
             <h2 className="text-xl font-black text-gray-900 mb-2">Account Deleted</h2>
             <p className="text-sm text-gray-500 leading-relaxed mb-6">
@@ -185,7 +190,7 @@ function DeleteAccount() {
             </p>
             <a
               href="/"
-              className="inline-block px-6 py-3 rounded-xl bg-[#0052cc] text-white text-sm font-bold hover:bg-blue-700 transition-all"
+              className="inline-block px-6 py-3 rounded-xl bg-[#1D4ED8] text-white text-sm font-bold hover:bg-blue-700 transition-all"
             >
               Back to Homepage
             </a>
@@ -196,13 +201,13 @@ function DeleteAccount() {
         {step === "error" && (
           <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_10px_35px_rgba(0,82,204,0.06)] p-8 text-center">
             <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-              <FaExclamationTriangle className="text-red-500 text-2xl" />
+              <FiAlertTriangle className="text-red-500 text-2xl" />
             </div>
             <h2 className="text-xl font-black text-gray-900 mb-2">Something Went Wrong</h2>
             <p className="text-sm text-red-500 leading-relaxed mb-6">{errorMsg}</p>
             <button
               onClick={() => { setStep("form"); setErrorMsg(""); }}
-              className="inline-block px-6 py-3 rounded-xl bg-[#0052cc] text-white text-sm font-bold hover:bg-blue-700 transition-all"
+              className="inline-block px-6 py-3 rounded-xl bg-[#1D4ED8] text-white text-sm font-bold hover:bg-blue-700 transition-all"
             >
               Try Again
             </button>
@@ -212,7 +217,7 @@ function DeleteAccount() {
         {/* Footer note */}
         <p className="text-center text-xs text-gray-400 mt-6">
           Need help? Contact us at{" "}
-          <a href="mailto:carcleanplusofficial@gmail.com" className="text-[#0052cc] hover:underline font-medium">
+          <a href="mailto:carcleanplusofficial@gmail.com" className="text-[#1D4ED8] hover:underline font-medium">
             carcleanplusofficial@gmail.com
           </a>
         </p>

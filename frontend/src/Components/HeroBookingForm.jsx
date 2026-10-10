@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaCar, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaShieldAlt, FaArrowRight } from 'react-icons/fa';
-import { MdLocalCarWash } from 'react-icons/md';
+import { FiArrowRight, FiCalendar, FiClock, FiDroplet, FiMapPin, FiShield } from 'react-icons/fi';
+import { HiOutlineTruck } from 'react-icons/hi';
 import { useBooking } from '../context/BookingContext';
 
 const HeroBookingForm = () => {
@@ -41,7 +41,7 @@ const HeroBookingForm = () => {
     <div className="bg-[#0b1325]/90 backdrop-blur-md border border-[#1a2238] rounded-xl p-5 shadow-2xl w-full max-w-[340px] mx-auto">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-          <FaCar className="text-lg" />
+          <HiOutlineTruck className="text-lg" />
         </div>
         <h3 className="text-xl font-bold text-white">Book Your Car Wash</h3>
       </div>
@@ -50,7 +50,7 @@ const HeroBookingForm = () => {
         {/* Car Type */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-            <FaCar className="text-sm" />
+            <HiOutlineTruck className="text-sm" />
           </div>
           <select
             name="carType"
@@ -73,7 +73,7 @@ const HeroBookingForm = () => {
         {/* Service */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-            <MdLocalCarWash className="text-base" />
+            <FiDroplet className="text-base" />
           </div>
           <select
             name="service"
@@ -95,7 +95,7 @@ const HeroBookingForm = () => {
         {/* Location */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-            <FaMapMarkerAlt className="text-sm" />
+            <FiMapPin className="text-sm" />
           </div>
           <select
             name="location"
@@ -122,7 +122,7 @@ const HeroBookingForm = () => {
         {/* Date */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-            <FaCalendarAlt className="text-sm" />
+            <FiCalendar className="text-sm" />
           </div>
           <input
             type="date"
@@ -137,7 +137,7 @@ const HeroBookingForm = () => {
         {/* Time */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-            <FaClock className="text-sm" />
+            <FiClock className="text-sm" />
           </div>
           <select
             name="time"
@@ -163,13 +163,13 @@ const HeroBookingForm = () => {
           type="submit"
           className="w-full bg-primary hover:bg-primary-dark text-white text-sm font-bold py-3 rounded-lg mt-1 flex items-center justify-center gap-2 transition-colors shadow-blue-glow"
         >
-          BOOK NOW <FaArrowRight />
+          BOOK NOW <FiArrowRight />
         </button>
       </form>
 
       {/* Secure Booking Badge */}
       <div className="mt-3 bg-[#072414] border border-[#10b981]/30 rounded-lg p-2.5 flex items-center gap-2.5">
-        <FaShieldAlt className="text-[#10b981] text-xl" />
+        <FiShield className="text-[#10b981] text-xl" />
         <div>
           <p className="text-white font-bold text-[13px] leading-tight">Secure Booking</p>
           <p className="text-gray-400 text-[11px] mt-0.5">Your details are safe with us</p>

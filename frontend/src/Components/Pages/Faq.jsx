@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { 
-  FaQuestionCircle, FaChevronDown, FaPhoneAlt, 
-  FaEnvelope, FaCar, FaClock, FaCheckCircle 
-} from "react-icons/fa";
-import { HiSparkles } from "react-icons/hi2";
+import { FiChevronDown, FiHelpCircle, FiPhone } from 'react-icons/fi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { useBooking } from "../../context/BookingContext";
+import faqPhoto from "../../assets/home section.png";
 
 const FAQ_DATA = [
   {
@@ -75,13 +73,13 @@ function Faq() {
         
         {/* Compact Hero Header */}
         <div className="text-center mb-10 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052cc] text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
-            <HiSparkles className="text-xs" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-[#1D4ED8] text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
+            <HiOutlineSparkles className="text-xs" />
             <span>Got Questions? We've Got Answers</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-blue-600">Questions</span>
+            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] to-blue-600">Questions</span>
           </h1>
 
           <p className="text-gray-500 text-xs sm:text-sm mt-2 font-medium max-w-lg mx-auto">
@@ -89,12 +87,16 @@ function Faq() {
           </p>
         </div>
 
+        <div className="photo-frame h-48 sm:h-64 mb-8">
+          <img src={faqPhoto} alt="Car Clean Plus at home" />
+        </div>
+
         {/* FAQ Accordion Groups */}
         <div className="space-y-6 mb-12">
           {FAQ_DATA.map((group, groupIdx) => (
             <div key={groupIdx} className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgba(0,82,204,0.04)] overflow-hidden p-5 sm:p-7">
-              <h2 className="text-xs font-black uppercase tracking-widest text-[#0052cc] mb-4 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#0052cc]"></span>
+              <h2 className="text-xs font-black uppercase tracking-widest text-[#1D4ED8] mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#1D4ED8]"></span>
                 {group.category}
               </h2>
 
@@ -111,14 +113,14 @@ function Faq() {
                         className="w-full flex items-center justify-between text-left gap-4 group cursor-pointer focus:outline-none"
                       >
                         <span className={`text-sm sm:text-[15px] font-bold transition-colors ${
-                          isOpen ? 'text-[#0052cc]' : 'text-gray-900 group-hover:text-[#0052cc]'
+                          isOpen ? 'text-[#1D4ED8]' : 'text-gray-900 group-hover:text-[#1D4ED8]'
                         }`}>
                           {item.q}
                         </span>
                         <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                          isOpen ? 'bg-blue-50 text-[#0052cc] rotate-180' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'
+                          isOpen ? 'bg-blue-50 text-[#1D4ED8] rotate-180' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'
                         }`}>
-                          <FaChevronDown className="text-xs" />
+                          <FiChevronDown className="text-xs" />
                         </div>
                       </button>
 
@@ -136,10 +138,10 @@ function Faq() {
         </div>
 
         {/* Bottom Help CTA Card */}
-        <div className="bg-gradient-to-r from-blue-900 to-[#0052cc] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+        <div className="bg-gradient-to-r from-blue-900 to-[#1D4ED8] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shrink-0 text-white text-xl">
-              <FaQuestionCircle />
+              <FiHelpCircle />
             </div>
             <div>
               <h3 className="text-lg font-black tracking-tight">Still have a question?</h3>
@@ -152,14 +154,14 @@ function Faq() {
               href="tel:+919120759988"
               className="px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-2"
             >
-              <FaPhoneAlt className="text-xs" />
+              <FiPhone className="text-xs" />
               <span>Call Us</span>
             </a>
 
             <button
               type="button"
               onClick={() => openModal()}
-              className="px-5 py-2.5 bg-white text-[#0052cc] font-black text-xs rounded-xl hover:bg-blue-50 transition-all shadow-md cursor-pointer"
+              className="px-5 py-2.5 bg-white text-[#1D4ED8] font-black text-xs rounded-xl hover:bg-blue-50 transition-all shadow-md cursor-pointer"
             >
               Book Doorstep Wash
             </button>

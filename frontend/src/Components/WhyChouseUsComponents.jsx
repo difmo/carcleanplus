@@ -1,6 +1,6 @@
 import React from "react";
-import { FaCheckCircle, FaArrowRight, FaShieldAlt } from "react-icons/fa";
-import aboutImg from "../assets/about5.png";
+import { FiArrowRight, FiCheckCircle, FiShield } from 'react-icons/fi';
+import aboutImg from "../assets/about section .jpeg";
 import { useNavigate } from "react-router-dom";
 
 function WhyChouseUsComponents() {
@@ -20,7 +20,7 @@ function WhyChouseUsComponents() {
 
           {/* Left Content */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
-            <p className="text-[#0033cc] font-bold text-[12px] tracking-widest uppercase mb-3">
+            <p className="text-[#1D4ED8] font-bold text-[12px] tracking-widest uppercase mb-3">
               WHY CHOOSE US
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-[42px] font-extrabold text-[#0a192f] leading-[1.1] mb-5 tracking-tight">
@@ -33,7 +33,7 @@ function WhyChouseUsComponents() {
             <ul className="space-y-4 mb-10">
               {points.map((point, index) => (
                 <li key={index} className="flex items-center text-[#0a192f] font-semibold text-[14px]">
-                  <FaCheckCircle className="text-[#0033cc] text-[20px] mr-3 shrink-0" />
+                  <FiCheckCircle className="text-[#1D4ED8] text-[20px] mr-3 shrink-0" />
                   {point}
                 </li>
               ))}
@@ -43,10 +43,10 @@ function WhyChouseUsComponents() {
               <button onClick={() => {
                 const section = document.getElementById("services");
                 if (section) section.scrollIntoView({ behavior: "smooth" });
-              }} className="bg-[#0033cc] hover:bg-[#002299] text-white font-bold text-sm py-3 px-6 rounded-lg flex items-center gap-3 transition-colors shadow-md hover:shadow-lg w-fit">
+              }} className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-bold text-sm py-3 px-6 rounded-full min-h-[44px] flex items-center gap-3 transition-colors shadow-md hover:shadow-lg w-fit">
                 Know More About Us
                 <div className="border border-white/40 rounded-full p-1 flex items-center justify-center">
-                  <FaArrowRight className="text-[10px] text-white" />
+                  <FiArrowRight className="text-[10px] text-white" />
                 </div>
               </button>
             </div>
@@ -54,19 +54,19 @@ function WhyChouseUsComponents() {
 
           {/* Right Image */}
           <div className="w-full lg:w-1/2 relative mt-12 lg:mt-0">
-            <div className="relative rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] h-[350px] md:h-[400px]">
+            <div className="photo-frame h-[350px] md:h-[400px] shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
               <img src={aboutImg} alt="Why Choose Us" className="w-full h-full object-cover object-center" />
             </div>
 
             {/* Satisfaction Badge */}
             <div className="absolute -bottom-8 lg:-bottom-10 right-4 lg:right-[-2rem] bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.12)] p-4 md:p-6 flex items-center gap-4 z-20 border border-gray-50">
-              <span className="text-[#0033cc] font-extrabold text-[40px] leading-none tracking-tighter">100%</span>
+              <span className="text-[#1D4ED8] font-extrabold text-[40px] leading-none tracking-tighter">100%</span>
               <div className="flex flex-col flex-1 pl-4 border-l-[1.5px] border-gray-100">
                 <span className="text-[#0a192f] text-[13px] font-semibold leading-tight">Satisfaction</span>
                 <span className="text-[#0a192f] text-[13px] font-semibold leading-tight">Guaranteed</span>
               </div>
               <div className="w-[42px] h-[42px] bg-[#f0f4ff] rounded-xl flex items-center justify-center shrink-0 ml-2">
-                <FaShieldAlt className="text-[#0033cc] text-[20px]" />
+                <FiShield className="text-[#1D4ED8] text-[20px]" />
               </div>
             </div>
           </div>

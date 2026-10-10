@@ -49,4 +49,27 @@ const superadmin = (req, res, next) => {
   }
 };
 
-module.exports = { protect, admin, superadmin };
+const optionalProtect = async (req, res, next) => {
+  if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer')) {
+    return next();
+  }
+
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select('-password');
+  } catch (error) {
+    req.user = undefined;
+  }
+
+  next();
+};
+
+const staff = (req, res, next) => {
+  if (req.user && req.user.role === 'staff') {
+    return next();
+  }
+  return res.status(403).json({ success: false, message: 'Not authorized as staff' });
+};
+
+module.exports = { protect, optionalProtect, admin, superadmin, staff };

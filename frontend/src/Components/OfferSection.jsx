@@ -1,7 +1,8 @@
 import React from 'react';
+import { FiCheckCircle, FiClock } from 'react-icons/fi';
 import { useBooking } from '../context/BookingContext';
 import { useFestivalTheme } from '../context/FestivalThemeContext';
-import { FaCheckCircle, FaCarSide } from 'react-icons/fa';
+import offerPhoto from '../assets/Complete Detailing.png';
 
 const OfferSection = () => {
   const { openModal } = useBooking();
@@ -46,7 +47,7 @@ const OfferSection = () => {
             <ul className="space-y-4 mb-10 text-left max-w-md mx-auto md:mx-0">
               {currentTheme.features.map((feature, idx) => (
                 <li key={idx} className="flex items-center text-gray-800 font-bold text-[15px]">
-                  <FaCheckCircle className="text-green-500 mr-3 text-2xl shrink-0" />
+                  <FiCheckCircle className="text-green-500 mr-3 text-2xl shrink-0" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -63,18 +64,15 @@ const OfferSection = () => {
 
           {/* Right Visual Content (The Package Card) */}
           <div className="flex-1 w-full max-w-md mx-auto relative mt-10 md:mt-0">
-            <div className={`bg-white p-8 md:p-10 rounded-[40px] border-[3px] ${themeColors.cardBorder} shadow-2xl relative transform hover:-translate-y-2 transition-all duration-500 z-10`}>
+            <div className={`bg-white p-5 md:p-6 rounded-2xl border border-gray-100 ${themeColors.cardBorder} shadow-xl relative transform hover:-translate-y-2 transition-all duration-500 z-10`}>
                {/* Discount Badge */}
                <div className={`absolute -top-6 -right-4 md:-right-6 w-24 h-24 ${themeColors.badgeBg} rounded-full flex flex-col items-center justify-center text-white font-black text-xl border-4 border-white shadow-lg rotate-12`}>
                  <span className="text-2xl leading-none">{currentTheme.discount.split(' ')[0]}</span>
                  <span className="text-xs font-bold uppercase tracking-wider">OFF</span>
                </div>
                
-               <div className="flex justify-center mb-6">
-                 <div className="w-24 h-24 bg-gradient-to-br from-amber-50 to-orange-100 rounded-full flex items-center justify-center shadow-inner relative">
-                   <span className="absolute -top-1 -right-1 text-2xl">{currentTheme.icon}</span>
-                   <FaCarSide className="text-5xl text-amber-500" />
-                 </div>
+               <div className="photo-frame h-48 mb-5">
+                 <img src={offerPhoto} alt={currentTheme.name} />
                </div>
                <h3 className="text-3xl font-extrabold text-center text-gray-900 mb-2 font-heading">{currentTheme.name}</h3>
                <div className="text-center mb-8">
@@ -85,9 +83,7 @@ const OfferSection = () => {
                
                <div className="space-y-4">
                  <div className="bg-gradient-to-r from-gray-50 to-amber-50/50 p-5 rounded-2xl border border-gray-100 flex items-start gap-4">
-                   <div className="bg-white p-3 rounded-xl text-amber-600 mt-1 shadow-sm">
-                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                   </div>
+                   <span className="icon-circle mt-1"><FiClock /></span>
                    <div>
                      <h4 className="font-extrabold text-gray-900 text-lg">Takes 90-120 Mins</h4>
                      <p className="text-sm text-gray-600 font-medium">Detailed and thorough cleaning by our top experts.</p>

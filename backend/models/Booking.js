@@ -10,7 +10,9 @@ const bookingSchema = new mongoose.Schema(
     location: {
       address: { type: String, required: function() { return this.status !== 'lead'; } },
       pincode: { type: String },
-      city: { type: String }
+      city: { type: String },
+      latitude: { type: Number },
+      longitude: { type: Number },
     },
     date: { type: String, required: function() { return this.status !== 'lead'; } },
     timeSlot: { type: String, required: function() { return this.status !== 'lead'; } },
@@ -26,14 +28,39 @@ const bookingSchema = new mongoose.Schema(
     paymentMethod: { type: String, enum: ['Online', 'Cash', 'UPI', 'Pending', 'N/A'], default: 'Online' },
     status: {
       type: String,
-      enum: ['lead', 'pending', 'confirmed', 'completed', 'cancelled', 'blocked'],
+      enum: ['lead', 'pending', 'confirmed', 'accepted', 'on_the_way', 'in_progress', 'completed', 'cancelled', 'blocked'],
       default: 'lead',
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    assignedStaff: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     bookingSource: {
       type: String,
-      enum: ['website', 'phone', 'admin_block'],
+      enum: ['website', 'phone', 'admin_block', 'app'],
       default: 'website'
-    }
+    },
+    addons: [{ name: String, price: Number }],
+    promoCode: { type: String, default: '' },
+    discount: { type: Number, default: 0 },
+    travelFee: { type: Number, default: 0 },
+    creditUsed: { type: Number, default: 0 },
+    planUsed: { type: Boolean, default: false },
+    rating: { type: Number },
+    review: { type: String, default: '' },
+    beforePhoto: { type: String, default: '' },
+    afterPhoto: { type: String, default: '' },
+    collectedCash: { type: Number, default: 0 },
+    collectedUpi: { type: Number, default: 0 },
+    refundAmount: { type: Number, default: 0 },
+    branch: { type: String, default: '' },
+    paymentLinkId: { type: String, default: '' },
+    paymentUrl: { type: String, default: '' },
+    clockedInAt: { type: Date },
   },
   { timestamps: true }
 );

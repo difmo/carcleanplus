@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaEnvelope, FaRupeeSign, FaSpinner, FaExclamationTriangle, FaClock } from 'react-icons/fa';
+import { FiAlertTriangle, FiCalendar, FiClock, FiLoader, FiMail } from 'react-icons/fi';
+import { HiOutlineCurrencyRupee } from 'react-icons/hi';
 import { fetchWithAuth } from '../../utils/api';
+import emptyPhoto from '../../assets/basic wash.png';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -27,7 +29,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-gray-400">
-        <FaSpinner className="animate-spin text-4xl mb-4 text-[#0052cc]" />
+        <FiLoader className="animate-spin text-4xl mb-4 text-[#1D4ED8]" />
         <p className="font-medium">Loading dashboard...</p>
       </div>
     );
@@ -36,7 +38,7 @@ const AdminDashboard = () => {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-red-500">
-        <FaExclamationTriangle className="text-4xl mb-4" />
+        <FiAlertTriangle className="text-4xl mb-4" />
         <p className="font-bold text-lg">{error}</p>
         <button 
           onClick={fetchStats}
@@ -52,28 +54,28 @@ const AdminDashboard = () => {
     {
       title: 'Total Revenue',
       value: `₹${stats.totalRevenue.toLocaleString('en-IN')}`,
-      icon: <FaRupeeSign />,
+      icon: <HiOutlineCurrencyRupee />,
       color: 'text-emerald-600',
       bgColor: 'bg-emerald-500/10',
     },
     {
       title: 'Total Bookings',
       value: stats.totalBookings,
-      icon: <FaCalendarAlt />,
+      icon: <FiCalendar />,
       color: 'text-blue-600',
       bgColor: 'bg-blue-500/10',
     },
     {
       title: 'Pending Action',
       value: stats.pendingBookings,
-      icon: <FaClock />,
+      icon: <FiClock />,
       color: 'text-orange-600',
       bgColor: 'bg-orange-500/10',
     },
     {
       title: 'New Inquiries',
       value: stats.totalInquiries,
-      icon: <FaEnvelope />,
+      icon: <FiMail />,
       color: 'text-purple-600',
       bgColor: 'bg-purple-500/10',
     }
@@ -145,7 +147,7 @@ const AdminDashboard = () => {
                     </td>
                     <td className="p-4">
                       <div className="font-bold text-gray-800 text-[13px]">{booking.carModel?.name || 'Unknown Car'}</div>
-                      <div className="text-[11px] text-[#0052cc] font-bold mt-0.5">{booking.service || 'Unknown Service'}</div>
+                      <div className="text-[11px] text-[#1D4ED8] font-bold mt-0.5">{booking.service || 'Unknown Service'}</div>
                     </td>
                     <td className="p-4 font-black text-gray-900 text-[13px]">
                       ₹{booking.finalPrice || 0}
@@ -167,10 +169,11 @@ const AdminDashboard = () => {
           </div>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-            <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-              <FaCalendarAlt className="text-gray-300" />
+            <div className="photo-frame h-28 w-44 mb-3">
+              <img src={emptyPhoto} alt="" />
             </div>
-            <h3 className="text-gray-500 font-bold text-sm">No recent bookings found</h3>
+            <span className="icon-circle mb-3"><FiCalendar /></span>
+            <h3 className="text-[#6B7280] font-bold text-sm">No recent bookings found</h3>
           </div>
         )}
       </div>

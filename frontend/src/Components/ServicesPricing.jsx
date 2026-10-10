@@ -1,8 +1,11 @@
 import React from 'react';
+import { FiArrowRight, FiCheck, FiClock, FiDroplet } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 import { SERVICES } from '../utils/pricingLogic';
-import { FaArrowRight, FaCheck, FaCarSide, FaRegClock } from 'react-icons/fa';
+import basicWash from '../assets/basic wash.png';
+import interiorImg from '../assets/Interior Cleaning.png';
+import completeImg from '../assets/Complete Detailing.png';
 
 const ServicesPricing = () => {
   const { openModal } = useBooking();
@@ -14,7 +17,8 @@ const ServicesPricing = () => {
       name: 'Basic Wash',
       price: '299',
       desc: 'Basic = Outside',
-      icon: <FaCarSide className="text-4xl text-primary" />,
+      image: basicWash,
+      icon: <FiDroplet />,
       features: [
         'Exterior Wash',
         'Wheel Cleaning',
@@ -31,7 +35,8 @@ const ServicesPricing = () => {
       name: 'Premium Wash',
       price: '499',
       desc: 'Premium = Outside + Inside',
-      icon: <FaCarSide className="text-4xl text-[#0052cc]" />,
+      image: interiorImg,
+      icon: <FiDroplet />,
       features: [
         'Everything in Basic Plus',
         'Interior Vacuum',
@@ -42,14 +47,15 @@ const ServicesPricing = () => {
       time: '45 - 60 mins',
       popular: true,
       bgColor: 'bg-gradient-to-b from-[#f8faff] to-white',
-      borderColor: 'border-2 border-[#0052cc]',
+      borderColor: 'border-2 border-[#1D4ED8]',
     },
     {
       id: SERVICES.COMPLETE,
       name: 'Complete Clean',
       price: '699',
       desc: 'Complete = Full Deep Clean',
-      icon: <FaCarSide className="text-4xl text-[#0052cc]" />,
+      image: completeImg,
+      icon: <FiDroplet />,
       features: [
         'Everything in Premium',
         'Deep Interior Cleaning',
@@ -69,7 +75,7 @@ const ServicesPricing = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-16 flex flex-col items-center">
           <h2 className="text-4xl md:text-[52px] font-sans font-black text-gray-900 mb-4 tracking-tighter leading-tight">
-            Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-[#3377ff]">Wash</span>
+            Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] to-[#3377ff]">Wash</span>
           </h2>
         </div>
 
@@ -77,22 +83,24 @@ const ServicesPricing = () => {
           {packages.map((pkg, index) => (
             <div
               key={index}
-              className={`relative rounded-[20px] transition-all duration-300 ease-out flex flex-col border-[1.5px] p-6 lg:p-8 hover:-translate-y-2 ${pkg.bgColor} ${pkg.borderColor} ${
+              className={`relative rounded-2xl transition-all duration-300 ease-out flex flex-col border-[1.5px] p-6 lg:p-8 hover:-translate-y-2 ${pkg.bgColor} ${pkg.borderColor} ${
                 pkg.popular ? 'md:-translate-y-2 hover:md:-translate-y-4' : ''
               }`}
             >
               {/* Popular Badge */}
               {pkg.popular && (
-                <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#0052cc] to-[#3377ff] text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.15em] rounded-full z-10 whitespace-nowrap border border-[#0052cc]/20">
+                <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#1D4ED8] to-[#3377ff] text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.15em] rounded-full z-10 whitespace-nowrap border border-[#1D4ED8]/20">
                   Most Popular
                 </div>
               )}
 
+              <div className="photo-frame h-40 mb-4">
+                <img src={pkg.image} alt={pkg.name} />
+              </div>
+
               {/* Header: Icon & Title */}
               <div className="flex gap-3 items-start mb-4">
-                <div className="flex-shrink-0 mt-1">
-                  {pkg.icon}
-                </div>
+                <span className="icon-circle">{pkg.icon}</span>
                 <div className="flex flex-col text-left">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
                     <h3 className="text-[17px] md:text-lg font-extrabold text-gray-900 leading-none">{pkg.name}</h3>
@@ -110,7 +118,7 @@ const ServicesPricing = () => {
               <ul className="text-left space-y-2 mb-6 flex-grow">
                 {pkg.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center text-[13px] text-gray-700 font-medium">
-                    <FaCheck className="text-primary mr-2.5 flex-shrink-0 text-[10px]" />
+                    <FiCheck className="text-primary mr-2.5 flex-shrink-0 text-[10px]" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -118,7 +126,7 @@ const ServicesPricing = () => {
 
               {/* Time Estimate */}
               <div className="flex items-center gap-2 text-gray-900 font-bold text-[13px] pt-4 border-t border-gray-200/80 mb-5">
-                <FaRegClock className="text-gray-500 text-base" />
+                <FiClock className="text-gray-500 text-base" />
                 <span>{pkg.time}</span>
               </div>
 
@@ -126,7 +134,7 @@ const ServicesPricing = () => {
               <div className="mt-auto pt-2">
                 <button
                   onClick={() => openModal(null, pkg.id)}
-                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 transform active:scale-95 border-2 ${
+                  className={`w-full min-h-[44px] py-3 rounded-full font-bold text-sm transition-all duration-300 transform active:scale-95 border-2 ${
                     pkg.popular
                       ? 'bg-primary border-primary text-white hover:bg-primary-dark hover:border-primary-dark hover:-translate-y-1'
                       : 'bg-transparent border-primary text-primary hover:bg-primary hover:text-white hover:border-primary hover:-translate-y-1'
@@ -145,7 +153,7 @@ const ServicesPricing = () => {
             className="group relative flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-8 rounded-full overflow-hidden transition-all duration-300"
           >
             <span className="relative z-10 tracking-widest uppercase text-xs font-extrabold">View All Packages</span>
-            <FaArrowRight className="relative z-10 transform group-hover:translate-x-1 transition-transform duration-300 text-sm" />
+            <FiArrowRight className="relative z-10 transform group-hover:translate-x-1 transition-transform duration-300 text-sm" />
           </button>
         </div>
       </div>

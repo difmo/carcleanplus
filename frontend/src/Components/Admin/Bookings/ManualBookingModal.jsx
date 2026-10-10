@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FaTimes, FaPhoneAlt, FaBan, FaCalendarAlt, FaClock, 
-  FaCar, FaUser, FaMapMarkerAlt, FaRupeeSign, FaInfoCircle, 
-  FaCheckCircle, FaExclamationTriangle, FaLock
-} from 'react-icons/fa';
+import { FiAlertTriangle, FiCalendar, FiCheckCircle, FiInfo, FiLock, FiMapPin, FiPhone, FiSlash, FiUser, FiX } from 'react-icons/fi';
 import { fetchWithAuth, BASE_URL } from '../../../utils/api';
 
 const TIME_SLOTS = [
@@ -201,8 +197,8 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
         {/* Header with Mode Switcher */}
         <div className="bg-gray-50/80 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-sm ${activeTab === 'phone' ? 'bg-[#0052cc]' : 'bg-amber-600'}`}>
-              {activeTab === 'phone' ? <FaPhoneAlt /> : <FaBan />}
+            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-sm ${activeTab === 'phone' ? 'bg-[#1D4ED8]' : 'bg-amber-600'}`}>
+              {activeTab === 'phone' ? <FiPhone /> : <FiSlash />}
             </div>
             <div>
               <h2 className="text-lg font-black text-gray-900 tracking-tight">
@@ -220,7 +216,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-white border border-gray-200 text-gray-400 hover:text-gray-700 hover:bg-gray-100 flex items-center justify-center transition-colors cursor-pointer"
           >
-            <FaTimes />
+            <FiX />
           </button>
         </div>
 
@@ -231,11 +227,11 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
             onClick={() => { setActiveTab('phone'); setError(null); }}
             className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'phone'
-                ? 'bg-blue-50 text-[#0052cc] border-2 border-[#0052cc]/30 shadow-xs'
+                ? 'bg-blue-50 text-[#1D4ED8] border-2 border-[#1D4ED8]/30 shadow-xs'
                 : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
             }`}
           >
-            <FaPhoneAlt className="text-xs" />
+            <FiPhone className="text-xs" />
             <span>Customer Phone Booking</span>
           </button>
 
@@ -248,7 +244,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                 : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
             }`}
           >
-            <FaBan className="text-xs" />
+            <FiSlash className="text-xs" />
             <span>Block Slot / Off-Day</span>
           </button>
         </div>
@@ -258,7 +254,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
           
           {error && (
             <div className="p-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100 flex items-center gap-2">
-              <FaExclamationTriangle className="shrink-0 text-red-500" />
+              <FiAlertTriangle className="shrink-0 text-red-500" />
               <span>{error}</span>
             </div>
           )}
@@ -267,10 +263,10 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
           <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/40 p-4 rounded-2xl border border-blue-100/80 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-black uppercase tracking-wider text-gray-800 flex items-center gap-1.5">
-                <FaCalendarAlt className="text-[#0052cc]" /> 1. Select Date & Slot
+                <FiCalendar className="text-[#1D4ED8]" /> 1. Select Date & Slot
               </span>
               {checkingSlots && (
-                <span className="text-[10px] text-[#0052cc] font-bold animate-pulse">Checking slot availability...</span>
+                <span className="text-[10px] text-[#1D4ED8] font-bold animate-pulse">Checking slot availability...</span>
               )}
             </div>
 
@@ -285,7 +281,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#0052cc]"
+                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#1D4ED8]"
                 />
               </div>
 
@@ -325,9 +321,9 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                             ? 'bg-red-50 text-red-700 border-red-200 hover:border-red-300'
                             : isSelected
                             ? activeTab === 'phone'
-                              ? 'bg-[#0052cc] text-white border-[#0052cc] shadow-sm'
+                              ? 'bg-[#1D4ED8] text-white border-[#1D4ED8] shadow-sm'
                               : 'bg-amber-600 text-white border-amber-600 shadow-sm'
-                            : 'bg-white text-gray-800 border-gray-200 hover:border-[#0052cc]/40'
+                            : 'bg-white text-gray-800 border-gray-200 hover:border-[#1D4ED8]/40'
                         }`}
                       >
                         <span className={taken ? 'line-through' : ''}>{slot.label}</span>
@@ -352,7 +348,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
           {activeTab === 'phone' && (
             <div className="space-y-3.5">
               <div className="text-xs font-black uppercase tracking-wider text-gray-800 flex items-center gap-1.5 border-b border-gray-100 pb-1">
-                <FaUser className="text-[#0052cc]" /> 2. Customer & Vehicle Details
+                <FiUser className="text-[#1D4ED8]" /> 2. Customer & Vehicle Details
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -366,7 +362,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                     placeholder="e.g. Ramesh Kumar"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                   />
                 </div>
 
@@ -381,7 +377,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                     placeholder="10-digit mobile number"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                   />
                 </div>
               </div>
@@ -396,7 +392,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                     placeholder="e.g. Honda City / Hyundai Creta"
                     value={carName}
                     onChange={(e) => setCarName(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                   />
                 </div>
 
@@ -407,7 +403,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                   <select
                     value={carCategory}
                     onChange={(e) => setCarCategory(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#0052cc] cursor-pointer"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#1D4ED8] cursor-pointer"
                   >
                     {CAR_BODY_CATEGORIES.map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.label}</option>
@@ -417,7 +413,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
               </div>
 
               <div className="text-xs font-black uppercase tracking-wider text-gray-800 flex items-center gap-1.5 border-b border-gray-100 pb-1 pt-1">
-                <FaMapMarkerAlt className="text-[#0052cc]" /> 3. Service & Location
+                <FiMapPin className="text-[#1D4ED8]" /> 3. Service & Location
               </div>
 
               <div>
@@ -427,7 +423,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                 <select
                   value={service}
                   onChange={(e) => setService(e.target.value)}
-                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#0052cc] cursor-pointer"
+                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#1D4ED8] cursor-pointer"
                 >
                   {SERVICES_LIST.map(s => (
                     <option key={s} value={s}>{s}</option>
@@ -443,7 +439,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                   <select
                     value={area}
                     onChange={(e) => setArea(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#0052cc] cursor-pointer"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#1D4ED8] cursor-pointer"
                   >
                     {LUCKNOW_AREAS.map(a => (
                       <option key={a} value={a}>{a}</option>
@@ -460,7 +456,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                     placeholder="e.g. Flat 302, Green Apartments"
                     value={specificAddress}
                     onChange={(e) => setSpecificAddress(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                   />
                 </div>
               </div>
@@ -476,7 +472,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                       type="number"
                       value={finalPrice}
                       onChange={(e) => setFinalPrice(e.target.value)}
-                      className="w-full bg-white border border-gray-200 pl-7 pr-3 py-2 rounded-xl text-xs font-bold text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                      className="w-full bg-white border border-gray-200 pl-7 pr-3 py-2 rounded-xl text-xs font-bold text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                       placeholder="Amount in Rupees"
                     />
                   </div>
@@ -489,7 +485,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                   <select
                     value={paymentMethod}
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#0052cc] cursor-pointer"
+                    className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-800 focus:outline-none focus:border-[#1D4ED8] cursor-pointer"
                   >
                     <option value="Cash">Cash on Service (Recommended)</option>
                     <option value="UPI">UPI / QR Code</option>
@@ -507,7 +503,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                   placeholder="e.g. Customer wants technician to call before arrival at main gate"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#0052cc]"
+                  className="w-full bg-white border border-gray-200 px-3 py-2 rounded-xl text-xs font-medium text-gray-900 focus:outline-none focus:border-[#1D4ED8]"
                 />
               </div>
             </div>
@@ -517,11 +513,11 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
           {activeTab === 'block' && (
             <div className="space-y-4">
               <div className="text-xs font-black uppercase tracking-wider text-amber-800 flex items-center gap-1.5 border-b border-amber-100 pb-1">
-                <FaLock className="text-amber-600" /> 2. Reason for Blocking Slot
+                <FiLock className="text-amber-600" /> 2. Reason for Blocking Slot
               </div>
 
               <div className="p-3 bg-amber-50/60 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start gap-2.5">
-                <FaInfoCircle className="text-amber-600 shrink-0 text-base mt-0.5" />
+                <FiInfo className="text-amber-600 shrink-0 text-base mt-0.5" />
                 <p className="leading-relaxed">
                   Jab aap slot block karenge, toh website par us slot ke upar line khich jayegi aur <strong>"Not Available"</strong> dikhega. Koi bhi customer online use book nahi kar payega.
                 </p>
@@ -593,7 +589,7 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
               disabled={loading}
               className={`px-6 py-2.5 rounded-xl text-xs font-black text-white shadow-md transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === 'phone'
-                  ? 'bg-[#0052cc] hover:bg-[#003380] shadow-blue-500/20'
+                  ? 'bg-[#1D4ED8] hover:bg-[#003380] shadow-blue-500/20'
                   : 'bg-amber-600 hover:bg-amber-700 shadow-amber-500/20'
               } ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
@@ -601,12 +597,12 @@ const ManualBookingModal = ({ isOpen, onClose, onSuccess, initialMode = 'phone' 
                 <span>Processing...</span>
               ) : activeTab === 'phone' ? (
                 <>
-                  <FaCheckCircle />
+                  <FiCheckCircle />
                   <span>Confirm Phone Booking</span>
                 </>
               ) : (
                 <>
-                  <FaBan />
+                  <FiSlash />
                   <span>Block Slot(s) Now</span>
                 </>
               )}

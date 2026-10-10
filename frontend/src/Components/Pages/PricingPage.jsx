@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { FaCarSide, FaCheck, FaRegClock, FaShieldAlt } from 'react-icons/fa';
-import { HiSparkles } from 'react-icons/hi2';
+import { FiCheck, FiClock, FiDroplet, FiShield } from 'react-icons/fi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { useBooking } from '../../context/BookingContext';
 import { SERVICES } from '../../utils/pricingLogic';
+import basicWash from '../../assets/basic wash.png';
+import interiorImg from '../../assets/Interior Cleaning.png';
+import completeImg from '../../assets/Complete Detailing.png';
 
 const PricingPage = () => {
   useEffect(() => {
@@ -17,6 +20,7 @@ const PricingPage = () => {
       name: 'Basic Wash',
       price: '299',
       desc: 'Exterior Foam Wash & Quick Shine',
+      image: basicWash,
       features: [
         'High-Pressure Exterior Foam Wash',
         'Alloy Wheel & Rim Cleaning',
@@ -33,6 +37,7 @@ const PricingPage = () => {
       name: 'Premium Wash',
       price: '499',
       desc: 'Complete Inside + Outside Clean',
+      image: interiorImg,
       features: [
         'Everything in Basic Wash',
         'Deep High-Power Interior Vacuum',
@@ -43,13 +48,14 @@ const PricingPage = () => {
       ],
       time: '45 - 60 mins',
       popular: true,
-      accentColor: 'border-[#0052cc]'
+      accentColor: 'border-[#1D4ED8]'
     },
     {
       id: SERVICES.COMPLETE,
       name: 'Complete Clean',
       price: '699',
       desc: 'Deep Interior Spa & Exterior Wax',
+      image: completeImg,
       features: [
         'Everything in Premium Wash',
         'Seat Upholstery Foam Shampoo',
@@ -73,12 +79,12 @@ const PricingPage = () => {
         
         {/* Header Section */}
         <div className="text-center mb-12 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052cc] text-xs font-black uppercase tracking-wider mb-3">
-            <HiSparkles className="text-xs" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-[#1D4ED8] text-xs font-black uppercase tracking-wider mb-3">
+            <HiOutlineSparkles className="text-xs" />
             <span>Honest & Transparent Rates</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-            Doorstep Wash <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052cc] to-blue-600">Packages</span>
+            Doorstep Wash <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] to-blue-600">Packages</span>
           </h1>
           <p className="text-gray-500 text-sm sm:text-base mt-2 max-w-xl mx-auto font-medium">
             Professional doorstep car detailing in Lucknow with zero hidden fees. Book online in 60 seconds.
@@ -90,25 +96,27 @@ const PricingPage = () => {
           {packages.map((pkg) => (
             <div
               key={pkg.id}
-              className={`relative bg-white rounded-3xl p-6 sm:p-7 flex flex-col border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+              className={`relative bg-white rounded-2xl p-6 sm:p-7 flex flex-col border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
                 pkg.popular 
-                  ? 'border-[#0052cc] shadow-lg shadow-blue-500/10' 
+                  ? 'border-[#1D4ED8] shadow-lg shadow-blue-500/10' 
                   : 'border-gray-200/80 shadow-xs'
               }`}
             >
               {pkg.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0052cc] text-white text-[10px] font-black px-4 py-1 uppercase tracking-widest rounded-full shadow-md whitespace-nowrap">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#1D4ED8] text-white text-[10px] font-black px-4 py-1 uppercase tracking-widest rounded-full shadow-md whitespace-nowrap">
                   Most Popular
                 </div>
               )}
+
+              <div className="photo-frame h-40 mb-4">
+                <img src={pkg.image} alt={pkg.name} />
+              </div>
 
               {/* Package Title & Price */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xl font-black text-gray-900">{pkg.name}</h3>
-                  <div className="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-[#0052cc]">
-                    <FaCarSide className="text-lg" />
-                  </div>
+                  <span className="icon-circle"><FiDroplet /></span>
                 </div>
                 <p className="text-xs text-gray-500 font-medium mb-3">{pkg.desc}</p>
                 
@@ -120,7 +128,7 @@ const PricingPage = () => {
 
               {/* Time Estimate */}
               <div className="flex items-center gap-2 text-xs font-bold text-gray-600 bg-gray-50 px-3 py-2 rounded-xl mb-5">
-                <FaRegClock className="text-[#0052cc]" />
+                <FiClock className="text-[#1D4ED8]" />
                 <span>Service Duration: {pkg.time}</span>
               </div>
 
@@ -129,7 +137,7 @@ const PricingPage = () => {
                 {pkg.features.map((feat, idx) => (
                   <li key={idx} className="flex items-start text-xs font-medium text-gray-700 gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                      <FaCheck className="text-[9px]" />
+                      <FiCheck className="text-[9px]" />
                     </div>
                     <span>{feat}</span>
                   </li>
@@ -140,9 +148,9 @@ const PricingPage = () => {
               <button
                 type="button"
                 onClick={() => openModal(null, pkg.id)}
-                className={`w-full py-3 rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-98 cursor-pointer ${
+                className={`w-full min-h-[44px] py-3 rounded-full font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-98 cursor-pointer ${
                   pkg.popular
-                    ? 'bg-[#0052cc] hover:bg-[#003380] text-white shadow-blue-500/25 hover:shadow-lg'
+                    ? 'bg-[#1D4ED8] hover:bg-[#003380] text-white shadow-blue-500/25 hover:shadow-lg'
                     : 'bg-gray-900 hover:bg-black text-white hover:shadow-lg'
                 }`}
               >
@@ -153,10 +161,10 @@ const PricingPage = () => {
         </div>
 
         {/* Guarantee Banner */}
-        <div className="max-w-3xl mx-auto bg-gradient-to-r from-blue-900 to-[#0052cc] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+        <div className="max-w-3xl mx-auto bg-gradient-to-r from-blue-900 to-[#1D4ED8] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shrink-0 text-white text-2xl">
-              <FaShieldAlt />
+              <FiShield />
             </div>
             <div>
               <h4 className="text-lg font-black tracking-tight">100% Satisfaction Guarantee</h4>
@@ -166,7 +174,7 @@ const PricingPage = () => {
           <button
             type="button"
             onClick={() => openModal()}
-            className="px-6 py-3 bg-white text-[#0052cc] font-black text-xs uppercase tracking-wider rounded-2xl hover:bg-blue-50 transition-all shadow-md shrink-0 cursor-pointer"
+            className="px-6 py-3 bg-white text-[#1D4ED8] font-black text-xs uppercase tracking-wider rounded-2xl hover:bg-blue-50 transition-all shadow-md shrink-0 cursor-pointer"
           >
             Custom Quote
           </button>

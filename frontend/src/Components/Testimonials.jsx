@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaStar, FaQuoteLeft, FaCheckCircle, FaMapMarkerAlt, FaUsers, FaTrophy, FaClock, FaHeart, FaCar } from 'react-icons/fa';
+import { FiAward, FiCheckCircle, FiClock, FiHeart, FiMapPin, FiMessageCircle, FiStar } from 'react-icons/fi';
+import { HiOutlineTruck } from 'react-icons/hi';
 
 import bgImage from '../assets/home1.png';
 import img1 from '../assets/wash car.png';
@@ -76,7 +77,7 @@ const Testimonials = () => {
           {/* Subtle Car Separator */}
           <div className="flex items-center justify-center gap-3">
             <div className="h-[1px] w-6 bg-primary-light/30"></div>
-            <FaCar className="text-primary text-base" />
+            <HiOutlineTruck className="text-primary text-base" />
             <div className="h-[1px] w-6 bg-primary-light/30"></div>
           </div>
         </div>
@@ -91,7 +92,7 @@ const Testimonials = () => {
 
                 {/* Top Row: Quote Icon & Profile Image */}
                 <div className="flex justify-between items-start mb-4">
-                  <FaQuoteLeft className="text-3xl text-primary/20 group-hover:text-primary/40 transition-colors" />
+                  <FiMessageCircle className="text-3xl text-primary/20 group-hover:text-primary/40 transition-colors" />
 
                   <div className="relative">
                     <div className="w-12 h-12 rounded-full p-0.5 border-2 border-primary-light/30 group-hover:border-primary-light transition-colors">
@@ -103,7 +104,7 @@ const Testimonials = () => {
                     </div>
                     {/* Verified Badge */}
                     <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5">
-                      <FaCheckCircle className="text-primary text-sm" />
+                      <FiCheckCircle className="text-primary text-sm" />
                     </div>
                   </div>
                 </div>
@@ -112,7 +113,7 @@ const Testimonials = () => {
                 <div className="mb-2">
                   <h4 className="font-extrabold text-gray-900 text-base">{review.name}</h4>
                   <div className="flex items-center text-gray-500 text-[10px] md:text-xs font-medium">
-                    <FaMapMarkerAlt className="text-primary mr-1" />
+                    <FiMapPin className="text-primary mr-1" />
                     {review.location}
                   </div>
                 </div>
@@ -120,7 +121,7 @@ const Testimonials = () => {
                 {/* Stars */}
                 <div className="flex text-yellow-400 mb-3 gap-0.5">
                   {[...Array(review.rating)].map((_, i) => (
-                    <FaStar key={i} size={12} />
+                    <FiStar key={i} size={12} />
                   ))}
                 </div>
 
@@ -151,7 +152,7 @@ const Testimonials = () => {
 
             <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0 first:pt-0">
               <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
-                <FaCheckCircle className="text-sm md:text-base" />
+                <FiCheckCircle className="text-sm md:text-base" />
               </div>
               <div>
                 <h5 className="font-extrabold text-gray-900 text-xs md:text-sm">Trusted by 500+</h5>
@@ -161,7 +162,7 @@ const Testimonials = () => {
 
             <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
               <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
-                <FaTrophy className="text-sm md:text-base" />
+                <FiAward className="text-sm md:text-base" />
               </div>
               <div>
                 <h5 className="font-extrabold text-gray-900 text-xs md:text-sm">Premium Quality</h5>
@@ -171,7 +172,7 @@ const Testimonials = () => {
 
             <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
               <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
-                <FaClock className="text-sm md:text-base" />
+                <FiClock className="text-sm md:text-base" />
               </div>
               <div>
                 <h5 className="font-extrabold text-gray-900 text-xs md:text-sm">On-Time Service</h5>
@@ -181,7 +182,7 @@ const Testimonials = () => {
 
             <div className="flex items-center gap-3 px-2 md:px-4 pt-2 md:pt-0">
               <div className="p-2 bg-primary-light/10 text-primary rounded-full shrink-0">
-                <FaHeart className="text-sm md:text-base" />
+                <FiHeart className="text-sm md:text-base" />
               </div>
               <div>
                 <h5 className="font-extrabold text-gray-900 text-xs md:text-sm">100% Satisfaction</h5>

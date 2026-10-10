@@ -1,6 +1,6 @@
 import React from 'react';
+import { FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
 import beforeAfter1 from '../assets/befor vs after1.png';
 import beforeAfter2 from '../assets/before vs after2.png';
 import beforeAfter3 from '../assets/befoer vs after3.png';
@@ -30,7 +30,7 @@ const BeforeAfterGallery = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-10 md:mb-12">
           <h2 className="text-[32px] md:text-[48px] font-extrabold text-[#0f172a] mb-2 md:mb-3 tracking-tight leading-tight" style={{ fontFamily: "'Inter', sans-serif" }}>
-            See The Transformation<span className="text-[#0052cc]">.</span>
+            See The Transformation<span className="text-[#1D4ED8]">.</span>
           </h2>
           <p className="text-[#64748b] text-[16px] md:text-[20px] font-medium tracking-normal" style={{ fontFamily: "'Inter', sans-serif" }}>
             Real results, real shine.
@@ -65,7 +65,7 @@ const BeforeAfterGallery = () => {
         <div className="text-center mt-12 flex justify-center">
           <Link to="/gallery" className="group relative flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white font-bold py-4 px-10 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(0,82,204,0.7)] border-b-4 border-primary-dark">
             <span className="relative z-10 tracking-widest uppercase text-sm font-extrabold">Explore Full Gallery</span>
-            <FaArrowRight className="relative z-10 transform group-hover:translate-x-1.5 transition-transform duration-300 text-lg" />
+            <FiArrowRight className="relative z-10 transform group-hover:translate-x-1.5 transition-transform duration-300 text-lg" />
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
           </Link>
         </div>

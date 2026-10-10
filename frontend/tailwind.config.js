@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0052cc', // Vibrant Blue matching the image
+          DEFAULT: '#1D4ED8',
           light: '#3377ff',
           dark: '#003d99',
           50: '#eef4ff',
@@ -18,7 +18,7 @@ export default {
           dark: '#e2e8f0',
         },
         dark: {
-          DEFAULT: '#0b1325', // Deep navy for hero/footer
+          DEFAULT: '#111827',
           light: '#15203b',
           card: '#111c33',
         },

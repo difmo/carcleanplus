@@ -1,19 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  FaPlus,
-  FaSearch,
-  FaSpinner,
-  FaExclamationTriangle,
-  FaEdit,
-  FaTrashAlt,
-  FaEye,
-  FaEyeSlash,
-  FaImages,
-  FaTag,
-  FaCalendarAlt,
-  FaCheckCircle
-} from 'react-icons/fa';
+import { FiAlertTriangle, FiCalendar, FiCheckCircle, FiEdit2, FiEye, FiEyeOff, FiImage, FiLoader, FiPlus, FiSearch, FiTag, FiTrash2 } from 'react-icons/fi';
 import { fetchWithAuth } from '../../../utils/api';
+import emptyPhoto from '../../../assets/Interior Cleaning.png';
 import UploadGalleryModal from './UploadGalleryModal';
 
 const AdminGallery = () => {
@@ -116,7 +104,7 @@ const AdminGallery = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2.5">
-            <FaImages className="text-[#0052cc]" />
+            <FiImage className="text-[#1D4ED8]" />
             Work Gallery Management
           </h1>
           <p className="text-gray-500 text-sm mt-1 font-medium">
@@ -129,9 +117,9 @@ const AdminGallery = () => {
             setEditingItem(null);
             setIsUploadOpen(true);
           }}
-          className="px-5 py-2.5 bg-[#0052cc] hover:bg-[#0747a6] text-white rounded-xl font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer self-start md:self-auto"
+          className="px-5 py-2.5 bg-[#1D4ED8] hover:bg-[#0747a6] text-white rounded-xl font-bold text-sm shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer self-start md:self-auto"
         >
-          <FaPlus className="text-xs" />
+          <FiPlus className="text-xs" />
           <span>Upload New Image</span>
         </button>
       </div>
@@ -139,8 +127,8 @@ const AdminGallery = () => {
       {/* Stats Summary Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-xl font-bold">
-            <FaImages />
+          <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xl font-bold">
+            <FiImage />
           </div>
           <div>
             <div className="text-2xl font-black text-gray-900">{items.length}</div>
@@ -152,7 +140,7 @@ const AdminGallery = () => {
 
         <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-xl font-bold">
-            <FaCheckCircle />
+            <FiCheckCircle />
           </div>
           <div>
             <div className="text-2xl font-black text-gray-900">
@@ -166,7 +154,7 @@ const AdminGallery = () => {
 
         <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">
-            <FaTag />
+            <FiTag />
           </div>
           <div>
             <div className="text-2xl font-black text-gray-900">
@@ -183,13 +171,13 @@ const AdminGallery = () => {
       <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
           <input
             type="text"
             placeholder="Search by title, description or tag..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0052cc] focus:border-transparent transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1D4ED8] focus:border-transparent transition-all"
           />
         </div>
 
@@ -204,7 +192,7 @@ const AdminGallery = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                   isSelected
-                    ? 'bg-[#0052cc] text-white shadow-sm'
+                    ? 'bg-[#1D4ED8] text-white shadow-sm'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -219,12 +207,12 @@ const AdminGallery = () => {
       <div className="flex-1">
         {loading ? (
           <div className="bg-white rounded-2xl border border-gray-100 p-20 flex flex-col items-center justify-center text-gray-400">
-            <FaSpinner className="animate-spin text-4xl mb-3 text-[#0052cc]" />
+            <FiLoader className="animate-spin text-4xl mb-3 text-[#1D4ED8]" />
             <p className="font-bold text-sm text-gray-600">Loading gallery photos...</p>
           </div>
         ) : error ? (
           <div className="bg-white rounded-2xl border border-red-100 p-12 flex flex-col items-center justify-center text-red-500">
-            <FaExclamationTriangle className="text-4xl mb-3" />
+            <FiAlertTriangle className="text-4xl mb-3" />
             <p className="font-bold text-base">{error}</p>
             <button
               onClick={fetchItems}
@@ -234,10 +222,11 @@ const AdminGallery = () => {
             </button>
           </div>
         ) : filteredItems.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 p-16 flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-50 text-[#0052cc] flex items-center justify-center text-2xl mb-4">
-              <FaImages />
+          <div className="bg-white rounded-2xl border border-gray-100 p-10 flex flex-col items-center justify-center text-center">
+            <div className="photo-frame h-32 w-52 mb-4">
+              <img src={emptyPhoto} alt="" />
             </div>
+            <span className="icon-circle mb-4"><FiImage /></span>
             <h3 className="text-lg font-black text-gray-900 mb-1">
               {items.length === 0 ? 'No Gallery Photos Yet' : 'No Matching Photos Found'}
             </h3>
@@ -251,9 +240,9 @@ const AdminGallery = () => {
                 setEditingItem(null);
                 setIsUploadOpen(true);
               }}
-              className="px-5 py-2.5 bg-[#0052cc] hover:bg-[#0747a6] text-white rounded-xl font-bold text-sm shadow-md shadow-blue-500/20 transition-all flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#1D4ED8] hover:bg-[#0747a6] text-white rounded-xl font-bold text-sm shadow-md shadow-blue-500/20 transition-all flex items-center gap-2"
             >
-              <FaPlus className="text-xs" />
+              <FiPlus className="text-xs" />
               <span>Upload Photo Now</span>
             </button>
           </div>
@@ -275,7 +264,7 @@ const AdminGallery = () => {
 
                   {/* Category Pill Overlay */}
                   <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-white text-[11px] font-bold border border-white/10 flex items-center gap-1.5">
-                    <FaTag className="text-blue-400 text-[10px]" />
+                    <FiTag className="text-blue-400 text-[10px]" />
                     <span>{item.category}</span>
                   </div>
 
@@ -309,7 +298,7 @@ const AdminGallery = () => {
                   {/* Footer & Actions */}
                   <div className="pt-3 border-t border-gray-50 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-1.5 text-gray-400 text-[11px]">
-                      <FaCalendarAlt className="text-gray-300" />
+                      <FiCalendar className="text-gray-300" />
                       <span>{formatDate(item.createdAt)}</span>
                     </div>
 
@@ -325,7 +314,7 @@ const AdminGallery = () => {
                         }`}
                         title={item.isActive ? 'Hide from public' : 'Show in public'}
                       >
-                        {item.isActive ? <FaEyeSlash /> : <FaEye />}
+                        {item.isActive ? <FiEyeOff /> : <FiEye />}
                       </button>
 
                       {/* Edit */}
@@ -335,10 +324,10 @@ const AdminGallery = () => {
                           setEditingItem(item);
                           setIsUploadOpen(true);
                         }}
-                        className="p-2 text-gray-400 hover:text-[#0052cc] hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-gray-400 hover:text-[#1D4ED8] hover:bg-blue-50 rounded-lg transition-colors"
                         title="Edit Details"
                       >
-                        <FaEdit />
+                        <FiEdit2 />
                       </button>
 
                       {/* Delete */}
@@ -348,7 +337,7 @@ const AdminGallery = () => {
                         className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Delete Image"
                       >
-                        <FaTrashAlt />
+                        <FiTrash2 />
                       </button>
                     </div>
                   </div>
@@ -377,7 +366,7 @@ const AdminGallery = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
             <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-xl mx-auto mb-4">
-              <FaTrashAlt />
+              <FiTrash2 />
             </div>
             <h3 className="text-base font-black text-center text-gray-900 mb-2">
               Delete Gallery Image?
@@ -401,7 +390,7 @@ const AdminGallery = () => {
                 className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 font-bold text-xs text-white shadow-md shadow-red-500/20 flex items-center justify-center gap-2"
               >
                 {isDeleting ? (
-                  <FaSpinner className="animate-spin text-xs" />
+                  <FiLoader className="animate-spin text-xs" />
                 ) : (
                   <span>Yes, Delete</span>
                 )}
@@ -430,7 +419,7 @@ const AdminGallery = () => {
             </div>
             <div className="p-6">
               <div className="flex items-center justify-between gap-4 mb-2">
-                <span className="px-3 py-1 bg-blue-50 text-[#0052cc] rounded-lg text-xs font-bold">
+                <span className="px-3 py-1 bg-blue-50 text-[#1D4ED8] rounded-lg text-xs font-bold">
                   {previewImage.category}
                 </span>
                 <span className="text-xs text-gray-400 font-medium">

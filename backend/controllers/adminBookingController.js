@@ -1,12 +1,39 @@
 const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
+const { notifyBooking, notifyDesk, notifyStaffJob } = require('../utils/notify');
+const { slotIsFull, getDateVariations: slotDateVariations } = require('../utils/slots');
 
 // @desc    Get all bookings
 // @route   GET /api/admin/bookings
 // @access  Private/Admin
 const getAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find({}).sort({ createdAt: -1 });
+    const filter = {};
+    if (req.query.status) filter.status = String(req.query.status).toLowerCase();
+    if (req.query.date) {
+      const dates = slotDateVariations(String(req.query.date));
+      filter.date = dates.length ? { $in: dates } : String(req.query.date);
+    }
+    if (req.query.staff) {
+      if (!mongoose.Types.ObjectId.isValid(String(req.query.staff))) {
+        return res.status(400).json({ success: false, message: 'Invalid staff id' });
+      }
+      filter.assignedStaff = req.query.staff;
+    }
+    if (req.query.payment) filter.paymentMethod = req.query.payment;
+    if (req.query.branch) filter.branch = req.query.branch;
+    if (req.query.q) {
+      const q = String(req.query.q).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filter.$or = [
+        { 'customerDetails.fullName': new RegExp(q, 'i') },
+        { 'customerDetails.mobile': new RegExp(q, 'i') },
+        { service: new RegExp(q, 'i') },
+      ];
+    }
+
+    const bookings = await Booking.find(filter)
+      .sort({ createdAt: -1 })
+      .populate('assignedStaff', 'name phone role');
     res.status(200).json({ success: true, count: bookings.length, data: bookings });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -50,7 +77,7 @@ const updateBookingStatus = async (req, res) => {
     }
 
     const normalizedStatus = status.toLowerCase();
-    const validStatuses = ['lead', 'pending', 'confirmed', 'completed', 'cancelled', 'blocked'];
+    const validStatuses = ['lead', 'pending', 'confirmed', 'accepted', 'on_the_way', 'in_progress', 'completed', 'cancelled', 'blocked'];
     if (!validStatuses.includes(normalizedStatus)) {
       return res.status(400).json({ success: false, message: `Invalid status: ${status}. Must be one of: ${validStatuses.join(', ')}` });
     }
@@ -63,6 +90,16 @@ const updateBookingStatus = async (req, res) => {
 
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    await notifyBooking(booking, normalizedStatus);
+    if (booking.assignedStaff) {
+      const customer = booking.customerDetails?.fullName || 'A customer';
+      await notifyStaffJob(
+        booking,
+        'Desk updated a job',
+        `${customer} is now ${normalizedStatus.replace(/_/g, ' ')}.`,
+      );
     }
 
     res.status(200).json({ success: true, message: 'Booking status updated successfully', data: booking });
@@ -129,18 +166,27 @@ const createManualBooking = async (req, res) => {
         ]
       : [timeSlot];
 
-    // Check collision for the selected slot(s)
     for (const slot of slotsToProcess) {
-      const existingBooking = await Booking.findOne({
-        date: { $in: dateVariations },
-        timeSlot: { $regex: new RegExp(slot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[-–]/g, '.*'), 'i') },
-        status: { $in: ['pending', 'confirmed', 'completed', 'paid', 'blocked'] }
-      });
-
-      if (existingBooking) {
+      if (type === 'block_slot') {
+        const alreadyBlocked = await Booking.findOne({
+          date: { $in: dateVariations },
+          timeSlot: slot,
+          status: 'blocked',
+          'location.city': city || 'Lucknow',
+        });
+        if (alreadyBlocked) {
+          return res.status(409).json({
+            success: false,
+            message: `Slot '${slot}' on ${date} is already blocked.`,
+          });
+        }
+        continue;
+      }
+      const full = await slotIsFull({ date, timeSlot: slot, city });
+      if (full) {
         return res.status(409).json({
           success: false,
-          message: `Slot '${slot}' on ${date} is already ${existingBooking.status === 'blocked' ? 'blocked' : 'booked'} (${existingBooking.customerDetails?.fullName || 'Existing booking'}). Please choose another slot.`
+          message: `Slot '${slot}' on ${date} is full. Please choose another slot.`,
         });
       }
     }
@@ -209,6 +255,13 @@ const createManualBooking = async (req, res) => {
       bookingSource: 'phone'
     });
 
+    const customer = customerName || 'A customer';
+    await notifyDesk(
+      'Phone booking',
+      `${customer} · ${service || 'Wash'} · ${date} ${timeSlot}`,
+      newBooking._id,
+    );
+
     res.status(201).json({
       success: true,
       message: `Phone booking confirmed for ${customerName} on ${date} (${timeSlot})`,
@@ -243,10 +296,52 @@ const deleteBooking = async (req, res) => {
   }
 };
 
+const assignBooking = async (req, res) => {
+  try {
+    const User = require('../models/User');
+    const { staffId } = req.body;
+    if (!staffId) {
+      return res.status(400).json({ success: false, message: 'Choose a staff member' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.params.id) || !mongoose.Types.ObjectId.isValid(staffId)) {
+      return res.status(400).json({ success: false, message: 'Invalid id' });
+    }
+
+    const staffUser = await User.findById(staffId);
+    if (!staffUser || staffUser.role !== 'staff') {
+      return res.status(400).json({ success: false, message: 'That account is not staff' });
+    }
+
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    booking.assignedStaff = staffUser._id;
+    await booking.save();
+    await booking.populate('assignedStaff', 'name phone role');
+    const customer = booking.customerDetails?.fullName || 'A customer';
+    await notifyStaffJob(
+      booking,
+      'New job',
+      `${customer} · ${booking.service || 'Wash'} · ${booking.date || ''} ${booking.timeSlot || ''}`.trim(),
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: `Assigned to ${staffUser.name}`,
+      data: booking,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getAllBookings,
   getBookingById,
   updateBookingStatus,
   createManualBooking,
-  deleteBooking
+  deleteBooking,
+  assignBooking,
 };

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { FiCheckCircle, FiEye, FiGift, FiSave, FiTag } from 'react-icons/fi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { useFestivalTheme } from '../../../context/FestivalThemeContext';
-import { FaCheckCircle, FaSave, FaEye, FaGift, FaTag } from 'react-icons/fa';
-import { HiSparkles } from 'react-icons/hi2';
+import festivalPhoto from '../../../assets/wash car.png';
 
 const AdminFestivals = () => {
   const {
@@ -50,6 +51,10 @@ const AdminFestivals = () => {
 
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto font-sans">
+      <div className="photo-frame h-40 mb-6">
+        <img src={festivalPhoto} alt="Festival wash offer" />
+      </div>
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
@@ -70,7 +75,7 @@ const AdminFestivals = () => {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl text-xs font-bold transition-all shadow-sm w-fit"
         >
-          <FaEye />
+          <FiEye />
           <span>View Public Offer Section</span>
         </a>
       </div>
@@ -84,7 +89,7 @@ const AdminFestivals = () => {
               : 'bg-red-50 text-red-800 border border-red-200'
           }`}
         >
-          <FaCheckCircle className="text-lg flex-shrink-0" />
+          <FiCheckCircle className="text-lg flex-shrink-0" />
           <span>{saveMessage.text}</span>
         </div>
       )}
@@ -98,7 +103,7 @@ const AdminFestivals = () => {
               Select Festival Atmosphere
             </h2>
             <span className="text-xs text-gray-400 font-bold">
-              Current Live: <span className="text-[#0052cc]">{currentTheme.name}</span>
+              Current Live: <span className="text-[#1D4ED8]">{currentTheme.name}</span>
             </span>
           </div>
 
@@ -114,7 +119,7 @@ const AdminFestivals = () => {
                   onClick={() => setSelectedFestival(key)}
                   className={`p-5 rounded-3xl border-2 transition-all cursor-pointer relative flex flex-col justify-between ${
                     isCardSelected
-                      ? 'border-[#0052cc] bg-blue-50/40 shadow-md ring-2 ring-[#0052cc]/20'
+                      ? 'border-[#1D4ED8] bg-blue-50/40 shadow-md ring-2 ring-[#1D4ED8]/20'
                       : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                   }`}
                 >
@@ -136,7 +141,7 @@ const AdminFestivals = () => {
                           {f.name}
                         </h3>
                         <span className="text-[11px] font-bold text-amber-600 flex items-center gap-1 mt-0.5">
-                          <FaTag className="text-[9px]" /> {f.discount} (₹{f.offerPrice})
+                          <FiTag className="text-[9px]" /> {f.discount} (₹{f.offerPrice})
                         </span>
                       </div>
                     </div>
@@ -161,7 +166,7 @@ const AdminFestivals = () => {
                       className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all ${
                         isCurrentLive
                           ? 'bg-emerald-100 text-emerald-800 cursor-default'
-                          : 'bg-[#0052cc] hover:bg-blue-700 text-white shadow-sm active:scale-95'
+                          : 'bg-[#1D4ED8] hover:bg-blue-700 text-white shadow-sm active:scale-95'
                       }`}
                     >
                       {isCurrentLive ? 'Currently Active' : 'Activate Live'}
@@ -177,7 +182,7 @@ const AdminFestivals = () => {
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-5">
             <h2 className="text-base font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-              <HiSparkles className="text-amber-500 text-lg" />
+              <HiOutlineSparkles className="text-amber-500 text-lg" />
               <span>Offer Details & Banner</span>
             </h2>
 
@@ -195,7 +200,7 @@ const AdminFestivals = () => {
                 type="checkbox"
                 checked={offerActive}
                 onChange={(e) => setOfferActive(e.target.checked)}
-                className="w-5 h-5 text-[#0052cc] rounded-lg accent-[#0052cc] cursor-pointer"
+                className="w-5 h-5 text-[#1D4ED8] rounded-lg accent-[#1D4ED8] cursor-pointer"
               />
             </div>
 
@@ -209,7 +214,7 @@ const AdminFestivals = () => {
                 placeholder={festivals[selectedFestival]?.offerPrice || '899'}
                 value={priceInput}
                 onChange={(e) => setPriceInput(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-[#0052cc] outline-none text-sm font-bold text-gray-900"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-[#1D4ED8] outline-none text-sm font-bold text-gray-900"
               />
               <p className="text-[10px] text-gray-400 mt-1">
                 Leave blank to use default (₹{festivals[selectedFestival]?.offerPrice || '899'})
@@ -226,7 +231,7 @@ const AdminFestivals = () => {
                 placeholder={festivals[selectedFestival]?.discount || '30% OFF'}
                 value={discountInput}
                 onChange={(e) => setDiscountInput(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-[#0052cc] outline-none text-sm font-bold text-gray-900"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-[#1D4ED8] outline-none text-sm font-bold text-gray-900"
               />
               <p className="text-[10px] text-gray-400 mt-1">
                 e.g. 25% OFF, FLAT 30% OFF, SPECIAL OFFER
@@ -238,9 +243,9 @@ const AdminFestivals = () => {
               type="button"
               disabled={isSaving}
               onClick={() => handleSave(selectedFestival)}
-              className="w-full bg-[#0052cc] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95 disabled:opacity-50"
+              className="w-full bg-[#1D4ED8] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95 disabled:opacity-50"
             >
-              <FaSave />
+              <FiSave />
               <span>{isSaving ? 'Updating Website...' : 'Save & Publish Live Theme'}</span>
             </button>
           </div>
@@ -248,7 +253,7 @@ const AdminFestivals = () => {
           {/* Quick Info Box */}
           <div className="bg-amber-50/70 border border-amber-200/80 p-5 rounded-3xl">
             <h4 className="text-xs font-black text-amber-900 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <FaGift className="text-amber-600" />
+              <FiGift className="text-amber-600" />
               <span>How This Works</span>
             </h4>
             <p className="text-xs text-amber-900/80 leading-relaxed font-medium">

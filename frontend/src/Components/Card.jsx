@@ -1,69 +1,62 @@
 import React from "react";
+import { FiCalendar, FiCreditCard, FiGrid, FiMinimize2, FiSettings, FiZap } from 'react-icons/fi';
+import { HiOutlineTruck } from 'react-icons/hi';
 import img5 from "../assets/home1.png";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
-import {
-  FaCalculator,
-  FaCalendarAlt,
-  FaCarAlt,
-  FaCarBattery,
-  FaCompressArrowsAlt,
-  FaIdCardAlt,
-} from "react-icons/fa";
 import CardSlider from "./CardSlider";
-import { RiHomeGearFill } from "react-icons/ri";
 const mydata = [
   {
     key: 1,
-    icon: <RiHomeGearFill />,
+    icon: <FiSettings />,
     title: "Preventative Maintenance",
     descri:
       "Key benefits include reduced downtime, cost savings, improved safety, and optimized performance.",
   },
   {
     key: 2,
-    icon: <FaCalendarAlt />,
+    icon: <FiCalendar />,
     title: "Brake Repair ",
     descri:
       "Brake repair and services involve inspecting, maintaining, and replacing components of a vehicle's braking system. ",
   },
   {
     key: 3,
-    icon: <FaCarAlt />,
+    icon: <HiOutlineTruck />,
     title: "Transmission Service & Repair",
     descri:
       "Vulputato sagittis purus hac ultrices. Nunc semper eleifend tristique venenatis",
   },
   {
     key: 4,
-    icon: <FaIdCardAlt />,
+    icon: <FiCreditCard />,
     title: "Engine Services ",
     descri:
       "Engine services involve the maintenance and repair of a vehicle's engine to ensure optimal performance and longevity",
   },
   {
     key: 5,
-    icon: <FaCompressArrowsAlt />,
+    icon: <FiMinimize2 />,
     title: "Tires & Wheels",
     descri:
       " Tires and wheels are vital components of any vehicle, significantly impacting safety, performance, and comfort",
   },
   {
     key: 6,
-    icon: <FaCarAlt />,
+    icon: <HiOutlineTruck />,
     title: "Exhaust System",
     descri:
       "The exhaust system is essential for directing harmful gases away from the engine and reducing vehicle emissions..",
   },
   {
     key: 7,
-    icon: <FaCarBattery />,
+    icon: <FiZap />,
     title: "Body Service",
     descri:
       "Body service involves the maintenance and repair of a vehicle's exterior components to enhance appearance .",
   },
   {
     key: 8,
-    icon: <FaCalculator />,
+    icon: <FiGrid />,
     title: "Diagnostic Car",
     descri:
       "Diagnostic car services involve identifying and troubleshooting issues within a vehicle using specialized tools and technology",

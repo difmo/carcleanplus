@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaWhatsapp,
-  FaClock, FaFacebookF, FaInstagram, FaYoutube,
-  FaChevronRight, FaShieldAlt, FaLink, FaCar, FaArrowRight
-} from "react-icons/fa";
+import { FiCamera, FiChevronRight, FiClock, FiMail, FiMapPin, FiMessageCircle, FiPhone, FiPlay, FiShare2 } from 'react-icons/fi';
+import { HiOutlineTruck } from 'react-icons/hi';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/carcleanplus.logo.jpeg";
 import footerBg from "../assets/footer.jpg";
@@ -60,20 +57,7 @@ const Footer = () => {
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
   if (isAuthPage) {
-    return (
-      <footer className="w-full font-sans bg-white border-t border-gray-100 py-4 mt-auto relative z-10">
-        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 font-medium gap-2">
-          <p>© {new Date().getFullYear()} Car Clean Plus. All Rights Reserved.</p>
-          <div className="flex items-center gap-4 text-xs text-gray-400">
-            <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-            <span className="text-gray-300">|</span>
-            <Link to="/termsofservice" className="hover:text-primary transition-colors">Terms of Service</Link>
-            <span className="text-gray-300">|</span>
-            <Link to="/helpsupport" className="hover:text-primary transition-colors">Help & Support</Link>
-          </div>
-        </div>
-      </footer>
-    );
+    return null;
   }
 
   return (
@@ -136,16 +120,16 @@ const Footer = () => {
 
             <div className="flex gap-3">
               <a href="#" className="p-2 rounded-full border border-[#1877F2] text-[#1877F2] hover:text-white hover:bg-[#1877F2] transition-colors">
-                <FaFacebookF size={16} />
+                <FiShare2 size={16} />
               </a>
               <a href="https://www.instagram.com/carcleanplus_?utm_source=qr&stkn=MTljbDgyZWRocsRkZQ==" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-[#E1306C] text-[#E1306C] hover:text-white hover:bg-[#E1306C] transition-colors">
-                <FaInstagram size={16} />
+                <FiCamera size={16} />
               </a>
               <a href="#" className="p-2 rounded-full border border-[#FF0000] text-[#FF0000] hover:text-white hover:bg-[#FF0000] transition-colors">
-                <FaYoutube size={16} />
+                <FiPlay size={16} />
               </a>
               <a href="https://wa.me/message/KKFVEXXXUXFXE1" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-[#25D366] text-[#25D366] hover:text-white hover:bg-[#25D366] transition-colors">
-                <FaWhatsapp size={16} />
+                <FiMessageCircle size={16} />
               </a>
             </div>
           </div>
@@ -156,7 +140,8 @@ const Footer = () => {
             <ul className="flex flex-col gap-1.5">
               {quickLinks.map(link => (
                 <li key={link.name}>
-                  <a href="#" onClick={link.action} className="text-gray-700 hover:text-primary text-sm transition-colors font-medium">
+                  <a href="#" onClick={link.action} className="inline-flex items-center gap-2 min-h-[40px] text-[#6B7280] hover:text-[#1D4ED8] text-sm transition-colors font-medium">
+                    <FiChevronRight className="text-[#1D4ED8]" />
                     {link.name}
                   </a>
                 </li>
@@ -170,7 +155,8 @@ const Footer = () => {
             <ul className="flex flex-col gap-1.5">
               {packagesList.map(pkg => (
                 <li key={pkg.name}>
-                  <a href="#" onClick={pkg.action} className="text-gray-700 hover:text-[#0052cc] text-sm transition-colors font-medium">
+                  <a href="#" onClick={pkg.action} className="inline-flex items-center gap-2 min-h-[40px] text-[#6B7280] hover:text-[#1D4ED8] text-sm transition-colors font-medium">
+                    <FiChevronRight className="text-[#1D4ED8]" />
                     {pkg.name}
                   </a>
                 </li>
@@ -184,24 +170,24 @@ const Footer = () => {
             <ul className="flex flex-col gap-2">
               <li>
                 <a href="https://www.google.com/maps/search/4%2F37+Vibhav+Khand+near+Mantri+Awas+Gomti+Nagar+Lucknow" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group cursor-pointer text-gray-700">
-                  <FaMapMarkerAlt className="mt-1 flex-shrink-0 text-gray-500" size={14} />
+                  <FiMapPin className="mt-1 flex-shrink-0 text-gray-500" size={14} />
                   <span className="text-sm font-medium group-hover:text-primary transition-colors leading-tight">3rd Floor, 4/37 Vibhav Khand, near Mantri Awas Colony, Gomti Nagar, Lucknow, Uttar Pradesh 226010</span>
                 </a>
               </li>
               <li>
                 <a href="tel:+919120759988" className="flex items-center gap-3 group cursor-pointer text-gray-700">
-                  <FaPhoneAlt className="flex-shrink-0 text-gray-500" size={12} />
+                  <FiPhone className="flex-shrink-0 text-gray-500" size={12} />
                   <span className="text-sm font-medium group-hover:text-primary transition-colors">+91 91207 59988</span>
                 </a>
               </li>
               <li>
                 <a href="mailto:carcleanplusofficial@gmail.com" className="flex items-center gap-3 group cursor-pointer text-gray-700">
-                  <FaEnvelope className="flex-shrink-0 text-gray-500" size={12} />
+                  <FiMail className="flex-shrink-0 text-gray-500" size={12} />
                   <span className="text-sm font-medium group-hover:text-primary transition-colors">carcleanplusofficial@gmail.com</span>
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-700">
-                <FaClock className="flex-shrink-0 text-gray-500" size={12} />
+                <FiClock className="flex-shrink-0 text-gray-500" size={12} />
                 <span className="text-sm font-medium">Mon - Sat: 8:00 AM - 8:00 PM</span>
               </li>
             </ul>
@@ -215,7 +201,7 @@ const Footer = () => {
         <div className="mx-auto px-4 max-w-6xl">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-3 text-center lg:text-left">
             <div className="flex items-center gap-2 shrink-0">
-              <FaMapMarkerAlt className="text-primary text-sm" />
+              <FiMapPin className="text-primary text-sm" />
               <span className="text-xs font-bold text-gray-900 uppercase tracking-wider">
                 Doorstep Service Areas (Lucknow):
               </span>
@@ -238,7 +224,7 @@ const Footer = () => {
                     updateBooking('city', area);
                     openModal();
                   }}
-                  className="inline-flex items-center hover:text-[#0052cc] hover:underline transition-colors cursor-pointer group"
+                  className="inline-flex items-center hover:text-[#1D4ED8] hover:underline transition-colors cursor-pointer group"
                 >
                   <span className="group-hover:font-semibold">{area}</span>
                   {idx < arr.length - 1 && <span className="ml-2 text-gray-300 no-underline">•</span>}
@@ -255,7 +241,7 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} Car Clean Plus. All Rights Reserved. <span className="hidden md:inline mx-2">|</span> <br className="md:hidden" /> Merchant ID: TPb4N2383whw9M</p>
 
           <div className="flex items-center gap-2 text-gray-400">
-            <FaCar className="text-blue-500 text-xl" />
+            <HiOutlineTruck className="text-blue-500 text-xl" />
           </div>
 
           <div className="flex items-center gap-4 text-sm text-gray-400">

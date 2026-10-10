@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FaSearch, FaSpinner, FaExclamationTriangle, FaEnvelope, FaCalendarAlt } from 'react-icons/fa';
+import { FiAlertTriangle, FiCalendar, FiLoader, FiMail, FiSearch } from 'react-icons/fi';
 import { fetchWithAuth } from '../../../utils/api';
+import emptyPhoto from '../../../assets/about section .jpeg';
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -62,13 +63,13 @@ const AdminContacts = () => {
         {/* Search */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative">
-            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Search messages..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0052cc] focus:border-transparent text-sm w-full sm:w-64"
+              className="pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1D4ED8] focus:border-transparent text-sm w-full sm:w-64"
             />
           </div>
         </div>
@@ -78,12 +79,12 @@ const AdminContacts = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex-1 flex flex-col overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center flex-1 py-20 text-gray-400">
-            <FaSpinner className="animate-spin text-4xl mb-4 text-[#0052cc]" />
+            <FiLoader className="animate-spin text-4xl mb-4 text-[#1D4ED8]" />
             <p className="font-medium">Loading inquiries...</p>
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center flex-1 py-20 text-red-500">
-            <FaExclamationTriangle className="text-4xl mb-4" />
+            <FiAlertTriangle className="text-4xl mb-4" />
             <p className="font-bold text-lg">{error}</p>
             <button 
               onClick={fetchContacts}
@@ -93,8 +94,11 @@ const AdminContacts = () => {
             </button>
           </div>
         ) : filteredContacts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center flex-1 py-20 text-gray-400">
-            <FaEnvelope className="text-5xl mb-4 text-gray-300" />
+          <div className="flex flex-col items-center justify-center flex-1 py-16 text-gray-400">
+            <div className="photo-frame h-32 w-52 mb-3">
+              <img src={emptyPhoto} alt="" />
+            </div>
+            <span className="icon-circle mb-3"><FiMail /></span>
             <p className="font-bold text-lg text-gray-600">No messages found</p>
             <p className="text-sm mt-1">Try adjusting your search.</p>
           </div>
@@ -114,7 +118,7 @@ const AdminContacts = () => {
                   <tr key={contact._id} className="hover:bg-blue-50/30 transition-colors">
                     <td className="p-3 pl-4 whitespace-nowrap">
                       <div className="font-medium text-gray-900 text-[12px] flex items-center gap-2">
-                        <FaCalendarAlt className="text-gray-400" />
+                        <FiCalendar className="text-gray-400" />
                         {formatDate(contact.createdAt)}
                       </div>
                     </td>
@@ -124,7 +128,7 @@ const AdminContacts = () => {
                       <div className="text-[11px] text-gray-500 mt-0.5">{contact.phone}</div>
                     </td>
                     <td className="p-3">
-                      <div className="font-bold text-[#0052cc] text-[13px]">{contact.subject}</div>
+                      <div className="font-bold text-[#1D4ED8] text-[13px]">{contact.subject}</div>
                     </td>
                     <td className="p-3">
                       <div className="text-[12px] text-gray-700 leading-relaxed max-w-sm">
