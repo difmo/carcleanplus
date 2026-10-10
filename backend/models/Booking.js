@@ -61,6 +61,20 @@ const bookingSchema = new mongoose.Schema(
     paymentLinkId: { type: String, default: '' },
     paymentUrl: { type: String, default: '' },
     clockedInAt: { type: Date },
+    washerName: { type: String, default: '' },
+    washerPhone: { type: String, default: '' },
+    timeline: [{
+      status: { type: String, required: true },
+      at: { type: Date, default: Date.now },
+      byName: { type: String, default: '' },
+      byRole: { type: String, default: '' },
+    }],
+    reports: [{
+      note: { type: String, default: '' },
+      image: { type: String, default: '' },
+      at: { type: Date, default: Date.now },
+      byName: { type: String, default: '' },
+    }],
   },
   { timestamps: true }
 );

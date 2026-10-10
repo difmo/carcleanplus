@@ -14,6 +14,7 @@ const {
   receiptMyBooking,
   listMessages,
   postMessage,
+  reportMyBooking,
 } = require('../controllers/bookingController');
 
 router.get('/booked-slots', getBookedSlots);
@@ -25,6 +26,7 @@ router.put('/:id/rate', protect, rateMyBooking);
 router.get('/:id/receipt', protect, receiptMyBooking);
 router.get('/:id/messages', protect, listMessages);
 router.post('/:id/messages', protect, postMessage);
+router.post('/:id/report', protect, reportMyBooking);
 router.put('/:id', optionalProtect, updateBooking);
 router.post('/', optionalProtect, createBooking);
 

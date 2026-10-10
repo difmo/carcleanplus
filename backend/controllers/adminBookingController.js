@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
+const { pushStatus } = require('../utils/bookingPath');
 const { notifyBooking, notifyDesk, notifyStaffJob } = require('../utils/notify');
 const { slotIsFull, getDateVariations: slotDateVariations } = require('../utils/slots');
 
@@ -82,15 +83,18 @@ const updateBookingStatus = async (req, res) => {
       return res.status(400).json({ success: false, message: `Invalid status: ${status}. Must be one of: ${validStatuses.join(', ')}` });
     }
 
-    const booking = await Booking.findByIdAndUpdate(
-      req.params.id,
-      { $set: { status: normalizedStatus } },
-      { new: true, runValidators: false }
-    );
-
+    const booking = await Booking.findById(req.params.id);
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
     }
+    booking.status = normalizedStatus;
+    pushStatus(
+      booking,
+      normalizedStatus,
+      req.user?.name || 'Desk',
+      req.user?.role || 'admin',
+    );
+    await booking.save();
 
     await notifyBooking(booking, normalizedStatus);
     if (booking.assignedStaff) {

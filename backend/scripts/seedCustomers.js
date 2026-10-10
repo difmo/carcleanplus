@@ -36,13 +36,24 @@ const slots = [
   'Slot 6 \u2013 04:30 PM',
 ];
 
-function tomorrowYmd() {
+function ymdOffset(days) {
   const ist = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
-  ist.setUTCDate(ist.getUTCDate() + 1);
+  ist.setUTCDate(ist.getUTCDate() + days);
   const month = String(ist.getUTCMonth() + 1).padStart(2, '0');
   const day = String(ist.getUTCDate()).padStart(2, '0');
   return `${ist.getUTCFullYear()}-${month}-${day}`;
 }
+
+function tomorrowYmd() {
+  return ymdOffset(1);
+}
+
+const sampleOrders = [
+  { service: 'Basic Wash', status: 'pending', price: 299, day: 1, slot: 0, paymentMethod: 'Cash', address: '12 Hazratganj, Lucknow' },
+  { service: 'Premium Wash', status: 'confirmed', price: 499, day: 1, slot: 2, paymentMethod: 'UPI', address: '44 Gomti Nagar, Lucknow' },
+  { service: 'Complete Clean', status: 'on_the_way', price: 699, day: 0, slot: 3, paymentMethod: 'Online', address: '8 Vibhuti Khand, Lucknow' },
+  { service: 'Festive Offer', status: 'completed', price: 899, day: -3, slot: 1, paymentMethod: 'Cash', address: '21 Aliganj, Lucknow', rating: 5 },
+];
 
 async function api(path, { method = 'GET', token, body } = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -259,43 +270,122 @@ async function seedViaMongo() {
       console.log(`vehicle  ${customer.email} kept ${customer.vehicle.name}`);
     }
 
-    if (!customer.booking) continue;
-    const existing = await Booking.findOne({
+    const existing = await Booking.countDocuments({
       user: user._id,
-      'customerDetails.instructions': 'Seed booking for app testing',
+      'customerDetails.instructions': /^Sample order/,
     });
-    if (existing) {
-      console.log(`booking  ${customer.email} kept`);
+    if (existing >= sampleOrders.length) {
+      console.log(`booking  ${customer.email} kept ${existing}`);
       continue;
     }
-    const booking = await Booking.create({
-      carModel: { name: customer.vehicle.name, category: customer.vehicle.category },
-      service: 'Basic Wash',
-      location: { address: '12 Hazratganj, Lucknow', city: 'Lucknow', pincode: '226001' },
-      date: tomorrowYmd(),
-      timeSlot: slots[0],
-      customerDetails: {
-        fullName: customer.name,
-        mobile: customer.phone,
-        instructions: 'Seed booking for app testing',
-      },
-      finalPrice: 299,
-      paymentMethod: 'Cash',
-      paymentStatus: 'pending',
-      status: 'pending',
-      bookingSource: 'app',
-      user: user._id,
-    });
-    await AppNotification.create({
-      user: user._id,
-      title: 'Wash booked',
-      body: `Basic Wash for ${customer.vehicle.name} is pending.`,
-      booking: booking._id,
-    });
-    console.log(`booking  ${customer.email} added ${booking.date}`);
+    for (const sample of sampleOrders) {
+      const marker = `Sample order ${sample.service}`;
+      const already = await Booking.findOne({
+        user: user._id,
+        'customerDetails.instructions': marker,
+      });
+      if (already) continue;
+      const booking = await Booking.create({
+        carModel: { name: customer.vehicle.name, category: customer.vehicle.category },
+        service: sample.service,
+        location: { address: sample.address, city: 'Lucknow', pincode: '226001' },
+        date: ymdOffset(sample.day),
+        timeSlot: slots[sample.slot],
+        customerDetails: {
+          fullName: customer.name,
+          mobile: customer.phone,
+          instructions: marker,
+        },
+        finalPrice: sample.price,
+        paymentMethod: sample.paymentMethod,
+        paymentStatus: sample.status === 'completed' ? 'paid' : 'pending',
+        status: sample.status,
+        rating: sample.rating,
+        bookingSource: 'app',
+        user: user._id,
+      });
+      await AppNotification.create({
+        user: user._id,
+        title: 'Wash booked',
+        body: `${sample.service} for ${customer.vehicle.name} is ${sample.status.replaceAll('_', ' ')}.`,
+        booking: booking._id,
+      });
+      console.log(`booking  ${customer.email} added ${sample.status} ${booking.date}`);
+    }
   }
 
+  const seededIds = saved.map((entry) => entry.user._id);
+  const others = await User.find({ role: 'customer', _id: { $nin: seededIds } });
+  for (const user of others) {
+    const count = await Booking.countDocuments({ user: user._id });
+    if (count > 0) continue;
+    for (const sample of sampleOrders) {
+      await Booking.create({
+        carModel: { name: 'Maruti Suzuki Swift', category: 'Compact' },
+        service: sample.service,
+        location: { address: sample.address, city: 'Lucknow', pincode: '226001' },
+        date: ymdOffset(sample.day),
+        timeSlot: slots[sample.slot],
+        customerDetails: {
+          fullName: user.name,
+          mobile: user.phone || '9000000099',
+          instructions: `Sample order ${sample.service}`,
+        },
+        finalPrice: sample.price,
+        paymentMethod: sample.paymentMethod,
+        paymentStatus: sample.status === 'completed' ? 'paid' : 'pending',
+        status: sample.status,
+        rating: sample.rating,
+        bookingSource: 'app',
+        user: user._id,
+      });
+    }
+    console.log(`booking  ${user.email} added ${sampleOrders.length} sample orders`);
+  }
+
+  const owned = await Booking.find({ user: { $in: seededIds } });
+  for (const booking of owned) {
+    const customerName = booking.customerDetails?.fullName || 'Customer';
+    const steps = pathForStatus(booking.status);
+    const last = booking.timeline && booking.timeline[booking.timeline.length - 1];
+    if (!last || last.status !== booking.status || booking.timeline.length < steps.length) {
+      const end = booking.updatedAt || new Date();
+      booking.timeline = steps.map((status, index) => ({
+        status,
+        at: new Date(end.getTime() - (steps.length - 1 - index) * 40 * 60 * 1000),
+        byName: actorName(status, customerName),
+        byRole: actorRole(status),
+      }));
+    }
+    if (['on_the_way', 'in_progress', 'completed'].includes(booking.status)) {
+      booking.washerName = booking.washerName || 'Amit Sharma';
+      booking.washerPhone = booking.washerPhone || '9876500101';
+    }
+    await booking.save();
+  }
+  console.log(`path     filled ${owned.length} orders`);
+
   await mongoose.disconnect();
+}
+
+function pathForStatus(status) {
+  if (status === 'cancelled' || status === 'canceled') return ['pending', 'cancelled'];
+  const steps = ['pending', 'confirmed', 'on_the_way', 'completed'];
+  const index = steps.indexOf(status === 'accepted' ? 'confirmed' : status === 'in_progress' ? 'on_the_way' : status);
+  if (index < 0) return ['pending'];
+  return steps.slice(0, index + 1);
+}
+
+function actorName(status, customerName) {
+  if (status === 'pending' || status === 'cancelled') return customerName;
+  if (status === 'confirmed') return 'Wash desk';
+  return 'Amit Sharma';
+}
+
+function actorRole(status) {
+  if (status === 'pending' || status === 'cancelled') return 'customer';
+  if (status === 'confirmed') return 'admin';
+  return 'washer';
 }
 
 const run = process.env.MONGO_URI ? seedViaMongo : seedViaApi;

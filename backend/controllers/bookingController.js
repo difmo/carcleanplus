@@ -1,4 +1,5 @@
 const Booking = require('../models/Booking');
+const { pushStatus } = require('../utils/bookingPath');
 const User = require('../models/User');
 const SupportMessage = require('../models/SupportMessage');
 const transporter = require('../config/mail');
@@ -341,6 +342,12 @@ const createBooking = async (req, res) => {
       user: req.user ? req.user._id : undefined,
       status: 'pending',
       bookingSource: req.body.bookingSource === 'app' ? 'app' : 'website',
+      timeline: [{
+        status: 'pending',
+        at: new Date(),
+        byName: customerDetails.fullName || req.user?.name || 'Customer',
+        byRole: 'customer',
+      }],
     });
 
     await notifyNewCustomer(booking);
@@ -460,6 +467,7 @@ const cancelMyBooking = async (req, res) => {
     }
 
     booking.status = 'cancelled';
+    pushStatus(booking, 'cancelled', req.user?.name || booking.customerDetails?.fullName || 'Customer', 'customer');
     await booking.save();
     const cancelledName = booking.customerDetails?.fullName || 'A customer';
     await notifyDesk('Wash cancelled', `${cancelledName} cancelled ${booking.service || 'a wash'}.`, booking._id);
@@ -617,6 +625,34 @@ const postMessage = async (req, res) => {
   }
 };
 
+const reportMyBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
+    if (!ownsBooking(booking, req.user)) {
+      return res.status(403).json({ success: false, message: 'This booking is not yours' });
+    }
+    const note = String(req.body.note || '').trim();
+    const image = String(req.body.image || '');
+    if (!note && !image) {
+      return res.status(400).json({ success: false, message: 'Add a note or a photo' });
+    }
+    if (image.length > 1800000) {
+      return res.status(400).json({ success: false, message: 'That photo is too large. Choose a smaller one.' });
+    }
+    booking.reports.push({
+      note: note.slice(0, 500),
+      image,
+      at: new Date(),
+      byName: req.user.name || booking.customerDetails?.fullName || 'Customer',
+    });
+    await booking.save();
+    return res.status(201).json({ success: true, message: 'Report sent', data: booking });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getBookedSlots,
   createLead,
@@ -629,4 +665,5 @@ module.exports = {
   receiptMyBooking,
   listMessages,
   postMessage,
+  reportMyBooking,
 };
