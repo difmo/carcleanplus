@@ -24,7 +24,6 @@ import AdminGallery from "./Components/Admin/Gallery/AdminGallery";
 import AdminFestivals from "./Components/Admin/Festivals/AdminFestivals";
 import { Outlet } from "react-router-dom";
 import { FestivalThemeProvider } from "./context/FestivalThemeContext";
-import FestivalSwitcherWidget from "./Components/FestivalSwitcherWidget";
 
 const PublicLayout = () => {
   return (
@@ -32,7 +31,6 @@ const PublicLayout = () => {
       <Navbar />
       <BookingModal />
       <Outlet />
-      <FestivalSwitcherWidget />
       <Footer />
     </>
   );
