@@ -8,12 +8,14 @@ const catalogSchema = new mongoose.Schema(
         category: String,
         service: String,
         amount: Number,
+        active: { type: Boolean, default: true },
       },
     ],
     addons: [
       {
         name: String,
         amount: Number,
+        active: { type: Boolean, default: true },
       },
     ],
     plans: [

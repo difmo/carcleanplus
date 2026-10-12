@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
 const { pushStatus } = require('../utils/bookingPath');
-const { notifyBooking, notifyDesk, notifyStaffJob } = require('../utils/notify');
+const { notifyUser, notifyDesk, notifyStaffJob } = require('../utils/notify');
 const { slotIsFull, getDateVariations: slotDateVariations } = require('../utils/slots');
+const { recordBookingLedger } = require('../utils/ledger');
 
 // @desc    Get all bookings
 // @route   GET /api/admin/bookings
@@ -256,8 +257,17 @@ const createManualBooking = async (req, res) => {
       paymentMethod: paymentMethod || 'Cash',
       paymentStatus: paymentMethod === 'Cash' ? 'Cash on Delivery' : 'Paid',
       status: 'confirmed',
-      bookingSource: 'phone'
+      bookingSource: 'phone',
+      timeline: [{
+        status: 'confirmed',
+        at: new Date(),
+        byName: req.user?.name || 'Desk',
+        byRole: 'admin',
+        note: 'Phone booking',
+      }],
     });
+
+    await recordBookingLedger(newBooking);
 
     const customer = customerName || 'A customer';
     await notifyDesk(
@@ -320,10 +330,34 @@ const assignBooking = async (req, res) => {
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
     }
+    if (['cancelled', 'completed', 'blocked'].includes(booking.status)) {
+      return res.status(400).json({ success: false, message: 'This wash can no longer be assigned' });
+    }
 
     booking.assignedStaff = staffUser._id;
+    booking.washerName = staffUser.name || '';
+    booking.washerPhone = staffUser.phone || '';
+    if (booking.status === 'pending' || booking.status === 'lead') {
+      booking.status = 'confirmed';
+    }
+    pushStatus(
+      booking,
+      booking.status,
+      req.user?.name || 'Desk',
+      'admin',
+      `Assigned to ${staffUser.name || 'washer'}`,
+    );
     await booking.save();
     await booking.populate('assignedStaff', 'name phone role');
+    if (booking.user) {
+      const userId = booking.user._id || booking.user;
+      await notifyUser(
+        userId,
+        'Washer assigned',
+        `${staffUser.name || 'A washer'} will do this wash.`,
+        booking._id,
+      );
+    }
     const customer = booking.customerDetails?.fullName || 'A customer';
     await notifyStaffJob(
       booking,

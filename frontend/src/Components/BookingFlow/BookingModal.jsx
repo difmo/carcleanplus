@@ -316,7 +316,11 @@ const BookingModal = () => {
       const payload = {
         carModel: bookingState.carModel,
         service: bookingState.service,
-        location: { address: 'To be confirmed on call', pincode: 'N/A', city: bookingState.city },
+        location: {
+          address: bookingState.address?.trim() || `${bookingState.city}, Lucknow`,
+          pincode: 'N/A',
+          city: bookingState.city
+        },
         date: bookingState.date || 'To be decided',
         timeSlot: bookingState.timeSlot || 'TBD',
         customerDetails: {
@@ -324,6 +328,9 @@ const BookingModal = () => {
           mobile: bookingState.mobile,
           instructions: 'Call customer to confirm location and time.'
         },
+        providesWaterElectricity: Boolean(bookingState.providesWaterElectricity),
+        waterElectricityDiscount: bookingState.providesWaterElectricity ? 100 : 0,
+        discount: bookingState.discount || (bookingState.providesWaterElectricity ? 100 : 0),
         finalPrice: bookingState.finalPrice || 0,
         paymentId,
         orderId,
@@ -1114,46 +1121,154 @@ const BookingModal = () => {
     );
   };
 
-  const renderStep7 = () => (
-    <div className="animate-fade-in relative flex flex-col h-full pt-4">
-      {renderCloseButton()}
-      {renderBackButton()}
+  const renderStep7 = () => {
+    const servicePrice = bookingState.servicePrice || (bookingState.finalPrice + (bookingState.providesWaterElectricity ? 100 : 0)) || 0;
+    const isWaterProvided = Boolean(bookingState.providesWaterElectricity);
+    const discountAmount = isWaterProvided ? 100 : 0;
+    const finalAmount = Math.max(0, servicePrice - discountAmount);
 
-      <div className="text-center w-full max-w-sm mx-auto mt-6">
-        <div className="w-14 h-14 bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-blue-200/50">
-          <HiOutlineTruck className="text-2xl text-blue-500" />
-        </div>
-        <h2 className="text-[26px] font-black text-gray-900 mb-2 tracking-tight leading-tight">Welcome to<br />Car Clean Plus</h2>
-        <p className="text-gray-500 text-[13px] mb-8 leading-relaxed px-4 font-medium">
-          Login to book top car wash and car services at your doorstep.
-        </p>
-      </div>
+    return (
+      <div className="animate-fade-in relative flex flex-col h-full pt-1">
+        {renderCloseButton()}
+        {renderBackButton()}
 
-      <div className="mt-auto pt-4 pb-1 space-y-3">
-        <button
-          onClick={handlePaymentAndBooking}
-          disabled={isSubmitting}
-          className="w-full bg-gray-900 text-white font-black py-3.5 rounded-xl text-[16px] hover:bg-black transition-all disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-400 shadow-md disabled:shadow-none"
-        >
-          {isSubmitting ? 'Processing...' : `Pay Online ₹${bookingState.finalPrice || 0}`}
-        </button>
-
-        <div className="flex items-center justify-center space-x-2">
-          <hr className="w-1/3 border-gray-300" />
-          <span className="text-gray-500 text-[12px] font-bold">OR</span>
-          <hr className="w-1/3 border-gray-300" />
+        <div className="text-center w-full max-w-sm mx-auto mt-1 mb-2.5">
+          <h2 className="text-[20px] font-black text-gray-900 tracking-tight leading-tight">Review & Confirm</h2>
+          <p className="text-gray-500 text-[11px] font-semibold">Verify details and choose Water & Electricity discount</p>
         </div>
 
-        <button
-          onClick={handleCashPayment}
-          disabled={isSubmitting}
-          className="w-full bg-white text-gray-900 border-2 border-gray-900 font-black py-3.5 rounded-xl text-[16px] hover:bg-gray-50 transition-all disabled:opacity-50 disabled:border-gray-200 disabled:text-gray-400 shadow-sm disabled:shadow-none"
-        >
-          {isSubmitting ? 'Processing...' : 'Pay with Cash'}
-        </button>
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-1 space-y-2.5 pb-2">
+          {/* Booking Summary Box */}
+          <div className="bg-gray-50/90 p-3 rounded-xl border border-gray-200/80 space-y-1.5 text-xs">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-500 font-bold">Vehicle</span>
+              <span className="font-black text-gray-900">{bookingState.carModel?.name} ({bookingState.carModel?.category || 'Standard'})</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-500 font-bold">Package</span>
+              <span className="font-black text-[#1D4ED8]">{bookingState.service}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-500 font-bold">Date & Slot</span>
+              <span className="font-extrabold text-gray-800">{bookingState.date} | {bookingState.timeSlot}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-500 font-bold">Customer</span>
+              <span className="font-extrabold text-gray-800">{bookingState.name} (+91 {bookingState.mobile})</span>
+            </div>
+          </div>
+
+          {/* Doorstep Address Field (Client Point 5) */}
+          <div className="bg-white p-3 rounded-xl border border-gray-200/80 shadow-xs">
+            <label className="block text-[11px] font-black text-gray-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+              <FiMapPin className="text-[#1D4ED8]" /> Doorstep Address / House No. / Landmark
+            </label>
+            <input
+              type="text"
+              value={bookingState.address || ''}
+              onChange={(e) => updateBooking('address', e.target.value)}
+              placeholder={`e.g. Flat 302, Tower 4, ${bookingState.city || 'Lucknow'}`}
+              className="w-full bg-gray-50/70 border border-gray-200 focus:border-[#1D4ED8] focus:bg-white px-3 py-2 rounded-xl text-[12px] font-bold text-gray-900 outline-none transition-all"
+            />
+          </div>
+
+          {/* Water & Electricity Discount Box (Client Points 1 & 2) */}
+          <div className="bg-gradient-to-br from-blue-50/60 via-emerald-50/40 to-white p-3 rounded-xl border-2 border-emerald-500/40 shadow-xs">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-black text-gray-900 uppercase tracking-wider flex items-center gap-1">
+                <span className="text-emerald-600 font-black">⚡</span> Water & Electricity Provision
+              </span>
+              <span className="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                Save ₹100
+              </span>
+            </div>
+            <p className="text-[11px] text-gray-600 font-medium mb-2.5">
+              Will you provide Water & Electricity for the service at your doorstep?
+            </p>
+
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => updateBooking('providesWaterElectricity', true)}
+                className={`p-2 rounded-xl border-2 text-left transition-all flex flex-col justify-between ${
+                  isWaterProvided
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-950 font-black shadow-sm ring-1 ring-emerald-500/20'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-0.5">
+                  <span className="text-[11px] font-black">Yes, I will provide</span>
+                  <span className={`w-3 h-3 rounded-full border-2 flex items-center justify-center ${isWaterProvided ? 'border-emerald-600 bg-emerald-600' : 'border-gray-300'}`}>
+                    {isWaterProvided && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+                  </span>
+                </div>
+                <span className="text-[9px] text-emerald-600 font-black uppercase">₹100 OFF Applied</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => updateBooking('providesWaterElectricity', false)}
+                className={`p-2 rounded-xl border-2 text-left transition-all flex flex-col justify-between ${
+                  !isWaterProvided
+                    ? 'border-[#1D4ED8] bg-blue-50/60 text-[#1D4ED8] font-black shadow-sm ring-1 ring-[#1D4ED8]/20'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-0.5">
+                  <span className="text-[11px] font-black">No, I won't provide</span>
+                  <span className={`w-3 h-3 rounded-full border-2 flex items-center justify-center ${!isWaterProvided ? 'border-[#1D4ED8] bg-[#1D4ED8]' : 'border-gray-300'}`}>
+                    {!isWaterProvided && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+                  </span>
+                </div>
+                <span className="text-[9px] text-gray-400 font-bold">Standard Wash Rate</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Required Booking Calculation (Client Point 7) */}
+          <div className="bg-white p-3 rounded-xl border border-gray-200/80 shadow-xs space-y-1.5 text-xs">
+            <div className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-0.5">Transparent Price Calculation</div>
+            <div className="flex justify-between items-center text-gray-600 font-semibold">
+              <span>Service Price ({bookingState.service})</span>
+              <span>₹{servicePrice}</span>
+            </div>
+            {isWaterProvided && (
+              <div className="flex justify-between items-center text-emerald-600 font-black">
+                <span>Water & Electricity Discount</span>
+                <span>- ₹100</span>
+              </div>
+            )}
+            <div className="pt-2 border-t border-gray-100 flex justify-between items-center">
+              <div>
+                <span className="text-[13px] font-black text-gray-900 block leading-none">Final Payable Amount</span>
+                <span className="text-[10px] text-gray-400 font-medium">Doorstep equipment & cleaning included</span>
+              </div>
+              <span className="text-[20px] font-black text-[#1D4ED8]">₹{finalAmount}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Payment Buttons */}
+        <div className="mt-auto pt-2 pb-1 space-y-2 shrink-0">
+          <button
+            onClick={handlePaymentAndBooking}
+            disabled={isSubmitting}
+            className="w-full bg-[#1D4ED8] text-white font-black py-3 rounded-xl text-[14px] hover:bg-blue-700 transition-all disabled:opacity-50 shadow-md flex items-center justify-center gap-2"
+          >
+            {isSubmitting ? 'Processing...' : `Pay Online ₹${finalAmount}`}
+          </button>
+
+          <button
+            onClick={handleCashPayment}
+            disabled={isSubmitting}
+            className="w-full bg-white text-gray-900 border-2 border-gray-900 font-black py-2.5 rounded-xl text-[13px] hover:bg-gray-50 transition-all disabled:opacity-50 shadow-xs"
+          >
+            {isSubmitting ? 'Processing...' : `Pay Cash / UPI at Car ₹${finalAmount}`}
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const getWhatsAppLink = () => {
     const adminPhone = "919120759988";

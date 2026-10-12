@@ -19,20 +19,29 @@ const applyFestival = (prices, festival) => {
   });
 };
 
-const presentCatalog = async () => {
+const isOn = (row) => row.active !== false;
+
+const presentCatalog = async ({ includeInactive = false } = {}) => {
   const catalog = await getCatalog();
   const festival = await FestivalSetting.findOne().sort({ updatedAt: -1 });
+  const sourcePrices = includeInactive ? catalog.prices : catalog.prices.filter(isOn);
+  const sourceAddons = includeInactive ? catalog.addons : catalog.addons.filter(isOn);
   const prices = applyFestival(
-    catalog.prices.map((row) => ({
+    sourcePrices.map((row) => ({
       category: row.category,
       service: row.service,
       amount: row.amount,
+      active: row.active !== false,
     })),
     festival,
   );
   return {
     prices,
-    addons: catalog.addons,
+    addons: sourceAddons.map((row) => ({
+      name: row.name,
+      amount: row.amount,
+      active: row.active !== false,
+    })),
     plans: catalog.plans,
     slotCapacity: catalog.slotCapacity,
     freeRadiusKm: catalog.freeRadiusKm,
@@ -59,6 +68,7 @@ const buildQuote = async ({
   latitude,
   longitude,
   promoCode,
+  providesWaterElectricity = false,
   usePlan = false,
   useCredit = false,
   user,
@@ -119,6 +129,10 @@ const buildQuote = async ({
     planUsed = true;
   }
 
+  const hasWaterElectricity = Boolean(providesWaterElectricity);
+  const waterElectricityDiscount = hasWaterElectricity ? 100 : 0;
+  discount += waterElectricityDiscount;
+
   let subtotal = Math.max(0, base + addonTotal - discount) + travel;
   let creditUsed = 0;
   if (useCredit && user && user.credit > 0) {
@@ -131,6 +145,8 @@ const buildQuote = async ({
     base,
     addonLines,
     discount,
+    waterElectricityDiscount,
+    providesWaterElectricity: hasWaterElectricity,
     travelFee: travel,
     creditUsed,
     total: subtotal,

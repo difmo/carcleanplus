@@ -158,6 +158,12 @@ const HeroBookingForm = () => {
           </div>
         </div>
 
+        {/* Water & Electricity Discount Tip */}
+        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-2 text-center text-xs text-emerald-300 font-semibold flex items-center justify-center gap-1.5">
+          <span>⚡</span>
+          <span>Save ₹100 if you provide Water & Electricity!</span>
+        </div>
+
         {/* Submit Button */}
         <button
           type="submit"

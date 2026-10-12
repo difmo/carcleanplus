@@ -98,6 +98,13 @@ const getContacts = async (req, res) => {
 // @desc    Get Admin Dashboard Stats
 // @route   GET /api/admin/dashboard
 // @access  Private/Admin
+const { listTransactions } = require('../utils/ledger');
+
+const getTransactions = async (req, res) => {
+  const data = await listTransactions();
+  res.status(200).json({ success: true, count: data.length, data });
+};
+
 const getDashboardStats = async (req, res) => {
   try {
     // Get all bookings
@@ -124,6 +131,26 @@ const getDashboardStats = async (req, res) => {
     // Get 5 most recent bookings
     const recentBookings = await Booking.find({}).sort({ createdAt: -1 }).limit(5);
 
+    const today = new Date();
+    const week = [];
+    for (let offset = 6; offset >= 0; offset -= 1) {
+      const day = new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset);
+      const key = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`;
+      week.push({ date: key, count: 0, revenue: 0 });
+    }
+    const weekIndex = new Map(week.map((point, index) => [point.date, index]));
+    const statusCounts = {};
+    for (const booking of bookings) {
+      const status = (booking.status || 'pending').toLowerCase();
+      statusCounts[status] = (statusCounts[status] || 0) + 1;
+      if (status === 'cancelled' || status === 'blocked') continue;
+      const raw = String(booking.date || '').slice(0, 10);
+      const index = weekIndex.get(raw);
+      if (index == null) continue;
+      week[index].count += 1;
+      week[index].revenue += Number(booking.finalPrice) || 0;
+    }
+
     res.status(200).json({
       success: true,
       data: {
@@ -131,7 +158,9 @@ const getDashboardStats = async (req, res) => {
         pendingBookings,
         totalRevenue,
         totalInquiries,
-        recentBookings
+        recentBookings,
+        week,
+        statusCounts
       }
     });
 
@@ -145,5 +174,6 @@ module.exports = {
   getUserById,
   updateUserRole,
   getContacts,
-  getDashboardStats
+  getDashboardStats,
+  getTransactions
 };

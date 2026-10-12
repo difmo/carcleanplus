@@ -36,3 +36,5 @@ dist-ssr
 # Flutter apps kept beside the web project
 /admin/
 /app/
+cred.txt
+

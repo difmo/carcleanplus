@@ -8,7 +8,7 @@ const wrap = (fn) => (req, res, next) =>
     res.status(500).json({ success: false, message: error.message });
   });
 
-router.get('/', wrap(readCatalog));
+router.get('/', optionalProtect, wrap(readCatalog));
 router.post('/quote', optionalProtect, wrap(quote));
 router.put('/', protect, admin, wrap(updateCatalog));
 

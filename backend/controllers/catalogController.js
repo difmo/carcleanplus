@@ -3,7 +3,8 @@ const { getCatalog } = require('../utils/catalogStore');
 const { presentCatalog, buildQuote } = require('../utils/quote');
 
 const readCatalog = async (req, res) => {
-  const data = await presentCatalog();
+  const includeInactive = req.user && (req.user.role === 'admin' || req.user.role === 'superadmin');
+  const data = await presentCatalog({ includeInactive });
   return res.status(200).json({ success: true, data });
 };
 
@@ -24,7 +25,8 @@ const updateCatalog = async (req, res) => {
     if (req.body[field] !== undefined) catalog[field] = req.body[field];
   });
   await catalog.save();
-  const data = await presentCatalog();
+  const includeInactive = req.user && (req.user.role === 'admin' || req.user.role === 'superadmin');
+  const data = await presentCatalog({ includeInactive });
   return res.status(200).json({ success: true, message: 'Prices saved', data });
 };
 

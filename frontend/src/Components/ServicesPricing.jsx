@@ -74,9 +74,13 @@ const ServicesPricing = () => {
     <section id="services" className="pt-10 pb-20 bg-white relative z-10 font-sans">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-16 flex flex-col items-center">
-          <h2 className="text-4xl md:text-[52px] font-sans font-black text-gray-900 mb-4 tracking-tighter leading-tight">
+          <h2 className="text-4xl md:text-[52px] font-sans font-black text-gray-900 mb-3 tracking-tighter leading-tight">
             Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] to-[#3377ff]">Wash</span>
           </h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 border border-emerald-200/80 rounded-full text-xs font-black text-emerald-800 shadow-sm mb-4">
+            <span className="text-emerald-600 font-extrabold">⚡ ₹100 OFF</span>
+            <span className="text-gray-600 font-semibold">— Provide Water & Electricity & get an automatic ₹100 discount!</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-[1150px] mx-auto">
@@ -99,7 +103,7 @@ const ServicesPricing = () => {
               </div>
 
               {/* Header: Icon & Title */}
-              <div className="flex gap-3 items-start mb-4">
+              <div className="flex gap-3 items-start mb-3">
                 <span className="icon-circle">{pkg.icon}</span>
                 <div className="flex flex-col text-left">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -108,9 +112,12 @@ const ServicesPricing = () => {
                       From ₹{pkg.price}
                     </span>
                   </div>
-                  <p className="text-[13px] text-gray-600 leading-snug font-medium pr-1">
+                  <p className="text-[13px] text-gray-600 leading-snug font-medium pr-1 mb-1">
                     {pkg.desc}
                   </p>
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200/60 text-emerald-700 text-[10px] font-black tracking-wide w-fit">
+                    <span>⚡ ₹100 OFF with Water & Electricity</span>
+                  </div>
                 </div>
               </div>
 

@@ -3,6 +3,8 @@ import HeroSection from "./HeroSection";
 import TrustStats from "./TrustStats";
 import OfferSection from "./OfferSection";
 import ServicesPricing from "./ServicesPricing";
+import WaterElectricityPromoBanner from "./WaterElectricityPromoBanner";
+import MonthlyMembership from "./MonthlyMembership";
 import HowItWorks from "./HowItWorks";
 import WhyChouseUsComponents from "./WhyChouseUsComponents";
 import BeforeAfterGallery from "./BeforeAfterGallery";
@@ -18,6 +20,9 @@ function Home() {
         <HeroSection />
         <TrustStats />
 
+        {/* Water & Electricity Discount Banner (Client Point 2) */}
+        <WaterElectricityPromoBanner />
+
         <WhyChouseUsComponents />
 
         {/* Offer Section handles the #offer id */}
@@ -25,6 +30,11 @@ function Home() {
 
         <div id="packages">
           <ServicesPricing />
+        </div>
+
+        {/* Monthly Membership Section (Client Point 3) */}
+        <div id="memberships">
+          <MonthlyMembership />
         </div>
 
         <div id="gallery">

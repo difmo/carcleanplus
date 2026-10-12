@@ -14,6 +14,7 @@ const {
   receiptMyBooking,
   listMessages,
   postMessage,
+  payMyBooking,
   reportMyBooking,
 } = require('../controllers/bookingController');
 
@@ -27,6 +28,7 @@ router.get('/:id/receipt', protect, receiptMyBooking);
 router.get('/:id/messages', protect, listMessages);
 router.post('/:id/messages', protect, postMessage);
 router.post('/:id/report', protect, reportMyBooking);
+router.post('/:id/pay', protect, payMyBooking);
 router.put('/:id', optionalProtect, updateBooking);
 router.post('/', optionalProtect, createBooking);
 

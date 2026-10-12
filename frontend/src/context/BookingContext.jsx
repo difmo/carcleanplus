@@ -16,6 +16,10 @@ export const BookingProvider = ({ children }) => {
     service: null,
     date: '',
     timeSlot: '',
+    address: '',
+    providesWaterElectricity: false,
+    discount: 0,
+    servicePrice: 0,
     finalPrice: 0,
     currentStep: 1,
     isModalOpen: false,
@@ -25,14 +29,14 @@ export const BookingProvider = ({ children }) => {
     setBookingState(prev => {
       const newState = { ...prev, [key]: value };
 
-      if (key === 'carModel' || key === 'service') {
+      if (key === 'carModel' || key === 'service' || key === 'providesWaterElectricity') {
         const category = newState.carModel?.category;
         const service = newState.service;
-        if (service) {
-          newState.finalPrice = getPrice(category, service);
-        } else {
-          newState.finalPrice = 0;
-        }
+        const basePrice = service ? getPrice(category, service) : 0;
+        newState.servicePrice = basePrice;
+        const discount = newState.providesWaterElectricity ? 100 : 0;
+        newState.discount = discount;
+        newState.finalPrice = Math.max(0, basePrice - discount);
       }
       return newState;
     });
@@ -66,7 +70,11 @@ export const BookingProvider = ({ children }) => {
       }
       if (service) {
         newState.service = service;
-        newState.finalPrice = getPrice(car?.category, service);
+        const basePrice = getPrice(car?.category, service);
+        newState.servicePrice = basePrice;
+        const discount = newState.providesWaterElectricity ? 100 : 0;
+        newState.discount = discount;
+        newState.finalPrice = Math.max(0, basePrice - discount);
       }
       
       // Auto-fill city if empty
@@ -86,11 +94,15 @@ export const BookingProvider = ({ children }) => {
       name: '',
       mobile: '',
       city: '',
+      address: '',
       carBrand: null,
       carModel: null,
       service: null,
       date: '',
       timeSlot: '',
+      providesWaterElectricity: false,
+      discount: 0,
+      servicePrice: 0,
       finalPrice: 0,
       currentStep: 1,
       isModalOpen: false,

@@ -6,6 +6,8 @@ import { SERVICES } from '../../utils/pricingLogic';
 import basicWash from '../../assets/basic wash.png';
 import interiorImg from '../../assets/Interior Cleaning.png';
 import completeImg from '../../assets/Complete Detailing.png';
+import WaterElectricityPromoBanner from '../WaterElectricityPromoBanner';
+import MonthlyMembership from '../MonthlyMembership';
 
 const PricingPage = () => {
   useEffect(() => {
@@ -91,6 +93,11 @@ const PricingPage = () => {
           </p>
         </div>
 
+        {/* Water & Electricity Discount Banner (Client Point 2) */}
+        <div className="max-w-5xl mx-auto mb-10">
+          <WaterElectricityPromoBanner compact={true} />
+        </div>
+
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto mb-16">
           {packages.map((pkg) => (
@@ -123,6 +130,11 @@ const PricingPage = () => {
                 <div className="flex items-baseline gap-1 pt-2 border-t border-gray-100">
                   <span className="text-xs font-bold text-gray-400">Starting from</span>
                   <span className="text-3xl font-black text-gray-900 tracking-tight">₹{pkg.price}</span>
+                </div>
+
+                {/* Water & Electricity Discount Tag (Client Point 2) */}
+                <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200/70 text-emerald-700 text-[11px] font-black tracking-wide w-fit">
+                  <span>⚡ ₹100 OFF with Water & Electricity</span>
                 </div>
               </div>
 
@@ -158,6 +170,11 @@ const PricingPage = () => {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Monthly Membership Section on Pricing Page (Client Point 3) */}
+        <div className="mb-20">
+          <MonthlyMembership />
         </div>
 
         {/* Guarantee Banner */}

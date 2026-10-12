@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FiAlignJustify, FiDroplet, FiHome, FiImage, FiLogIn, FiLogOut, FiPhone, FiSettings, FiTag, FiX } from 'react-icons/fi';
+import { FiAlignJustify, FiCalendar, FiDroplet, FiHome, FiImage, FiLogIn, FiLogOut, FiPhone, FiSettings, FiTag, FiX } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import img from "../assets/carcleanplus.logo.jpeg";
@@ -48,6 +48,7 @@ const Navbar = () => {
     { name: "Home", icon: FiHome },
     { name: "Service", icon: FiDroplet },
     { name: "Packages", icon: FiTag },
+    { name: "Memberships", icon: FiCalendar },
     { name: "Offer", icon: HiOutlineSparkles },
     { name: "Gallery", icon: FiImage },
     ...(isAdmin ? [{ name: "Admin Panel", icon: FiSettings, badge: "Admin" }] : []),

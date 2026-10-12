@@ -10,6 +10,8 @@ const publicUser = (user) => ({
   name: user.name,
   email: user.email,
   phone: user.phone || '',
+  city: user.city || '',
+  address: user.address || '',
   role: user.role,
   avatar: user.avatar || '',
   referralCode: user.referralCode || '',
@@ -225,6 +227,64 @@ const googleAuth = async (req, res) => {
 };
 
 
+const readJwtPayload = (token) => {
+  const parts = String(token || '').split('.');
+  if (parts.length < 2) return null;
+  try {
+    return JSON.parse(Buffer.from(parts[1], 'base64').toString('utf8'));
+  } catch (error) {
+    return null;
+  }
+};
+
+const appleAuth = async (req, res) => {
+  try {
+    const { identityToken, email: bodyEmail, name: bodyName } = req.body;
+    const payload = readJwtPayload(identityToken);
+    const appleId = payload?.sub || '';
+    if (!appleId) {
+      return res.status(400).json({ success: false, message: 'Apple sign-in did not include an account id' });
+    }
+    const tokenEmail = String(payload?.email || '').trim().toLowerCase();
+    const email = tokenEmail || String(bodyEmail || '').trim().toLowerCase();
+    const name = String(bodyName || '').trim();
+
+    let user = await User.findOne({ appleId });
+    if (!user && tokenEmail) user = await User.findOne({ email: tokenEmail });
+    if (!user && !email) {
+      return res.status(400).json({ success: false, message: 'Apple account email is required' });
+    }
+
+    if (user) {
+      if (appleId && !user.appleId) user.appleId = appleId;
+      if (name && !user.name) user.name = name;
+      await user.save();
+      await ensureCode(user);
+      return res.status(200).json({
+        success: true,
+        user: publicUser(user),
+        token: generateToken(user._id),
+      });
+    }
+
+    user = await User.create({
+      name: name || email.split('@')[0],
+      email,
+      phone: '',
+      appleId: appleId || `apple_${Date.now()}`,
+      role: 'customer',
+    });
+    await ensureCode(user);
+    return res.status(201).json({
+      success: true,
+      user: publicUser(user),
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message || 'Apple login failed' });
+  }
+};
+
 // @desc    Delete user account
 // @route   DELETE /api/auth/delete-account
 // @access  Private
@@ -282,6 +342,31 @@ const issueEmailCode = async (user) => {
   }
 };
 
+const sendSmsCode = async (phone, code) => {
+  const authKey = process.env.MSG91_AUTH_KEY;
+  const templateId = process.env.MSG91_TEMPLATE_ID;
+  if (!authKey || !templateId) return false;
+  const response = await fetch('https://control.msg91.com/api/v5/otp', {
+    method: 'POST',
+    headers: {
+      authkey: authKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      template_id: templateId,
+      mobile: `91${phone}`,
+      otp: code,
+    }),
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    const error = new Error(text || 'Text message was not sent');
+    error.statusCode = 502;
+    throw error;
+  }
+  return true;
+};
+
 const requestOtp = async (req, res) => {
   try {
     if (otpBypass()) {
@@ -312,9 +397,22 @@ const requestOtp = async (req, res) => {
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
     });
 
+    try {
+      const sentText = await sendSmsCode(phone, code);
+      if (sentText) {
+        return res.status(200).json({ success: true, message: 'Code sent by text' });
+      }
+    } catch (error) {
+      await OtpCode.deleteMany({ phone });
+      throw error;
+    }
+
     if (!targetEmail) {
       await OtpCode.deleteMany({ phone });
-      return res.status(400).json({ success: false, message: 'Add an email that can receive the code' });
+      return res.status(400).json({
+        success: false,
+        message: 'Add MSG91 keys for a text, or an email that can receive the code',
+      });
     }
 
     try {
@@ -395,6 +493,8 @@ const updateMe = async (req, res) => {
     }
     user.name = name;
     user.phone = digits ? digits.slice(-10) : '';
+    if (req.body.city !== undefined) user.city = String(req.body.city || '').trim();
+    if (req.body.address !== undefined) user.address = String(req.body.address || '').trim();
     if (req.body.password) {
       const nextPassword = String(req.body.password);
       if (nextPassword.length < 6) {
@@ -419,6 +519,7 @@ module.exports = {
   registerUser,
   loginUser,
   googleAuth,
+  appleAuth,
   getMe,
   updateMe,
   requestOtp,

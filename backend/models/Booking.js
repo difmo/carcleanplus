@@ -47,6 +47,8 @@ const bookingSchema = new mongoose.Schema(
     addons: [{ name: String, price: Number }],
     promoCode: { type: String, default: '' },
     discount: { type: Number, default: 0 },
+    providesWaterElectricity: { type: Boolean, default: false },
+    waterElectricityDiscount: { type: Number, default: 0 },
     travelFee: { type: Number, default: 0 },
     creditUsed: { type: Number, default: 0 },
     planUsed: { type: Boolean, default: false },
@@ -68,6 +70,7 @@ const bookingSchema = new mongoose.Schema(
       at: { type: Date, default: Date.now },
       byName: { type: String, default: '' },
       byRole: { type: String, default: '' },
+      note: { type: String, default: '' },
     }],
     reports: [{
       note: { type: String, default: '' },

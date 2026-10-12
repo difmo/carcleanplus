@@ -5,7 +5,8 @@ const {
   getUserById,
   updateUserRole,
   getContacts,
-  getDashboardStats
+  getDashboardStats,
+  getTransactions
 } = require('../controllers/adminController');
 const {
   getAllBookings,
@@ -43,6 +44,9 @@ router.use(protect);
 // Dashboard Route
 router.route('/dashboard')
   .get(admin, getDashboardStats);
+
+router.route('/transactions')
+  .get(admin, wrap(getTransactions));
 
 router.route('/users')
   .get(admin, getUsers);

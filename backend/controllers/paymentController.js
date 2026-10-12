@@ -2,6 +2,7 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const Booking = require('../models/Booking');
 const { notifyUser, notifyDesk } = require('../utils/notify');
+const { recordBookingLedger } = require('../utils/ledger');
 
 const keys = () => {
   const keyId = process.env.RAZORPAY_KEY_ID;
@@ -103,6 +104,7 @@ const verifyPayment = async (req, res) => {
       }
       const paidName = booking?.customerDetails?.fullName || 'A customer';
       await notifyDesk('Payment received', `${paidName} paid online.`, booking?._id);
+      if (booking) await recordBookingLedger(booking);
     }
     return res.status(200).json({ success: true, message: 'Payment verified successfully' });
   } catch (error) {
@@ -143,6 +145,7 @@ const refundPayment = async (booking, amount) => {
     await razorpay.payments.refund(booking.paymentId, { amount: rupees * 100 });
   }
   await booking.save();
+  await recordBookingLedger(booking);
   return booking;
 };
 

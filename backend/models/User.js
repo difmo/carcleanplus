@@ -19,12 +19,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  city: {
+    type: String,
+    default: ''
+  },
+  address: {
+    type: String,
+    default: ''
+  },
   password: {
     type: String,
     minlength: 6,
     select: false
   },
   googleId: {
+    type: String,
+    default: null
+  },
+  appleId: {
     type: String,
     default: null
   },

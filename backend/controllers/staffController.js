@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
 const Payout = require('../models/Payout');
+const { pushStatus } = require('../utils/bookingPath');
 const { notifyBooking, notifyDesk, notifyUser } = require('../utils/notify');
 const { getCatalog } = require('../utils/catalogStore');
 const { distanceKm } = require('../utils/cities');
+const { recordBookingLedger } = require('../utils/ledger');
 
 const nextStatus = {
   pending: 'accepted',
@@ -80,6 +82,13 @@ const updateMyJobStatus = async (req, res) => {
       });
     }
 
+    job.status = requested;
+    if (requested === 'accepted') {
+      job.washerName = req.user.name || job.washerName || '';
+      job.washerPhone = req.user.phone || job.washerPhone || '';
+    }
+    pushStatus(job, requested, req.user.name || 'Washer', 'staff');
+    await job.save();
     if (requested === 'completed') {
       const existing = await Payout.findOne({ booking: job._id, staff: req.user._id });
       if (!existing) {
@@ -91,8 +100,6 @@ const updateMyJobStatus = async (req, res) => {
         });
       }
     }
-    job.status = requested;
-    await job.save();
     await notifyBooking(job, requested);
     const customer = job.customerDetails?.fullName || 'A customer';
     await notifyDesk(
@@ -190,6 +197,7 @@ const collectPayment = async (req, res) => {
     else if (upi) job.paymentMethod = 'UPI';
     else if (cash) job.paymentMethod = 'Cash';
     await job.save();
+    await recordBookingLedger(job);
     if (!wasPaid && job.paymentStatus === 'paid') {
       const collectedName = job.customerDetails?.fullName || 'A customer';
       if (job.user) {

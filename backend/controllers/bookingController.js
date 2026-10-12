@@ -7,6 +7,7 @@ const { slotIsFull, fullSlotIds } = require('../utils/slots');
 const { buildQuote } = require('../utils/quote');
 const { createPaymentLink } = require('./paymentController');
 const { notifyDesk, notifyStaffJob, notifyNewCustomer, notifyBooking, notifyUser } = require('../utils/notify');
+const { recordBookingLedger } = require('../utils/ledger');
 
 const SLOT_IDS = [
   'Slot 1 – 08:30 AM',
@@ -178,6 +179,7 @@ const updateBooking = async (req, res) => {
         latitude: booking.location?.latitude,
         longitude: booking.location?.longitude,
         promoCode: req.body.promoCode,
+        providesWaterElectricity: req.body.providesWaterElectricity,
         usePlan: Boolean(req.body.usePlan) && Boolean(account) && !booking.planUsed,
         useCredit: Boolean(req.body.useCredit) && Boolean(account),
         user: account,
@@ -191,6 +193,8 @@ const updateBooking = async (req, res) => {
       }
       booking.finalPrice = quote.total;
       booking.discount = quote.discount;
+      booking.providesWaterElectricity = Boolean(quote.providesWaterElectricity);
+      booking.waterElectricityDiscount = quote.waterElectricityDiscount || 0;
       booking.travelFee = quote.travelFee;
       booking.addons = quote.addonLines;
       booking.promoCode = req.body.promoCode ? String(req.body.promoCode).toUpperCase() : '';
@@ -229,19 +233,16 @@ const updateBooking = async (req, res) => {
       if (booking.user) await notifyBooking(booking, 'pending');
     }
 
+    let paymentMessage = '';
     if (booking.paymentMethod === 'Online' && booking.paymentStatus !== 'paid' && !booking.paymentUrl) {
       try {
         const url = await createPaymentLink(booking);
         if (!url) {
-          booking.paymentMethod = 'UPI';
-          booking.paymentStatus = 'pending';
-          await booking.save();
+          paymentMessage = 'Online payment is not configured. You can pay the washer at the car.';
         }
       } catch (paymentError) {
         console.warn('Payment link was not created:', paymentError.message);
-        booking.paymentMethod = 'UPI';
-        booking.paymentStatus = 'pending';
-        await booking.save();
+        paymentMessage = 'The payment link could not be opened. You can pay the washer at the car.';
       }
     }
 
@@ -286,7 +287,7 @@ const updateBooking = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: 'Booking finalized successfully',
+      message: paymentMessage || 'Booking finalized successfully',
       data: booking
     });
   } catch (error) {
@@ -338,6 +339,9 @@ const createBooking = async (req, res) => {
       timeSlot,
       customerDetails,
       finalPrice,
+      providesWaterElectricity: Boolean(req.body.providesWaterElectricity),
+      waterElectricityDiscount: req.body.providesWaterElectricity ? 100 : 0,
+      discount: req.body.discount || (req.body.providesWaterElectricity ? 100 : 0),
       paymentMethod: paymentMethod || 'Online',
       user: req.user ? req.user._id : undefined,
       status: 'pending',
@@ -352,6 +356,7 @@ const createBooking = async (req, res) => {
 
     await notifyNewCustomer(booking);
     if (booking.user) await notifyBooking(booking, 'pending');
+    await recordBookingLedger(booking);
 
     // Email details
     const mailOptions = {
@@ -625,6 +630,35 @@ const postMessage = async (req, res) => {
   }
 };
 
+const payMyBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
+    if (!ownsBooking(booking, req.user)) {
+      return res.status(403).json({ success: false, message: 'This booking is not yours' });
+    }
+    if (['cancelled', 'blocked', 'lead'].includes(booking.status)) {
+      return res.status(400).json({ success: false, message: 'This wash cannot be paid' });
+    }
+    if (booking.paymentStatus === 'paid') {
+      return res.status(400).json({ success: false, message: 'This wash is already paid' });
+    }
+    if (Math.round(Number(booking.finalPrice) * 100) < 100) {
+      return res.status(400).json({ success: false, message: 'This wash has no amount to pay online' });
+    }
+    booking.paymentMethod = 'Online';
+    booking.paymentUrl = '';
+    booking.paymentLinkId = '';
+    const url = await createPaymentLink(booking);
+    if (!url) {
+      return res.status(503).json({ success: false, message: 'Online payment is not configured on the server' });
+    }
+    return res.status(200).json({ success: true, paymentUrl: url, data: booking });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const reportMyBooking = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
@@ -640,13 +674,16 @@ const reportMyBooking = async (req, res) => {
     if (image.length > 1800000) {
       return res.status(400).json({ success: false, message: 'That photo is too large. Choose a smaller one.' });
     }
+    const byName = req.user.name || booking.customerDetails?.fullName || 'Customer';
     booking.reports.push({
       note: note.slice(0, 500),
       image,
       at: new Date(),
-      byName: req.user.name || booking.customerDetails?.fullName || 'Customer',
+      byName,
     });
     await booking.save();
+    const preview = note ? note.slice(0, 80) : 'A photo was attached';
+    await notifyDesk('Wash report', `${byName}: ${preview}`, booking._id);
     return res.status(201).json({ success: true, message: 'Report sent', data: booking });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -665,5 +702,6 @@ module.exports = {
   receiptMyBooking,
   listMessages,
   postMessage,
+  payMyBooking,
   reportMyBooking,
 };

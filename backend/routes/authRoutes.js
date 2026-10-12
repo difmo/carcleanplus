@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   googleAuth,
+  appleAuth,
   getMe,
   updateMe,
   deleteAccount,
@@ -17,6 +18,7 @@ router.post('/login', loginUser);
 router.post('/otp/request', requestOtp);
 router.post('/otp/verify', verifyOtp);
 router.post('/google', googleAuth);
+router.post('/apple', appleAuth);
 router.get('/me', protect, getMe);
 router.put('/me', protect, updateMe);
 
