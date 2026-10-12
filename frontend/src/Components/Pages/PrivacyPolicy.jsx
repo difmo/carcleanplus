@@ -171,6 +171,89 @@ function PrivacyPolicy() {
             </div>
           </div>
 
+          {/* Section 7: App Access & Review Test Credentials */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center gap-2.5 mb-3 text-gray-900">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1D4ED8] flex items-center justify-center text-xs font-black shrink-0">
+                07
+              </div>
+              <div>
+                <h2 className="text-lg font-black tracking-tight">App Access & Google Play Test Credentials</h2>
+                <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wide">For Compliance, App Review & Demo Evaluation</span>
+              </div>
+            </div>
+
+            <p className="text-gray-600 text-xs sm:text-sm pl-10.5 mb-4">
+              To support Google Play compliance evaluation and quality verification, the following pre-activated test accounts are configured without two-factor authentication (no SMS OTP or phone verification required):
+            </p>
+
+            <div className="pl-10.5 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Customer App Card */}
+              <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 rounded-2xl border border-blue-200/80 p-5 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-100 text-[#1D4ED8] text-[11px] font-extrabold uppercase tracking-wider">
+                    Customer App
+                  </span>
+                  <span className="text-[10px] text-gray-500 font-mono">com.difmo.carcleanplususer</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-1">Car Clean Plus</h3>
+                <p className="text-xs text-gray-500 mb-3">Doorstep Car Wash & Detailing Customer App</p>
+
+                <div className="bg-white rounded-xl border border-gray-200/70 p-3 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">Email:</span>
+                    <span className="text-gray-900 font-bold select-all">priya.nair@carcleanplus.com</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">Password:</span>
+                    <span className="text-blue-700 font-bold select-all">Test@123</span>
+                  </div>
+                  <div className="pt-1.5 border-t border-gray-100 flex justify-between items-center text-[11px]">
+                    <span className="text-gray-400">Alt Reviewer:</span>
+                    <span className="text-gray-600 select-all">reviewer@carcleanplus.com / Review@2026</span>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-start gap-1.5 text-[11px] text-emerald-700 font-medium bg-emerald-50/80 p-2 rounded-lg border border-emerald-200/60">
+                  <FiCheckCircle className="text-emerald-600 mt-0.5 shrink-0" />
+                  <span>Pre-configured vehicles, bookings in Lucknow, no OTP required.</span>
+                </div>
+              </div>
+
+              {/* Staff / Partner App Card */}
+              <div className="bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-2xl border border-gray-300/80 p-5 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-200 text-gray-800 text-[11px] font-extrabold uppercase tracking-wider">
+                    Staff & Admin App
+                  </span>
+                  <span className="text-[10px] text-gray-500 font-mono">com.difmo.carcleanplusstaff</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-1">Car Clean Plus Staff</h3>
+                <p className="text-xs text-gray-500 mb-3">Washer Crew Operations & Dispatch Portal</p>
+
+                <div className="bg-white rounded-xl border border-gray-200/70 p-3 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">Email:</span>
+                    <span className="text-gray-900 font-bold select-all">admin@carcleanplus.com</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">Password:</span>
+                    <span className="text-blue-700 font-bold select-all">password123</span>
+                  </div>
+                  <div className="pt-1.5 border-t border-gray-100 flex justify-between items-center text-[11px]">
+                    <span className="text-gray-400">Role:</span>
+                    <span className="text-gray-600">Admin / Operations Lead</span>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-start gap-1.5 text-[11px] text-emerald-700 font-medium bg-emerald-50/80 p-2 rounded-lg border border-emerald-200/60">
+                  <FiCheckCircle className="text-emerald-600 mt-0.5 shrink-0" />
+                  <span>Instant login, live dispatch, before/after photo proof & cash collection.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
