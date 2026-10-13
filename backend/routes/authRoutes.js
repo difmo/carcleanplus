@@ -7,6 +7,7 @@ const {
   appleAuth,
   getMe,
   updateMe,
+  markOnboardingSeen,
   deleteAccount,
   requestOtp,
   verifyOtp,
@@ -21,6 +22,7 @@ router.post('/google', googleAuth);
 router.post('/apple', appleAuth);
 router.get('/me', protect, getMe);
 router.put('/me', protect, updateMe);
+router.post('/onboarding-seen', protect, markOnboardingSeen);
 
 router.delete('/delete-account', protect, deleteAccount);
 

@@ -57,6 +57,7 @@ const userSchema = new mongoose.Schema({
   planWashesLeft: { type: Number, default: 0 },
   planExpiresAt: { type: Date },
   planPayments: { type: [String], default: [] },
+  seenOnboarding: { type: Boolean, default: false },
   pushTokens: {
     type: [
       {
