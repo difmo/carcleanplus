@@ -57,6 +57,24 @@ const userSchema = new mongoose.Schema({
   planWashesLeft: { type: Number, default: 0 },
   planExpiresAt: { type: Date },
   planPayments: { type: [String], default: [] },
+  pendingPlan: {
+    name: { type: String, default: '' },
+    linkId: { type: String, default: '' },
+    url: { type: String, default: '' },
+  },
+  addresses: {
+    type: [
+      {
+        label: { type: String, default: 'Home' },
+        address: { type: String, required: true },
+        city: { type: String, default: '' },
+        latitude: { type: Number },
+        longitude: { type: Number },
+        isDefault: { type: Boolean, default: false },
+      },
+    ],
+    default: [],
+  },
   seenOnboarding: { type: Boolean, default: false },
   pushTokens: {
     type: [

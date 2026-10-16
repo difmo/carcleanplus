@@ -11,7 +11,12 @@ const wrap = (fn) => (req, res, next) =>
 router.use(protect);
 router.get('/vehicles', wrap(account.listVehicles));
 router.post('/vehicles', wrap(account.addVehicle));
+router.put('/vehicles/:id/default', wrap(account.setDefaultVehicle));
 router.delete('/vehicles/:id', wrap(account.removeVehicle));
+router.get('/addresses', wrap(account.listAddresses));
+router.post('/addresses', wrap(account.addAddress));
+router.put('/addresses/:id/default', wrap(account.setDefaultAddress));
+router.delete('/addresses/:id', wrap(account.removeAddress));
 router.get('/notifications', wrap(account.listNotifications));
 router.put('/notifications/read', wrap(account.markNotificationsRead));
 router.post('/push-token', wrap(account.savePushToken));

@@ -136,6 +136,57 @@ const createPaymentLink = async (booking) => {
   return link.short_url;
 };
 
+// Payment links have no webhook here, so the paid state is read back from
+// Razorpay when the customer looks at the booking.
+const syncPaymentLink = async (booking) => {
+  if (!booking || !booking.paymentLinkId || booking.paymentStatus === 'paid') return false;
+  const razorpay = client();
+  if (!razorpay) return false;
+  try {
+    const link = await razorpay.paymentLink.fetch(booking.paymentLinkId);
+    if (!link || link.status !== 'paid') return false;
+    const payment = Array.isArray(link.payments) ? link.payments.find((row) => row.status === 'captured') : null;
+    booking.paymentStatus = 'paid';
+    booking.paymentMethod = 'Online';
+    if (payment && payment.payment_id) booking.paymentId = payment.payment_id;
+    await booking.save();
+    if (booking.user) {
+      await notifyUser(booking.user, 'Payment received', 'We received the online payment for your wash.', booking._id);
+    }
+    await notifyDesk('Payment received', `${booking.customerDetails?.fullName || 'A customer'} paid online.`, booking._id);
+    await recordBookingLedger(booking);
+    return true;
+  } catch (error) {
+    console.warn('Payment link status was not read:', error.message);
+    return false;
+  }
+};
+
+const createPlanPaymentLink = async (user, plan) => {
+  const razorpay = client();
+  if (!razorpay) return null;
+  const link = await razorpay.paymentLink.create({
+    amount: Math.round(Number(plan.amount) * 100),
+    currency: 'INR',
+    description: `${plan.name} wash plan`,
+    customer: {
+      name: user.name || 'Customer',
+      email: user.email || undefined,
+      contact: String(user.phone || '').replace(/\D/g, '').slice(-10) || undefined,
+    },
+    notify: { sms: false, email: false },
+    reminder_enable: false,
+    notes: { userId: String(user._id), plan: plan.name },
+  });
+  return link;
+};
+
+const readPaymentLink = async (linkId) => {
+  const razorpay = client();
+  if (!razorpay || !linkId) return null;
+  return razorpay.paymentLink.fetch(linkId);
+};
+
 const refundPayment = async (booking, amount) => {
   const razorpay = client();
   const rupees = Math.round(Number(amount) || Number(booking.finalPrice) || 0);
@@ -153,6 +204,9 @@ module.exports = {
   createOrder,
   verifyPayment,
   createPaymentLink,
+  syncPaymentLink,
+  createPlanPaymentLink,
+  readPaymentLink,
   refundPayment,
   openOrder,
   confirmOnlinePayment,

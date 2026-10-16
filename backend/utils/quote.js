@@ -1,7 +1,9 @@
 const FestivalSetting = require('../models/FestivalSetting');
 const Promo = require('../models/Promo');
+const Booking = require('../models/Booking');
 const { getCatalog } = require('./catalogStore');
-const { findCity, distanceKm } = require('./cities');
+const { defaultServices } = require('./defaultCatalog');
+const { findCity, cityList, distanceKm } = require('./cities');
 
 const applyFestival = (prices, festival) => {
   if (!festival || !festival.isOfferActive) return prices.map((row) => ({ ...row }));
@@ -21,7 +23,55 @@ const applyFestival = (prices, festival) => {
 
 const isOn = (row) => row.active !== false;
 
-const presentCatalog = async ({ includeInactive = false } = {}) => {
+// Saved service rows win over the defaults, field by field.
+const mergeServices = (saved = []) => {
+  const byName = new Map(defaultServices.map((row) => [row.name, { ...row }]));
+  saved.forEach((row) => {
+    if (!row || !row.name) return;
+    const plain = typeof row.toObject === 'function' ? row.toObject() : row;
+    const base = byName.get(plain.name) || {};
+    const next = { ...base };
+    Object.entries(plain).forEach(([key, value]) => {
+      if (key === '_id' || value === undefined || value === null) return;
+      if (Array.isArray(value) && value.length === 0 && Array.isArray(base[key])) return;
+      next[key] = value;
+    });
+    byName.set(plain.name, next);
+  });
+  return Array.from(byName.values());
+};
+
+// Real numbers for the service cards: bookings in the last 30 days and the
+// average customer rating.
+const serviceStats = async () => {
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const [recent, ratings] = await Promise.all([
+    Booking.aggregate([
+      { $match: { createdAt: { $gte: since }, status: { $nin: ['lead', 'blocked', 'cancelled'] } } },
+      { $group: { _id: '$service', count: { $sum: 1 } } },
+    ]),
+    Booking.aggregate([
+      { $match: { rating: { $gte: 1 } } },
+      { $group: { _id: '$service', average: { $avg: '$rating' }, count: { $sum: 1 } } },
+    ]),
+  ]);
+  const stats = {};
+  recent.forEach((row) => {
+    if (!row._id) return;
+    stats[row._id] = { ...(stats[row._id] || {}), bookings30d: row.count };
+  });
+  ratings.forEach((row) => {
+    if (!row._id) return;
+    stats[row._id] = {
+      ...(stats[row._id] || {}),
+      rating: Math.round(row.average * 10) / 10,
+      ratingCount: row.count,
+    };
+  });
+  return stats;
+};
+
+const presentCatalog = async ({ includeInactive = false, withStats = false } = {}) => {
   const catalog = await getCatalog();
   const festival = await FestivalSetting.findOne().sort({ updatedAt: -1 });
   const sourcePrices = includeInactive ? catalog.prices : catalog.prices.filter(isOn);
@@ -35,8 +85,25 @@ const presentCatalog = async ({ includeInactive = false } = {}) => {
     })),
     festival,
   );
+  const basePrices = sourcePrices.map((row) => ({
+    category: row.category,
+    service: row.service,
+    amount: row.amount,
+  }));
+  let stats = {};
+  if (withStats) {
+    try {
+      stats = await serviceStats();
+    } catch (error) {
+      console.warn('Service stats were not loaded:', error.message);
+    }
+  }
   return {
     prices,
+    basePrices,
+    services: mergeServices(catalog.services),
+    cities: cityList(),
+    stats,
     addons: sourceAddons.map((row) => ({
       name: row.name,
       amount: row.amount,
@@ -124,7 +191,15 @@ const buildQuote = async ({
   }
 
   let planUsed = false;
-  if (usePlan && user && user.planWashesLeft > 0) {
+  if (usePlan && user) {
+    const plan = (view.plans || []).find((row) => row.name === user.planName);
+    const expired = user.planExpiresAt && new Date(user.planExpiresAt) < new Date();
+    if (!(user.planWashesLeft > 0) || expired) {
+      return { refused: true, reason: 'There are no plan washes left on this account' };
+    }
+    if (plan && plan.service && String(plan.service).toLowerCase() !== String(service || '').toLowerCase()) {
+      return { refused: true, reason: `Your ${plan.name} plan covers ${plan.service} only` };
+    }
     discount += base;
     planUsed = true;
   }

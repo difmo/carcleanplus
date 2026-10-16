@@ -21,6 +21,7 @@ const publicUser = (user) => ({
   onShift: Boolean(user.onShift),
   branch: user.branch || '',
   seenOnboarding: Boolean(user.seenOnboarding),
+  addresses: user.addresses || [],
   createdAt: user.createdAt,
   updatedAt: user.updatedAt,
 });
@@ -303,6 +304,11 @@ const deleteAccount = async (req, res) => {
     }
 
     await User.findByIdAndDelete(userId);
+    // Remove what only this account used. Bookings stay for the books.
+    await Promise.all([
+      require('../models/Vehicle').deleteMany({ user: userId }),
+      require('../models/AppNotification').deleteMany({ user: userId }),
+    ]);
 
     res.status(200).json({ success: true, message: 'Account deleted successfully' });
   } catch (error) {
@@ -571,7 +577,84 @@ const markOnboardingSeen = async (req, res) => {
   }
 };
 
+// @desc    Send a password reset code to the account email
+// @route   POST /api/auth/password/forgot
+// @access  Public
+const forgotPassword = async (req, res) => {
+  try {
+    const email = String(req.body.email || '').trim().toLowerCase();
+    if (!email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'Enter a valid email' });
+    }
+    const user = await User.findOne({ email });
+    // Same answer either way, so the form cannot be used to find accounts.
+    const message = `If ${email} has an account, a 6 digit code is on its way.`;
+    if (!user) return res.status(200).json({ success: true, message });
+    const code = String(crypto.randomInt(100000, 999999));
+    await OtpCode.deleteMany({ email, phone: 'password-reset' });
+    await OtpCode.create({
+      phone: 'password-reset',
+      email,
+      codeHash: await bcrypt.hash(code, 8),
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+    });
+    try {
+      await sendMail({
+        to: email,
+        subject: 'Reset your Car Clean Plus password',
+        text: `Your password reset code is ${code}. It expires in 15 minutes. If you did not ask for this, ignore this email.`,
+      });
+    } catch (error) {
+      await OtpCode.deleteMany({ email, phone: 'password-reset' });
+      return res.status(502).json({ success: false, message: 'The reset email could not be sent. Try again later.' });
+    }
+    return res.status(200).json({ success: true, message });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Set a new password with the emailed code
+// @route   POST /api/auth/password/reset
+// @access  Public
+const resetPassword = async (req, res) => {
+  try {
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const code = String(req.body.code || '').trim();
+    const password = String(req.body.password || '');
+    if (!email.includes('@') || code.length !== 6) {
+      return res.status(400).json({ success: false, message: 'Enter the email and the 6 digit code' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
+    }
+    const record = await OtpCode.findOne({ email, phone: 'password-reset' }).sort({ createdAt: -1 });
+    if (!record || record.expiresAt < new Date()) {
+      return res.status(400).json({ success: false, message: 'That code has expired. Ask for a new one.' });
+    }
+    if (!(await bcrypt.compare(code, record.codeHash))) {
+      return res.status(400).json({ success: false, message: 'That code is wrong' });
+    }
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) return res.status(400).json({ success: false, message: 'That code is wrong' });
+    user.password = password;
+    await user.save();
+    await OtpCode.deleteMany({ email, phone: 'password-reset' });
+    await ensureCode(user);
+    return res.status(200).json({
+      success: true,
+      message: 'Password changed',
+      user: publicUser(user),
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
+  forgotPassword,
+  resetPassword,
   deleteAccount,
   registerUser,
   loginUser,

@@ -26,6 +26,18 @@ const catalogSchema = new mongoose.Schema(
         service: String,
       },
     ],
+    services: [
+      {
+        name: String,
+        title: String,
+        tagline: String,
+        description: String,
+        durationMins: Number,
+        inclusions: [String],
+        group: String,
+        popular: Boolean,
+      },
+    ],
     slotCapacity: { type: Number, default: 4 },
     freeRadiusKm: { type: Number, default: 8 },
     zoneKm: { type: Number, default: 25 },

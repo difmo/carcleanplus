@@ -5,7 +5,7 @@ const SupportMessage = require('../models/SupportMessage');
 const transporter = require('../config/mail');
 const { slotIsFull, fullSlotIds } = require('../utils/slots');
 const { buildQuote } = require('../utils/quote');
-const { createPaymentLink } = require('./paymentController');
+const { createPaymentLink, syncPaymentLink } = require('./paymentController');
 const { notifyDesk, notifyStaffJob, notifyNewCustomer, notifyBooking, notifyUser } = require('../utils/notify');
 const { recordBookingLedger } = require('../utils/ledger');
 
@@ -17,6 +17,16 @@ const SLOT_IDS = [
   'Slot 5 – 03:00 PM',
   'Slot 6 – 04:30 PM',
 ];
+
+const todayYmd = () => {
+  // Bookings are in India, so "today" is the IST date.
+  const now = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+  return now.toISOString().slice(0, 10);
+};
+
+const isPastDate = (date) => /^\d{4}-\d{2}-\d{2}$/.test(String(date)) && String(date) < todayYmd();
+
+const isAdmin = (user) => Boolean(user) && ['admin', 'superadmin'].includes(user.role);
 
 // Helper to build date format variations
 const getDateVariations = (dateStr) => {
@@ -125,6 +135,21 @@ const updateBooking = async (req, res) => {
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Booking not found' });
     }
+    // Only an open lead can be finished without owning it. A lead that
+    // belongs to an account can only be finished by that account.
+    const owner = req.user && ownsBooking(booking, req.user);
+    if (booking.status !== 'lead' && !owner && !isAdmin(req.user)) {
+      return res.status(403).json({ success: false, message: 'This booking can no longer be changed' });
+    }
+    if (booking.status === 'lead' && booking.user && !owner && !isAdmin(req.user)) {
+      return res.status(403).json({ success: false, message: 'This booking is not yours' });
+    }
+    if (date && isPastDate(date)) {
+      return res.status(400).json({ success: false, message: 'Choose today or a later date' });
+    }
+    if (req.body.bookingSource === 'app' && timeSlot && !SLOT_IDS.includes(timeSlot)) {
+      return res.status(400).json({ success: false, message: 'Choose one of the listed time slots' });
+    }
 
     const nextCity = location?.city || booking.location?.city;
     if (date && timeSlot) {
@@ -225,10 +250,17 @@ const updateBooking = async (req, res) => {
     const becameBooking = booking.status === 'lead';
     if (becameBooking) {
       booking.status = 'pending';
+      pushStatus(
+        booking,
+        'pending',
+        booking.customerDetails?.fullName || req.user?.name || 'Customer',
+        'customer',
+      );
     }
 
     await booking.save();
     if (becameBooking) {
+      await recordBookingLedger(booking);
       await notifyNewCustomer(booking);
       if (booking.user) await notifyBooking(booking, 'pending');
     }
@@ -445,6 +477,11 @@ const getMyBookings = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate('assignedStaff', 'name phone');
 
+    const unpaid = bookings
+      .filter((booking) => booking.paymentLinkId && booking.paymentStatus !== 'paid' && booking.status !== 'cancelled')
+      .slice(0, 5);
+    await Promise.all(unpaid.map((booking) => syncPaymentLink(booking)));
+
     const claimIds = bookings
       .filter((booking) => !booking.user && ownsBooking(booking, req.user))
       .map((booking) => booking._id);
@@ -453,6 +490,22 @@ const getMyBookings = async (req, res) => {
     }
 
     return res.status(200).json({ success: true, count: bookings.length, data: bookings });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const getMyBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate('assignedStaff', 'name phone');
+    if (!booking || booking.status === 'lead') {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+    if (!ownsBooking(booking, req.user) && !isAdmin(req.user)) {
+      return res.status(403).json({ success: false, message: 'This booking is not yours' });
+    }
+    await syncPaymentLink(booking);
+    return res.status(200).json({ success: true, data: booking });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -467,12 +520,21 @@ const cancelMyBooking = async (req, res) => {
     if (!ownsBooking(booking, req.user)) {
       return res.status(403).json({ success: false, message: 'This booking is not yours' });
     }
-    if (!['pending', 'lead'].includes(booking.status)) {
-      return res.status(400).json({ success: false, message: 'Only a pending booking can be cancelled' });
+    if (!['pending', 'confirmed', 'lead'].includes(booking.status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'A washer has already taken this job. Message the desk to cancel it.',
+      });
     }
 
     booking.status = 'cancelled';
-    pushStatus(booking, 'cancelled', req.user?.name || booking.customerDetails?.fullName || 'Customer', 'customer');
+    pushStatus(
+      booking,
+      'cancelled',
+      req.user?.name || booking.customerDetails?.fullName || 'Customer',
+      'customer',
+      String(req.body?.reason || '').trim().slice(0, 200),
+    );
     await booking.save();
     const cancelledName = booking.customerDetails?.fullName || 'A customer';
     await notifyDesk('Wash cancelled', `${cancelledName} cancelled ${booking.service || 'a wash'}.`, booking._id);
@@ -497,6 +559,12 @@ const rescheduleMyBooking = async (req, res) => {
     if (!date || !timeSlot) {
       return res.status(400).json({ success: false, message: 'Date and slot are required' });
     }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date)) || isPastDate(date)) {
+      return res.status(400).json({ success: false, message: 'Choose today or a later date' });
+    }
+    if (!SLOT_IDS.includes(timeSlot)) {
+      return res.status(400).json({ success: false, message: 'Choose one of the listed time slots' });
+    }
     const full = await slotIsFull({
       date,
       timeSlot,
@@ -508,6 +576,13 @@ const rescheduleMyBooking = async (req, res) => {
     }
     booking.date = date;
     booking.timeSlot = timeSlot;
+    pushStatus(
+      booking,
+      booking.status,
+      req.user?.name || booking.customerDetails?.fullName || 'Customer',
+      'customer',
+      `Moved to ${date}, ${timeSlot}`,
+    );
     await booking.save();
     const movedName = booking.customerDetails?.fullName || 'A customer';
     await notifyDesk('Wash moved', `${movedName} moved a wash to ${date} ${timeSlot}.`, booking._id);
@@ -696,6 +771,7 @@ module.exports = {
   updateBooking,
   createBooking,
   getMyBookings,
+  getMyBooking,
   cancelMyBooking,
   rescheduleMyBooking,
   rateMyBooking,

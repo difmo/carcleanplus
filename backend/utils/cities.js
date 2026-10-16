@@ -14,6 +14,15 @@ const cities = {
 
 const findCity = (name) => cities[String(name || '').trim().toLowerCase()] || null;
 
+// One row per serviceable city, without the alias keys.
+const cityList = () => {
+  const seen = new Map();
+  Object.values(cities).forEach((city) => {
+    if (!seen.has(city.name)) seen.set(city.name, { ...city });
+  });
+  return Array.from(seen.values()).sort((a, b) => a.name.localeCompare(b.name));
+};
+
 const toRad = (value) => (value * Math.PI) / 180;
 
 const distanceKm = (fromLat, fromLng, toLat, toLng) => {
@@ -26,4 +35,4 @@ const distanceKm = (fromLat, fromLng, toLat, toLng) => {
   return earth * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 };
 
-module.exports = { findCity, distanceKm, cities };
+module.exports = { findCity, cityList, distanceKm, cities };

@@ -8,6 +8,7 @@ const {
   updateBooking,
   createBooking,
   getMyBookings,
+  getMyBooking,
   cancelMyBooking,
   rescheduleMyBooking,
   rateMyBooking,
@@ -29,6 +30,7 @@ router.get('/:id/messages', protect, listMessages);
 router.post('/:id/messages', protect, postMessage);
 router.post('/:id/report', protect, reportMyBooking);
 router.post('/:id/pay', protect, payMyBooking);
+router.get('/:id', protect, getMyBooking);
 router.put('/:id', optionalProtect, updateBooking);
 router.post('/', optionalProtect, createBooking);
 

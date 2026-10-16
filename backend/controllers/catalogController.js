@@ -4,7 +4,7 @@ const { presentCatalog, buildQuote } = require('../utils/quote');
 
 const readCatalog = async (req, res) => {
   const includeInactive = req.user && (req.user.role === 'admin' || req.user.role === 'superadmin');
-  const data = await presentCatalog({ includeInactive });
+  const data = await presentCatalog({ includeInactive, withStats: true });
   return res.status(200).json({ success: true, data });
 };
 
@@ -14,6 +14,7 @@ const updateCatalog = async (req, res) => {
     'prices',
     'addons',
     'plans',
+    'services',
     'slotCapacity',
     'freeRadiusKm',
     'zoneKm',
@@ -39,6 +40,7 @@ const quote = async (req, res) => {
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     promoCode: req.body.promoCode,
+    providesWaterElectricity: Boolean(req.body.providesWaterElectricity),
     usePlan: Boolean(req.body.usePlan),
     useCredit: Boolean(req.body.useCredit),
     user: req.user,
@@ -52,6 +54,7 @@ const quote = async (req, res) => {
       base: result.base,
       addons: result.addonLines,
       discount: result.discount,
+      waterElectricityDiscount: result.waterElectricityDiscount,
       travelFee: result.travelFee,
       creditUsed: result.creditUsed,
       total: result.total,

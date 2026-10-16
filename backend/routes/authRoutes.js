@@ -11,6 +11,8 @@ const {
   deleteAccount,
   requestOtp,
   verifyOtp,
+  forgotPassword,
+  resetPassword,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -18,6 +20,8 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/otp/request', requestOtp);
 router.post('/otp/verify', verifyOtp);
+router.post('/password/forgot', forgotPassword);
+router.post('/password/reset', resetPassword);
 router.post('/google', googleAuth);
 router.post('/apple', appleAuth);
 router.get('/me', protect, getMe);
