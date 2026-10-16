@@ -44,6 +44,10 @@ const updateUserRole = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid role' });
     }
 
+    if (String(req.params.id) === String(req.user._id)) {
+      return res.status(400).json({ success: false, message: 'You cannot change your own role' });
+    }
+
     const targetUser = await User.findById(req.params.id);
 
     if (!targetUser) {
@@ -105,47 +109,59 @@ const getTransactions = async (req, res) => {
   res.status(200).json({ success: true, count: data.length, data });
 };
 
+const indiaDay = (offset = 0) =>
+  new Date(Date.now() + (5.5 * 60 * 60 * 1000) + offset * 86400000).toISOString().slice(0, 10);
+
+// Stored dates can be YYYY-MM-DD or DD-MM-YYYY; compare them as YYYY-MM-DD.
+const ymd = (raw) => {
+  const text = String(raw || '').trim();
+  const iso = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (iso) return `${iso[1]}-${iso[2].padStart(2, '0')}-${iso[3].padStart(2, '0')}`;
+  const dmy = text.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  if (dmy) return `${dmy[3]}-${dmy[2].padStart(2, '0')}-${dmy[1].padStart(2, '0')}`;
+  return text.slice(0, 10);
+};
+
 const getDashboardStats = async (req, res) => {
   try {
-    // Get all bookings
-    const bookings = await Booking.find({});
-    
-    // Total Bookings
+    // Leads are abandoned checkouts and blocked rows are closed slots: neither is a booking.
+    const bookings = await Booking.find({ status: { $nin: ['lead', 'blocked'] } })
+      .select('status finalPrice date assignedStaff paymentStatus');
+    const live = bookings.filter((b) => (b.status || 'pending').toLowerCase() !== 'cancelled');
+
     const totalBookings = bookings.length;
-    
-    // Pending Bookings (status is pending or undefined)
     const pendingBookings = bookings.filter(b => !b.status || b.status.toLowerCase() === 'pending').length;
-    
-    // Total Revenue (sum of finalPrice for completed or confirmed bookings)
-    const totalRevenue = bookings.reduce((sum, b) => {
-      const status = (b.status || 'pending').toLowerCase();
-      if (status !== 'cancelled' && b.finalPrice) {
-        return sum + Number(b.finalPrice);
-      }
-      return sum;
-    }, 0);
+    const totalRevenue = live.reduce((sum, b) => sum + (Number(b.finalPrice) || 0), 0);
+    const collectedRevenue = live
+      .filter((b) => String(b.paymentStatus || '').toLowerCase() === 'paid')
+      .reduce((sum, b) => sum + (Number(b.finalPrice) || 0), 0);
 
-    // Get all contacts
+    const today = indiaDay();
+    const todayBookings = live.filter((b) => ymd(b.date) === today && b.status !== 'completed').length;
+    const unassigned = live.filter(
+      (b) => !b.assignedStaff && ['pending', 'confirmed'].includes(b.status) && ymd(b.date) >= today,
+    ).length;
+
     const totalInquiries = await Contact.countDocuments({});
+    const leads = await Booking.countDocuments({ status: 'lead' });
 
-    // Get 5 most recent bookings
-    const recentBookings = await Booking.find({}).sort({ createdAt: -1 }).limit(5);
+    const recentBookings = await Booking.find({ status: { $nin: ['lead', 'blocked'] } })
+      .select('-beforePhoto -afterPhoto -reports.image')
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .populate('assignedStaff', 'name phone role');
 
-    const today = new Date();
     const week = [];
-    for (let offset = 6; offset >= 0; offset -= 1) {
-      const day = new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset);
-      const key = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`;
-      week.push({ date: key, count: 0, revenue: 0 });
+    for (let offset = -6; offset <= 0; offset += 1) {
+      week.push({ date: indiaDay(offset), count: 0, revenue: 0 });
     }
     const weekIndex = new Map(week.map((point, index) => [point.date, index]));
     const statusCounts = {};
     for (const booking of bookings) {
       const status = (booking.status || 'pending').toLowerCase();
       statusCounts[status] = (statusCounts[status] || 0) + 1;
-      if (status === 'cancelled' || status === 'blocked') continue;
-      const raw = String(booking.date || '').slice(0, 10);
-      const index = weekIndex.get(raw);
+      if (status === 'cancelled') continue;
+      const index = weekIndex.get(ymd(booking.date));
       if (index == null) continue;
       week[index].count += 1;
       week[index].revenue += Number(booking.finalPrice) || 0;
@@ -157,7 +173,12 @@ const getDashboardStats = async (req, res) => {
         totalBookings,
         pendingBookings,
         totalRevenue,
+        collectedRevenue,
         totalInquiries,
+        todayBookings,
+        unassigned,
+        leads,
+        today,
         recentBookings,
         week,
         statusCounts

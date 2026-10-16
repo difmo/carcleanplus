@@ -6,6 +6,16 @@ const { notifyBooking, notifyDesk, notifyUser } = require('../utils/notify');
 const { getCatalog } = require('../utils/catalogStore');
 const { distanceKm } = require('../utils/cities');
 const { recordBookingLedger } = require('../utils/ledger');
+const { getDateVariations } = require('../utils/slots');
+
+const ymd = (raw) => {
+  const text = String(raw || '').trim();
+  const iso = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (iso) return `${iso[1]}-${iso[2].padStart(2, '0')}-${iso[3].padStart(2, '0')}`;
+  const dmy = text.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  if (dmy) return `${dmy[3]}-${dmy[2].padStart(2, '0')}-${dmy[1].padStart(2, '0')}`;
+  return text;
+};
 
 const nextStatus = {
   pending: 'accepted',
@@ -37,13 +47,30 @@ const todayInIndia = () => {
 
 const getMyJobs = async (req, res) => {
   try {
-    const date = String(req.query.date || todayInIndia());
+    const today = todayInIndia();
+    // scope=upcoming: every unfinished job after tomorrow, plus anything
+    // left open from earlier days, so no assigned wash is out of sight.
+    if (req.query.scope === 'upcoming') {
+      const tomorrow = ymd(new Date(Date.now() + (5.5 * 60 * 60 * 1000) + 86400000).toISOString().slice(0, 10));
+      const open = await Booking.find({
+        assignedStaff: req.user._id,
+        status: { $nin: ['lead', 'cancelled', 'blocked', 'completed'] },
+      }).select('-beforePhoto -afterPhoto -reports.image');
+      const jobs = open
+        .filter((job) => {
+          const day = ymd(job.date);
+          return day > tomorrow || day < today;
+        })
+        .sort((a, b) => `${ymd(a.date)} ${a.timeSlot}`.localeCompare(`${ymd(b.date)} ${b.timeSlot}`));
+      return res.status(200).json({ success: true, scope: 'upcoming', count: jobs.length, data: jobs });
+    }
+    const date = String(req.query.date || today);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return res.status(400).json({ success: false, message: 'Date must be YYYY-MM-DD' });
     }
     const jobs = await Booking.find({
       assignedStaff: req.user._id,
-      date,
+      date: { $in: getDateVariations(date) },
       status: { $nin: ['lead', 'cancelled', 'blocked'] },
     }).sort({ timeSlot: 1 });
 
@@ -89,6 +116,7 @@ const updateMyJobStatus = async (req, res) => {
     }
     pushStatus(job, requested, req.user.name || 'Washer', 'staff');
     await job.save();
+    await recordBookingLedger(job);
     if (requested === 'completed') {
       const existing = await Payout.findOne({ booking: job._id, staff: req.user._id });
       if (!existing) {
@@ -258,9 +286,9 @@ const getMySummary = async (req, res) => {
     const date = todayInIndia();
     const jobs = await Booking.find({
       assignedStaff: req.user._id,
-      date,
+      date: { $in: getDateVariations(date) },
       status: { $nin: ['lead', 'cancelled', 'blocked'] },
-    });
+    }).select('status collectedCash collectedUpi finalPrice');
     const countOf = (status) => jobs.filter((job) => job.status === status).length;
     const sum = (field) => jobs.reduce((total, job) => total + (Number(job[field]) || 0), 0);
     return res.status(200).json({

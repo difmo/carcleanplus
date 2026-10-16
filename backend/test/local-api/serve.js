@@ -5,7 +5,10 @@
 //   npm install --no-save mongodb-memory-server@10 supertest@7
 //   node test/local-api/serve.js
 //
-// Demo login: demo@example.com / demo123
+// Demo logins:
+//   customer  demo@example.com / demo123
+//   desk      desk@example.com / desk123   (admin app)
+//   washer    ravi@example.com / ravi123   (admin app, staff view)
 const path = require('path');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { blankLiveKeys } = require('./env');
@@ -47,6 +50,31 @@ const BACKEND = path.resolve(__dirname, '../..');
       { status: 'accepted', byName: 'Ravi Kumar', byRole: 'staff', at: new Date('2026-10-10T04:00:00Z') },
       { status: 'completed', byName: 'Ravi Kumar', byRole: 'staff', at: new Date('2026-10-10T05:30:00Z') },
     ],
+  });
+  // Desk and washer accounts, and a wash today that still needs a washer.
+  await User.create({ name: 'Desk Admin', email: 'desk@example.com', password: 'desk123', role: 'admin' });
+  await User.create({ name: 'Ravi Kumar', email: 'ravi@example.com', phone: '9000000001', password: 'ravi123', role: 'staff' });
+  const today = new Date(Date.now() + 5.5 * 3600000).toISOString().slice(0, 10);
+  const waiting = await Booking.create({
+    user: user._id,
+    status: 'confirmed',
+    service: 'Basic Wash',
+    carModel: { name: 'Maruti Swift', category: 'Compact' },
+    location: { address: '7 Aliganj Sector B', city: 'Lucknow' },
+    date: today,
+    timeSlot: 'Slot 6 – 04:30 PM',
+    customerDetails: { fullName: 'Priya Sharma', mobile: '9876543210', instructions: 'Car is in the basement' },
+    finalPrice: 399,
+    paymentMethod: 'Cash',
+    paymentStatus: 'pending',
+    bookingSource: 'app',
+    timeline: [{ status: 'confirmed', byName: 'Priya Sharma', byRole: 'customer' }],
+  });
+  await require(path.join(BACKEND, 'models/SupportMessage.js')).create({
+    booking: waiting._id,
+    user: user._id,
+    fromRole: 'customer',
+    body: 'Please come after 4 pm',
   });
   app.listen(5001, () => console.log('LOCAL API READY on http://localhost:5001/api'));
 })().catch((error) => {

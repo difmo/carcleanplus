@@ -93,8 +93,86 @@ Each entry says what changed, why, and where. Newest work goes at the bottom of 
   - `publicUser` includes `addresses`.
 
 ### How the backend was tested
-`/private/tmp/.../scratchpad/apitest/run.js` (session scratchpad, not in the repo) starts the Express app against an in-memory MongoDB with every live key blanked (Razorpay, SMTP, Firebase, MSG91), so nothing touches the live database or sends anything. 33 checks, all passing on 16 Oct 2026: catalog shape, water discount quote, plan not free, plan service/expiry rules, addresses, vehicles, lead ownership, past date/slot checks, finish + timeline, single read, reschedule, cancel, forgot/reset password, delete cleanup.
+Scripts live in `backend/test/local-api/`. They start the Express app against an **in-memory MongoDB** and blank every live key first (`env.js`: Razorpay, SMTP, Firebase, MSG91, and `MONGO_URI`), so nothing touches the live database or sends anything.
 
-To repeat: `npm i mongodb-memory-server@10 supertest@7` in an empty folder, copy the script, run `node run.js /path/to/backend`.
+```
+cd backend
+npm install --no-save mongodb-memory-server@10 supertest@7   # does not change package.json
+node test/local-api/run.js     # 33 API checks, all passing on 16 Oct 2026
+node test/local-api/serve.js   # API on :5001 for the app, demo@example.com / demo123
+```
+
+`run.js` covers: catalog shape, water discount quote, plan not free, plan service/expiry rules, addresses, vehicles, lead ownership, past date/slot checks, finish + timeline, single read, reschedule, cancel, forgot/reset password, delete cleanup.
 
 **Not yet deployed.** The live API on Vercel still runs the old code until the backend is redeployed.
+
+
+---
+
+## App changes (`app/`)
+
+### Structure
+The app was rewritten under `app/lib/src/`. `lib/main.dart` only imports `lib/src`, so the old screens are **no longer compiled**. They are still on disk (deleting or moving them was not allowed in this session) and are excluded in `analysis_options.yaml`. Old folders that can be deleted once you are happy: `lib/authentication`, `lib/compoments`, `lib/component`, `lib/data`, `lib/location`, `lib/models`, `lib/providers`, `lib/router`, `lib/services`, `lib/theme`, `lib/user_footer`, `lib/user_pages`, `lib/utils` (then remove the exclude list).
+
+```
+lib/main.dart                 providers + MaterialApp.router
+lib/src/config.dart           API_BASE, SITE_BASE, support contacts, photo paths
+lib/src/theme.dart            Hoora-style yellow + ink theme, text styles
+lib/src/router.dart           routes, sign-in guard, first-run tour gate
+lib/src/data/defaults.dart    built-in catalog (mirrors backend defaults), slots, car models
+lib/src/models/               user, address, vehicle, catalog, booking
+lib/src/services/             api (one HTTP client), local_store, social_sign_in, notifications
+lib/src/providers/            auth, catalog, account (vehicles/addresses/plan/alerts), bookings
+lib/src/widgets/              ui kit, service card, vehicle/address sheets, slot picker
+lib/src/screens/              splash, tour, auth, home, services, booking, orders, plus, profile, alerts, city, desk
+```
+
+### Fixes for the audit list
+- **A1** `AuthProvider` has `status` (unknown/signedOut/signedIn) for app start and a separate `busy` flag for sign-in. The router only shows the splash while `status` is unknown.
+- **A2** Only a 401/404 from `/auth/me` signs out. Offline or 5xx keeps the cached profile (`LocalStore.user`).
+- **A3** Logout and account deletion clear token, cached profile, selected vehicle and every per-user bookings cache. Bookings are cached per user id.
+- **A4** One 30 s poll for the whole app (started/stopped with the app lifecycle in `AppShell`); bookings load as soon as someone signs in. The booking page refreshes itself every 20 s while open.
+- **A5** Cities come from `GET /catalog` → `cities` (the only cities the backend accepts). "Use my current location" uses the GPS and picks the nearest city within `zoneKm`, or says the area is not served.
+- **A6** Prices use the chosen vehicle's size everywhere. With no vehicle, cards say "from ₹…" (lowest car price). Guests can add a vehicle; it is kept on the phone and uploaded on first sign-in.
+- **A7** Reschedule uses the same date/slot picker as checkout (full and past slots disabled).
+- **A8** Chat screen shows the whole thread and refreshes every 10 s.
+- **A9** Booking page reads `GET /booking/:id` and falls back to the list for the old API.
+- **A10** Forgot password sends a real code and resets (needs the backend change).
+- **A11** Plus buys a plan through a payment link; the plan turns on once paid.
+- **A12** `AndroidManifest.xml`: `INTERNET` permission and `<queries>` for `tel:`, `https:`, `mailto:`. (A `CAMERA` permission was deliberately **not** added: declaring it without a runtime request breaks image_picker's camera.)
+- **A13** Photos converted to JPEG, max 1400 px (≈45 MB → 4.4 MB). `Photo` widget decodes at display size.
+- **A14** Checkout quote sends `providesWaterElectricity`; bill comes from the server quote.
+- **A15** First-run tour shows for everyone on first launch; signing in later marks it seen on the server.
+- **A16** Phone-OTP screen dropped from the new app (the live server has OTP turned off).
+
+### Screens (Hoora-style)
+- **Tour**: three slides, Skip / Next / Get started.
+- **Home**: yellow header with address (or city) picker, vehicle chip, alerts bell, search, hero banner with the real starting price, category tiles, next upcoming booking card, popular service cards, plan banner, promises, refer banner. Pull to refresh.
+- **Service card**: photo, title, price with struck-through price and % off **only when a real festival discount is on**, rating and "bookings in last 30 days" **only from real data** (`stats`), duration, inclusions, View details / Book.
+- **Service detail**: photo gallery, inclusions, description, how it works, price for your vehicle, prices by size, Book now bar.
+- **Checkout** (one page): vehicle, address, date + slot, add-ons, coupon, water/power discount, plan wash, referral credit, pay after service / pay online, mobile (if missing), notes, server bill. Confirm → **Booking Confirmed** (booking ID, vehicle, time, Track order); online payment opens from there.
+- **My Bookings**: Upcoming / Completed / Cancelled tabs.
+- **Booking detail / tracking**: status stepper with timestamps, washer card with call, details, payment with Pay online and receipt, before/after photos, rate with review, reports, Reschedule, Chat with us, Report an issue (camera/gallery), Cancel with reason, activity log.
+- **Plus**: plans from the catalog, per-wash price, pending-payment state with "I have paid".
+- **Profile**: header, stats, vehicles, addresses, plans, refer and earn, notifications, help, privacy/terms (when `SITE_BASE` is set), log out, delete account.
+- **Help**: call, WhatsApp, email (+91 91207 59988, carcleanplusofficial@gmail.com from the website), FAQ.
+
+### Tests
+- `app/test/widget_test.dart` — 8 tests: rupee formatting, discount rule, booking status rules match the backend, slot ids, first launch tour → home, guest Book → sign-in. They caught 3 real overflow bugs (home search bar, service card duration line, sign-in "remember" row).
+- `app/integration_test/app_flow_test.dart` — full journey on a simulator against `serve.js`: guest home → sign in → add vehicle → checkout with address, slot and add-on → Booking Confirmed → tracking → reschedule → chat → cancel → bookings → rate → plan purchase refused without payment keys. Prints `SHOT:` markers for screenshots. Run: `flutter test integration_test/app_flow_test.dart -d <simulator>`.
+- `app/test_driver/local_app.dart` — dev entry that points the app at the local API: `flutter run -t test_driver/local_app.dart`.
+
+Bugs the simulator run found and fixed: sign-in did not leave a pushed sign-in page (screens now navigate on success), Upcoming tab label truncated, payment card missing the service line, cancel-reason sheet overflowing on smaller phones (and reschedule sheet made scrollable), ticked checkbox showed no tick, content scrolling under the status bar on Home/Plus/Profile, a 60 px gap from nested grids picking up the status bar inset.
+
+### Still needed outside the code
+1. **Redeploy the backend** to Vercel. Until then the app runs on the old API: it falls back to built-in services/cities, single profile address, list-based booking reads; forgot password, plan purchase, cancel-when-confirmed and addresses will not work against the old API.
+2. Set `--dart-define=SITE_BASE=https://<website>` in release builds so privacy/terms links show (the website URL is not in the repo).
+3. Android push: add `android/app/google-services.json` (Firebase). Without it push stays off on Android; local alerts still work.
+4. Razorpay keys must stay set on the server for online payment and plan purchase.
+
+## Admin and staff app
+
+The admin/staff app (`admin/`) and the backend changes it needed are logged in
+[ADMIN_STAFF_APP_NOTES.md](ADMIN_STAFF_APP_NOTES.md) (2026-10-16): 18 backend
+bugs, 19 app bugs, desk chat and inbox, booking edit, refunds and payouts.
+

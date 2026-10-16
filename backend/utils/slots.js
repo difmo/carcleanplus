@@ -12,6 +12,16 @@ const ACTIVE = [
   'blocked',
 ];
 
+// The six daily slots the app, website and desk all book against.
+const SLOT_IDS = [
+  'Slot 1 – 08:30 AM',
+  'Slot 2 – 10:00 AM',
+  'Slot 3 – 11:30 AM',
+  'Slot 4 – 01:30 PM',
+  'Slot 5 – 03:00 PM',
+  'Slot 6 – 04:30 PM',
+];
+
 const getDateVariations = (dateStr) => {
   if (!dateStr) return [];
   const clean = String(dateStr).trim();
@@ -98,6 +108,7 @@ const fullSlotIds = async ({ date, city, slots }) => {
 
 module.exports = {
   ACTIVE,
+  SLOT_IDS,
   getDateVariations,
   slotIsFull,
   fullSlotIds,

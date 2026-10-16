@@ -89,6 +89,7 @@ const presentCatalog = async ({ includeInactive = false, withStats = false } = {
     category: row.category,
     service: row.service,
     amount: row.amount,
+    active: row.active !== false,
   }));
   let stats = {};
   if (withStats) {

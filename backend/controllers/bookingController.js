@@ -462,6 +462,14 @@ const ownsBooking = (booking, user) => {
   return Boolean(bookingPhone && userPhone && bookingPhone === userPhone);
 };
 
+// Customers chat on their own bookings, washers on jobs assigned to them,
+// and the desk on any booking.
+const canChat = (booking, user) => {
+  if (['admin', 'superadmin'].includes(user.role)) return true;
+  if (user.role === 'staff') return String(booking.assignedStaff || '') === String(user._id);
+  return ownsBooking(booking, user);
+};
+
 const getMyBookings = async (req, res) => {
   try {
     const phone = lastTen(req.user.phone);
@@ -665,8 +673,7 @@ const listMessages = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
-    const staffSide = ['admin', 'superadmin', 'staff'].includes(req.user.role);
-    if (!staffSide && !ownsBooking(booking, req.user)) {
+    if (!canChat(booking, req.user)) {
       return res.status(403).json({ success: false, message: 'This booking is not yours' });
     }
     const messages = await SupportMessage.find({ booking: booking._id }).sort({ createdAt: 1 });
@@ -680,10 +687,10 @@ const postMessage = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
-    const staffSide = ['admin', 'superadmin', 'staff'].includes(req.user.role);
-    if (!staffSide && !ownsBooking(booking, req.user)) {
+    if (!canChat(booking, req.user)) {
       return res.status(403).json({ success: false, message: 'This booking is not yours' });
     }
+    const role = req.user.role;
     const body = String(req.body.body || '').trim();
     if (!body) return res.status(400).json({ success: false, message: 'Write a message' });
     const message = await SupportMessage.create({
@@ -693,11 +700,15 @@ const postMessage = async (req, res) => {
       body: body.slice(0, 1000),
     });
     const preview = body.slice(0, 140);
-    if (staffSide && booking.user && String(booking.user) !== String(req.user._id)) {
-      await notifyUser(booking.user, 'New message', preview, booking._id);
-    } else {
-      await notifyDesk('New message', `${req.user.name || 'A customer'}: ${preview}`, booking._id);
+    const sender = req.user.name || 'Someone';
+    if (role === 'customer') {
+      await notifyDesk('New message', `${sender}: ${preview}`, booking._id);
       await notifyStaffJob(booking, 'New message', preview);
+    } else {
+      // Desk or washer wrote: tell the customer, and the other side of the crew.
+      if (booking.user) await notifyUser(booking.user, 'New message', preview, booking._id);
+      if (role === 'staff') await notifyDesk('Washer message', `${sender}: ${preview}`, booking._id);
+      else await notifyStaffJob(booking, 'Desk message', preview);
     }
     return res.status(201).json({ success: true, data: message });
   } catch (error) {

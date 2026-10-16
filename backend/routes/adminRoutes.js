@@ -13,6 +13,7 @@ const {
   getBookingById,
   updateBookingStatus,
   createManualBooking,
+  updateBooking,
   deleteBooking,
   assignBooking
 } = require('../controllers/adminBookingController');
@@ -29,6 +30,8 @@ const {
   listPayroll,
   markPayoutPaid,
   refundBooking,
+  updatePromo,
+  inbox,
 } = require('../controllers/deskController');
 
 const wrap = (fn) => (req, res, next) =>
@@ -66,6 +69,7 @@ router.route('/bookings/manual')
 
 router.route('/bookings/:id')
   .get(admin, getBookingById)
+  .put(admin, updateBooking)
   .delete(admin, deleteBooking);
 
 router.route('/bookings/:id/status')
@@ -94,6 +98,12 @@ router.route('/branches')
 router.route('/promos')
   .get(admin, wrap(listPromos))
   .post(admin, wrap(createPromo));
+
+router.route('/promos/:id')
+  .put(admin, wrap(updatePromo));
+
+router.route('/messages')
+  .get(admin, wrap(inbox));
 
 router.route('/payroll')
   .get(admin, wrap(listPayroll));
