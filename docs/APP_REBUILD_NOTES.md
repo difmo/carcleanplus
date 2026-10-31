@@ -147,7 +147,7 @@ lib/src/screens/              splash, tour, auth, home, services, booking, order
 
 ### Screens (Hoora-style)
 - **Tour**: three slides, Skip / Next / Get started.
-- **Home**: yellow header with address (or city) picker, vehicle chip, alerts bell, search, hero banner with the real starting price, category tiles, next upcoming booking card, popular service cards, plan banner, promises, refer banner. Pull to refresh.
+- **Home**: brand header (blue since 2026-10-18) with address (or city) picker, vehicle chip, alerts bell, search, hero banner with the real starting price, category tiles, next upcoming booking card, popular service cards, plan banner, promises, refer banner. Pull to refresh.
 - **Service card**: photo, title, price with struck-through price and % off **only when a real festival discount is on**, rating and "bookings in last 30 days" **only from real data** (`stats`), duration, inclusions, View details / Book.
 - **Service detail**: photo gallery, inclusions, description, how it works, price for your vehicle, prices by size, Book now bar.
 - **Checkout** (one page): vehicle, address, date + slot, add-ons, coupon, water/power discount, plan wash, referral credit, pay after service / pay online, mobile (if missing), notes, server bill. Confirm → **Booking Confirmed** (booking ID, vehicle, time, Track order); online payment opens from there.
@@ -156,6 +156,14 @@ lib/src/screens/              splash, tour, auth, home, services, booking, order
 - **Plus**: plans from the catalog, per-wash price, pending-payment state with "I have paid".
 - **Profile**: header, stats, vehicles, addresses, plans, refer and earn, notifications, help, privacy/terms (when `SITE_BASE` is set), log out, delete account.
 - **Help**: call, WhatsApp, email (+91 91207 59988, carcleanplusofficial@gmail.com from the website), FAQ.
+
+### Blue brand theme (2026-10-18)
+The client asked for the app to match the carcleanplus.com website, so the yellow Hoora palette is now the website's blue. The colours come from `frontend/tailwind.config.js`.
+- `app/lib/src/theme.dart`: the `yellow*` tokens are renamed to `brand` `#1D4ED8`, `brandDeep` `#1E40AF`, `brandLight` `#3377FF`, `brandSoft` `#DBEAFE` and `brandWash` `#EEF4FF`. Two tokens are new: `brandOnDark` `#93C5FD` for accents on dark cards, and `headerTop` `#D6E4FF` for the top of the header wash and the status bar. `paper` is now `#F4F7FB` and `line` is now `#E2E8F0`. Primary buttons, tabs, switches, checkboxes, focused inputs, text buttons and spinners use the brand blue with white text.
+- Text was dark on yellow, so it is now white wherever it sits on solid blue. That covers the bottom-nav pill, the home offer badge, the next-booking icon, the plan button, the services filter chips, the slot-picker day, the Car/Bike toggle, BEST VALUE, the help icons, the how-it-works numbers, the chat send button and the profile avatar.
+- On the dark Plus card and hero banner, the accent is `brandOnDark`, because blue on near-black is hard to read. Done steps in the tracking stepper are now blue.
+- The splash, auth, home and profile headers use a blue wash in place of yellow. Star ratings stay amber, as they are on the website.
+- Checks: `flutter analyze lib/src` is clean and `flutter test` passes (8/8). No `AppColors.yellow` references are left.
 
 ### Tests
 - `app/test/widget_test.dart` — 8 tests: rupee formatting, discount rule, booking status rules match the backend, slot ids, first launch tour → home, guest Book → sign-in. They caught 3 real overflow bugs (home search bar, service card duration line, sign-in "remember" row).
